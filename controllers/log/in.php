@@ -11,11 +11,10 @@ $login_password_input = "pass";
 
 $user_data = [];
 
-$login_table = "view_users_complete_data";
+$login_table = "k1_users";
 $login_user_field = "user_login";
 $login_password_field = "user_password";
 $login_level_field = "user_level";
-$user_data['user_type'] = "agency";
 
 
 // chekc the magic value
