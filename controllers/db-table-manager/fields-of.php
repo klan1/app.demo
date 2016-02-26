@@ -6,7 +6,7 @@ use \k1lib\templates\temply as temply;
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 
-$table_alias = \k1lib\urlrewrite\url_manager::set_url_rewrite_var(\k1lib\urlrewrite\url_manager::get_url_level_count(), "row_key_text", FALSE);
+$table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
 $span = new \k1lib\html\span_tag("subheader");
@@ -33,7 +33,7 @@ if ($db_table->get_state()) {
         $table_config_to_use = [];
         foreach ($_POST as $field => $config) {
             $options_values = [];
-            $data_to_show = [];
+            $comment_values = [];
             $table_config_to_use[$field] = \k1lib\common\clean_array_with_guide($config, $table_config[$field]);
             foreach ($table_config_to_use[$field] as $option_name => $option_value) {
                 if ($option_value == "yes") {
@@ -46,10 +46,13 @@ if ($db_table->get_state()) {
                     continue;
                 }
 
-                if ($option_value === $table_config[$field][$option_name]) {
+                if ($option_value === $k1lib_field_config_options_defaults[$option_name]) {
                     continue;
                 }
 
+                if (($option_name == "label") && ($option_value == \k1lib\sql\get_field_label_default($db_table_to_use, $field))) {
+                    continue;
+                }
                 if (($option_name == "validation") && ($option_value == $mysql_default_validation[$db_table->get_db_table_config()[$field]['type']])) {
                     continue;
                 }
@@ -60,15 +63,16 @@ if ($db_table->get_state()) {
                 }
                 $options_values[] = "$option_name:$option_value";
             }
-            $data_to_show[$field] = implode(",", $options_values);
-            if ($data_to_show) {
+            $comment_values[$field] = implode(",", $options_values);
+            if ($comment_values) {
                 $table_definitions = \k1lib\sql\get_table_definition_as_array($db, $db_table_to_use);
-                foreach ($data_to_show as $field => $comment_to_update) {
+                foreach ($comment_values as $field => $comment_to_update) {
                     if (isset($table_definitions[$field])) {
-                        $sql_tu_update_comment = "ALTER TABLE `{$db_table_to_use}` CHANGE `$field` `$field` {$table_definitions[$field]} COMMENT '{$data_to_show[$field]}'";
-                        if (!empty($data_to_show[$field])) {
-                            if (\k1lib\sql\sql_query($db, $sql_tu_update_comment) !== FALSE) {
-                                $div_ok->append_p("$sql_tu_update_comment (ok) ", TRUE);
+                        $sql_update_comment = "ALTER TABLE `{$db_table_to_use}` CHANGE `$field` `$field` {$table_definitions[$field]} COMMENT '{$comment_values[$field]}'";
+                        if (!empty($comment_values[$field])) {
+//                            if (1) {
+                            if (\k1lib\sql\sql_query($db, $sql_update_comment) !== FALSE) {
+                                $div_ok->append_p("$sql_update_comment (ok) ", TRUE);
                             } else {
                                 $p_fail->set_value("$field (fail)", TRUE);
                             }
@@ -101,11 +105,9 @@ if ($db_table->get_state()) {
     $ul->set_attrib("data-accordion", TRUE);
     $ul->set_attrib('data-allow-all-closed="true"', TRUE);
 
-
-
     $table_config_to_use = [];
     $post_data_to_change = [];
-    foreach ($db_table->get_db_table_config() as $field => $config) {
+    foreach ($db_table->get_db_table_config(TRUE) as $field => $config) {
 
 
         $table_config_to_use[$field] = \k1lib\common\clean_array_with_guide($config, $k1lib_field_config_options_defaults);
@@ -113,23 +115,34 @@ if ($db_table->get_state()) {
         foreach ($table_config_to_use[$field] as $option_name => $option_value) {
 
 //            \k1lib\common\bolean_to_string($bolean)
-            $make_checkbox = FALSE;
+            $make_radio = FALSE;
             if ($option_value === TRUE) {
                 $option_value = "yes";
-//                $make_checkbox = TRUE;
+                $make_radio = TRUE;
             } elseif ($option_value === FALSE) {
                 $option_value = "no";
-//                $make_checkbox = TRUE;
+                $make_radio = TRUE;
             }
-            if ($make_checkbox) {
-                $input = new \k1lib\html\input_tag("checkbox", "{$field}[{$option_name}]", "yes");
+            if ($make_radio) {
+                $input_yes = new \k1lib\html\input_tag("radio", "{$field}[{$option_name}]", "yes");
+                $label_yes = new \k1lib\html\label_tag("yes", "{$field}[{$option_name}]");
+                $input_yes->post_code($label_yes->generate_tag());
+
+                $input_no = new \k1lib\html\input_tag("radio", "{$field}[{$option_name}]", "no");
+                $label_no = new \k1lib\html\label_tag("no", "{$field}[{$option_name}]");
+                $input_no->post_code($label_no->generate_tag());
+                
                 if ($option_value == "yes") {
-                    $input->set_attrib("checked", TRUE);
+                    $input_yes->set_attrib("checked", TRUE);
                 }
+                if ($option_value == "no") {
+                    $input_no->set_attrib("checked", TRUE);
+                }
+                $table_config_to_use[$field][$option_name] = $input_yes->generate_tag() . " " . $input_no->generate_tag();
             } else {
                 $input = new \k1lib\html\input_tag("text", "{$field}[{$option_name}]", $option_value);
+                $table_config_to_use[$field][$option_name] = $input->generate_tag();
             }
-            $table_config_to_use[$field][$option_name] = $input->generate_tag();
         }
         if (isset($_POST[$field])) {
             $post_data_to_change[$field] = implode(",", $_POST[$field]);
@@ -137,20 +150,13 @@ if ($db_table->get_state()) {
 
 
         $li = $ul->append_li("accordion-item")->set_attrib("data-accordion-item", TRUE);
-        $a_title = (new \k1lib\html\a_tag("#", $field))->set_attrib("class", "accordion-title")->append_to($li);
+        $a_title = (new \k1lib\html\a_tag("#", $field))->set_attrib("class", "accordion-title k1-field-of-title")->append_to($li);
         $div_content = (new \k1lib\html\div_tag($class))->set_attrib("class", "accordion-content")->set_attrib("data-tab-content", TRUE)->append_to($li);
         $div_content->set_value(\k1lib\html\make_row_2columns_layout($table_config_to_use[$field]));
-//        $div_fielset = new \k1lib\html\div_tag("large-4 medium-6 small-12 columns end");
-//        $fieldset = new \k1lib\html\fieldset_tag($field);
-//        $fieldset->append_to($div_fielset);
-////        $fieldset->set_attrib("class", "");
-//        $fieldset->set_value(\k1lib\html\make_row_2columns_layout($table_config_to_use[$field]));
-//        $div_row_fieldset->set_value($div_fielset->generate_tag(), TRUE);
     }
 
     $form->append_child($ul);
     $form->append_child($div_result);
-//    $form->append_child($div_row_buttons);
 
     $div_container->generate_tag(TRUE);
 }

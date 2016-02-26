@@ -26,7 +26,7 @@ const APP_VERBOSE = 0;
 /**
  * URL REWRITE ENABLE
  */
-\k1lib\urlrewrite\url_manager::enable();
+\k1lib\urlrewrite\url::enable();
 
 /**
  * TEMPLATE AND OUTPUT BUFFER SYSTEM ENABLE
@@ -66,7 +66,7 @@ const APP_VERBOSE = 0;
 if ($_SERVER['SERVER_NAME'] == 'dev.klan1.net') {
     include "config-db-remote.php";
 } else {
-    \k1lib\db\handler::enable("k1dev_indcheca", 'k1dev', '', "localhost", "3306", "mysql");
+    \k1lib\db\handler::enable("k1app_demo", 'k1dev', '', "localhost", "3306", "mysql");
 }
 /**
  * DB SEcurity

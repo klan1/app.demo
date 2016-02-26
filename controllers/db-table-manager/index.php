@@ -2,6 +2,8 @@
 
 namespace k1app;
 
+use k1lib\urlrewrite\url as url;
+
 $mysql_default_validation = array(
     'char' => 'mixed-symbols',
     'varchar' => 'mixed-symbols',
@@ -45,8 +47,8 @@ if (\k1lib\session\session_plain::check_user_level(["god"])) {
     require 'dirmgnt-optional.php';
 
     if (!$dirmgnt_include_sucess) {
-        $go_url = APP_URL . \k1lib\urlrewrite\url_manager::make_url_from_rewrite() . "show-tables/";
-        \k1lib\html\html_header_go($go_url);
+        $go_url = APP_URL . \k1lib\urlrewrite\url::make_url_from_rewrite() . "show-tables/";
+        \k1lib\html\html_header_go(url::do_url($go_url));
     }
 } else {
     d("You can't thouch this... can't touch this... ta la la la...");

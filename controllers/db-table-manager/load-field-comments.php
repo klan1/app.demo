@@ -6,7 +6,7 @@ use \k1lib\templates\temply as temply;
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 
-$db_table_to_use = \k1lib\urlrewrite\url_manager::set_url_rewrite_var(\k1lib\urlrewrite\url_manager::get_url_level_count(), "row_key_text", FALSE);
+$db_table_to_use = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 
 $span = new \k1lib\html\span_tag("subheader");
 temply::set_place_value("html-title", " | Load field comments");

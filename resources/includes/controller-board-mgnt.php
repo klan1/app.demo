@@ -2,15 +2,15 @@
 
 namespace k1app;
 
-use k1lib\urlrewrite\url_manager as url_manager;
+use k1lib\urlrewrite\url as url;
 
 // This will work because the URL internal index is from 0
-$this_url_level_value = url_manager::get_url_level_value();
-$next_url_level = url_manager::get_url_level_count();
+$this_url_level_value = url::get_url_level_value();
+$next_url_level = url::get_url_level_count();
 // get the base URL to load the next one
-$actual_url = url_manager::make_url_from_rewrite(-1);
+$actual_url = url::make_url_from_rewrite(-1);
 // get from the URL the next level value :   /$actual_url/next_level_value
-$controller_board_name = url_manager::set_url_rewrite_var($next_url_level, "controller_board_name", FALSE);
+$controller_board_name = url::set_url_rewrite_var($next_url_level, "controller_board_name", FALSE);
 
 $controller_to_load = $this_url_level_value . '-' . $controller_board_name;
 

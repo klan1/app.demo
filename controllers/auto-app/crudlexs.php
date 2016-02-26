@@ -3,10 +3,11 @@
 namespace k1app;
 
 use \k1lib\templates\temply as temply;
+use \k1lib\urlrewrite\url as url;
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 
-$table_alias = \k1lib\urlrewrite\url_manager::set_url_rewrite_var(\k1lib\urlrewrite\url_manager::get_url_level_count(), "row_key_text", FALSE);
+$table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
 $span = new \k1lib\html\span_tag("subheader");
@@ -28,23 +29,39 @@ $div = $controller_object->init_board();
 
 // CREATE
 if (isset($controller_object->board_create_object)) {
-    $controller_object->board_create_object->set_show_rule_to_apply(NULL);
+    if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
+        $controller_object->board_create_object->set_show_rule_to_apply(NULL);
+    } else {
+        $controller_object->board_create_object->create_object->set_use_create_custom_template(TRUE);
+    }
 }
 // READ
 if (isset($controller_object->board_read_object)) {
-    $controller_object->board_read_object->set_show_rule_to_apply(NULL);
+    if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
+        $controller_object->board_read_object->set_show_rule_to_apply(NULL);
+    } else {
+        $controller_object->board_read_object->read_object->set_use_read_custom_template(TRUE);
+    }
 }
 // UPDATE
 if (isset($controller_object->board_update_object)) {
-    $controller_object->board_update_object->set_show_rule_to_apply(NULL);
+    if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
+        $controller_object->board_update_object->set_show_rule_to_apply(NULL);
+    } else {
+        $controller_object->board_update_object->update_object->set_use_create_custom_template(TRUE);
+    }
 }
 // DELETE
 if (isset($controller_object->board_delete_object)) {
-    $controller_object->board_delete_object->set_show_rule_to_apply(NULL);
+    if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
+        $controller_object->board_delete_object->set_show_rule_to_apply(NULL);
+    }
 }
 // LIST
 if (isset($controller_object->board_list_object)) {
-    $controller_object->board_list_object->set_show_rule_to_apply(NULL);
+    if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
+        $controller_object->board_list_object->set_show_rule_to_apply(NULL);
+    }
 
     /**
      * BACK
@@ -60,8 +77,8 @@ $controller_object->start_board();
 if (isset($controller_object->board_list_object)) {
     if (isset($controller_object->board_list_object->list_object)) {
         $controller_object->board_list_object->list_object->apply_link_on_field_filter(
-                "../{$controller_object->get_board_read_url_name()}/%row_keys%/?auth-code=%auth_code%"
-                , \k1lib\crudlexs\crudlexs_base::USE_KEY_FIELDS
+                url::do_url("../{$controller_object->get_board_read_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--"])
+                , (isset($_GET['no-rules']) ? \k1lib\crudlexs\crudlexs_base::USE_KEY_FIELDS : \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS)
         );
     }
 }

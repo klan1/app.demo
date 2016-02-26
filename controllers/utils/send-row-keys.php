@@ -11,17 +11,17 @@
 namespace k1app;
 
 use k1lib\templates\temply as temply;
-use k1lib\urlrewrite\url_manager as url_manager;
+use k1lib\urlrewrite\url as url;
 
 /**
  * ONE LINE config: less codign, more party time!
  */
-$table_to_use = url_manager::set_url_rewrite_var(url_manager::get_url_level_count(), "table_to_use", FALSE);
+$table_to_use = url::set_url_rewrite_var(url::get_url_level_count(), "table_to_use", FALSE);
 $table_to_use_real = \k1lib\db\security\db_table_aliases::decode($table_to_use);
 
-$row_keys_text = url_manager::set_url_rewrite_var(url_manager::get_url_level_count(), "row_key_text", FALSE);
+$row_keys_text = url::set_url_rewrite_var(url::get_url_level_count(), "row_key_text", FALSE);
 
-$reference_table_to_use = url_manager::set_url_rewrite_var(url_manager::get_url_level_count(), "reference_table_to_use", FALSE);
+$reference_table_to_use = url::set_url_rewrite_var(url::get_url_level_count(), "reference_table_to_use", FALSE);
 $reference_table_to_use_real = \k1lib\db\security\db_table_aliases::decode($reference_table_to_use);
 
 $to_use_db_table = new \k1lib\crudlexs\class_db_table($db, $table_to_use_real);

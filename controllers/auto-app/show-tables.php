@@ -3,7 +3,7 @@
 namespace k1app;
 
 use \k1lib\templates\temply as temply;
-use \k1lib\urlrewrite\url_manager as url_manager;
+use \k1lib\urlrewrite\url as url;
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 $span = new \k1lib\html\span_tag("subheader");
@@ -24,8 +24,10 @@ foreach ($db_tables as $row_field => $row_value) {
     }
     $p = new \k1lib\html\p_tag();
 
-    $a_crudlexs = new \k1lib\html\a_tag(url_manager::do_url("../crudlexs/{$table_alias}/"), "$table_to_link");
-    $ul->append_li()->append_child($a_crudlexs);
+    $a_crudlexs = new \k1lib\html\a_tag(url::do_url("../crudlexs/{$table_alias}/", [], FALSE), "$table_to_link");
+    $a_crudlexs_no_rules = new \k1lib\html\a_tag(url::do_url("../crudlexs/{$table_alias}/", ['no-rules' => 1]), "No rules");
+//    $a_crudlexs->
+    $ul->append_li()->set_value($a_crudlexs->generate_tag() . " - " . $a_crudlexs_no_rules->generate_tag());
 }
 
 $ul->generate_tag(TRUE);

@@ -2,7 +2,7 @@
 
 namespace k1app;
 
-use \k1lib\urlrewrite\url_manager;
+use \k1lib\urlrewrite\url;
 
 if (isset($_GET['file']) && isset($_GET['auth'])) {
     if ($_GET['auth'] == md5(APP_CONTROLLERS_PATH . $_GET['file'] . \k1lib\K1MAGIC::get_value())) {

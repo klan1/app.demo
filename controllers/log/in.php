@@ -3,6 +3,7 @@
 namespace k1app;
 
 use k1lib\session\session_plain as k1lib_session;
+use \k1lib\urlrewrite\url as url;
 
 \k1lib\common\check_on_k1lib();
 
@@ -11,7 +12,7 @@ $login_password_input = "pass";
 
 $user_data = [];
 
-$login_table = "k1_users";
+$login_table = "users";
 $login_user_field = "user_login";
 $login_password_field = "user_password";
 $login_level_field = "user_level";
@@ -56,16 +57,16 @@ if (isset($_POST['magic_value'])) {
             // SET THE LOGGED SESSION
             k1lib_session::start_logged_session($user_data[$login_user_field], $user_data, $user_data[$login_level_field]);
             if (\k1lib\urlrewrite\get_back_url(TRUE)) {
-                \k1lib\html\html_header_go(\k1lib\urlrewrite\get_back_url(TRUE));
+                \k1lib\html\html_header_go(url::do_url(\k1lib\urlrewrite\get_back_url(TRUE)));
             } else {
-                \k1lib\html\html_header_go(APP_HOME_URL, FALSE);
+                \k1lib\html\html_header_go(url::do_url(APP_HOME_URL));
             }
         } else {
-            \k1lib\html\html_header_go(APP_URL . "log/form?error=bad-login");
+            \k1lib\html\html_header_gourl::do_url((APP_URL . "log/form?error=bad-login"));
         }
     } else {
-        \k1lib\html\html_header_go(APP_URL . "log/form?error=bad-magic");
+        \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=bad-magic"));
     }
 } else {
-    \k1lib\html\html_header_go(APP_URL . "log/form?error=no-data");
+    \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=no-data"));
 }

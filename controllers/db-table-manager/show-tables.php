@@ -3,7 +3,7 @@
 namespace k1app;
 
 use \k1lib\templates\temply as temply;
-use \k1lib\urlrewrite\url_manager as url_manager;
+use \k1lib\urlrewrite\url as url;
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 $span = new \k1lib\html\span_tag("subheader");
@@ -22,10 +22,9 @@ foreach ($db_tables as $row_field => $row_value) {
     }
     $p = new \k1lib\html\p_tag();
 
-    $back_url = urlencode($_SERVER['REQUEST_URI']);
-    $get_params = ['back-url' => $back_url];
+    $get_params = ['back-url' => $_SERVER['REQUEST_URI']];
 
-    $a_manage = new \k1lib\html\a_tag(url_manager::do_url("../fields-of/{$table_alias}/", $get_params), "Configure");
+    $a_manage = new \k1lib\html\a_tag(url::do_url("../fields-of/{$table_alias}/", $get_params), "Configure");
     $p->set_value($table_to_link . " : " . $a_manage->generate_tag());
     $p->generate_tag(TRUE);
 }

@@ -66,7 +66,7 @@ if (\k1lib\db\handler::is_enabled()) {
 /*
  * MANAGE THE URL REWRITING 1st (0 index) level
  */
-$url_controller = \k1lib\urlrewrite\url_manager::set_url_rewrite_var(0, "url_section", TRUE);
+$url_controller = \k1lib\urlrewrite\url::set_url_rewrite_var(0, "url_section", TRUE);
 if (!$url_controller) {
     $url_controller = "index";
 }

@@ -11,7 +11,7 @@
 namespace k1app;
 
 use k1lib\templates\temply as temply;
-use k1lib\urlrewrite\url_manager as url_manager;
+use k1lib\urlrewrite\url as url;
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 
@@ -22,7 +22,7 @@ unset($static_vars_from_get[\k1lib\URL_REWRITE_VAR_NAME]);
 /**
  * ONE LINE config: less codign, more party time!
  */
-$table_to_use = url_manager::set_url_rewrite_var(url_manager::get_url_level_count(), "table_to_use", FALSE);
+$table_to_use = url::set_url_rewrite_var(url::get_url_level_count(), "table_to_use", FALSE);
 $table_to_use_real = \k1lib\db\security\db_table_aliases::decode($table_to_use);
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $table_to_use_real, "Select data helper");
 
@@ -52,7 +52,8 @@ if ($controller_object->get_state()) {
     $controller_object->init_board();
 
     if (isset($controller_object->board_list_object)) {
-        $reference_table_to_use = url_manager::set_url_rewrite_var(url_manager::get_url_level_count(), "reference_table_to_use", FALSE);
+        $controller_object->board_list_object->set_back_enable(FALSE);
+        $reference_table_to_use = url::set_url_rewrite_var(url::get_url_level_count(), "reference_table_to_use", FALSE);
         $reference_table_to_use_real = \k1lib\db\security\db_table_aliases::decode($reference_table_to_use);
         $reference_db_table = new \k1lib\crudlexs\class_db_table($db, $reference_table_to_use_real);
         $creating_obj = new \k1lib\crudlexs\creating($reference_db_table, FALSE);
@@ -69,7 +70,7 @@ if ($controller_object->get_state()) {
 // LIST
     if (isset($controller_object->board_list_object)) {
         if (isset($controller_object->board_list_object->list_object)) {
-            $controller_object->board_list_object->list_object->apply_link_on_field_filter(APP_URL . "utils/send-row-keys/{$table_to_use}/%row_keys%/{$reference_table_to_use}/", \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
+            $controller_object->board_list_object->list_object->apply_link_on_field_filter(APP_URL . "utils/send-row-keys/{$table_to_use}/--rowkeys--/{$reference_table_to_use}/", \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
         }
     }
 

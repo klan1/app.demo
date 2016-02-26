@@ -6,7 +6,6 @@ header("Content-Type: text/plain");
 
 use \k1lib\templates\temply as temply;
 
-
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
 foreach ($db_tables as $row_field => $row_value) {
@@ -34,6 +33,9 @@ foreach ($db_tables as $row_field => $row_value) {
                 if ($option_value === $k1lib_field_config_options_defaults[$option_name]) {
                     continue;
                 }
+                if (($option_name == "label") && ($option_value == \k1lib\sql\get_field_label_default($db_table_to_use, $field))) {
+                    continue;
+                }
 
                 if (($option_name == "validation") && ($option_value == $mysql_default_validation[$db_table->get_db_table_config()[$field]['type']])) {
                     continue;
@@ -49,11 +51,13 @@ foreach ($db_tables as $row_field => $row_value) {
             if ($data_to_show) {
                 $table_definitions = \k1lib\sql\get_table_definition_as_array($db, $db_table_to_use);
                 foreach ($data_to_show as $field => $comment_to_update) {
-                    if (isset($table_definitions[$field])) {
+                    if (isset($table_definitions[$field]) && !empty($data_to_show[$field])) {
                         $sql_tu_update_comment = "{$db_table_to_use}\t{$field}\t{$data_to_show[$field]}";
                         echo $sql_tu_update_comment . PHP_EOL;
                     } else {
-                        trigger_error("FIELD definition of $field did not found to update", E_USER_WARNING);
+                        if (!isset($table_definitions[$field])) {
+                            trigger_error("FIELD definition of $field did not found to update", E_USER_WARNING);
+                        }
                     }
                 }
             }

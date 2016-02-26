@@ -2,14 +2,14 @@
 
 namespace k1app;
 
-use k1lib\urlrewrite\url_manager as url_manager;
+use k1lib\urlrewrite\url as url;
 
 // This will work because the URL internal index is from 0
-$next_url_level = url_manager::get_url_level_count();
+$next_url_level = url::get_url_level_count();
 // get the base URL to load the next one
-$actual_url = url_manager::get_this_url(FALSE);
+$actual_url = url::get_this_url();
 // get from the URL the next level value :   /$actual_url/next_level_value
-$next_directory_name = url_manager::set_url_rewrite_var($next_url_level, "next_directory_name", FALSE);
+$next_directory_name = url::set_url_rewrite_var($next_url_level, "next_directory_name", FALSE);
 
 if ($next_directory_name !== FALSE) {
     $file_to_include = \k1lib\controllers\load_controller($next_directory_name, \k1app\APP_CONTROLLERS_PATH . $actual_url);
