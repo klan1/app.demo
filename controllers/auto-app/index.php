@@ -4,9 +4,9 @@ namespace k1app;
 
 use \k1lib\urlrewrite\url as url;
 
-\k1lib\session\session_plain::is_logged(TRUE, url::do_url(APP_URL . "log/form/", ["back-url" => $_SERVER['REQUEST_URI']]));
+\k1lib\session\session_db::is_logged(TRUE, url::do_url(APP_URL . "log/form/", ["back-url" => $_SERVER['REQUEST_URI']]));
 
-if (\k1lib\session\session_plain::check_user_level(["god", 'admin', 'user'])) {
+if (\k1lib\session\session_db::check_user_level(["god", 'admin', 'user'])) {
     require 'dirmgnt-optional.php';
 
     if (!$dirmgnt_include_sucess) {

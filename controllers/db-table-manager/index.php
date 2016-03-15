@@ -41,9 +41,9 @@ $k1lib_field_config_options_defaults = [
     'sql' => null,
 ];
 
-\k1lib\session\session_plain::is_logged(TRUE, APP_URL . "log/form/?back-url=" . urlencode($_SERVER['REQUEST_URI']));
+\k1lib\session\session_db::is_logged(TRUE, APP_URL . "log/form/?back-url=" . urlencode($_SERVER['REQUEST_URI']));
 
-if (\k1lib\session\session_plain::check_user_level(["god"])) {
+if (\k1lib\session\session_db::check_user_level(["god"])) {
     require 'dirmgnt-optional.php';
 
     if (!$dirmgnt_include_sucess) {

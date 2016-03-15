@@ -2,7 +2,7 @@
 
 namespace k1app;
 
-use \k1lib\session\session_plain as k1lib_session;
+use \k1lib\session\session_db as k1lib_session;
 use \k1lib\urlrewrite\url as url;
 use \k1lib\templates\temply as temply;
 ?>

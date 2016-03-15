@@ -24,10 +24,9 @@ foreach ($db_tables as $row_field => $row_value) {
     }
     $p = new \k1lib\html\p_tag();
 
-    $a_crudlexs = new \k1lib\html\a_tag(url::do_url("../crudlexs/{$table_alias}/", [], FALSE), "$table_to_link");
-    $a_crudlexs_no_rules = new \k1lib\html\a_tag(url::do_url("../crudlexs/{$table_alias}/", ['no-rules' => 1]), "No rules");
-//    $a_crudlexs->
-    $ul->append_li()->set_value($a_crudlexs->generate_tag() . " - " . $a_crudlexs_no_rules->generate_tag());
+    $a_crudlexs = new \k1lib\html\a_tag(url::do_url("../crudlexs/{$table_alias}/", [], FALSE), "with rules");
+    $a_crudlexs_no_rules = new \k1lib\html\a_tag(url::do_url("../crudlexs/{$table_alias}/", ['no-rules' => 1]), "raw table");
+    $ul->append_li()->set_value($table_to_link . " : " . $a_crudlexs->generate_tag() . " - " . $a_crudlexs_no_rules->generate_tag());
 }
 
 $ul->generate_tag(TRUE);

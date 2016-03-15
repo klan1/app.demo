@@ -21,6 +21,7 @@ temply::set_place_value("controller-name", $span->generate_tag());
  * ONE LINE config: less codign, more party time!
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $db_table_to_use);
+$controller_object->set_security_no_rules_enable(TRUE);
 
 /**
  * ALL READY, let's do it :)
@@ -31,14 +32,20 @@ $div = $controller_object->init_board();
 if (isset($controller_object->board_create_object)) {
     if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
         $controller_object->board_create_object->set_show_rule_to_apply(NULL);
+        $controller_object->board_create_object->set_apply_label_filter(FALSE);
+        $controller_object->board_create_object->set_apply_field_label_filter(FALSE);
     } else {
         $controller_object->board_create_object->create_object->set_use_create_custom_template(TRUE);
     }
 }
 // READ
-if (isset($controller_object->board_read_object)) {
+if ($controller_object->on_board_read()) {
     if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
         $controller_object->board_read_object->set_show_rule_to_apply(NULL);
+        $controller_object->board_read_object->set_apply_label_filter(FALSE);
+        $controller_object->board_read_object->set_apply_field_label_filter(FALSE);
+        $controller_object->board_read_object->set_use_label_as_title_enabled(FALSE);
+        
     } else {
         $controller_object->board_read_object->read_object->set_use_read_custom_template(TRUE);
     }
@@ -47,6 +54,8 @@ if (isset($controller_object->board_read_object)) {
 if (isset($controller_object->board_update_object)) {
     if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
         $controller_object->board_update_object->set_show_rule_to_apply(NULL);
+        $controller_object->board_update_object->set_apply_label_filter(FALSE);
+        $controller_object->board_update_object->set_apply_field_label_filter(FALSE);
     } else {
         $controller_object->board_update_object->update_object->set_use_create_custom_template(TRUE);
     }
@@ -58,9 +67,11 @@ if (isset($controller_object->board_delete_object)) {
     }
 }
 // LIST
-if (isset($controller_object->board_list_object)) {
+if ($controller_object->on_board_list()) {
     if (isset($_GET['no-rules']) && $_GET['no-rules'] == "1") {
         $controller_object->board_list_object->set_show_rule_to_apply(NULL);
+        $controller_object->board_list_object->set_apply_label_filter(FALSE);
+        $controller_object->board_list_object->set_apply_field_label_filter(FALSE);
     }
 
     /**
@@ -74,10 +85,10 @@ if (isset($controller_object->board_list_object)) {
 $controller_object->start_board();
 
 // LIST
-if (isset($controller_object->board_list_object)) {
-    if (isset($controller_object->board_list_object->list_object)) {
+if ($controller_object->on_board_list()) {
+    if ($controller_object->on_object_list()) {
         $controller_object->board_list_object->list_object->apply_link_on_field_filter(
-                url::do_url("../{$controller_object->get_board_read_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--"])
+                url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_read_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--"])
                 , (isset($_GET['no-rules']) ? \k1lib\crudlexs\crudlexs_base::USE_KEY_FIELDS : \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS)
         );
     }

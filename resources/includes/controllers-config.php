@@ -158,6 +158,8 @@ class client_task_orders_config extends client_clients_config {
 class client_task_orders_assignations_config extends client_task_orders_config {
 
     const ROOT_URL = "the-clients/task-orders-assignations";
+    const BOARD_CREATE_ALLOWED_LEVELS = ['god', 'admin', 'user'];
+    const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin', 'user'];
 
 }
 
@@ -165,5 +167,6 @@ class client_task_orders_states_config extends client_task_orders_assignations_c
 
     const ROOT_URL = "the-clients/task-orders-states";
     const BOARD_CREATE_ALLOWED_LEVELS = ['god', 'admin', 'user'];
+    const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin', 'user'];
 
 }

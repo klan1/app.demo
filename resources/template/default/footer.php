@@ -4,7 +4,7 @@ namespace k1app;
 
 use k1lib\sql\profiler;
 use k1lib\sql\local_cache;
-use k1lib\session\session_plain as k1lib_session;
+use k1lib\session\session_db as k1lib_session;
 ?><!--div  class="k1-main-section"-->
 </div>
 <!-- FOOTER -->

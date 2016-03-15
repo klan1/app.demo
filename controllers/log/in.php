@@ -2,71 +2,59 @@
 
 namespace k1app;
 
-use k1lib\session\session_plain as k1lib_session;
-use \k1lib\urlrewrite\url as url;
+use k1lib\urlrewrite\url as url;
 
 \k1lib\common\check_on_k1lib();
 
+
 $login_user_input = "login";
 $login_password_input = "pass";
+$login_remember_me = "remember-me";
 
 $user_data = [];
-
 $login_table = "users";
 $login_user_field = "user_login";
 $login_password_field = "user_password";
 $login_level_field = "user_level";
 
+if (!isset($app_session)) {
+    $app_session = new \k1lib\session\session_db($db);
+}
+$app_session->set_config($login_table, $login_user_field, $login_password_field, $login_level_field);
+$app_session->set_inputs($login_user_input, $login_password_input, $login_remember_me);
 
 // chekc the magic value
-if (isset($_POST['magic_value'])) {
-    $magic_test = \k1lib\common\check_magic_value("login_form", $_POST['magic_value']);
-    if ($magic_test == TRUE) {
-        // the form was correct, so lets try to login
+$post_data = $app_session->catch_post();
+if ($post_data) {
+    $app_session_check = $app_session->check_login();
+    if ($app_session_check) {
 
-        /**
-         * Check the _GET incomming vars
-         */
-        $form_values = \k1lib\forms\check_all_incomming_vars($_POST, "k1lib_login");
 
-        /**
-         * Login fields
-         */
-        $user_login = $form_values[$login_user_input];
-        $user_password = md5($form_values[$login_password_input]);
-
-        if (empty($user_login) || empty($user_password)) {
-            \k1lib\html\html_header_go(APP_URL . "log/form?error=no-data");
-        }
-
-        /**
-         * SQL check
-         */
-        $sql_user_login = "SELECT * FROM " . $login_table
-                . " WHERE "
-                . $login_user_field . "= '{$user_login}' "
-                . " AND " . $login_password_field . "= '{$user_password}'";
-        $sql_result = \k1lib\sql\sql_query($db, $sql_user_login, FALSE);
-        if (!empty($sql_result)) {
-            $user_data = array_merge($user_data, $sql_result);
-            unset($user_data[$login_password_field]);
-            // CLEAR ALL
-            k1lib_session::end_session();
-            // BEGIN ALL AGAIN
-            k1lib_session::start_session();
-            // SET THE LOGGED SESSION
-            k1lib_session::start_logged_session($user_data[$login_user_field], $user_data, $user_data[$login_level_field]);
+        $user_data = array_merge($user_data, $app_session_check);
+//        unset($user_data[$login_password_field]);
+        // CLEAR ALL
+//        $app_session->unset_coockie(APP_BASE_URL);
+        $app_session->end_session();
+        // BEGIN ALL AGAIN
+        $app_session->start_session();
+        // SET THE LOGGED SESSION
+        $app_session->save_data_to_coockie(APP_BASE_URL);
+        if ($app_session->load_data_from_coockie($db)) {
             if (\k1lib\urlrewrite\get_back_url(TRUE)) {
                 \k1lib\html\html_header_go(url::do_url(\k1lib\urlrewrite\get_back_url(TRUE)));
             } else {
                 \k1lib\html\html_header_go(url::do_url(APP_HOME_URL));
             }
         } else {
-            \k1lib\html\html_header_gourl::do_url((APP_URL . "log/form?error=bad-login"));
+            trigger_error("Login with coockie not possible", E_USER_ERROR);
         }
-    } else {
-        \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=bad-magic"));
+    } elseif ($app_session_check === NULL) {
+        \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=no-data"));
+    } elseif ($app_session_check === FALSE) {
+        \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=bad-login"));
     }
-} else {
+} elseif ($post_data === FALSE) {
+    \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=bad-magic"));
+} elseif ($post_data === NULL) {
     \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=no-data"));
 }

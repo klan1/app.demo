@@ -11,7 +11,7 @@
 
 namespace k1app;
 
-use \k1lib\session\session_plain as k1lib_session;
+use \k1lib\session\session_db as session_db;
 use \k1lib\templates\temply as temply;
 
 header('Content-Type: text/html; charset=utf-8');
@@ -27,27 +27,11 @@ define("K1LIB_LANG", "en");
 if (file_exists('../k1.lib/lastest/init.php')) {
     include_once '../k1.lib/lastest/init.php';
 } else {
-    require_once 'k1lib-init.php';
+    require_once 'init.php';
 }
 require_once 'path-settings.php';
 require_once 'config.php';
 
-/*
- * APP START
- */
-//\k1lib\output_buffer\start_app();
-k1lib_session::start_session();
-k1lib_session::load_logged_session();
-
-//\k1lib\session\start_app_session();
-
-/*
- *  MAKE THE CONNECTION TO MEMCACHE SERVER
- */
-//if (USE_MEMCACHE) {
-//    $memcache = new Memcache;
-//    $memcache_connected = $memcache->connect(MEMCACHE_SERVER, MEMCACHE_PORT);
-//}
 /*
  * DB CONNECTION
  */
@@ -63,6 +47,17 @@ if (\k1lib\db\handler::is_enabled()) {
     }
     $db->exec("set names utf8");
 }
+
+/*
+ * APP START
+ */
+/**
+ * @var \k1lib\session\session_db
+ */
+$app_session = new \k1lib\session\session_db($db);
+$app_session->start_session();
+$app_session->load_logged_session_db();
+
 /*
  * MANAGE THE URL REWRITING 1st (0 index) level
  */

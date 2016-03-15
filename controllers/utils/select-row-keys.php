@@ -51,7 +51,7 @@ if ($controller_object->get_state()) {
 
     $controller_object->init_board();
 
-    if (isset($controller_object->board_list_object)) {
+    if ($controller_object->on_board_list()) {
         $controller_object->board_list_object->set_back_enable(FALSE);
         $reference_table_to_use = url::set_url_rewrite_var(url::get_url_level_count(), "reference_table_to_use", FALSE);
         $reference_table_to_use_real = \k1lib\db\security\db_table_aliases::decode($reference_table_to_use);
@@ -68,8 +68,8 @@ if ($controller_object->get_state()) {
     $controller_object->start_board();
 
 // LIST
-    if (isset($controller_object->board_list_object)) {
-        if (isset($controller_object->board_list_object->list_object)) {
+    if ($controller_object->on_board_list()) {
+        if ($controller_object->on_object_list()) {
             $controller_object->board_list_object->list_object->apply_link_on_field_filter(APP_URL . "utils/send-row-keys/{$table_to_use}/--rowkeys--/{$reference_table_to_use}/", \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
         }
     }

@@ -149,8 +149,25 @@ select.k1-crudlexs-page-goto {
     width: 55px;
     font-size: 1em;
     border: none;
+    margin: 0;
+}
+ul.k1-ul-object.pagination.k1lib-crudlexs {
+    margin: 0 !important;
 }
 
 div.k1-crudlexs-table-pagination li.k1-li-object {
     display: inline-block !important;
+}
+/**
+LIST TABLE STYLES
+*/
+div.k1-crudlexs-table table tbody tr td {
+    vertical-align: top;
+}
+/**
+TABLE MANAGER
+*/
+
+.k1-field-of-title {
+    font-size: 1em !important;
 }

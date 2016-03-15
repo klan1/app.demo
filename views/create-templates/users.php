@@ -3,7 +3,7 @@
 namespace k1app;
 
 use \k1lib\templates\temply as temply;
-use k1lib\session\session_plain as session;
+use k1lib\session\session_db as session;
 ?>
 <div class="row">
     <?php if (session::check_user_level(['god', 'admin'])) : ?>
