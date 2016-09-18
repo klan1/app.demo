@@ -5,7 +5,7 @@ namespace k1app;
 use k1lib\templates\temply as temply;
 
 /**
- * This file es called every time in the app
+ * This file is called every time in the app
  */
 temply::register_place("header");
 temply::register_place("html-title");
