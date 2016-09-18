@@ -1,13 +1,17 @@
 {
     "name": "klan1/k1-app-skeleton",
-    "description": "Description of project k1.app-skeleton.",
+    "description": "App skeleton using k1.lib.",
+    "license": "Apache-2.0",
+    "type": "library",
+    "homepage": "https://github.com/klan1/k1.lib",
     "authors": [
         {
-            "name": "Alejandro Trujillo J.",
-            "email": "contacto@klan1.com"
+            "name": "Klan1 Network",
+            "homepage": "https://klan1.com/ref=k1.lib"
         }
     ],
     "require": {
+        "php": "^5.6 | ^7.0",
         "klan1/k1.lib": "0.8.x-dev",
         "zurb/foundation": "6.2.1"
     }
