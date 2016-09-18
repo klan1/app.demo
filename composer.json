@@ -1,0 +1,14 @@
+{
+    "name": "klan1/k1-app-skeleton",
+    "description": "Description of project k1.app-skeleton.",
+    "authors": [
+        {
+            "name": "Alejandro Trujillo J.",
+            "email": "contacto@klan1.com"
+        }
+    ],
+    "require": {
+        "klan1/k1.lib": "0.8.x-dev",
+        "zurb/foundation": "6.2.1"
+    }
+}

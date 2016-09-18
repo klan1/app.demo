@@ -1,3 +1,5 @@
+$(document).foundation();
+
 $(function () {
     $(".datepicker").datepicker({
         changeMonth: true,

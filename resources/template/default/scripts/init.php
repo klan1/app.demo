@@ -19,14 +19,14 @@ $main_css = COMPOSER_FOUNDATION_CSS_URL;
 
 temply::register_header($main_css);
 temply::register_header(BOWER_PACKAGES_URL . "foundation-icon-fonts/foundation-icons.css");
-//temply::register_header(BOWER_PACKAGES_URL . "jqueryui/themes/base/all.css");
+temply::register_header(BOWER_PACKAGES_URL . "jqueryui/themes/base/all.css");
 //temply::register_header(APP_RESOURCES_URL . "/html5/css/app.css");
 temply::register_header(APP_RESOURCES_URL . "html5/css/k1-app.css");
+temply::register_header(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js");
 
 temply::register_footer(BOWER_PACKAGES_URL . "jquery/dist/jquery.min.js");
-//temply::register_footer(BOWER_PACKAGES_URL . "jqueryui/jquery-ui.min.js");
+temply::register_footer(BOWER_PACKAGES_URL . "jqueryui/jquery-ui.min.js");
 temply::register_footer(BOWER_PACKAGES_URL . "what-input/what-input.min.js");
-temply::register_footer(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js");
 temply::register_footer(COMPOSER_FOUNDATION_JS_URL);
 //temply::register_footer(APP_RESOURCES_URL . "/html5/js/app.js");
 temply::register_footer(APP_RESOURCES_URL . "html5/js/k1app.js");

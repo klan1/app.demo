@@ -1,1 +1,4 @@
 /config-db-remote.php
+/nbproject/private/
+/vendor/
+/bower_components/

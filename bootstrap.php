@@ -23,14 +23,8 @@ const IN_K1APP = TRUE;
 /*
  * INCLUDING ALL THE NECESSARY FILES
  */
-define("K1LIB_LANG", "en");
-if (file_exists('../k1.lib/lastest/init.php')) {
-    include_once '../k1.lib/lastest/init.php';
-} else {
-    require_once 'init.php';
-}
-require_once 'path-settings.php';
-require_once 'config.php';
+require_once 'settings/path-settings.php';
+require_once 'settings/config.php';
 
 /*
  * DB CONNECTION

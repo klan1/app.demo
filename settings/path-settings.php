@@ -27,6 +27,15 @@ define("APP_UPLOADS_PATH", APP_RESOURCES_PATH . "uploads/");
 define("APP_SHELL_SCRIPTS_PATH", APP_RESOURCES_PATH . "/shell-scripts/");
 define("APP_TEMPLATE_PATH", APP_RESOURCES_PATH . '/template/default/');
 
+/**
+ * COMPOSER
+ */
+define("COMPOSER_PACKAGES_PATH", APP_ROOT . "vendor/");
+/**
+ * BOWER
+ */
+define("BOWER_PACKAGES_PATH", APP_ROOT . "bower_components/");
+
 // INCLUDES PATH ADDITION
 set_include_path(APP_RESOURCES_PATH . "/includes" . PATH_SEPARATOR . get_include_path());
 
@@ -53,4 +62,19 @@ if (\k1app\APP_MODE != 'shell') {
     define("APP_UPLOADS_URL", APP_RESOURCES_URL . "uploads/");
     define("APP_TEMPLATE_URL", APP_RESOURCES_URL . "template/default/");
     define("APP_TEMPLATE_IMAGES_URL", APP_RESOURCES_URL . "images/");
+
+    /**
+     * COMPOSER
+     */
+    define("COMPOSER_PACKAGES_URL", APP_URL . "vendor/");
+    /**
+     * COMPOSER - FOUNDATION 6.X
+     */
+    define("COMPOSER_FOUNDATION_URL", COMPOSER_PACKAGES_URL . "zurb/foundation/");
+    define("COMPOSER_FOUNDATION_CSS_URL", COMPOSER_FOUNDATION_URL . "dist/foundation.min.css");
+    define("COMPOSER_FOUNDATION_JS_URL", COMPOSER_FOUNDATION_URL . "dist/foundation.min.js");
+    /**
+     * BOWER
+     */
+    define("BOWER_PACKAGES_URL", APP_URL . "bower_components/");
 }

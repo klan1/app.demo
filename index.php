@@ -6,6 +6,10 @@
 
 namespace k1app;
 
-const APP_MODE = "web";
+// Composer lines
+define("K1LIB_LANG", "es");
+require __DIR__ . '/vendor/autoload.php';
 
+// k1.app start
+const APP_MODE = "web";
 include_once "./bootstrap.php";

@@ -1,0 +1,23 @@
+{
+  "name": "k1.app-skeleton",
+  "version": "1.0.0",
+  "description": "K1.lib app skeleton ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klan1/k1.app-skeleton.git"
+  },
+  "keywords": [
+    "k1.lib",
+    "klan1"
+  ],
+  "author": "Alejandro Trujillo J.",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/klan1/k1.app-skeleton/issues"
+  },
+  "homepage": "https://github.com/klan1/k1.app-skeleton#readme"
+}

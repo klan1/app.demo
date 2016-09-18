@@ -15,12 +15,11 @@ $span->set_value("Auto app of table: ");
 temply::set_place_value("html-title", " | {$span->get_value()} {$db_table_to_use}");
 temply::set_place_value("controller-name", $span->generate_tag());
 
-
-
 /**
  * ONE LINE config: less codign, more party time!
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $db_table_to_use);
+$controller_object->set_config_from_class("\k1app\crudlexs_config");
 $controller_object->set_security_no_rules_enable(TRUE);
 
 /**
