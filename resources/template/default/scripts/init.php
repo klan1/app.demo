@@ -15,21 +15,21 @@ temply::register_place("footer");
 temply::register_place("foote_app_infor");
 temply::register_place("html-footer");
 
-$main_css = APP_RESOURCES_URL . "/html5/css/foundation.css";
+$main_css = COMPOSER_FOUNDATION_CSS_URL;
 
 temply::register_header($main_css);
-temply::register_header(APP_RESOURCES_URL . "/html5/css/foundation-icons/foundation-icons.css");
-temply::register_header(APP_RESOURCES_URL . "/html5/jquery-ui-1.11.4.custom/jquery-ui.min.css");
-temply::register_header(APP_RESOURCES_URL . "/html5/css/app.css");
-temply::register_header(APP_RESOURCES_URL . "/html5/css/k1-app.css");
-temply::register_header(APP_RESOURCES_URL . "/html5/js/tinymce/tinymce.min.js");
+temply::register_header(BOWER_PACKAGES_URL . "foundation-icon-fonts/foundation-icons.css");
+//temply::register_header(BOWER_PACKAGES_URL . "jqueryui/themes/base/all.css");
+//temply::register_header(APP_RESOURCES_URL . "/html5/css/app.css");
+temply::register_header(APP_RESOURCES_URL . "html5/css/k1-app.css");
 
-temply::register_footer(APP_RESOURCES_URL . "/html5/js/vendor/jquery.min.js");
-temply::register_footer(APP_RESOURCES_URL . "/html5/jquery-ui-1.11.4.custom/jquery-ui.min.js");
-temply::register_footer(APP_RESOURCES_URL . "/html5/js/vendor/what-input.min.js");
-temply::register_footer(APP_RESOURCES_URL . "/html5/js/foundation.min.js");
-temply::register_footer(APP_RESOURCES_URL . "/html5/js/app.js");
-temply::register_footer(APP_RESOURCES_URL . "/html5/js/k1app.js");
+temply::register_footer(BOWER_PACKAGES_URL . "jquery/dist/jquery.min.js");
+//temply::register_footer(BOWER_PACKAGES_URL . "jqueryui/jquery-ui.min.js");
+temply::register_footer(BOWER_PACKAGES_URL . "what-input/what-input.min.js");
+temply::register_footer(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js");
+temply::register_footer(COMPOSER_FOUNDATION_JS_URL);
+//temply::register_footer(APP_RESOURCES_URL . "/html5/js/app.js");
+temply::register_footer(APP_RESOURCES_URL . "html5/js/k1app.js");
 
 temply::set_place_value("html-title", APP_TITLE);
 
