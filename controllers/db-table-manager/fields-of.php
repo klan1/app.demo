@@ -3,8 +3,13 @@
 namespace k1app;
 
 use \k1lib\templates\temply as temply;
+use \k1lib\html\DOM as DOM;
+
+$body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
@@ -158,7 +163,6 @@ if ($db_table->get_state()) {
     $form->append_child($ul);
     $form->append_child($div_result);
 
-    $div_container->generate_tag(TRUE);
+    $body->content()->append_child($div_container);
 }
 
-include temply::load_template("footer", APP_TEMPLATE_PATH);

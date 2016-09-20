@@ -4,8 +4,13 @@ namespace k1app;
 
 use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
+use \k1lib\html\DOM as DOM;
+
+$body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
@@ -97,6 +102,4 @@ $controller_object->exec_board(FALSE);
 
 $controller_object->finish_board();
 
-$div->generate_tag(TRUE);
-
-include temply::load_template("footer", APP_TEMPLATE_PATH);
+$body->content()->append_child($div);

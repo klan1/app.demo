@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "be42b5be381354dc0f5a865aed9160a9",
-    "content-hash": "0dae648c7cfea30c08d67259b7339389",
+    "hash": "ec70577897952dd0b02c4daf308a248b",
+    "content-hash": "67c275aed362234aa3dbf8b7a15e8274",
     "packages": [
         {
             "name": "klan1/k1.lib",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib.git",
-                "reference": "ce5f2d50cbad0a9f5ac83ba6a8a4c7d29ac0c16f"
+                "reference": "1a5022eaef4d915b4e99d8623ffdc5b880990132"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/ce5f2d50cbad0a9f5ac83ba6a8a4c7d29ac0c16f",
-                "reference": "ce5f2d50cbad0a9f5ac83ba6a8a4c7d29ac0c16f",
+                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/1a5022eaef4d915b4e99d8623ffdc5b880990132",
+                "reference": "1a5022eaef4d915b4e99d8623ffdc5b880990132",
                 "shasum": ""
             },
             "require": {
@@ -42,7 +42,7 @@
             ],
             "description": "Classes and functions for comercial software development",
             "homepage": "https://github.com/klan1/k1.lib",
-            "time": "2016-09-17 19:40:20"
+            "time": "2016-09-20 12:43:56"
         },
         {
             "name": "zurb/foundation",
@@ -92,6 +92,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^5.6 | ^7.0"
+    },
     "platform-dev": []
 }

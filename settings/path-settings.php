@@ -25,7 +25,7 @@ define("APP_VIEWS_CRUD_PATH", APP_VIEWS_PATH . '/k1lib.crud/');
 define("APP_RESOURCES_PATH", APP_ROOT . "/resources/");
 define("APP_UPLOADS_PATH", APP_RESOURCES_PATH . "uploads/");
 define("APP_SHELL_SCRIPTS_PATH", APP_RESOURCES_PATH . "/shell-scripts/");
-define("APP_TEMPLATE_PATH", APP_RESOURCES_PATH . '/template/default/');
+define("APP_TEMPLATE_PATH", APP_RESOURCES_PATH . '/template/k1phphtml/');
 
 /**
  * COMPOSER

@@ -4,8 +4,14 @@ namespace k1app;
 
 use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
+use \k1lib\html\DOM as DOM;
+
+$body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
+
 $span = new \k1lib\html\span_tag("subheader");
 $span->set_value("Tables of database ");
 temply::set_place_value("controller-name", $span->generate_tag() . \k1lib\sql\get_db_database_name($db));
@@ -29,6 +35,4 @@ foreach ($db_tables as $row_field => $row_value) {
     $ul->append_li()->set_value($table_to_link . " : " . $a_crudlexs->generate_tag() . " - " . $a_crudlexs_no_rules->generate_tag());
 }
 
-$ul->generate_tag(TRUE);
-
-include temply::load_template("footer", APP_TEMPLATE_PATH);
+$body->content()->append_child($ul);

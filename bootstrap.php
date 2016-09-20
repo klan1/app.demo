@@ -74,17 +74,20 @@ if (isset($_GET['error']) || !empty($_GET['error'])) {
  */
 switch (\k1app\APP_MODE) {
     case 'web':
+        // Start the HTML DOM object
+        \k1lib\html\DOM::start(K1LIB_LANG);
+
 //        d(\k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH));
         require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
         require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
-        require temply::load_template("end", APP_TEMPLATE_PATH . '/scripts');
+//        require temply::load_template("end", APP_TEMPLATE_PATH . '/scripts');
 //        \k1lib\output_buffer\end_app(TRUE);
         $app_run_time = round((microtime(TRUE) - $app_init_time), 5);
         if (temply::is_place_registered("footer_app_info")) {
             temply::set_place_value("footer_app_info", "Runtime: {$app_run_time} Seg - K1.lib V" . \k1lib\VERSION);
         }
 
-
+        \k1lib\html\DOM::html()->generate_tag(TRUE);
         break;
     case 'ajax':
         // do nothing, yet
