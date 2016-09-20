@@ -15,10 +15,10 @@ include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
-$span = new \k1lib\html\span_tag("subheader");
+$span = new \k1lib\html\span("subheader");
 $span->set_value("Auto app of table: ");
 temply::set_place_value("html-title", " | {$span->get_value()} {$db_table_to_use}");
-temply::set_place_value("controller-name", $span->generate_tag());
+temply::set_place_value("controller-name", $span->generate());
 
 /**
  * ONE LINE config: less codign, more party time!

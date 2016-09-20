@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ec70577897952dd0b02c4daf308a248b",
-    "content-hash": "67c275aed362234aa3dbf8b7a15e8274",
+    "hash": "25ef1fa7488f5fc3364e7760b6571938",
+    "content-hash": "842f3aa2612d6f0cddd9967e12308d5c",
     "packages": [
         {
             "name": "klan1/k1.lib",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib.git",
-                "reference": "1a5022eaef4d915b4e99d8623ffdc5b880990132"
+                "reference": "909b26171a1071c0728dccc8465b9d0ec98b1ba8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/1a5022eaef4d915b4e99d8623ffdc5b880990132",
-                "reference": "1a5022eaef4d915b4e99d8623ffdc5b880990132",
+                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/909b26171a1071c0728dccc8465b9d0ec98b1ba8",
+                "reference": "909b26171a1071c0728dccc8465b9d0ec98b1ba8",
                 "shasum": ""
             },
             "require": {
@@ -42,7 +42,48 @@
             ],
             "description": "Classes and functions for comercial software development",
             "homepage": "https://github.com/klan1/k1.lib",
-            "time": "2016-09-20 12:43:56"
+            "time": "2016-09-20 13:38:15"
+        },
+        {
+            "name": "klan1/k1.lib-dom",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klan1/k1.lib-dom.git",
+                "reference": "0239875237bc0eb2548f244a0b1358f01be417a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/0239875237bc0eb2548f244a0b1358f01be417a8",
+                "reference": "0239875237bc0eb2548f244a0b1358f01be417a8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 | ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/init.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klan1 Network",
+                    "homepage": "https://klan1.com/ref=k1.lib"
+                },
+                {
+                    "name": "Alejandro Trujillo J.",
+                    "homepage": "https://klan1.com/ref=k1.lib"
+                }
+            ],
+            "description": "DOM Classes from K1.lib.",
+            "homepage": "https://github.com/klan1/k1.lib-dom",
+            "time": "2016-09-20 19:24:17"
         },
         {
             "name": "zurb/foundation",
@@ -88,7 +129,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "klan1/k1.lib": 20
+        "klan1/k1.lib": 20,
+        "klan1/k1.lib-dom": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

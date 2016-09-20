@@ -39,4 +39,4 @@ $buffer_header = ob_get_clean();
 $body->header()->set_value($buffer_header);
 
 $body->content()->append_div()->set_value(temply::set_template_place("controller-msg"));
-$body->content()->append_child(new \k1lib\html\h3_tag(temply::set_template_place("board-name")));
+$body->content()->append_child(new \k1lib\html\h3(temply::set_template_place("board-name")));

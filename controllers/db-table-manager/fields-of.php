@@ -14,14 +14,14 @@ include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
-$span = new \k1lib\html\span_tag("subheader");
+$span = new \k1lib\html\span("subheader");
 $span->set_value("Fields of: ");
 temply::set_place_value("html-title", " | {$span->get_value()} {$db_table_to_use}");
-temply::set_place_value("controller-name", $span->generate_tag() . $db_table_to_use);
+temply::set_place_value("controller-name", $span->generate() . $db_table_to_use);
 
 $db_table = new \k1lib\crudlexs\class_db_table($db, $db_table_to_use);
 
-$div_result = new \k1lib\html\div_tag();
+$div_result = new \k1lib\html\div();
 $div_ok = $div_result->append_div();
 $p_fail = $div_result->append_p();
 $p_unchanged = $div_result->append_p();
@@ -93,20 +93,20 @@ if ($db_table->get_state()) {
         }
     }
 
-    $div_container = new \k1lib\html\div_tag("row");
-    $form = (new \k1lib\html\form_tag());
+    $div_container = new \k1lib\html\div("row");
+    $form = (new \k1lib\html\form());
     $form->append_to($div_container);
 
-    $div_row_buttons = new \k1lib\html\div_tag("row");
+    $div_row_buttons = new \k1lib\html\div("row");
     $div_row_buttons->append_child(\k1lib\html\get_link_button("../../show-tables/", "Back"));
     $div_row_buttons->append_child(\k1lib\html\get_link_button("./", "Cancel"));
     $div_row_buttons->append_child($form->append_submit_button("Save changes", TRUE));
 
     $form->append_child($div_row_buttons);
-    $form->append_child(new \k1lib\html\div_tag("row clearfix"));
-//    $div_row_fieldset = new \k1lib\html\div_tag("row");
+    $form->append_child(new \k1lib\html\div("row clearfix"));
+//    $div_row_fieldset = new \k1lib\html\div("row");
 
-    $ul = new \k1lib\html\ul_tag("accordion");
+    $ul = new \k1lib\html\ul("accordion");
     $ul->set_attrib("data-accordion", TRUE);
     $ul->set_attrib('data-allow-all-closed="true"', TRUE);
 
@@ -129,13 +129,13 @@ if ($db_table->get_state()) {
                 $make_radio = TRUE;
             }
             if ($make_radio) {
-                $input_yes = new \k1lib\html\input_tag("radio", "{$field}[{$option_name}]", "yes");
-                $label_yes = new \k1lib\html\label_tag("yes", "{$field}[{$option_name}]");
-                $input_yes->post_code($label_yes->generate_tag());
+                $input_yes = new \k1lib\html\input("radio", "{$field}[{$option_name}]", "yes");
+                $label_yes = new \k1lib\html\label("yes", "{$field}[{$option_name}]");
+                $input_yes->post_code($label_yes->generate());
 
-                $input_no = new \k1lib\html\input_tag("radio", "{$field}[{$option_name}]", "no");
-                $label_no = new \k1lib\html\label_tag("no", "{$field}[{$option_name}]");
-                $input_no->post_code($label_no->generate_tag());
+                $input_no = new \k1lib\html\input("radio", "{$field}[{$option_name}]", "no");
+                $label_no = new \k1lib\html\label("no", "{$field}[{$option_name}]");
+                $input_no->post_code($label_no->generate());
                 
                 if ($option_value == "yes") {
                     $input_yes->set_attrib("checked", TRUE);
@@ -143,10 +143,10 @@ if ($db_table->get_state()) {
                 if ($option_value == "no") {
                     $input_no->set_attrib("checked", TRUE);
                 }
-                $table_config_to_use[$field][$option_name] = $input_yes->generate_tag() . " " . $input_no->generate_tag();
+                $table_config_to_use[$field][$option_name] = $input_yes->generate() . " " . $input_no->generate();
             } else {
-                $input = new \k1lib\html\input_tag("text", "{$field}[{$option_name}]", $option_value);
-                $table_config_to_use[$field][$option_name] = $input->generate_tag();
+                $input = new \k1lib\html\input("text", "{$field}[{$option_name}]", $option_value);
+                $table_config_to_use[$field][$option_name] = $input->generate();
             }
         }
         if (isset($_POST[$field])) {
@@ -155,8 +155,8 @@ if ($db_table->get_state()) {
 
 
         $li = $ul->append_li("accordion-item")->set_attrib("data-accordion-item", TRUE);
-        $a_title = (new \k1lib\html\a_tag("#", $field))->set_attrib("class", "accordion-title k1-field-of-title")->append_to($li);
-        $div_content = (new \k1lib\html\div_tag($class))->set_attrib("class", "accordion-content")->set_attrib("data-tab-content", TRUE)->append_to($li);
+        $a_title = (new \k1lib\html\a("#", $field))->set_attrib("class", "accordion-title k1-field-of-title")->append_to($li);
+        $div_content = (new \k1lib\html\div($class))->set_attrib("class", "accordion-content")->set_attrib("data-tab-content", TRUE)->append_to($li);
         $div_content->set_value(\k1lib\html\make_row_2columns_layout($table_config_to_use[$field]));
     }
 

@@ -13,13 +13,13 @@ include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 
 $db_table_to_use = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 
-$span = new \k1lib\html\span_tag("subheader");
+$span = new \k1lib\html\span("subheader");
 temply::set_place_value("html-title", " | Load field comments");
 temply::set_place_value("controller-name", " | Load field comments");
 
-$div_container = new \k1lib\html\div_tag("row");
+$div_container = new \k1lib\html\div("row");
 
-$form_create = (new \k1lib\html\form_tag());
+$form_create = (new \k1lib\html\form());
 $form_create->append_to($div_container);
 
 $div_row_buttons = $form_create->append_div("row");
@@ -31,7 +31,7 @@ $form_create->append_div("row clearfix");
 /**
  * @var \k1lib\html\textarea_tag
  */
-$textarea = new \k1lib\html\textarea_tag("load-info");
+$textarea = new \k1lib\html\textarea("load-info");
 $textarea->set_attrib("rows", 10)->append_to($form_create);
 
 
@@ -65,7 +65,7 @@ if (isset($_POST['load-info']) && !empty($_POST['load-info'])) {
 
     $submit_button->set_value("Exectute SQL", FALSE);
 
-    $textarea_result = new \k1lib\html\textarea_tag("result-sql");
+    $textarea_result = new \k1lib\html\textarea("result-sql");
     $textarea_result->set_attrib("rows", 10)->append_to($form_create);
     $textarea_result->set_value($sql_field_update_comments);
 
@@ -79,7 +79,7 @@ if (isset($_POST['load-info']) && !empty($_POST['load-info'])) {
         $result_sql_by_lines = str_replace("\n", "", $result_sql_by_lines);
         $result_sql_by_lines = str_replace("\r", "", $result_sql_by_lines);
 
-        $div_result = new \k1lib\html\div_tag();
+        $div_result = new \k1lib\html\div();
         $div_result->append_to($form_create);
 
         foreach ($result_sql_by_lines as $line => $field_comment_line) {

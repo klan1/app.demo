@@ -87,7 +87,7 @@ switch (\k1app\APP_MODE) {
             temply::set_place_value("footer_app_info", "Runtime: {$app_run_time} Seg - K1.lib V" . \k1lib\VERSION);
         }
 
-        \k1lib\html\DOM::html()->generate_tag(TRUE);
+        \k1lib\html\DOM::html()->generate(TRUE);
         break;
     case 'ajax':
         // do nothing, yet

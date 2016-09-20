@@ -21,17 +21,17 @@ $head->link_css(COMPOSER_FOUNDATION_CSS_URL);
 $head->link_css(BOWER_PACKAGES_URL . "foundation-icon-fonts/foundation-icons.css");
 $head->link_css(BOWER_PACKAGES_URL . "jqueryui/themes/base/all.css");
 $head->link_css(APP_RESOURCES_URL . "html5/css/k1-app.css");
-$head->append_child(new script_tag(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js"));
+$head->append_child(new script(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js"));
 
 /**
  * HTML BODY
  */
-$body->append_child_tail(new script_tag($main_css));
-$body->append_child_tail(new script_tag(BOWER_PACKAGES_URL . "jquery/dist/jquery.min.js"));
-$body->append_child_tail(new script_tag(BOWER_PACKAGES_URL . "jqueryui/jquery-ui.min.js"));
-$body->append_child_tail(new script_tag(BOWER_PACKAGES_URL . "what-input/what-input.min.js"));
-$body->append_child_tail(new script_tag(COMPOSER_FOUNDATION_JS_URL));
-$body->append_child_tail(new script_tag(APP_RESOURCES_URL . "html5/js/k1app.js"));
+$body->append_child_tail(new script($main_css));
+$body->append_child_tail(new script(BOWER_PACKAGES_URL . "jquery/dist/jquery.min.js"));
+$body->append_child_tail(new script(BOWER_PACKAGES_URL . "jqueryui/jquery-ui.min.js"));
+$body->append_child_tail(new script(BOWER_PACKAGES_URL . "what-input/what-input.min.js"));
+$body->append_child_tail(new script(COMPOSER_FOUNDATION_JS_URL));
+$body->append_child_tail(new script(APP_RESOURCES_URL . "html5/js/k1app.js"));
 
 $body->init_sections();
 $body->content()->set_class("k1-main-section");
