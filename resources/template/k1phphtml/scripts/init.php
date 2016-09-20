@@ -4,7 +4,7 @@ namespace k1app;
 
 use k1lib\templates\temply as temply;
 use \k1lib\html\DOM as DOM;
-use \k1lib\html\script_tag as script_tag;
+use \k1lib\html\script as script;
 
 $head = DOM::html()->head();
 $body = DOM::html()->body();

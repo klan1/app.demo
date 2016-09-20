@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "25ef1fa7488f5fc3364e7760b6571938",
-    "content-hash": "842f3aa2612d6f0cddd9967e12308d5c",
+    "hash": "bd9f7b9688fd7126771a8cc59a2d3add",
+    "content-hash": "281051ba5d417dad23538eea08c32617",
     "packages": [
         {
             "name": "klan1/k1.lib",
@@ -13,49 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib.git",
-                "reference": "909b26171a1071c0728dccc8465b9d0ec98b1ba8"
+                "reference": "aa4976d48c35ac7a6a8bf80fdd2fb8cd4d40d8f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/909b26171a1071c0728dccc8465b9d0ec98b1ba8",
-                "reference": "909b26171a1071c0728dccc8465b9d0ec98b1ba8",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 | ^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/init.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Klan1 Network",
-                    "homepage": "https://klan1.com/ref=k1.lib"
-                }
-            ],
-            "description": "Classes and functions for comercial software development",
-            "homepage": "https://github.com/klan1/k1.lib",
-            "time": "2016-09-20 13:38:15"
-        },
-        {
-            "name": "klan1/k1.lib-dom",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/klan1/k1.lib-dom.git",
-                "reference": "0239875237bc0eb2548f244a0b1358f01be417a8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/0239875237bc0eb2548f244a0b1358f01be417a8",
-                "reference": "0239875237bc0eb2548f244a0b1358f01be417a8",
+                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/aa4976d48c35ac7a6a8bf80fdd2fb8cd4d40d8f5",
+                "reference": "aa4976d48c35ac7a6a8bf80fdd2fb8cd4d40d8f5",
                 "shasum": ""
             },
             "require": {
@@ -81,9 +44,50 @@
                     "homepage": "https://klan1.com/ref=k1.lib"
                 }
             ],
+            "description": "Classes and functions for comercial software development",
+            "homepage": "https://github.com/klan1/k1.lib",
+            "time": "2016-09-20 19:52:19"
+        },
+        {
+            "name": "klan1/k1.lib-dom",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klan1/k1.lib-dom.git",
+                "reference": "8056231c01379e37b6158e72fd9fed097668719c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/8056231c01379e37b6158e72fd9fed097668719c",
+                "reference": "8056231c01379e37b6158e72fd9fed097668719c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 | ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/loader.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klan1 Network",
+                    "homepage": "https://klan1.com/ref=k1.lib"
+                },
+                {
+                    "name": "Alejandro Trujillo J.",
+                    "homepage": "https://klan1.com/ref=k1.lib"
+                }
+            ],
             "description": "DOM Classes from K1.lib.",
             "homepage": "https://github.com/klan1/k1.lib-dom",
-            "time": "2016-09-20 19:24:17"
+            "time": "2016-09-20 19:52:46"
         },
         {
             "name": "zurb/foundation",

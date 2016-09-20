@@ -29,7 +29,7 @@ $submit_button->append_to($div_row_buttons);
 
 $form_create->append_div("row clearfix");
 /**
- * @var \k1lib\html\textarea_tag
+ * @var \k1lib\html\textarea
  */
 $textarea = new \k1lib\html\textarea("load-info");
 $textarea->set_attrib("rows", 10)->append_to($form_create);
