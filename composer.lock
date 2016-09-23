@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib.git",
-                "reference": "aa4976d48c35ac7a6a8bf80fdd2fb8cd4d40d8f5"
+                "reference": "9ce7932ee36d9df20c95c38a5474c13197ff638d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/aa4976d48c35ac7a6a8bf80fdd2fb8cd4d40d8f5",
-                "reference": "aa4976d48c35ac7a6a8bf80fdd2fb8cd4d40d8f5",
+                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/9ce7932ee36d9df20c95c38a5474c13197ff638d",
+                "reference": "9ce7932ee36d9df20c95c38a5474c13197ff638d",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
             ],
             "description": "Classes and functions for comercial software development",
             "homepage": "https://github.com/klan1/k1.lib",
-            "time": "2016-09-20 19:52:19"
+            "time": "2016-09-20 21:26:06"
         },
         {
             "name": "klan1/k1.lib-dom",
@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib-dom.git",
-                "reference": "8056231c01379e37b6158e72fd9fed097668719c"
+                "reference": "08a859c6b354de7974f73ffee00b85fabb5ef3f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/8056231c01379e37b6158e72fd9fed097668719c",
-                "reference": "8056231c01379e37b6158e72fd9fed097668719c",
+                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/08a859c6b354de7974f73ffee00b85fabb5ef3f6",
+                "reference": "08a859c6b354de7974f73ffee00b85fabb5ef3f6",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
             ],
             "description": "DOM Classes from K1.lib.",
             "homepage": "https://github.com/klan1/k1.lib-dom",
-            "time": "2016-09-20 19:52:46"
+            "time": "2016-09-20 19:53:28"
         },
         {
             "name": "zurb/foundation",
