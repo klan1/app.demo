@@ -49,7 +49,6 @@ if ($controller_object->on_board_read()) {
         $controller_object->board_read_object->set_apply_label_filter(FALSE);
         $controller_object->board_read_object->set_apply_field_label_filter(FALSE);
         $controller_object->board_read_object->set_use_label_as_title_enabled(FALSE);
-        
     } else {
         $controller_object->board_read_object->read_object->set_use_read_custom_template(TRUE);
     }
@@ -84,7 +83,6 @@ if ($controller_object->on_board_list()) {
     $back_link = \k1lib\html\get_link_button(urldecode("../../../"), "Back");
     $back_link->append_to($controller_object->board_div_content);
 }
-
 
 $controller_object->start_board();
 
