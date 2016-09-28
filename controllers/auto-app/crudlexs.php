@@ -38,8 +38,6 @@ if (isset($controller_object->board_create_object)) {
         $controller_object->board_create_object->set_show_rule_to_apply(NULL);
         $controller_object->board_create_object->set_apply_label_filter(FALSE);
         $controller_object->board_create_object->set_apply_field_label_filter(FALSE);
-    } else {
-        $controller_object->board_create_object->create_object->set_use_create_custom_template(TRUE);
     }
 }
 // READ
@@ -49,8 +47,6 @@ if ($controller_object->on_board_read()) {
         $controller_object->board_read_object->set_apply_label_filter(FALSE);
         $controller_object->board_read_object->set_apply_field_label_filter(FALSE);
         $controller_object->board_read_object->set_use_label_as_title_enabled(FALSE);
-    } else {
-        $controller_object->board_read_object->read_object->set_use_read_custom_template(TRUE);
     }
 }
 // UPDATE
@@ -59,8 +55,6 @@ if (isset($controller_object->board_update_object)) {
         $controller_object->board_update_object->set_show_rule_to_apply(NULL);
         $controller_object->board_update_object->set_apply_label_filter(FALSE);
         $controller_object->board_update_object->set_apply_field_label_filter(FALSE);
-    } else {
-        $controller_object->board_update_object->update_object->set_use_create_custom_template(TRUE);
     }
 }
 // DELETE

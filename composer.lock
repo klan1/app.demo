@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib.git",
-                "reference": "4e2cc1fe19213f5316512bd7f817e8a71c80a8a5"
+                "reference": "f830df253e220c8a220987a1615413bcf35fb985"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/4e2cc1fe19213f5316512bd7f817e8a71c80a8a5",
-                "reference": "4e2cc1fe19213f5316512bd7f817e8a71c80a8a5",
+                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/f830df253e220c8a220987a1615413bcf35fb985",
+                "reference": "f830df253e220c8a220987a1615413bcf35fb985",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
             ],
             "description": "Classes and functions for comercial software development",
             "homepage": "https://github.com/klan1/k1.lib",
-            "time": "2016-09-28 12:09:05"
+            "time": "2016-09-28 13:06:51"
         },
         {
             "name": "klan1/k1.lib-dom",
