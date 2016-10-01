@@ -9,12 +9,13 @@ use \k1lib\html\DOM as DOM;
 $body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("html-parts/app-header", APP_TEMPLATE_PATH);
+include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 
-$span = new \k1lib\html\span("subheader");
-$span->set_value("Tables of database ");
-temply::set_place_value("controller-name", $span->generate() . \k1lib\sql\get_db_database_name($db));
+$span = (new \k1lib\html\span("subheader"))->set_value("Tables of DB: ");
+$top_bar->set_title(3, $span . \k1lib\sql\get_db_database_name($db));
+
+DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} " . \k1lib\sql\get_db_database_name($db));
 
 
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);

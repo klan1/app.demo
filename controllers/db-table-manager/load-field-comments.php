@@ -8,14 +8,14 @@ use \k1lib\html\DOM as DOM;
 $body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("html-parts/app-header", APP_TEMPLATE_PATH);
+include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 
-$db_table_to_use = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
+$span = (new \k1lib\html\span("subheader"))->set_value("Load metada for: ");
+$top_bar->set_title(3, $span . \k1lib\sql\get_db_database_name($db));
 
-$span = new \k1lib\html\span("subheader");
-temply::set_place_value("html-title", " | Load field comments");
-temply::set_place_value("controller-name", " | Load field comments");
+DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} " . \k1lib\sql\get_db_database_name($db));
+
 
 $div_container = new \k1lib\html\div("row");
 

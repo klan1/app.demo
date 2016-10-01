@@ -76,6 +76,7 @@ switch (\k1app\APP_MODE) {
     case 'web':
         // Start the HTML DOM object
         \k1lib\html\DOM::start(K1LIB_LANG);
+        \k1lib\html\html::set_use_log(TRUE);
 
 //        d(\k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH));
         require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
@@ -103,4 +104,6 @@ switch (\k1app\APP_MODE) {
 if (temply::is_enabled()) {
     temply::end(\k1app\APP_MODE);
 }
-// APP END, sweet... it isn't ?
+echo "<!--\n\nHTML LOG\n\n";
+echo \k1lib\html\tag_log::get_log();
+echo "->";

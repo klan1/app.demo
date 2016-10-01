@@ -12,8 +12,18 @@ namespace k1app;
 
 use k1lib\templates\temply as temply;
 use k1lib\urlrewrite\url as url;
+use \k1lib\html\DOM as DOM;
+
+$body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
+include temply::load_template("app-header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
+
+$span = (new \k1lib\html\span("subheader"))->set_value("Select the Key ");
+$top_bar->set_title(3, $span);
+
+DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} ");
 
 
 $static_vars_from_get = \k1lib\forms\check_all_incomming_vars($_GET);
@@ -49,7 +59,7 @@ if ($controller_object->get_state()) {
 
     $controller_object->set_board_list_name("Select on a row link to use it");
 
-    $controller_object->init_board();
+    $div = $controller_object->init_board();
 
     if ($controller_object->on_board_list()) {
         $controller_object->board_list_object->set_back_enable(FALSE);
@@ -74,7 +84,10 @@ if ($controller_object->get_state()) {
         }
     }
 
-    $controller_object->exec_board(TRUE);
+    $controller_object->exec_board(FALSE);
+
+    $controller_object->finish_board();
 }
 
-include temply::load_template("footer", APP_TEMPLATE_PATH);
+
+$body->content()->append_child($div);

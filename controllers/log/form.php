@@ -2,9 +2,15 @@
 
 namespace k1app;
 
-\k1lib\common\check_on_k1lib();
+use \k1lib\templates\temply as temply;
+use \k1lib\urlrewrite\url as url;
+use \k1lib\html\DOM as DOM;
 
-require \k1lib\templates\temply::load_template("header", APP_TEMPLATE_PATH);
+$body = DOM::html()->body();
+
+include temply::load_template("header", APP_TEMPLATE_PATH);
+include temply::load_template("app-header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 
 // Form behaivor values
 $form_magic_value = \k1lib\common\set_magic_value("login_form");

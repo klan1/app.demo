@@ -8,16 +8,17 @@ use \k1lib\html\DOM as DOM;
 $body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("html-parts/app-header", APP_TEMPLATE_PATH);
+include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
-$span = new \k1lib\html\span("subheader");
-$span->set_value("Fields of: ");
-temply::set_place_value("html-title", " | {$span->get_value()} {$db_table_to_use}");
-temply::set_place_value("controller-name", $span->generate() . $db_table_to_use);
+$span = (new \k1lib\html\span("subheader"))->set_value("Field of: ");
+$top_bar->set_title(3, $span . $db_table_to_use);
+
+DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
+
 
 $db_table = new \k1lib\crudlexs\class_db_table($db, $db_table_to_use);
 

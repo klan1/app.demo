@@ -9,12 +9,13 @@ use \k1lib\html\DOM as DOM;
 $body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("html-parts/app-header", APP_TEMPLATE_PATH);
+include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
 
-$span = new \k1lib\html\span("subheader");
-$span->set_value("Tables of database ");
-temply::set_place_value("controller-name", $span->generate() . \k1lib\sql\get_db_database_name($db));
+DOM::html()->head()->set_title(APP_TITLE . " | Auto APP");
+
+$span = (new \k1lib\html\span("subheader"))->set_value("Tables of DB ");
+$top_bar->set_title(3, $span . \k1lib\sql\get_db_database_name($db));
 
 
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
@@ -32,7 +33,7 @@ foreach ($db_tables as $row_field => $row_value) {
 
     $a_crudlexs = new \k1lib\html\a(url::do_url("../crudlexs/{$table_alias}/", [], FALSE), "with rules");
     $a_crudlexs_no_rules = new \k1lib\html\a(url::do_url("../crudlexs/{$table_alias}/", ['no-rules' => 1]), "raw table");
-    $ul->append_li()->set_value($table_to_link . " : " . $a_crudlexs->generate() . " - " . $a_crudlexs_no_rules->generate());
+    $ul->append_li()->set_value($table_to_link . " : " . $a_crudlexs . " - " . $a_crudlexs_no_rules);
 }
 
 $body->content()->append_child($ul);

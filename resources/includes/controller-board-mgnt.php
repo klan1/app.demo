@@ -23,9 +23,11 @@ if ($controller_board_name !== FALSE) {
 }
 include $file_to_include;
 
-if (\k1lib\templates\temply::is_place_registered("php-file-to-show")) {
-        \k1lib\templates\temply::set_place_value("php-file-to-show", str_replace(APP_CONTROLLERS_PATH, "", $file_to_include) . "&auth=" . md5($file_to_include . \k1lib\K1MAGIC::get_value()));
+$php_viewer = DOM::html()->get_element_by_id('php-viewer-button');
+if ($php_viewer) {
+    $php_viewer->set_attrib('href', APP_URL . "php-file-viewer/?file=" . str_replace(APP_CONTROLLERS_PATH, "", $file_to_include) . "&auth=" . md5($file_to_include . \k1lib\K1MAGIC::get_value()));
 }
+
 unset($this_url_level_value);
 unset($next_url_level);
 unset($actual_url);

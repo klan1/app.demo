@@ -3,6 +3,7 @@
 namespace k1app;
 
 use k1lib\urlrewrite\url as url;
+use \k1lib\html\DOM as DOM;
 
 // This will work because the URL internal index is from 0
 $next_url_level = url::get_url_level_count();
@@ -13,9 +14,12 @@ $next_directory_name = url::set_url_rewrite_var($next_url_level, "next_directory
 
 $file_to_include = \k1lib\controllers\load_controller($next_directory_name, \k1app\APP_CONTROLLERS_PATH . $actual_url);
 include $file_to_include;
-if (\k1lib\templates\temply::is_place_registered("php-file-to-show")) {
-    \k1lib\templates\temply::set_place_value("php-file-to-show", str_replace(APP_CONTROLLERS_PATH, "", $file_to_include) . "&auth=" . md5($file_to_include . \k1lib\K1MAGIC::get_value()));
+
+$php_viewer = DOM::html()->get_element_by_id('php-viewer-button');
+if ($php_viewer) {
+    $php_viewer->set_attrib('href', APP_URL . "php-file-viewer/?file=" . str_replace(APP_CONTROLLERS_PATH, "", $file_to_include) . "&auth=" . md5($file_to_include . \k1lib\K1MAGIC::get_value()));
 }
+
 unset($next_url_level);
 unset($actual_url);
 unset($next_directory_name);
