@@ -36,7 +36,6 @@ if (k1lib_session::is_logged()) {
         $li->append_a("#", "App preferences");
 
         $sub_menu = $top_bar->add_sub_menu($li);
-        $top_bar->add_menu_item(APP_URL . "auto-app/show-tables/", "DB tables", $sub_menu);
         $top_bar->add_menu_item(APP_URL . "db-table-manager/show-tables/", "Manage tables", $sub_menu);
         $top_bar->add_menu_item(APP_URL . "db-table-manager/export-field-comments/", "Export field comments", $sub_menu)->set_attrib("target", "_blank");
         $top_bar->add_menu_item(APP_URL . "db-table-manager/load-field-comments/", "Load field comments", $sub_menu);
