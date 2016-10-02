@@ -37,6 +37,4 @@ switch ($app_error) {
 }
 
 
-require \k1lib\templates\temply::load_view("log/form", APP_VIEWS_PATH);
-
-require \k1lib\templates\temply::load_template("footer", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/login", APP_TEMPLATE_PATH);
