@@ -12,13 +12,26 @@ namespace k1app;
 
 use k1lib\templates\temply as temply;
 use k1lib\urlrewrite\url as url;
+use \k1lib\html\DOM as DOM;
 use k1lib\session\session_plain as session_plain;
 
 if (!\k1lib\session\session_plain::is_logged()) {
     trigger_error("You are not loged yet.", E_USER_ERROR);
 }
 
+$body = DOM::html()->body();
+
 include temply::load_template("header", APP_TEMPLATE_PATH);
+include temply::load_template("app-header", APP_TEMPLATE_PATH);
+include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
+
+$span = (new \k1lib\html\span("subheader"))->set_value("Select the Key ");
+$top_bar->set_title(3, $span);
+
+DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} ");
+
+
+
 
 
 $static_vars_from_get = \k1lib\forms\check_all_incomming_vars($_GET);
@@ -71,7 +84,7 @@ switch ($password_utility) {
             }
         }
 
-        include temply::load_template("password-change", APP_TEMPLATE_PATH);
+        include temply::load_template("html-parts/password-change", APP_TEMPLATE_PATH);
         break;
     case 'forgot':
 

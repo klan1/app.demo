@@ -14,7 +14,6 @@ ob_start();
 <!-- FOOTER -->
 <div class="clearfix"></div>
 <?php if (!(isset($_GET['no-footer']) && ($_GET['no-footer'] == "1"))) : ?>
-
     <div class="callout secondary medium" id="k1app-footer">
         <h6>2013-2016, Developed by <a href="http://www.klan1.com?ref=k1.app">Klan1 Network</a> | 
             <span id="app-footer">
@@ -80,7 +79,6 @@ ob_start();
         </h6>
     </div>
 <?php endif // NO FOOTER  ?>
-
 <!-- /footer -->
 <?php echo \k1lib\templates\temply::set_template_place("html-footer") ?>
 <?php echo \k1lib\templates\temply::set_template_place("footer") ?>
