@@ -13,7 +13,6 @@ $body = DOM::html()->body();
 $body_header = $body->header();
 
 $top_bar = new \k1lib\html\foundation\top_bar($body_header);
-$top_bar->append_to($body_header);
 
 $top_bar->set_title(1, APP_TITLE);
 $top_bar->set_title(2, " :: ");
@@ -37,7 +36,8 @@ if (k1lib_session::is_logged()) {
 
         $sub_menu = $top_bar->add_sub_menu($li);
         $top_bar->add_menu_item(APP_URL . "db-table-manager/show-tables/", "Manage tables", $sub_menu);
-        $top_bar->add_menu_item(APP_URL . "db-table-manager/export-field-comments/", "Export field comments", $sub_menu)->set_attrib("target", "_blank");
+        $li = $top_bar->add_menu_item(APP_URL . "db-table-manager/export-field-comments/", "Export field comments", $sub_menu);
+        $li->get_child(0)->set_attrib("target", "_blank");
         $top_bar->add_menu_item(APP_URL . "db-table-manager/load-field-comments/", "Load field comments", $sub_menu);
     }
 

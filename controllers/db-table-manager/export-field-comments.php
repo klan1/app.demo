@@ -64,7 +64,4 @@ foreach ($db_tables as $row_field => $row_value) {
         }
     }
 }
-
-
-
-
+exit;

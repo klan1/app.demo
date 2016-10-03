@@ -84,7 +84,7 @@ if ($controller_object->get_state()) {
         }
     }
 
-    $controller_object->exec_board(FALSE);
+    $controller_object->exec_board();
 
     $controller_object->finish_board();
 }

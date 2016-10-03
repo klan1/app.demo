@@ -92,7 +92,7 @@ if ($controller_object->on_board_list()) {
     }
 }
 
-$controller_object->exec_board(FALSE);
+$controller_object->exec_board();
 
 $controller_object->finish_board();
 

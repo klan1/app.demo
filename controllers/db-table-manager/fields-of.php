@@ -137,7 +137,7 @@ if ($db_table->get_state()) {
                 $input_no = new \k1lib\html\input("radio", "{$field}[{$option_name}]", "no");
                 $label_no = new \k1lib\html\label("no", "{$field}[{$option_name}]");
                 $input_no->post_code($label_no->generate());
-                
+
                 if ($option_value == "yes") {
                     $input_yes->set_attrib("checked", TRUE);
                 }
@@ -155,7 +155,7 @@ if ($db_table->get_state()) {
         }
 
 
-        $li = $ul->append_li("accordion-item")->set_attrib("data-accordion-item", TRUE);
+        $li = $ul->append_li(null, "accordion-item")->set_attrib("data-accordion-item", TRUE);
         $a_title = (new \k1lib\html\a("#", $field))->set_attrib("class", "accordion-title k1-field-of-title")->append_to($li);
         $div_content = (new \k1lib\html\div($class))->set_attrib("class", "accordion-content")->set_attrib("data-tab-content", TRUE)->append_to($li);
         $div_content->set_value(\k1lib\html\make_row_2columns_layout($table_config_to_use[$field]));

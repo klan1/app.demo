@@ -48,7 +48,7 @@ if (\k1lib\db\handler::is_enabled()) {
 /**
  * @var \k1lib\session\session_db
  */
-$app_session = new \k1lib\session\session_db($db);
+$app_session = new session_db($db);
 $app_session->start_session();
 $app_session->load_logged_session_db();
 
@@ -78,17 +78,15 @@ switch (\k1app\APP_MODE) {
         \k1lib\html\DOM::start(K1LIB_LANG);
         \k1lib\html\html::set_use_log(TRUE);
 
-//        d(\k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH));
         require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
         require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
-//        require temply::load_template("end", APP_TEMPLATE_PATH . '/scripts');
-//        \k1lib\output_buffer\end_app(TRUE);
+
         $app_run_time = round((microtime(TRUE) - $app_init_time), 5);
         if (temply::is_place_registered("footer_app_info")) {
             temply::set_place_value("footer_app_info", "Runtime: {$app_run_time} Seg - K1.lib V" . \k1lib\VERSION);
         }
 
-        \k1lib\html\DOM::html()->generate(TRUE);
+        echo \k1lib\html\DOM::html()->generate();
         break;
     case 'ajax':
         // do nothing, yet
