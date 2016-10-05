@@ -10,7 +10,7 @@ $body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 include temply::load_template("app-header", APP_TEMPLATE_PATH);
-include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
+include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Tables of DB: ");
 $top_bar->set_title(3, $span . \k1lib\sql\get_db_database_name($db));

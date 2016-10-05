@@ -12,20 +12,20 @@ $body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 include temply::load_template("app-header", APP_TEMPLATE_PATH);
-include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
+include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
-$span = (new \k1lib\html\span("subheader"))->set_value("Auto app of table: ");
-$top_bar->set_title(3, $span . $db_table_to_use);
+//$span = (new \k1lib\html\span("subheader"))->set_value("Auto app of table: ");
+//$top_bar->set_title(3, $span . $db_table_to_use);
 
-DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
+//DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
 
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $db_table_to_use);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, "Auto App", $top_bar);
 $controller_object->set_config_from_class("\k1app\crudlexs_config");
 $controller_object->set_security_no_rules_enable(TRUE);
 

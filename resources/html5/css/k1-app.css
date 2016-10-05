@@ -8,8 +8,12 @@ and open the template in the editor.
     Author     : J0hnD03
 */
 
-.k1-main-section {
+#k1app-content {
     padding: 20px;
+}
+#k1app-run-info {
+    font-size: 0.9em;
+    color: #555;
 }
 
 .k1-uppercase {
@@ -56,6 +60,11 @@ body {
 /*
 BOARD STYLES
 */
+
+/** 
+GENERAL
+/*
+
 
 /* READ */
 .k1app-related-list {

@@ -9,7 +9,7 @@ $body = DOM::html()->body();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
 include temply::load_template("app-header", APP_TEMPLATE_PATH);
-include temply::load_template("html-parts/app-footer", APP_TEMPLATE_PATH);
+include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);

@@ -26,7 +26,6 @@ $head->append_child(new script(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js"));
 /**
  * HTML BODY
  */
-$body->append_child_tail(new script($main_css));
 $body->append_child_tail(new script(BOWER_PACKAGES_URL . "jquery/dist/jquery.min.js"));
 $body->append_child_tail(new script(BOWER_PACKAGES_URL . "jqueryui/jquery-ui.min.js"));
 $body->append_child_tail(new script(BOWER_PACKAGES_URL . "what-input/what-input.min.js"));
@@ -34,18 +33,17 @@ $body->append_child_tail(new script(COMPOSER_FOUNDATION_JS_URL));
 $body->append_child_tail(new script(APP_RESOURCES_URL . "html5/js/k1app.js"));
 
 $body->init_sections();
-$body->content()->set_class("k1-main-section");
 
 /**
  * This file is called every time in the app
  * TODO: DO not use this any more
  */
-temply::register_place("header");
-temply::register_place("html-title");
-temply::register_place("app-title");
-temply::register_place("controller-name");
-temply::register_place("footer");
-temply::register_place("foote_app_infor");
-temply::register_place("html-footer");
-
-temply::set_place_value("app-title", APP_TITLE);
+//temply::register_place("header");
+//temply::register_place("html-title");
+//temply::register_place("app-title");
+//temply::register_place("controller-name");
+//temply::register_place("footer");
+//temply::register_place("foote_app_infor");
+//temply::register_place("html-footer");
+//
+//temply::set_place_value("app-title", APP_TITLE);

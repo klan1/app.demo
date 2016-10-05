@@ -13,10 +13,11 @@ namespace k1app;
 
 use \k1lib\session\session_db as session_db;
 use \k1lib\templates\temply as temply;
+use k1lib\PROFILER as PROFILER;
+
+PROFILER::start();
 
 header('Content-Type: text/html; charset=utf-8');
-
-$app_init_time = microtime(TRUE);
 
 const IN_K1APP = TRUE;
 
@@ -81,10 +82,8 @@ switch (\k1app\APP_MODE) {
         require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
         require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
 
-        $app_run_time = round((microtime(TRUE) - $app_init_time), 5);
-        if (temply::is_place_registered("footer_app_info")) {
-            temply::set_place_value("footer_app_info", "Runtime: {$app_run_time} Seg - K1.lib V" . \k1lib\VERSION);
-        }
+        require temply::load_template("verbose-output", APP_TEMPLATE_PATH);
+        require temply::load_template("end", APP_TEMPLATE_PATH . '/scripts');
 
         echo \k1lib\html\DOM::html()->generate();
         break;
@@ -100,7 +99,7 @@ switch (\k1app\APP_MODE) {
 }
 
 if (temply::is_enabled()) {
-    temply::end(\k1app\APP_MODE);
+//    temply::end(\k1app\APP_MODE);
 }
 echo "<!--\n\nHTML LOG\n\n";
 echo \k1lib\html\tag_log::get_log();
