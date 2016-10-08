@@ -47,5 +47,4 @@ if (k1lib_session::is_logged()) {
     $top_bar->add_button(url::do_url(APP_URL . "log/form/"), "Ingresar");
 }
 
-//$body->header()->append_div()->set_value(temply::set_template_place("controller-msg"));
-//$body->content()->append_child(new \k1lib\html\h3(temply::set_template_place("board-name")));
+$body->header()->append_div(null, "k1app-output");

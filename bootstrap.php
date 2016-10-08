@@ -85,7 +85,7 @@ switch (\k1app\APP_MODE) {
         require temply::load_template("verbose-output", APP_TEMPLATE_PATH);
         require temply::load_template("end", APP_TEMPLATE_PATH . '/scripts');
 
-        echo \k1lib\html\DOM::html()->generate();
+        echo \k1lib\html\DOM::generate();
         break;
     case 'ajax':
         // do nothing, yet

@@ -158,7 +158,9 @@ if ($db_table->get_state()) {
         $li = $ul->append_li(null, "accordion-item")->set_attrib("data-accordion-item", TRUE);
         $a_title = (new \k1lib\html\a("#", $field))->set_attrib("class", "accordion-title k1-field-of-title")->append_to($li);
         $div_content = (new \k1lib\html\div($class))->set_attrib("class", "accordion-content")->set_attrib("data-tab-content", TRUE)->append_to($li);
-        $div_content->set_value(\k1lib\html\make_row_2columns_layout($table_config_to_use[$field]));
+
+
+        \k1lib\html\generate_row_2columns_layout($div_content, $table_config_to_use[$field]);
     }
 
     $form->append_child($ul);
