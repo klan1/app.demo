@@ -95,6 +95,10 @@ GENERAL
     color: #444;
 }
 
+.k1-data-img {
+    max-width: 200px;
+}
+
 /**
 LIST PAGINATION
 */

@@ -14,7 +14,7 @@ date_default_timezone_set("America/Bogota");
 
 const APP_TITLE = "K1 App";
 const APP_DESCRIPTION = "K1.lib web app implementation demo";
-const APP_VERBOSE = 3;
+const APP_VERBOSE = 0;
 
 /**
  * SET a CUSTOM K1MAGIC for K1.lib

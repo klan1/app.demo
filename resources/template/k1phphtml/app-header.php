@@ -23,7 +23,8 @@ $menu_right = $top_bar->menu_right();
 /**
  * AUTO APP
  */
-$top_bar->add_menu_item(url::do_url(APP_URL . "auto-app/show-tables/"), "Auto App");
+$li = $top_bar->add_menu_item(url::do_url(APP_URL . "auto-app/show-tables/"), "Home");
+$li->set_id("auto-app-menu");
 
 if (k1lib_session::is_logged()) {
     /**

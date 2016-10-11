@@ -29,11 +29,9 @@ foreach ($db_tables as $row_field => $row_value) {
     if (strstr($table_to_link, "view_")) {
         continue;
     }
-    $p = new \k1lib\html\p();
 
-    $a_crudlexs = new \k1lib\html\a(url::do_url("../crudlexs/{$table_alias}/", [], FALSE), "with rules");
-    $a_crudlexs_no_rules = new \k1lib\html\a(url::do_url("../crudlexs/{$table_alias}/", ['no-rules' => 1]), "raw table");
-    $ul->append_li()->set_value($table_to_link . " : " . $a_crudlexs . " - " . $a_crudlexs_no_rules);
+    $a_crudlexs = new \k1lib\html\a(url::do_url("../crudlexs/{$table_alias}/", [], FALSE), $table_to_link);
+    $ul->append_li()->set_value($a_crudlexs);
 }
-
+$body->content()->append_h4("Choose a table");
 $body->content()->append_child($ul);

@@ -19,15 +19,45 @@ $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
 //$span = (new \k1lib\html\span("subheader"))->set_value("Auto app of table: ");
 //$top_bar->set_title(3, $span . $db_table_to_use);
-
 //DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
 
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, "Auto App", $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, "DB Table explorer", $top_bar);
 $controller_object->set_config_from_class("\k1app\crudlexs_config");
 $controller_object->set_security_no_rules_enable(TRUE);
+
+/**
+ * TOP BAR - Tables added to menu
+ */
+$db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
+
+$ul = new \k1lib\html\ul();
+
+$li_auto_app_menu = DOM::html()->body()->header()->get_element_by_id("auto-app-menu");
+if (empty($li_auto_app_menu)) {
+    $li_auto_app_menu = $top_bar->add_menu_item("#", "DB Tables");
+}
+if (!isset($top_bar)) {
+    $top_bar = new \k1lib\html\foundation\top_bar(null);
+}
+$sub_menu = $top_bar->add_sub_menu($li_auto_app_menu);
+foreach ($db_tables as $row_field => $row_value) {
+    $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
+    $table_alias = \k1lib\db\security\db_table_aliases::encode($table_to_link);
+
+    if (strstr($table_to_link, "view_")) {
+        continue;
+    }
+    $top_bar->add_menu_item(url::do_url("../../{$table_alias}/", [], FALSE), $table_to_link, $sub_menu);
+}
+
+if (strstr($_SERVER['REQUEST_URI'], 'no-rules') === FALSE) {
+    $top_bar->add_menu_item(url::do_url("./", ['no-rules' => 1], TRUE), "Don't follow rules");
+} else {
+    $top_bar->add_menu_item(url::do_url($_SERVER['REQUEST_URI'], [], TRUE, ['auth-code']), "Follow rules");
+}
 
 /**
  * ALL READY, let's do it :)
@@ -72,12 +102,6 @@ if ($controller_object->on_board_list()) {
         $controller_object->board_list_object->set_apply_label_filter(FALSE);
         $controller_object->board_list_object->set_apply_field_label_filter(FALSE);
     }
-
-    /**
-     * BACK
-     */
-    $back_link = \k1lib\html\get_link_button(urldecode("../../../"), "Back");
-    $back_link->append_to($controller_object->board_div_content);
 }
 
 $controller_object->start_board();
