@@ -23,6 +23,7 @@ const APP_VIEWS_PATH = \APP_VIEWS_PATH;
 
 define("APP_VIEWS_CRUD_PATH", APP_VIEWS_PATH . '/k1lib.crud/');
 define("APP_RESOURCES_PATH", APP_ROOT . "/resources/");
+define("APP_SETTINGS_PATH", APP_ROOT . "/settings/");
 define("APP_UPLOADS_PATH", APP_RESOURCES_PATH . "uploads/");
 define("APP_SHELL_SCRIPTS_PATH", APP_RESOURCES_PATH . "/shell-scripts/");
 define("APP_TEMPLATE_PATH", APP_RESOURCES_PATH . '/template/k1phphtml/');
@@ -37,7 +38,7 @@ define("COMPOSER_PACKAGES_PATH", APP_ROOT . "vendor/");
 define("BOWER_PACKAGES_PATH", APP_ROOT . "bower_components/");
 
 // INCLUDES PATH ADDITION
-set_include_path(APP_RESOURCES_PATH . "/includes" . PATH_SEPARATOR . get_include_path());
+set_include_path(APP_SETTINGS_PATH . PATH_SEPARATOR . APP_RESOURCES_PATH . "/includes" . PATH_SEPARATOR . get_include_path());
 
 // AUTO CONFIGURATED URLS 
 if (\k1app\APP_MODE != 'shell') {
