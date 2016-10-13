@@ -51,6 +51,7 @@ class crudlexs_config {
     const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin'];
 
 }
+
 /**
  * THE AGENCY
  */
@@ -149,7 +150,7 @@ class agency_users_config extends agency_departments_config {
 
     const ROOT_URL = "the-agency/users";
     const BOARD_READ_URL = "details";
-    const BOARD_UPDATE_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_UPDATE_ALLOWED_LEVELS = ['god', 'admin', 'user'];
     const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin', 'user'];
 
 }
