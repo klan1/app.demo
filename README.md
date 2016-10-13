@@ -1,4 +1,4 @@
-# k1.app
+# k1.app - Skeleton
 App skeleton using k1.lib library.
 ## Installation
 
