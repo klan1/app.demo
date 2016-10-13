@@ -3,7 +3,7 @@
 namespace k1app;
 
 /**
- * THE AGENCY
+ * TABLE EXPLORER
  */
 class crudlexs_config {
 
@@ -12,7 +12,7 @@ class crudlexs_config {
     /**
      * URLS
      */
-    const ROOT_URL = "auto-app/crudlexs";
+    const ROOT_URL = "table-explorer/crudlexs";
     const BOARD_CREATE_URL = "create";
     const BOARD_READ_URL = "read";
     const BOARD_UPDATE_URL = "update";
@@ -43,11 +43,11 @@ class crudlexs_config {
     /**
      * ALLOWED LEVELS
      */
-    const BOARD_CREATE_ALLOWED_LEVELS = ['god', 'admin'];
-    const BOARD_READ_ALLOWED_LEVELS = ['god', 'admin'];
-    const BOARD_UPDATE_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_CREATE_ALLOWED_LEVELS = ['god', 'admin', 'user'];
+    const BOARD_READ_ALLOWED_LEVELS = ['god', 'admin', 'user', 'guest'];
+    const BOARD_UPDATE_ALLOWED_LEVELS = ['god', 'admin', 'user'];
     const BOARD_DELETE_ALLOWED_LEVELS = ['god', 'admin'];
     const BOARD_EXPORT_ALLOWED_LEVELS = ['god', 'admin'];
-    const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin', 'user', 'guest'];
 
 }

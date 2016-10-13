@@ -6,8 +6,10 @@ use \k1lib\urlrewrite\url as url;
 
 \k1lib\common\check_on_k1lib();
 
-require "dirmgnt-optional.php";
+$controller_to_load = url::set_next_url_level(APP_CONTROLLERS_PATH, FALSE);
 
-if (!$dirmgnt_include_sucess) {
+if (!$controller_to_load) {
     \k1lib\html\html_header_go(url::do_url("./form"));
+} else {
+    require $controller_to_load;
 }

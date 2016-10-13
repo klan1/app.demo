@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib.git",
-                "reference": "f830df253e220c8a220987a1615413bcf35fb985"
+                "reference": "947a9b70b63a22e81e89e19e57d72fa3f666ae2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/f830df253e220c8a220987a1615413bcf35fb985",
-                "reference": "f830df253e220c8a220987a1615413bcf35fb985",
+                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/947a9b70b63a22e81e89e19e57d72fa3f666ae2d",
+                "reference": "947a9b70b63a22e81e89e19e57d72fa3f666ae2d",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
             ],
             "description": "Classes and functions for comercial software development",
             "homepage": "https://github.com/klan1/k1.lib",
-            "time": "2016-09-28 13:06:51"
+            "time": "2016-10-11 16:35:09"
         },
         {
             "name": "klan1/k1.lib-dom",
@@ -54,19 +54,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib-dom.git",
-                "reference": "73de59067a9be5dad8717a116587c81f16a923d9"
+                "reference": "e99a74d583ab3c5a0dc4d439340a235aa1a6fa6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/73de59067a9be5dad8717a116587c81f16a923d9",
-                "reference": "73de59067a9be5dad8717a116587c81f16a923d9",
+                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/e99a74d583ab3c5a0dc4d439340a235aa1a6fa6a",
+                "reference": "e99a74d583ab3c5a0dc4d439340a235aa1a6fa6a",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6 | ^7.0"
-            },
-            "require-dev": {
-                "apigen/apigen": "^4.1"
             },
             "type": "library",
             "autoload": {
@@ -90,7 +87,7 @@
             ],
             "description": "Say good bye to the inline HTML tags as strings on your PHP code!. DOM Classes from K1.lib.",
             "homepage": "https://github.com/klan1/k1.lib-dom",
-            "time": "2016-09-28 11:55:54"
+            "time": "2016-10-11 16:35:16"
         },
         {
             "name": "zurb/foundation",

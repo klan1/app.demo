@@ -23,8 +23,8 @@ $menu_right = $top_bar->menu_right();
 /**
  * AUTO APP
  */
-$li = $top_bar->add_menu_item(url::do_url(APP_URL . "auto-app/show-tables/"), "Home");
-$li->set_id("auto-app-menu");
+$li = $top_bar->add_menu_item(url::do_url(APP_URL . "table-explorer/show-tables/"), "Home");
+$li->set_id("table-explorer-menu");
 
 if (k1lib_session::is_logged()) {
     /**
@@ -36,13 +36,12 @@ if (k1lib_session::is_logged()) {
         $li->append_a("#", "App preferences");
 
         $sub_menu = $top_bar->add_sub_menu($li);
-        $top_bar->add_menu_item(APP_URL . "db-table-manager/show-tables/", "Manage tables", $sub_menu);
-        $li = $top_bar->add_menu_item(APP_URL . "db-table-manager/export-field-comments/", "Export field comments", $sub_menu);
+        $top_bar->add_menu_item(APP_URL . "table-metadata/show-tables/", "Manage tables", $sub_menu);
+        $li = $top_bar->add_menu_item(APP_URL . "table-metadata/export-field-comments/", "Export field comments", $sub_menu);
         $li->get_child(0)->set_attrib("target", "_blank");
-        $top_bar->add_menu_item(APP_URL . "db-table-manager/load-field-comments/", "Load field comments", $sub_menu);
+        $top_bar->add_menu_item(APP_URL . "table-metadata/load-field-comments/", "Load field comments", $sub_menu);
     }
 
-    $top_bar->add_button("#", "View PHP Code", "warning", "php-viewer-button")->set_attrib("target", "php-viewer");
     $top_bar->add_button(url::do_url(APP_URL . "log/out/"), "Salir", "alert");
 } else {
     $top_bar->add_button(url::do_url(APP_URL . "log/form/"), "Ingresar");

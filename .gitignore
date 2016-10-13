@@ -2,3 +2,6 @@
 /nbproject/private/
 /vendor/
 /bower_components/
+/controllers/general-utils/
+/controllers/table-metadata/
+/controllers/table-explorer/
