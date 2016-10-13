@@ -10,10 +10,4 @@ db_table_aliases::$aliases = [
     "locations" => "table2",
     "departments" => "table3",
     "job_titles" => "table4",
-    "clients" => "table5",
-    "contacts" => "table6",
-    "contracts" => "table7",
-    "projects" => "table8",
-    "task_orders" => "table9",
-    "discos" => "chingados",
 ];
