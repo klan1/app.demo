@@ -1,4 +1,5 @@
 /config-db-remote.php
+/composer.lock
 /nbproject/private/
 /vendor/
 /bower_components/
