@@ -9,5 +9,6 @@ bower install
 composer install
 chmod +x ./controllers/install-app-scripts.sh
 chmod +x ./controllers/update-app-scripts.sh
-./controllers/install-app-scripts.sh
+cd controllers
+./install-app-scripts.sh
 ```
