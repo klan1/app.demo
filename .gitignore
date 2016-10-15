@@ -1,8 +1,8 @@
 /config-db-remote.php
 /composer.lock
-/nbproject/
 /vendor/
 /bower_components/
 /controllers/general-utils/
 /controllers/table-metadata/
 /controllers/table-explorer/
+/nbproject/
