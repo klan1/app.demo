@@ -97,10 +97,3 @@ switch (\k1app\APP_MODE) {
         \k1lib\common\show_error('No \k1app\APP_MODE defined', __FILE__);
         break;
 }
-
-if (temply::is_enabled()) {
-//    temply::end(\k1app\APP_MODE);
-}
-echo "<!--\n\nHTML LOG\n\n";
-echo \k1lib\html\tag_log::get_log();
-echo "->";
