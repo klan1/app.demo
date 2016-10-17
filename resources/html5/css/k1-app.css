@@ -9,7 +9,7 @@ and open the template in the editor.
 */
 
 #k1app-content {
-    padding: 20px;
+    padding: 20px 20px 60px 20px;
 }
 #k1app-run-info {
     font-size: 0.9em;
