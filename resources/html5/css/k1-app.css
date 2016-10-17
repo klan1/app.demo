@@ -39,6 +39,13 @@ label.k1-label-object {
 
 #k1app-footer-message {
     border: none !important;
+    position: fixed; 
+    bottom:0; 
+    width:100%;
+    margin: 0;
+}
+#k1app-footer-message h6 {
+    font-size: 0.7em;
 }
 
 /*
