@@ -62,7 +62,7 @@ if (\k1app\APP_MODE != 'shell') {
     define("APP_RESOURCES_URL", APP_URL . "resources/");
     define("APP_UPLOADS_URL", APP_RESOURCES_URL . "uploads/");
     define("APP_TEMPLATE_URL", APP_RESOURCES_URL . "template/k1phphtml/");
-    define("APP_TEMPLATE_IMAGES_URL", APP_RESOURCES_URL . "images/");
+    define("APP_TEMPLATE_IMAGES_URL", APP_TEMPLATE_URL . "img/");
 
     /**
      * COMPOSER

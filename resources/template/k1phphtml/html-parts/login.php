@@ -17,7 +17,7 @@ if (!empty($app_messajes)) {
         <div class="medium-6 medium-centered large-4 large-centered columns">
             <form id="login-form" action="<?php echo url::do_url(APP_URL . "log/in/") ?>" method="post" name="login-form" >
                 <div class="row column log-in-form">
-                    <p class="text-center"><img src="<?php echo APP_RESOURCES_URL . "html5/img/klan1.png" ?>" alt="Klan1 Network"/></p>
+                    <p class="text-center"><img src="<?php echo APP_TEMPLATE_IMAGES_URL . "klan1.png" ?>" /></p>
                     <h5 class="text-center">Welcome, please do login to continue</h5>
                     <label>Login as
                         <select name="login-type"  >
