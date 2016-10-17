@@ -43,7 +43,7 @@ if (k1lib_session::is_logged()) {
 
         $li = $top_bar->add_menu_item("#", "Agency");
         $sub_menu = $top_bar->add_sub_menu($li);
-        if (\k1lib\session\session_db::check_user_level(['god', 'admin', 'user'])) {
+        if (\k1lib\session\session_db::check_user_level(['god', 'admin'])) {
             $top_bar->add_menu_item(APP_URL . "the-agency/my-agency/", "My Agency", $sub_menu);
             $top_bar->add_menu_item(APP_URL . "the-agency/locations/", "Locations", $sub_menu);
             $top_bar->add_menu_item(APP_URL . "the-agency/departments/", "Departments", $sub_menu);
@@ -102,7 +102,6 @@ if (k1lib_session::is_logged()) {
         $top_bar->add_menu_item(APP_URL . "table-metadata/load-field-comments/", "Load field comments", $sub_menu);
     }
 
-//    $top_bar->add_button("#", "View PHP Code", "warning", "php-viewer-button")->set_attrib("target", "php-viewer");
     $top_bar->add_button(APP_URL . "log/out/", "Salir", "alert");
 } else {
     $top_bar->add_button(APP_URL . "log/form/", "Ingresar");

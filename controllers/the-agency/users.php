@@ -47,13 +47,25 @@ if (isset($controller_object->board_create_object)) {
     $controller_object->read_url_keys_text_for_create("locations");
 }
 if ($controller_object->on_board_read()) {
-    $controller_object->board_read_object->set_use_label_as_title_enabled(FALSE);
+    if (!session_db::check_user_level(['god', 'admin'])) {
+        if ($controller_object->board_read_object->read_object->get_row_keys_array()['user_login'] !== session_db::get_user_login()) {
+            $controller_object->board_read_object->set_update_enable(FALSE);
+        }
+    }
 //    $controller_object->board_read_object->read_object->set_read_custom_template(APP_VIEWS_PATH . '/read-templates/users_.php');
 }
 if ($controller_object->on_object_create()) {
 //    $controller_object->board_create_object->create_object->set_create_custom_template(APP_VIEWS_PATH . '/create-templates/users_.php');
 }
 if ($controller_object->on_object_update()) {
+    if (!session_db::check_user_level(['god', 'admin'])) {
+        $controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_data()['user_login']]);
+        $controller_object->db_table->set_field_constants(["user_level" => session_db::get_user_data()['user_level']]);
+        $controller_object->db_table->set_field_constants(["location_id" => session_db::get_user_data()['location_id']]);
+        $controller_object->db_table->set_field_constants(["job_title_id" => session_db::get_user_data()['job_title_id']]);
+        $controller_object->db_table->set_field_constants(["dep_id" => session_db::get_user_data()['dep_id']]);
+        $controller_object->db_table->set_field_constants(["job_title_id" => session_db::get_user_data()['job_title_id']]);
+    }
 //    $controller_object->board_update_object->update_object->set_create_custom_template(APP_VIEWS_PATH . '/create-templates/users_.php');
 }
 
