@@ -2,10 +2,8 @@
 
 namespace k1app;
 
+use k1lib\notifications\on_DOM as DOM_notifications;
 use k1lib\urlrewrite\url as url;
-
-\k1lib\common\check_on_k1lib();
-
 
 $login_user_input = "login";
 $login_password_input = "pass";
@@ -40,6 +38,7 @@ if ($post_data) {
         // SET THE LOGGED SESSION
         $app_session->save_data_to_coockie(APP_BASE_URL);
         if ($app_session->load_data_from_coockie($db)) {
+            DOM_notifications::queue_mesasage("Bienvenido", "success");
             if (\k1lib\urlrewrite\get_back_url(TRUE)) {
                 \k1lib\html\html_header_go(url::do_url(\k1lib\urlrewrite\get_back_url(TRUE)));
             } else {
@@ -49,12 +48,14 @@ if ($post_data) {
             trigger_error("Login with coockie not possible", E_USER_ERROR);
         }
     } elseif ($app_session_check === NULL) {
-        \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=no-data"));
+        DOM_notifications::queue_mesasage("No se han recibido datos", "warning");
+        exit;
     } elseif ($app_session_check === FALSE) {
-        \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=bad-login"));
+        DOM_notifications::queue_mesasage("Usuario y/o contraseña incorrecta", "alert");
     }
 } elseif ($post_data === FALSE) {
-    \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=bad-magic"));
+    DOM_notifications::queue_mesasage("BAD, BAD Magic!!", "warning");
 } elseif ($post_data === NULL) {
-    \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form?error=no-data"));
+    DOM_notifications::queue_mesasage("No se han recibido datos", "warning");
 }
+\k1lib\html\html_header_go(url::do_url(APP_URL . "log/form/"));
