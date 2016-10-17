@@ -11,3 +11,5 @@ if (!empty($run_info)) {
     $run_time = \k1lib\PROFILER::end();
     $run_info->set_value(" | Runtime: {$run_time} Seconds - $k1lib_a V" . \k1lib\VERSION);
 }
+
+\k1lib\notifications\on_DOM::insert_messases_on_DOM();
