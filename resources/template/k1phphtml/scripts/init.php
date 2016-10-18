@@ -21,6 +21,7 @@ $head->link_css(COMPOSER_FOUNDATION_CSS_URL);
 $head->link_css(BOWER_PACKAGES_URL . "foundation-icon-fonts/foundation-icons.css");
 $head->link_css(BOWER_PACKAGES_URL . "jqueryui/themes/base/all.css");
 $head->link_css(APP_TEMPLATE_URL . "css/k1-app.css");
+$head->link_css(APP_TEMPLATE_URL . "css/custom-styles.css");
 $head->append_child(new script(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js"));
 
 /**
