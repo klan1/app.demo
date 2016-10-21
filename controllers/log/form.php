@@ -43,7 +43,7 @@ $grid_row_password = (new \k1lib\html\foundation\label_value_row("Password", (ne
 $grid_row_remember = (new \k1lib\html\foundation\label_value_row("Remember me", (new \k1lib\html\input("checkbox", "remember-me", NULL))))->append_to($login_grid->row(4)->col(1));
 
 $button_grid = $login_grid->row(5)->col(1)->append_row(2);
-$button_grid->col(1)->small(6)->append_a("javascript:alert('Sorry to hear that!, Please contacta an administrator')", "Forgot your password?");
+$button_grid->col(1)->small(6)->append_a("javascript:alert('Sorry to hear that!, Please contact an administrator.')", "Forgot your password?");
 $button_grid->col(2)->small(6)->set_class("text-right")->append_child(new \k1lib\html\input("submit", NULL, "Login", "button"));
 
 $main_grid->row(4)->col(1)->append_h6("© 2013-2016 Developed by $klan1_link")->set_id("k1lib-login-copyright");
