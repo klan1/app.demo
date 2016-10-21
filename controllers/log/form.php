@@ -47,3 +47,4 @@ $button_grid->col(1)->small(6)->append_a("javascript:alert('Sorry to hear that!,
 $button_grid->col(2)->small(6)->set_class("text-right")->append_child(new \k1lib\html\input("submit", NULL, "Login", "button"));
 
 $main_grid->row(4)->col(1)->append_h6("© 2013-2016 Developed by $klan1_link")->set_id("k1lib-login-copyright");
+
