@@ -120,13 +120,13 @@ ul.k1-ul-object.pagination.k1lib-crudlexs {
     margin: 0 !important;
 }
 
-div.k1-crudlexs-table-pagination li.k1-li-object {
+div.k1lib-crudlexs-list-pagination li.k1-li-object {
     display: inline-block !important;
 }
 /**
 LIST TABLE STYLES
 */
-div.k1-crudlexs-table table tbody tr td {
+div.k1lib-crudlexs-list table tbody tr td {
     vertical-align: top;
 }
 /**
