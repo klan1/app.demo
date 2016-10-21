@@ -54,7 +54,15 @@ label.k1lib-label-object {
 LOGIN FORM
 **/
 html #login-form-body {
-    background-color: #CCC;
+    background-color: #D0D0D0;
+}
+#login-form-body .button{
+    margin: 0px !important;
+}
+#k1lib-login-copyright {
+    font-size: 0.6em;
+    margin-top: 0.8em;
+    text-align: center;
 }
 #k1lib-login-logo {
     padding: 2em;
@@ -67,7 +75,7 @@ html #login-form-body {
     font-size: 0.8em;
 }
 #k1lib-login-title {
-    background-color: #555;
+    background-color: #00a2d0;
 }
 #k1lib-login-title h1 {
     color: #FFF;
