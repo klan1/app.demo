@@ -49,6 +49,7 @@ if ($controller_object->on_board_list()) {
 }
 
 $controller_object->read_url_keys_text_for_create("contracts");
+$controller_object->read_url_keys_text_for_list("clients", FALSE);
 
 $controller_object->start_board();
 

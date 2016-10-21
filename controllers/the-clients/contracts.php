@@ -13,7 +13,6 @@ namespace k1app;
 use k1lib\templates\temply as temply;
 use k1lib\urlrewrite\url as url;
 use k1lib\session\session_db as session_db;
-
 use \k1lib\html\DOM as DOM;
 
 $body = DOM::html()->body();
@@ -50,6 +49,7 @@ if ($controller_object->on_board_list()) {
 }
 
 $controller_object->read_url_keys_text_for_create("clients");
+$controller_object->read_url_keys_text_for_list("clients", FALSE);
 
 $controller_object->start_board();
 
