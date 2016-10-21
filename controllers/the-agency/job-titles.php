@@ -53,7 +53,7 @@ $controller_object->exec_board();
 $controller_object->finish_board();
 
 if ($controller_object->on_board_read()) {
-    $related_div = $div->append_div("row k1-crudlexs-related-data");
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
 
     $users_db_table = new \k1lib\crudlexs\class_db_table($db, "users");
     $controller_object->board_read_object->set_related_show_new(FALSE);

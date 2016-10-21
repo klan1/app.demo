@@ -75,7 +75,7 @@ $controller_object->finish_board();
 
 
 if ($controller_object->on_board_read()) {
-    $related_div = $div->append_div("row k1-crudlexs-related-data");
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
     $projects_db_table = new \k1lib\crudlexs\class_db_table($db, "projects");
     $projects_subdetail_div = $controller_object->board_read_object->create_related_list($projects_db_table, ["project_name"], "Projects", client_projects_config::ROOT_URL, client_projects_config::BOARD_CREATE_URL, client_projects_config::BOARD_READ_URL, client_projects_config::BOARD_LIST_URL);
     $projects_subdetail_div->append_to($related_div);

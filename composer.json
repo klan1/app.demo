@@ -1,5 +1,5 @@
 {
-    "name": "klan1/k1-app-skeleton",
+    "name": "klan1/k1lib-app-skeleton",
     "description": "App skeleton using k1.lib.",
     "license": "Apache-2.0",
     "type": "application",

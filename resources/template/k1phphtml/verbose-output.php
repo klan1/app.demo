@@ -8,7 +8,7 @@ use k1lib\session\session_db as k1lib_session;
 use \k1lib\html\DOM as DOM;
 
 if (APP_VERBOSE > 0) {
-    $div = $body->footer()->append_div("callout", "k1app-session-data");
+    $div = $body->footer()->append_div("callout", "k1lib-session-data");
     if (k1lib_session::is_enabled()) {
         $div->append_h5("App session data");
         $pre = $div->append_div()->set_attrib("style", "overflow: scroll")->append_pre();
@@ -18,13 +18,13 @@ if (APP_VERBOSE > 0) {
     }
 }
 if (k1lib_session::is_logged() && APP_VERBOSE > 1) {
-    $div = $body->footer()->append_div("callout", "k1app-serialized-data");
+    $div = $body->footer()->append_div("callout", "k1lib-serialized-data");
     $div->append_h5("App Serialized data");
     $div->append_div()->set_attrib("style", "overflow: scroll")
             ->set_value(print_r($_SESSION['serialized_vars'], TRUE));
 }
 if (k1lib_session::is_logged() && APP_VERBOSE > 2) {
-    $div = $body->footer()->append_div("callout", "k1app-sql-profile");
+    $div = $body->footer()->append_div("callout", "k1lib-sql-profile");
     if (local_cache::is_enabled()) {
         $div->append_h5("DB Local cache and SQL profiler");
         $pre = $div->append_div()->set_attrib("style", "overflow: scroll")->append_pre();
@@ -43,7 +43,7 @@ if (k1lib_session::is_logged() && APP_VERBOSE > 2) {
     }
 }
 if (k1lib_session::is_logged() && APP_VERBOSE > 3) {
-    $div = $body->footer()->append_div("callout", "k1app-globals");
+    $div = $body->footer()->append_div("callout", "k1lib-globals");
     if (local_cache::is_enabled()) {
         $div->append_h5("PHP Globals data");
         $pre = $div->append_div()->set_attrib("style", "overflow: scroll")->append_pre();

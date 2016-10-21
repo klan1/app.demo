@@ -51,7 +51,7 @@ $controller_object->finish_board();
 
 
 if ($controller_object->on_board_read()) {
-    $related_div = $div->append_div("row k1-crudlexs-related-data");
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
 
     $users_db_table = new \k1lib\crudlexs\class_db_table($db, "users");
     $users_subdetail_div = $controller_object->board_read_object->create_related_list($users_db_table, ["user_names"], "Users", agency_users_config::ROOT_URL, agency_users_config::BOARD_CREATE_URL, agency_users_config::BOARD_READ_URL, agency_users_config::BOARD_LIST_URL);

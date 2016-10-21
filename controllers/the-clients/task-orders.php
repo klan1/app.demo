@@ -142,8 +142,8 @@ $controller_object->exec_board();
 $controller_object->finish_board();
 
 if ($controller_object->on_board_read()) {
-    $related_div1 = $div->append_div("row k1-crudlexs-related-data");
-    $related_div2 = $div->append_div("row k1-crudlexs-related-data");
+    $related_div1 = $div->append_div("row k1lib-crudlexs-related-data");
+    $related_div2 = $div->append_div("row k1lib-crudlexs-related-data");
 
     $assignations_db_table = new \k1lib\crudlexs\class_db_table($db, "to_assignations");
     $assignations_db_table->set_order_by("to_assignation_datetime_in", "DESC");

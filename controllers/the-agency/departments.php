@@ -51,7 +51,7 @@ $controller_object->finish_board();
 
 
 if ($controller_object->on_board_read()) {
-    $related_div = $div->append_div("row k1-crudlexs-related-data");
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
 
     $job_titles_db_table = new \k1lib\crudlexs\class_db_table($db, "job_titles");
     $job_titles_subdetail_div = $controller_object->board_read_object->create_related_list($job_titles_db_table, ["job_title_name"], "Job titles", agency_job_titles_config::ROOT_URL, agency_job_titles_config::BOARD_CREATE_URL, agency_job_titles_config::BOARD_READ_URL, agency_job_titles_config::BOARD_LIST_URL);

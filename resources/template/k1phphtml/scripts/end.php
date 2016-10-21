@@ -4,7 +4,7 @@ namespace k1app;
 
 use \k1lib\html\DOM as DOM;
 
-$run_info = DOM::html()->body()->footer()->get_element_by_id("k1app-run-info");
+$run_info = DOM::html()->body()->footer()->get_element_by_id("k1lib-run-info");
 
 if (!empty($run_info)) {
     $k1lib_a = new \k1lib\html\a("https://github.com/klan1/k1.lib", "k1.lib", "_blank");

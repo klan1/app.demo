@@ -64,7 +64,7 @@ $controller_object->finish_board();
 
 
 if ($controller_object->on_board_read()) {
-    $related_div = $div->append_div("row k1-crudlexs-related-data");
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
     /**
      * Contacts list
      */

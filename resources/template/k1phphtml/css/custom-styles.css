@@ -3,3 +3,127 @@
     Author     : j0hnd03
 */
 
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+}
+
+h4 {
+    font-size: 1em;
+    color: #7b7b7b;
+    background-color: #f4f4f4;
+    border-radius: 10px 0px 10px 0px;
+    padding: 5px 20px;
+   
+}
+
+h4 .button.fi-list, h4 .button.fi-plus {
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 5px 0px;
+     color: #004a8f;
+}
+
+h4 .button.fi-plus:hover {
+    background-color: #147cc0;
+}
+
+.k1lib-related-list {
+    
+}
+
+.k1lib-related-list h4{
+    font-family: "foundation-icons";
+}
+.table6-realted-list h4:before {
+    content: "\f199";
+;
+}
+
+
+
+.top-bar, .top-bar ul {
+    background-color: #000;
+    color: #FFF;
+}
+
+
+.top-bar a, .top-bar ul a {
+    color: #FFF;
+}
+
+.subheader {
+  color: #FFF;  
+}
+
+.dropdown.menu>li.is-dropdown-submenu-parent>a:after {
+    border-color: #ffffff transparent transparent;
+}
+
+
+
+.k1-data-group {
+    background-color: #f4f4f4;
+    border-radius: 15px 0 15px 0;
+    padding: 20px;
+    color: #7b7b7b;
+}
+
+.k1-data-group-title 
+{
+
+    text-transform: uppercase;
+    font-size: 1.3em;
+    padding: 0px 20px 10px 20px;
+    
+}
+
+.k1-data-item-label {
+     color: #7b7b7b;
+     text-transform: uppercase;
+      font-size: 0.8em;
+      
+}
+
+
+
+
+#value-client-logo {
+    margin: 0 0 0px 20px;
+}
+
+
+
+.k1lib-related-list {
+    border-top:none;
+}
+
+
+
+
+
+.button.alert {
+        
+    background-color: #d20f00;
+    color: #fefefe;
+}
+
+
+
+table tfoot td, table tfoot th, table thead td, table thead th {
+    text-transform: uppercase;
+    font-size: 0.8em;
+     color: #7b7b7b;
+}
+
+table.scroll {
+ #f8f8f8
+}

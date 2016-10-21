@@ -78,7 +78,7 @@ $controller_object->finish_board();
 
 
 if ($controller_object->on_board_read()) {
-    $related_div = $div->append_div("row k1-crudlexs-related-data");
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
 
     $sub_title = new \k1lib\html\h3("Task Orders");
     $sub_title->set_attrib("style", "margin-top:1em;");
