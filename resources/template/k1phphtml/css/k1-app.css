@@ -16,6 +16,8 @@ and open the template in the editor.
     color: #555;
 }
 
+
+
 .k1lib-uppercase {
     text-transform: uppercase;
 }
@@ -48,14 +50,35 @@ label.k1lib-label-object {
     font-size: 0.7em;
 }
 
-/*
-LOGIN - Building blocks 
-*/
-.log-in-form {
-    /*    border: 1px solid #cacaca;
-        padding: 1rem;
-        border-radius: 3px; */
-
+/**
+LOGIN FORM
+**/
+html #login-form-body {
+    background-color: #CCC;
+}
+#k1lib-login-logo {
+    padding: 2em;
+}
+#k1app-login-content {
+    background-color: #FFF;
+    padding: 1em;
+}
+#k1app-login-content a {
+    font-size: 0.8em;
+}
+#k1lib-login-title {
+    background-color: #555;
+}
+#k1lib-login-title h1 {
+    color: #FFF;
+    margin: 0px;
+    padding: 0.6em 0.6em;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+#login-form-body .login-form-data {
+    padding-top: 0.6em;
+    background-color: #FFFFFF;
 }
 /*
 TOP MENU - Building blocks 
