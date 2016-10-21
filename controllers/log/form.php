@@ -29,7 +29,7 @@ $form->set_attrib("action", url::do_url(APP_URL . "log/in/"));
 $form->append_child(new \k1lib\html\input("hidden", "magic_value", $form_magic_value));
 
 $content_grid = new \k1lib\html\foundation\grid_row(1, 1, $form);
-$content_grid->col(1)->medium(6)->medium_centered()->large(4)->large_centered();
+$content_grid->col(1)->medium(8)->medium_centered()->large(5)->large_centered();
 
 $main_grid = $content_grid->col(1)->append_grid(4, 1);
 $main_grid->row(1)->col(1)->set_class("text-center")->set_id("k1lib-login-logo")->append_child(new \k1lib\html\img(APP_TEMPLATE_IMAGES_URL . "klan1.png"));
