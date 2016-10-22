@@ -42,7 +42,6 @@ $select = new \k1lib\html\select("login-type");
 $select->append_option("agency", "An agency");
 $select->append_option("client", "A client client");
 
-//(new \k1lib\html\foundation\label_value_row("Which type?", $select))->append_to($login_grid->row(2)->col(1));
 $login_grid->row(2)->col(1)->append_child((new \k1lib\html\label("You are:", "remember-me", "k1lib-label-object")));
 $login_grid->row(2)->col(1)->append_child($select);
 
