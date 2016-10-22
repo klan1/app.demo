@@ -29,7 +29,7 @@ $form->set_attrib("action", url::do_url(APP_URL . "log/in/"));
 $form->append_child(new \k1lib\html\input("hidden", "magic_value", $form_magic_value));
 
 $content_grid = new \k1lib\html\foundation\grid_row(1, 1, $form);
-$content_grid->col(1)->medium(8)->medium_centered()->large(5)->large_centered();
+$content_grid->col(1)->small(10)->small_centered()->medium(6)->medium_centered()->large(4)->large_centered();
 
 $main_grid = $content_grid->col(1)->append_grid(4, 1);
 $main_grid->row(1)->col(1)->set_class("text-center")->set_id("k1lib-login-logo")->append_child(new \k1lib\html\img(APP_TEMPLATE_IMAGES_URL . "klan1.png"));
@@ -40,12 +40,17 @@ $login_grid = $main_grid->row(3)->col(1)->append_grid(6, 1)->set_id("k1app-login
 
 $select = new \k1lib\html\select("login-type");
 $select->append_option("agency", "An agency");
-$select->append_option("client", "A client");
+$select->append_option("client", "A client client");
 
-$grid_row_type = (new \k1lib\html\foundation\label_value_row("Which type?", $select))->append_to($login_grid->row(2)->col(1));
-$grid_row_login = (new \k1lib\html\foundation\label_value_row("Login", (new \k1lib\html\input("text", "login", NULL))))->set_attrib("placeholder", "Login")->append_to($login_grid->row(3)->col(1));
-$grid_row_password = (new \k1lib\html\foundation\label_value_row("Password", (new \k1lib\html\input("password", "pass", NULL))))->set_attrib("placeholder", "Password")->append_to($login_grid->row(4)->col(1));
-$grid_row_remember = (new \k1lib\html\foundation\label_value_row("Remember me", (new \k1lib\html\input("checkbox", "remember-me", NULL))))->append_to($login_grid->row(5)->col(1));
+//(new \k1lib\html\foundation\label_value_row("Which type?", $select))->append_to($login_grid->row(2)->col(1));
+$login_grid->row(2)->col(1)->append_child((new \k1lib\html\label("You are:", "remember-me", "k1lib-label-object")));
+$login_grid->row(2)->col(1)->append_child($select);
+
+(new \k1lib\html\input("text", "login", NULL))->set_attrib("placeholder", "Login")->append_to($login_grid->row(2)->col(1));
+(new \k1lib\html\input("password", "pass", NULL))->set_attrib("placeholder", "Password")->append_to($login_grid->row(3)->col(1));
+
+$login_grid->row(4)->col(1)->append_child((new \k1lib\html\label("Remember me", "remember-me", "float-left")));
+$login_grid->row(4)->col(1)->append_child((new \k1lib\html\input("checkbox", "remember-me", NULL, ""))->set_style("margin-left:1em;"));
 
 $button_grid = $login_grid->row(5)->col(1)->append_row(2);
 $button_grid->col(1)->small(6)->append_a("javascript:alert('Sorry to hear that!, Please contact an administrator.')", "Forgot your password?");
