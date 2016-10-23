@@ -10,16 +10,31 @@ $login_password_input = "pass";
 $login_remember_me = "remember-me";
 
 $user_data = [];
-$login_table = "users";
-$login_user_field = "user_login";
-$login_password_field = "user_password";
-$login_level_field = "user_level";
+if (isset($_POST['login-type'])) {
+    if ($_POST['login-type'] == 'agency') {
 
-if (!isset($app_session)) {
-    $app_session = new \k1lib\session\session_db($db);
+        $login_table = "view_users_complete_data";
+        $login_user_field = "user_login";
+        $login_password_field = "user_password";
+        $login_level_field = "user_level";
+    } elseif ($_POST['login-type'] == 'client') {
+
+        $login_table = "contacts";
+        $login_user_field = "contact_login";
+        $login_password_field = "contact_password";
+        $login_level_field = "user_level";
+    } else {
+
+        trigger_error("Bad hacker, bad hacker... don't do that !!!", E_USER_ERROR);
+    }
+    if (!isset($app_session)) {
+        $app_session = new \k1lib\session\session_db($db);
+    }
+    $app_session->set_config($login_table, $login_user_field, $login_password_field, $login_level_field);
+    $app_session->set_inputs($login_user_input, $login_password_input, $login_remember_me);
+} else {
+    DOM_notifications::queue_mesasage("Incorrect login form", "alert");
 }
-$app_session->set_config($login_table, $login_user_field, $login_password_field, $login_level_field);
-$app_session->set_inputs($login_user_input, $login_password_input, $login_remember_me);
 
 // chekc the magic value
 $post_data = $app_session->catch_post();
