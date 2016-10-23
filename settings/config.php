@@ -72,6 +72,10 @@ if ($_SERVER['SERVER_NAME'] != 'k1dev.local') {
  * DB Security
  */
 include_once 'db-tables-aliases.php';
+/**
+ * Controllers Config
+ */
+include_once 'controllers-config.php';
 /*
  * OTHERS
  */

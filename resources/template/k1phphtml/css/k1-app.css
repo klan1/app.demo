@@ -136,7 +136,17 @@ GENERAL
 .k1lib-data-img {
     max-width: 200px;
 }
+/**
+LIST SEARCH
+*/
+.search-modal {
+}
 
+.search-iframe {
+    border: none;
+    width: 100%;
+    height: 500px;
+}
 /**
 LIST PAGINATION
 */
