@@ -38,7 +38,7 @@ $klan1_link = new \k1lib\html\a("http://www.klan1.com?ref=k1.app", "Klan1 Networ
 
 $login_grid = $main_grid->row(3)->col(1)->append_grid(6, 1)->set_id("k1app-login-content");
 
-$select = new \k1lib\html\select("login-type");
+$select = new \k1lib\html\select("login-type", NULL, "remember-me");
 $select->append_option("agency", "An agency");
 $select->append_option("client", "A client client");
 
