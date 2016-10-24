@@ -11,6 +11,7 @@ $(function () {
 
 function use_select_row_keys(form_obj, url_to_submit) {
     form_obj.action = url_to_submit;
+    form_obj.target = "_self";
     form_obj.submit();
 }
 
