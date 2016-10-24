@@ -6,3 +6,4 @@
 /controllers/table-metadata/
 /controllers/table-explorer/
 /nbproject/
+/settings/config-db-remote.php
