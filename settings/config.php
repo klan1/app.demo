@@ -79,4 +79,5 @@ include_once 'controllers-config.php';
 /*
  * OTHERS
  */
+\k1lib\html\html::set_use_log(FALSE);
 //ini_set('memory_limit', '100M');

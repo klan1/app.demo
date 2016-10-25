@@ -77,7 +77,6 @@ switch (\k1app\APP_MODE) {
     case 'web':
         // Start the HTML DOM object
         \k1lib\html\DOM::start(K1LIB_LANG);
-        \k1lib\html\html::set_use_log(TRUE);
 
         require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
         require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
