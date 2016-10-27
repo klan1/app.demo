@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib.git",
-                "reference": "49913022bf5e45db223a85513f92680c379cd39e"
+                "reference": "72bc22c62a1358992e9c7a9dfd75378b734472b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/49913022bf5e45db223a85513f92680c379cd39e",
-                "reference": "49913022bf5e45db223a85513f92680c379cd39e",
+                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/72bc22c62a1358992e9c7a9dfd75378b734472b0",
+                "reference": "72bc22c62a1358992e9c7a9dfd75378b734472b0",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
             ],
             "description": "Classes and functions for comercial software development",
             "homepage": "https://github.com/klan1/k1.lib",
-            "time": "2016-10-27 15:33:07"
+            "time": "2016-10-27 18:30:49"
         },
         {
             "name": "klan1/k1.lib-dom",
@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib-dom.git",
-                "reference": "e6f0ab4318157cfe99beac1205833053ce3f8b23"
+                "reference": "b6978909a05ce39758f335b39db180d0cda3733e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/e6f0ab4318157cfe99beac1205833053ce3f8b23",
-                "reference": "e6f0ab4318157cfe99beac1205833053ce3f8b23",
+                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/b6978909a05ce39758f335b39db180d0cda3733e",
+                "reference": "b6978909a05ce39758f335b39db180d0cda3733e",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
             ],
             "description": "Say good bye to the inline HTML tags as strings on your PHP code!. DOM Classes from K1.lib.",
             "homepage": "https://github.com/klan1/k1.lib-dom",
-            "time": "2016-10-23 19:57:33"
+            "time": "2016-10-27 18:30:39"
         },
         {
             "name": "zurb/foundation",

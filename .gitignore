@@ -1,3 +1,4 @@
 /nbproject/private/
 /vendor/zurb/foundation/*
 !/vendor/zurb/foundation/dist/
+!/vendor/zurb/foundation/dist/*
