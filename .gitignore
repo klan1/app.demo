@@ -1,4 +1,4 @@
-composer.lock
+/composer.lock
 /nbproject/
 /bower_components/
 /vendor/

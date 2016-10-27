@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/klan1/k1.lib-dom.git",
-                "reference": "b6978909a05ce39758f335b39db180d0cda3733e"
+                "reference": "1c438a9cdb973b4edf1b8466c6c81b77d412f4d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/b6978909a05ce39758f335b39db180d0cda3733e",
-                "reference": "b6978909a05ce39758f335b39db180d0cda3733e",
+                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/1c438a9cdb973b4edf1b8466c6c81b77d412f4d9",
+                "reference": "1c438a9cdb973b4edf1b8466c6c81b77d412f4d9",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
             ],
             "description": "Say good bye to the inline HTML tags as strings on your PHP code!. DOM Classes from K1.lib.",
             "homepage": "https://github.com/klan1/k1.lib-dom",
-            "time": "2016-10-27 18:30:39"
+            "time": "2016-10-27 18:33:41"
         },
         {
             "name": "zurb/foundation",
