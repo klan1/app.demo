@@ -1,4 +1,4 @@
+composer.lock
 /nbproject/private/
-/vendor/zurb/foundation/*
-!/vendor/zurb/foundation/dist/
-!/vendor/zurb/foundation/dist/*
+/bower_components/
+/vendor/
