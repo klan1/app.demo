@@ -1,6 +1,3 @@
-/config-db-remote.php
 /composer.lock
-/vendor/
-/bower_components/
-/nbproject/
+/nbproject/private/
 /settings/config-db-remote.php
