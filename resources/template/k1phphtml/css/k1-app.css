@@ -14,12 +14,10 @@ Flash of Unstyled Content
 */
 body {
     position: relative;
-    z-index: 1;
 }
 section {
     position: relative;
     display: block;
-    z-index: 2;
 }
 section.k1lib-content {
     height: 100%;
