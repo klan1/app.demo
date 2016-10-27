@@ -13,9 +13,11 @@
             "homepage": "https://klan1.com/ref=k1.lib"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^5.6 | ^7.0",
-        "klan1/k1.lib": "0.8.x-dev",
+        "klan1/k1.lib": "dev-master",
         "klan1/k1.lib-dom": "dev-master",
         "zurb/foundation": "6.2.1"
     }
