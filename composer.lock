@@ -1,0 +1,145 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "82190c7f6251537fe9036fc92e0fbf2e",
+    "content-hash": "1e4a4f22eeab67133cdcfedc0270687e",
+    "packages": [
+        {
+            "name": "klan1/k1.lib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klan1/k1.lib.git",
+                "reference": "49913022bf5e45db223a85513f92680c379cd39e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klan1/k1.lib/zipball/49913022bf5e45db223a85513f92680c379cd39e",
+                "reference": "49913022bf5e45db223a85513f92680c379cd39e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 | ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/init.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klan1 Network",
+                    "homepage": "https://klan1.com/ref=k1.lib"
+                },
+                {
+                    "name": "Alejandro Trujillo J.",
+                    "homepage": "https://klan1.com/ref=k1.lib"
+                }
+            ],
+            "description": "Classes and functions for comercial software development",
+            "homepage": "https://github.com/klan1/k1.lib",
+            "time": "2016-10-27 15:33:07"
+        },
+        {
+            "name": "klan1/k1.lib-dom",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klan1/k1.lib-dom.git",
+                "reference": "e6f0ab4318157cfe99beac1205833053ce3f8b23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klan1/k1.lib-dom/zipball/e6f0ab4318157cfe99beac1205833053ce3f8b23",
+                "reference": "e6f0ab4318157cfe99beac1205833053ce3f8b23",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 | ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/loader.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klan1 Network",
+                    "homepage": "https://klan1.com/ref=k1.lib"
+                },
+                {
+                    "name": "Alejandro Trujillo J.",
+                    "homepage": "https://klan1.com/ref=k1.lib"
+                }
+            ],
+            "description": "Say good bye to the inline HTML tags as strings on your PHP code!. DOM Classes from K1.lib.",
+            "homepage": "https://github.com/klan1/k1.lib-dom",
+            "time": "2016-10-23 19:57:33"
+        },
+        {
+            "name": "zurb/foundation",
+            "version": "6.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zurb/foundation-sites.git",
+                "reference": "7a6ed604689635ddda430ae46a100d30c415959b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zurb/foundation-sites/zipball/7a6ed604689635ddda430ae46a100d30c415959b",
+                "reference": "7a6ed604689635ddda430ae46a100d30c415959b",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ZURB, Inc.",
+                    "email": "foundation@zurb.com",
+                    "homepage": "http://zurb.com"
+                }
+            ],
+            "description": "The most advanced responsive front-end framework in the world.",
+            "homepage": "http://foundation.zurb.com",
+            "keywords": [
+                "JS",
+                "css",
+                "framework",
+                "mobile-first",
+                "responsive",
+                "sass",
+                "scss"
+            ],
+            "time": "2016-04-08 18:15:06"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "klan1/k1.lib": 20,
+        "klan1/k1.lib-dom": 20
+    },
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "^5.6 | ^7.0"
+    },
+    "platform-dev": []
+}
