@@ -12,8 +12,8 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const APP_TITLE = "K1 App";
-const APP_DESCRIPTION = "K1.lib web app implementation demo";
+const APP_TITLE = "Imepex Suite";
+const APP_DESCRIPTION = "K1.lib web app implementation";
 const APP_VERBOSE = 0;
 
 /**
@@ -21,7 +21,7 @@ const APP_VERBOSE = 0;
  */
 // # md5 -s "k1 app demo"
 //MD5 ("k1 app demo") = ffb07e0d73382f34ffdd99567c39921c
-\k1lib\K1MAGIC::set_value("ffb07e0d73382f34ffdd99567c39921c");
+\k1lib\K1MAGIC::set_value("ffb07j0d73382f34ffdd99567c39921c");
 
 /**
  * URL REWRITE ENABLE
@@ -37,7 +37,7 @@ const APP_VERBOSE = 0;
  * SESSION CONFIG
  */
 \k1lib\session\session_plain::enable();
-\k1lib\session\session_plain::set_session_name("K1APP-DEMO");
+\k1lib\session\session_plain::set_session_name("K1APP-IMEPEX-SUITE");
 \k1lib\session\session_plain::set_app_user_levels([
     'god',
     'admin',
@@ -66,18 +66,14 @@ const APP_VERBOSE = 0;
 if ($_SERVER['SERVER_NAME'] != 'k1dev.local') {
     include "config-db-remote.php";
 } else {
-    \k1lib\db\handler::enable("k1app_demo", 'k1dev', '', "localhost", "3306", "mysql");
+    \k1lib\db\handler::enable("k1app_imepex_suite", 'k1dev', '', "localhost", "3306", "mysql");
 }
+
 /**
  * DB Security
  */
 include_once 'db-tables-aliases.php';
-/**
- * Controllers Config
- */
-include_once 'controllers-config.php';
 /*
  * OTHERS
  */
-\k1lib\html\html::set_use_log(FALSE);
 //ini_set('memory_limit', '100M');
