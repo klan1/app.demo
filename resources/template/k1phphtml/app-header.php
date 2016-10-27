@@ -9,8 +9,9 @@ use k1lib\session\session_db as session_db;
 use \k1lib\html\DOM as DOM;
 
 $body = DOM::html()->body();
-
 if (!isset($_GET['just-controller'])) {
+
+    $body_header = $body->header();
 
     $top_bar = new \k1lib\html\foundation\top_bar($body->header());
 
