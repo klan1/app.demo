@@ -12,8 +12,8 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const APP_TITLE = "K1 App";
-const APP_DESCRIPTION = "K1.lib web app implementation demo";
+const APP_TITLE = "E.T. Los Monos - Inventario Web";
+const APP_DESCRIPTION = "Manejo de inventario de las bodegas de frio de la empresa.";
 const APP_VERBOSE = 0;
 
 /**
