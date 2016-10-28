@@ -3,5 +3,11 @@
 namespace k1app;
 
 use k1lib\urlrewrite\url as url;
+use \k1lib\session\session_db as k1lib_session;
 
-\k1lib\html\html_header_go(url::do_url("clientes/"));
+if (k1lib_session::is_logged()) {
+    \k1lib\html\html_header_go(url::do_url("clientes/"));
+} else {
+    \k1lib\html\html_header_go(url::do_url("log/form/"));
+}
+    

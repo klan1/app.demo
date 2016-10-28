@@ -2,10 +2,8 @@
 
 namespace k1app;
 
-use \k1lib\templates\temply as temply;
 use \k1lib\session\session_db as k1lib_session;
 use \k1lib\urlrewrite\url as url;
-use \k1lib\session\session_plain as session_plain;
 use \k1lib\html\DOM as DOM;
 
 $body = DOM::html()->body();
@@ -21,13 +19,13 @@ if (!isset($_GET['just-controller'])) {
 
     $menu_right = $top_bar->menu_right();
 
-    /**
-     * APP CONTROLLERS
-     */
-    $top_bar->add_menu_item(APP_URL . "clientes/", "Clientes");
-    $top_bar->add_menu_item(APP_URL . "proveedores/", "Provedores");
-
     if (k1lib_session::is_logged()) {
+        /**
+         * APP CONTROLLERS
+         */
+        $top_bar->add_menu_item(APP_URL . "clientes/", "Clientes");
+        $top_bar->add_menu_item(APP_URL . "proveedores/", "Provedores");
+
         /**
          * APP Preferences
          */
@@ -37,6 +35,7 @@ if (!isset($_GET['just-controller'])) {
             $li->append_a("#", "App preferences");
 
             $sub_menu = $top_bar->add_sub_menu($li);
+            $top_bar->add_menu_item(url::do_url(APP_URL . "usuarios/"), "Usuarios del App", $sub_menu);
             $top_bar->add_menu_item(url::do_url(APP_URL . "table-explorer/show-tables/"), "Table explorer", $sub_menu)->set_id("table-explorer-menu");
             $top_bar->add_menu_item(APP_URL . "table-metadata/show-tables/", "Manage tables", $sub_menu);
             $li = $top_bar->add_menu_item(APP_URL . "table-metadata/export-field-comments/", "Export field comments", $sub_menu);

@@ -104,3 +104,8 @@ class providers_config extends clients_config {
     const ROOT_URL = "proveedores";
 
 }
+class users_config extends clients_config {
+
+    const ROOT_URL = "usuarios";
+
+}
