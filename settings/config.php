@@ -21,7 +21,7 @@ const APP_VERBOSE = 0;
  */
 // # md5 -s "k1 app demo"
 //MD5 ("k1 app demo") = ffb07e0d73382f34ffdd99567c39921c
-\k1lib\K1MAGIC::set_value("ffb07e0d73382f34ffdd99567c39921c");
+\k1lib\K1MAGIC::set_value("ffb07e0d73382f34fadd99567c39921c");
 
 /**
  * URL REWRITE ENABLE
@@ -37,7 +37,7 @@ const APP_VERBOSE = 0;
  * SESSION CONFIG
  */
 \k1lib\session\session_plain::enable();
-\k1lib\session\session_plain::set_session_name("K1APP-DEMO");
+\k1lib\session\session_plain::set_session_name("K1APP-IMEPEX-SUITE");
 \k1lib\session\session_plain::set_app_user_levels([
     'god',
     'admin',
