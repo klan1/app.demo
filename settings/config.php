@@ -13,7 +13,7 @@ date_default_timezone_set("America/Bogota");
  */
 
 const APP_TITLE = "Imepex Suite";
-const APP_DESCRIPTION = "K1.lib web app implementation";
+const APP_DESCRIPTION = "Suite de control de clientes y exportaciones.";
 const APP_VERBOSE = 0;
 
 /**
