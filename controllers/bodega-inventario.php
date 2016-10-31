@@ -7,6 +7,7 @@ namespace k1app;
 use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
 use \k1lib\html\DOM as DOM;
+use k1lib\session\session_db as session_db;
 
 $body = DOM::html()->body();
 
@@ -24,9 +25,19 @@ $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_
 $controller_object->set_config_from_class("\k1app\warehouses_inventory_config");
 
 /**
+ * USER LOGIN AS CONSTANT
+ */
+$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
+
+/**
  * ALL READY, let's do it :)
  */
 $div = $controller_object->init_board();
+
+// CREATE - UPDATE
+IF ($controller_object->on_board_create() || $controller_object->on_board_update()) {
+    \k1lib\crudlexs\input_helper::set_fk_fields_to_skip(['warehouse_id', 'wh_column_id', 'wh_column_row_id', 'wh_position_id']);
+}
 
 $controller_object->start_board();
 
