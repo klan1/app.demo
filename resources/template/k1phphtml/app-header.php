@@ -25,6 +25,8 @@ if (!isset($_GET['just-controller'])) {
          */
         $top_bar->add_menu_item(APP_URL . "clientes/", "Clientes");
         $top_bar->add_menu_item(APP_URL . "proveedores/", "Provedores");
+        $top_bar->add_menu_item(APP_URL . "productos/", "Productos");
+        $top_bar->add_menu_item(APP_URL . "presentaciones/", "Presentaciones");
 
         /**
          * APP Preferences

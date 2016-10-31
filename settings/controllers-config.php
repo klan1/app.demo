@@ -109,3 +109,15 @@ class users_config extends clients_config {
     const ROOT_URL = "usuarios";
 
 }
+
+class presentations_config extends clients_config {
+
+    const ROOT_URL = "presentaciones";
+
+}
+
+class products_config extends clients_config {
+
+    const ROOT_URL = "productos";
+
+}
