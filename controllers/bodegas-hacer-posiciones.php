@@ -14,6 +14,9 @@ include temply::load_template("header", APP_TEMPLATE_PATH);
 include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
+/**
+ * $_GET['do-floors'] capture and creation button
+ */
 $incoming = \k1lib\forms\check_all_incomming_vars($_GET);
 if (isset($incoming['do-floors'])) {
     $do_foors = TRUE;
@@ -24,7 +27,6 @@ if (isset($incoming['do-floors'])) {
     $do_foors = FALSE;
 }
 
-$floors_default = 5;
 /**
  * Open tables
  */
@@ -34,6 +36,7 @@ $wh_columns_rows = new \k1lib\crudlexs\class_db_table($db, "wh_column_rows");
 $wh_positions = new \k1lib\crudlexs\class_db_table($db, "wh_positions");
 
 $warehouses_data = $warehouses->get_data(TRUE);
+$floors_default = 5;
 
 if ($warehouses_data) {
     unset($warehouses_data[0]);
