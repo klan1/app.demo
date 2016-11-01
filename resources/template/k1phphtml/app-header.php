@@ -15,7 +15,7 @@ if (!isset($_GET['just-controller'])) {
 
     $top_bar->set_title(1, APP_TITLE);
     $top_bar->set_title(2, " :: ");
-    $top_bar->set_title(3, "HOME");
+    $top_bar->set_title(3, "Inicio");
 
     $menu_right = $top_bar->menu_right();
 
@@ -25,6 +25,7 @@ if (!isset($_GET['just-controller'])) {
          */
 //        $li_warehouse = $top_bar->add_menu_item("#", "Bodegas");
 //        $sub_menu = $top_bar->add_sub_menu($li_warehouse);
+        $top_bar->add_menu_item(APP_URL . "tablero/", "Inicio");
         $top_bar->add_menu_item(APP_URL . "bodegas/", "Bodegas");
         $top_bar->add_menu_item(APP_URL . "productos/", "Productos");
         $top_bar->add_menu_item(APP_URL . "bodega-inventario/", "Inventario");

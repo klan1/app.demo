@@ -40,4 +40,24 @@ $controller_object->exec_board();
 
 $controller_object->finish_board();
 
+if ($controller_object->on_board_read()) {
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
+    /**
+     * Present inventory
+     */
+    $actual_inventory = new \k1lib\crudlexs\class_db_table($db, "product_position");
+    $actual_inventory->set_query_filter(['product_exit' => NULL], TRUE);
+    $controller_object->board_read_object->set_related_rows_to_show(50);
+    $related_list = $controller_object->board_read_object->create_related_list($actual_inventory, NULL, "Inventario presente", warehouses_inventory_config::ROOT_URL, warehouses_inventory_config::BOARD_CREATE_URL, warehouses_inventory_config::BOARD_READ_URL, warehouses_inventory_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+    /**
+     * Present inventory
+     */
+    $actual_inventory->clear_query_filter();
+    $actual_inventory->set_query_filter_exclude(['product_exit' => NULL], TRUE);
+    $controller_object->board_read_object->set_related_rows_to_show(10);
+    $related_list = $controller_object->board_read_object->create_related_list($actual_inventory, NULL, "Inventario pasado", warehouses_inventory_config::ROOT_URL, warehouses_inventory_config::BOARD_CREATE_URL, warehouses_inventory_config::BOARD_READ_URL, warehouses_inventory_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+}
+
 $body->content()->append_child($div);

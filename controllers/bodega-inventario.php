@@ -24,6 +24,15 @@ $controller_name = "Inventario de bodega";
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, $top_bar);
 $controller_object->set_config_from_class("\k1app\warehouses_inventory_config");
 
+$incoming = \k1lib\forms\check_all_incomming_vars($_GET);
+
+if (isset($incoming['modo']) && $incoming['modo'] == 'pasado') {
+    $controller_object->db_table->set_query_filter_exclude(['product_exit' => NULL], TRUE);
+} else {
+    $controller_object->db_table->set_query_filter(['product_exit' => NULL], TRUE);
+}
+
+
 /**
  * USER LOGIN AS CONSTANT
  */
@@ -34,17 +43,29 @@ $controller_object->db_table->set_field_constants(["user_login" => session_db::g
  */
 $div = $controller_object->init_board();
 
+$controller_object->read_url_keys_text_for_create("products");
+$controller_object->read_url_keys_text_for_list("products", FALSE);
+
 // CREATE - UPDATE
 IF ($controller_object->on_board_create() || $controller_object->on_board_update()) {
     \k1lib\crudlexs\input_helper::set_fk_fields_to_skip(['warehouse_id', 'wh_column_id', 'wh_column_row_id', 'wh_position_id']);
 }
-
+if ($controller_object->on_object_list()) {
+    $controller_object->board_list_object->set_create_enable(FALSE);
+}
 $controller_object->start_board();
 
 // LIST
 if ($controller_object->on_object_list()) {
-    $read_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_read_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--"]);
-    $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
+    if (isset($incoming['modo']) && $incoming['modo'] == 'pasado') {
+        $create_positions_button = new \k1lib\html\a(url::do_url($_SERVER['REQUEST_URI'], [], FALSE), "Ver inventario presente", "_SELF", "button success");
+    } else {
+        $create_positions_button = new \k1lib\html\a($_SERVER['REQUEST_URI'] . "?modo=pasado", "Ver inventario pasado", "_SELF", "button warning");
+    }
+    $create_positions_button->append_to($controller_object->board_list_object->button_div_tag());
+
+    $read_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_update_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
+    $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, ['product_id']);
 }
 
 $controller_object->exec_board();
