@@ -41,6 +41,9 @@ $controller_object->exec_board();
 $controller_object->finish_board();
 
 if ($controller_object->on_board_read()) {
+    $create_positions_button = new \k1lib\html\a(APP_URL . "/bodegas-hacer-posiciones/", "Crear posiciones", "_SELF", "button small warning");
+    $create_positions_button->append_to($controller_object->board_read_object->button_div_tag());
+    
     $related_div = $div->append_div("row k1lib-crudlexs-related-data");
     /**
      * Related list
