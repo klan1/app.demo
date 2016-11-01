@@ -49,8 +49,8 @@ $controller_object->finish_board();
 //     * Related list
 //     */
 //    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "wh_positions");
-//    $related_div = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Posiciones", warehouse_positions_config::ROOT_URL, warehouse_positions_config::BOARD_CREATE_URL, warehouse_positions_config::BOARD_READ_URL, warehouse_positions_config::BOARD_LIST_URL, TRUE);
-//    $related_div->append_to($related_div);
+//    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Posiciones", warehouse_positions_config::ROOT_URL, warehouse_positions_config::BOARD_CREATE_URL, warehouse_positions_config::BOARD_READ_URL, warehouse_positions_config::BOARD_LIST_URL, TRUE);
+//    $related_list->append_to($related_div);
 //}
 
 $body->content()->append_child($div);

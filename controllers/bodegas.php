@@ -47,8 +47,8 @@ if ($controller_object->on_board_read()) {
      */
     $related_db_table = new \k1lib\crudlexs\class_db_table($db, "wh_columns");
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
-    $related_div = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Columnas", warehouse_columns_config::ROOT_URL, warehouse_columns_config::BOARD_CREATE_URL, warehouse_columns_config::BOARD_READ_URL, warehouse_columns_config::BOARD_LIST_URL, TRUE);
-    $related_div->append_to($related_div);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Columnas", warehouse_columns_config::ROOT_URL, warehouse_columns_config::BOARD_CREATE_URL, warehouse_columns_config::BOARD_READ_URL, warehouse_columns_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
 }
 
 
