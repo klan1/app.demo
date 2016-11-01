@@ -43,6 +43,7 @@ if ($warehouses_data) {
     foreach ($warehouses_data as $wh) {
         $content->append_h2("Bodega: " . $wh['warehouse_name']);
         $content->append_p("Columnas: " . $wh['warehouse_columns']);
+        // GET COLUMNS DATA
         $wh_columns->set_query_filter(['warehouse_id' => $wh['warehouse_id']], TRUE);
         $wh_columns_data = $wh_columns->get_data();
         /**
