@@ -55,7 +55,7 @@ if ($controller_object->on_board_read()) {
     $related_db_table = new \k1lib\crudlexs\class_db_table($db, "products");
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
     $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Productos", products_config::ROOT_URL, products_config::BOARD_CREATE_URL, products_config::BOARD_READ_URL, products_config::BOARD_LIST_URL, TRUE);
-    $related_list->append_to($related_div);
+    $related_list->append_to($related_div); 
 }
 
 $body->content()->append_child($div);
