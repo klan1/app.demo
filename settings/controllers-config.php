@@ -121,3 +121,15 @@ class products_config extends clients_config {
     const ROOT_URL = "productos";
 
 }
+
+class client_has_presentation_config extends clients_config {
+
+    const ROOT_URL = "cliente-presentaciones";
+
+}
+
+class presentation_specs_config extends clients_config {
+
+    const ROOT_URL = "presentaciones-specs";
+
+}

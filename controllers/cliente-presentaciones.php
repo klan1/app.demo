@@ -15,14 +15,14 @@ include temply::load_template("header", APP_TEMPLATE_PATH);
 include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
-$db_table_to_use = "clients";
-$controller_name = "Clientes";
+$db_table_to_use = "clients_has_presentations";
+$controller_name = "Presentaciones de Cliente";
 
 /**
  * ONE LINE config: less codign, more party time!
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, $top_bar);
-$controller_object->set_config_from_class("\k1app\clients_config");
+$controller_object->set_config_from_class("\k1app\client_has_presentation_config");
 
 /**
  * USER LOGIN AS CONSTANT
@@ -33,6 +33,9 @@ $controller_object->db_table->set_field_constants(["user_login" => session_db::g
  * ALL READY, let's do it :)
  */
 $div = $controller_object->init_board();
+
+$controller_object->read_url_keys_text_for_create("clients");
+$controller_object->read_url_keys_text_for_list("clients", TRUE);
 
 $controller_object->start_board();
 
@@ -51,9 +54,9 @@ if ($controller_object->on_board_read()) {
     /**
      * Related list
      */
-    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "clients_has_presentations");
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "presentation_specs");
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
-    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Presentaciones", client_has_presentation_config::ROOT_URL, client_has_presentation_config::BOARD_CREATE_URL, client_has_presentation_config::BOARD_READ_URL, client_has_presentation_config::BOARD_LIST_URL, TRUE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Especificaciones", presentation_specs_config::ROOT_URL, presentation_specs_config::BOARD_CREATE_URL, presentation_specs_config::BOARD_READ_URL, presentation_specs_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
 }
 
