@@ -36,6 +36,7 @@ if (isset($_POST['login-type'])) {
     DOM_notifications::queue_mesasage("Incorrect login form", "alert");
 }
 
+
 // chekc the magic value
 $post_data = $app_session->catch_post();
 if ($post_data) {
