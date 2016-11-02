@@ -18,7 +18,7 @@ include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
 $warehouse_url_value = url::set_url_rewrite_var(url::get_url_level_count(), 'warehouse', FALSE);
 
-$content->append_h3(APP_TITLE);
+//$content->append_h1(APP_TITLE);
 
 $content_grid = new \k1lib\html\foundation\grid(1, 2, $content);
 
