@@ -14,106 +14,75 @@ include temply::load_template("header", APP_TEMPLATE_PATH);
 include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
+$warehouse_url_value = url::set_url_rewrite_var(url::get_url_level_count(), 'warehouse', FALSE);
+
+$content->append_h3(APP_TITLE);
+
+$content_grid = new \k1lib\html\foundation\grid(1, 2, $content);
+
+$col1 = $content_grid->row(1)->col(1)->large(6)->medium(6)->small(12);
+$col2 = $content_grid->row(1)->col(2)->large(6)->medium(6)->small(12);
+
 /**
- * $_GET['do-floors'] capture and creation button
+ * COL 1
  */
-$incoming = \k1lib\forms\check_all_incomming_vars($_GET);
-if (isset($incoming['do-floors'])) {
-    $do_foors = TRUE;
-    $content->append_child(new \k1lib\html\foundation\callout("Creating floors"));
+$col1->append_h4("Utilizacion por bodega");
+$warehouses = new \k1lib\crudlexs\class_db_table($db, "warehouses");
+if ($warehouse_url_value) {
+    $warehouse_filter = "WHERE product_position.warehouse_id = {$warehouse_url_value} AND product_position.product_exit IS NULL";
+    $col1->append_p(new \k1lib\html\a("../", "Ver todas"));
 } else {
-    $do_floors_button = new \k1lib\html\a(url::do_url($_SERVER['REQUEST_URI'], ['do-floors' => 1], FALSE), "Crear pisos", "_self", "button small warning");
-    $do_floors_button->append_to($content);
-    $do_foors = FALSE;
+    $warehouse_filter = 'WHERE product_position.product_exit IS NULL';
 }
 
-/**
- * Open tables
- */
-$warehouses = new \k1lib\crudlexs\class_db_table($db, "warehouses");
-$wh_columns = new \k1lib\crudlexs\class_db_table($db, "wh_columns");
-$wh_columns_rows = new \k1lib\crudlexs\class_db_table($db, "wh_column_rows");
-$wh_positions = new \k1lib\crudlexs\class_db_table($db, "wh_positions");
+$sql_query = "SELECT warehouses.warehouse_id AS ID, 
+	warehouses.warehouse_name AS BODEGA, 
+	SUM(product_position.product_weight) as PESO
+FROM warehouses INNER JOIN product_position ON warehouses.warehouse_id = product_position.warehouse_id
+{$warehouse_filter}
+GROUP BY warehouses.warehouse_id
+ORDER BY warehouses.warehouse_id ASC";
+
+$warehouses->set_custom_sql_query($sql_query);
 
 $warehouses_data = $warehouses->get_data(TRUE);
-$floors_default = 5;
 
 if ($warehouses_data) {
-    unset($warehouses_data[0]);
-    /**
-     * WAREHOUSES LEVEL
-     */
-    foreach ($warehouses_data as $wh) {
-        $content->append_h2("Bodega: " . $wh['warehouse_name']);
-        $content->append_p("Columnas: " . $wh['warehouse_columns']);
-        // GET COLUMNS DATA
-        $wh_columns->set_query_filter(['warehouse_id' => $wh['warehouse_id']], TRUE);
-        $wh_columns_data = $wh_columns->get_data();
-        /**
-         * COLUMNS LEVEL
-         */
-        unset($wh_columns_data[0]);
-        foreach ($wh_columns_data as $wh_column) {
-            $content->append_h3("Columna " . $wh_column['wh_column_id']);
-            $content->append_p("Filas: " . $wh_column['wh_column_rows']);
-            /**
-             * CREATE ROWS
-             */
-            for ($row = 1; $row <= $wh_column['wh_column_rows']; $row++) {
-                $row_data = array(
-                    'warehouse_id' => $wh_column['warehouse_id'],
-                    'wh_column_id' => $wh_column['wh_column_id'],
-                    'wh_column_row_id' => $row,
-                );
-                if ($wh_column['wh_column_rows'] == 1) {
-                    $row_data['wh_column_row_floors'] = 1;
-                } else {
-                    $row_data['wh_column_row_floors'] = $floors_default;
-                }
-                if (\k1lib\sql\sql_insert($db, $wh_columns_rows->get_db_table_name(), $row_data)) {
-                    $content->append_p(print_r($row_data, TRUE));
-                    $content->append_p("Inserted!");
-                } else {
-                    $content->append_p("Row {$row} already exist.");
-                }
-            }
-            // GET ROW DATA
-            $wh_columns_rows->set_query_filter(['warehouse_id' => $wh_column['warehouse_id'], 'wh_column_id' => $wh_column['wh_column_id']], TRUE);
-            $wh_columns_rows_data = $wh_columns_rows->get_data();
-            /**
-             * ROW LEVEL
-             */
-            unset($wh_columns_rows_data[0]);
-            foreach ($wh_columns_rows_data as $wh_row) {
-                $content->append_h4("Fila " . $wh_row['wh_column_row_id']);
-                $content->append_p("Pisos: " . $wh_row['wh_column_row_floors']);
-                /**
-                 * FLOOR LEVEL
-                 */
-                for ($floor = 1; $floor <= $wh_row['wh_column_row_floors']; $floor++) {
-                    $position = array(
-                        'warehouse_id' => $wh_row['warehouse_id'],
-                        'wh_column_id' => $wh_row['wh_column_id'],
-                        'wh_column_row_id' => $wh_row['wh_column_row_id'],
-                        'wh_position_id' => $floor,
-                    );
-                    /**
-                     * Let's do the floors
-                     */
-                    if ($do_foors) {
-                        if (\k1lib\sql\sql_insert($db, $wh_positions->get_db_table_name(), $position)) {
-                            $content->append_p(print_r($position, TRUE));
-                            $content->append_p("Floor inserted!");
-                        } else {
-                            $content->append_p("Floor {$floor} already exist.");
-                        }
-                    } else {
-                        $content->append_p(print_r($position, TRUE));
-                    }
-                }
-            }
-            $wh_columns_rows->clear_query_filter();
-        }
-        $wh_columns->clear_query_filter();
+    $wh_table = new \k1lib\html\foundation\table_from_data();
+    $wh_table->append_to($col1);
+
+    $wh_table->set_data($warehouses_data)->set_class('scroll');
+    if (!$warehouse_url_value) {
+        $wh_table->insert_tag_on_field(new \k1lib\html\a('./{{field:ID}}/', "{{field:BODEGA}}"), ['BODEGA']);
     }
+}
+/**
+ * COL 2
+ */
+$col2->append_h4("Productos presentes");
+
+$products = new \k1lib\crudlexs\class_db_table($db, "products");
+
+$sql_query = "SELECT products.product_id AS COD, 
+	products.product_name AS PRODUCTO, 
+	SUM(product_position.product_weight) AS PESO
+FROM products INNER JOIN product_position ON products.product_id = product_position.product_id
+{$warehouse_filter}
+GROUP BY products.product_id
+ORDER BY PESO DESC";
+
+$products->set_custom_sql_query($sql_query);
+
+$products_data = $products->get_data(TRUE);
+
+if ($products_data) {
+    $product_table = new \k1lib\html\foundation\table_from_data();
+    $product_table->append_to($col2);
+
+    $product_table->set_data($products_data)->set_class('scroll');
+    $product_table->set_fields_for_key_array_text(['COD']);
+    $product_url = url::do_url(APP_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/{{field:COD}}/', ['auth-code' => '--authcode--', 'back-url' => $_SERVER['REQUEST_URI']]);
+    $product_table->insert_tag_on_field(new \k1lib\html\a($product_url, "{{field:PRODUCTO}}"), ['PRODUCTO']);
+
+//    $product_table->
 }

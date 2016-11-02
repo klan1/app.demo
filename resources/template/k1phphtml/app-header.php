@@ -28,7 +28,11 @@ if (!isset($_GET['just-controller'])) {
         $top_bar->add_menu_item(APP_URL . "tablero/", "Inicio");
         $top_bar->add_menu_item(APP_URL . "bodegas/", "Bodegas");
         $top_bar->add_menu_item(APP_URL . "productos/", "Productos");
-        $top_bar->add_menu_item(APP_URL . "bodega-inventario/", "Inventario");
+        $li_inventario = $top_bar->add_menu_item("#", "Inventario");
+        $sub_menu_inventario = $top_bar->add_sub_menu($li_inventario);
+        $top_bar->add_menu_item(APP_URL . "bodega-inventario/", "Inventario presente", $sub_menu_inventario);
+        $top_bar->add_menu_item(APP_URL . "bodega-inventario/?modo=pasado", "Historial", $sub_menu_inventario);
+        $top_bar->add_menu_item(APP_URL . "bodega-inventario/?modo=sin-ubicar", "Por ubicar", $sub_menu_inventario);
 
         /**
          * APP Preferences
