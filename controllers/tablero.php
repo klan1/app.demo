@@ -8,6 +8,8 @@ use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
 use \k1lib\html\DOM as DOM;
 
+\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'log/form/');
+
 $content = DOM::html()->body()->content();
 
 include temply::load_template("header", APP_TEMPLATE_PATH);
