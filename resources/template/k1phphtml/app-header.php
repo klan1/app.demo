@@ -89,8 +89,6 @@ if (!isset($_GET['just-controller'])) {
         /**
          * AUTO APP
          */
-        $li = $top_bar->add_menu_item(url::do_url(APP_URL . "table-explorer/show-tables/"), "Home");
-        $li->set_id("table-explorer-menu");
 
         if (k1lib_session::is_logged()) {
             /**
