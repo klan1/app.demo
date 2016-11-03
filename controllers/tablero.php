@@ -20,22 +20,33 @@ $warehouse_url_value = url::set_url_rewrite_var(url::get_url_level_count(), 'war
 
 $content->append_h1(APP_TITLE);
 
-$content_grid = new \k1lib\html\foundation\grid(1, 2, $content);
+/**
+ * HTML GRID DEFINITION
+ */
+$content_grid = new \k1lib\html\foundation\grid(2, 2, $content);
 
-$col1 = $content_grid->row(1)->col(1)->large(7)->medium(7)->small(12)->set_class("text-centered");
-$col2 = $content_grid->row(1)->col(2)->large(5)->medium(5)->small(12)->set_class("text-centered");
+$row1_col1 = $content_grid->row(1)->col(1)->large(7)->medium(7)->small(12);
+$row1_col2 = $content_grid->row(1)->col(2)->large(5)->medium(5)->small(12);
+
+$row2_col1 = $content_grid->row(1)->col(1)->large(7)->medium(7)->small(12);
+$row2_col2 = $content_grid->row(1)->col(2)->large(5)->medium(5)->small(12);
 
 /**
- * COL 1
+ * GRID ROW 1
  */
-$col1->append_h4("Utilizacion por bodega");
+/**
+ * GRID ROW 1 COL 1
+ */
+$row1_col1->append_h4("Utilizacion por bodega");
 if ($warehouse_url_value) {
     $warehouse_filter = "WHERE ID = {$warehouse_url_value}";
     $product_filter = "WHERE product_position.warehouse_id = {$warehouse_url_value} AND product_position.product_exit IS NULL";
-    $col1->append_p(new \k1lib\html\a("../", "Ver todas"));
+    $row1_col1->append_p(new \k1lib\html\a("../", "Ver todas"));
+    $product_title_append = " EN BODEGA $warehouse_url_value";
 } else {
     $warehouse_filter = '';
     $product_filter = "WHERE product_position.product_exit IS NULL";
+    $product_title_append = "";
 }
 
 $sql_query = "SELECT *
@@ -47,17 +58,17 @@ $warehouses_data = \k1lib\sql\sql_query($db, $sql_query, TRUE, TRUE);
 
 if ($warehouses_data) {
     $wh_table = new \k1lib\html\foundation\table_from_data();
-    $wh_table->append_to($col1);
+    $wh_table->append_to($row1_col1);
 
-    $wh_table->set_data($warehouses_data)->set_class('scroll');
+    $wh_table->set_data($warehouses_data)->set_class('full');
     if (!$warehouse_url_value) {
         $wh_table->insert_tag_on_field(new \k1lib\html\a('./{{field:ID}}/', "{{field:BODEGA}}"), ['BODEGA']);
     }
 }
 /**
- * COL 2
+ * GRID ROW 1 COL 2
  */
-$col2->append_h4("Productos presentes");
+$row1_col2->append_h4("Productos presentes{$product_title_append}");
 
 $products = new \k1lib\crudlexs\class_db_table($db, "products");
 
@@ -69,18 +80,74 @@ FROM products A INNER JOIN product_position ON A.product_id = product_position.p
 GROUP BY COD
 ORDER BY PESO DESC";
 
-$products->set_custom_sql_query($sql_query);
-
-$products_data = $products->get_data(TRUE);
+$products_data = \k1lib\sql\sql_query($db, $sql_query, TRUE, TRUE);
 
 if ($products_data) {
     $product_table = new \k1lib\html\foundation\table_from_data();
-    $product_table->append_to($col2);
+    $product_table->append_to($row1_col2);
 
-    $product_table->set_data($products_data)->set_class('scroll');
+    $product_table->set_data($products_data)->set_class('full');
     $product_table->set_fields_for_key_array_text(['COD']);
     $product_url = url::do_url(APP_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/{{field:COD}}/', ['auth-code' => '--authcode--', 'back-url' => $_SERVER['REQUEST_URI']]);
     $product_table->insert_tag_on_field(new \k1lib\html\a($product_url, "{{field:PRODUCTO}}"), ['PRODUCTO']);
+}
+/**
+ * GRID ROW 2
+ */
+/**
+ * GRID ROW 2 COL 1
+ */
+$row1_col1->append_h4("Utilizacion por bodega");
+if ($warehouse_url_value) {
+    $warehouse_filter = "WHERE ID = {$warehouse_url_value}";
+    $product_filter = "WHERE product_position.warehouse_id = {$warehouse_url_value} AND product_position.product_exit IS NULL";
+    $row1_col1->append_p(new \k1lib\html\a("../", "Ver todas"));
+    $product_title_append = " EN BODEGA $warehouse_url_value";
+} else {
+    $warehouse_filter = '';
+    $product_filter = "WHERE product_position.product_exit IS NULL";
+    $product_title_append = "";
+}
 
-//    $product_table->
+$sql_query = "SELECT *
+FROM view_warehouse_dashboard
+{$warehouse_filter}";
+
+
+$warehouses_data = \k1lib\sql\sql_query($db, $sql_query, TRUE, TRUE);
+
+if ($warehouses_data) {
+    $wh_table = new \k1lib\html\foundation\table_from_data();
+    $wh_table->append_to($row1_col1);
+
+    $wh_table->set_data($warehouses_data)->set_class('full');
+    if (!$warehouse_url_value) {
+        $wh_table->insert_tag_on_field(new \k1lib\html\a('./{{field:ID}}/', "{{field:BODEGA}}"), ['BODEGA']);
+    }
+}
+/**
+ * GRID ROW 2 COL 2
+ */
+$row1_col2->append_h4("Productos presentes{$product_title_append}");
+
+$products = new \k1lib\crudlexs\class_db_table($db, "products");
+
+$sql_query = "SELECT A.product_id AS COD, 
+	A.product_name AS PRODUCTO, 
+	SUM(product_position.product_weight) AS PESO
+FROM products A INNER JOIN product_position ON A.product_id = product_position.product_id
+{$product_filter}
+GROUP BY COD
+ORDER BY PESO DESC";
+
+$products_data = \k1lib\sql\sql_query($db, $sql_query, TRUE, TRUE);
+
+if ($products_data) {
+    $product_table = new \k1lib\html\foundation\table_from_data();
+    $product_table->append_to($row1_col2);
+
+    $product_table->set_data($products_data)->set_class('full');
+    $product_table->set_fields_for_key_array_text(['COD']);
+    $product_url = url::do_url(APP_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/{{field:COD}}/', ['auth-code' => '--authcode--', 'back-url' => $_SERVER['REQUEST_URI']]);
+    $product_table->insert_tag_on_field(new \k1lib\html\a($product_url, "{{field:PRODUCTO}}"), ['PRODUCTO']);
 }
