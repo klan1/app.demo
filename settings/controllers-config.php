@@ -59,7 +59,7 @@ class clients_config {
     /**
      * URLS
      */
-    const ROOT_URL = "clients";
+    const ROOT_URL = "app/clients";
     const BOARD_CREATE_URL = "crear";
     const BOARD_READ_URL = "detalles";
     const BOARD_UPDATE_URL = "actualizar";
@@ -101,35 +101,35 @@ class clients_config {
 
 class providers_config extends clients_config {
 
-    const ROOT_URL = "proveedores";
+    const ROOT_URL = "app/proveedores";
 
 }
 class users_config extends clients_config {
 
-    const ROOT_URL = "usuarios";
+    const ROOT_URL = "app/usuarios";
 
 }
 
 class presentations_config extends clients_config {
 
-    const ROOT_URL = "presentaciones";
+    const ROOT_URL = "app/presentaciones";
 
 }
 
 class products_config extends clients_config {
 
-    const ROOT_URL = "productos";
+    const ROOT_URL = "app/productos";
 
 }
 
 class client_has_presentation_config extends clients_config {
 
-    const ROOT_URL = "cliente-presentaciones";
+    const ROOT_URL = "app/cliente-presentaciones";
 
 }
 
 class presentation_specs_config extends clients_config {
 
-    const ROOT_URL = "presentaciones-specs";
+    const ROOT_URL = "app/presentaciones-specs";
 
 }

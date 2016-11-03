@@ -23,10 +23,10 @@ if (!isset($_GET['just-controller'])) {
         /**
          * APP CONTROLLERS
          */
-        $top_bar->add_menu_item(APP_URL . "clientes/", "Clientes");
-        $top_bar->add_menu_item(APP_URL . "proveedores/", "Provedores");
-        $top_bar->add_menu_item(APP_URL . "productos/", "Productos");
-        $top_bar->add_menu_item(APP_URL . "presentaciones/", "Presentaciones");
+        $top_bar->add_menu_item(APP_URL . "app/clientes/", "Clientes");
+        $top_bar->add_menu_item(APP_URL . "app/proveedores/", "Provedores");
+        $top_bar->add_menu_item(APP_URL . "app/productos/", "Productos");
+        $top_bar->add_menu_item(APP_URL . "app/presentaciones/", "Presentaciones");
 
         /**
          * APP Preferences
@@ -37,7 +37,7 @@ if (!isset($_GET['just-controller'])) {
             $li->append_a("#", "App preferences");
 
             $sub_menu = $top_bar->add_sub_menu($li);
-            $top_bar->add_menu_item(url::do_url(APP_URL . "usuarios/"), "Usuarios del App", $sub_menu);
+            $top_bar->add_menu_item(url::do_url(APP_URL . "app/usuarios/"), "Usuarios del App", $sub_menu);
             $top_bar->add_menu_item(url::do_url(APP_URL . "table-explorer/show-tables/"), "Table explorer", $sub_menu)->set_id("table-explorer-menu");
             $top_bar->add_menu_item(APP_URL . "table-metadata/show-tables/", "Manage tables", $sub_menu);
             $li = $top_bar->add_menu_item(APP_URL . "table-metadata/export-field-comments/", "Export field comments", $sub_menu);
