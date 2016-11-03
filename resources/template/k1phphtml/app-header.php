@@ -25,13 +25,13 @@ if (!isset($_GET['just-controller'])) {
          */
 //        $li_warehouse = $top_bar->add_menu_item("#", "Bodegas");
 //        $sub_menu = $top_bar->add_sub_menu($li_warehouse);
-        $top_bar->add_menu_item(APP_URL . "tablero/", "Inicio");
-        $top_bar->add_menu_item(APP_URL . "productos/", "Productos");
+        $top_bar->add_menu_item(APP_URL . "app/tablero/", "Inicio");
+        $top_bar->add_menu_item(APP_URL . "app/productos/", "Productos");
         $li_inventario = $top_bar->add_menu_item("#", "Inventario");
         $sub_menu_inventario = $top_bar->add_sub_menu($li_inventario);
-        $top_bar->add_menu_item(APP_URL . "bodega-inventario/", "Inventario presente", $sub_menu_inventario);
-        $top_bar->add_menu_item(APP_URL . "bodega-inventario/?modo=pasado", "Historial", $sub_menu_inventario);
-        $top_bar->add_menu_item(APP_URL . "bodega-inventario/?modo=sin-ubicar", "Por ubicar", $sub_menu_inventario);
+        $top_bar->add_menu_item(APP_URL . "app/bodega-inventario/", "Inventario presente", $sub_menu_inventario);
+        $top_bar->add_menu_item(APP_URL . "app/bodega-inventario/?modo=pasado", "Historial", $sub_menu_inventario);
+        $top_bar->add_menu_item(APP_URL . "app/bodega-inventario/?modo=sin-ubicar", "Por ubicar", $sub_menu_inventario);
 
         /**
          * APP Preferences
@@ -42,8 +42,8 @@ if (!isset($_GET['just-controller'])) {
             $li->append_a("#", "App preferences");
 
             $sub_menu = $top_bar->add_sub_menu($li);
-            $top_bar->add_menu_item(url::do_url(APP_URL . "usuarios/"), "Usuarios del App", $sub_menu);
-            $top_bar->add_menu_item(APP_URL . "bodegas/", "Bodegas", $sub_menu);
+            $top_bar->add_menu_item(url::do_url(APP_URL . "app/usuarios/"), "Usuarios del App", $sub_menu);
+            $top_bar->add_menu_item(APP_URL . "app/bodegas/", "Bodegas", $sub_menu);
             $top_bar->add_menu_item(url::do_url(APP_URL . "table-explorer/show-tables/"), "Table explorer", $sub_menu)->set_id("table-explorer-menu");
             $top_bar->add_menu_item(APP_URL . "table-metadata/show-tables/", "Manage tables", $sub_menu);
             $li = $top_bar->add_menu_item(APP_URL . "table-metadata/export-field-comments/", "Export field comments", $sub_menu);

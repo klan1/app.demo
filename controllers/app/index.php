@@ -9,15 +9,15 @@ if (session_db::is_logged()) {
     $controller_to_include = url::set_next_url_level(APP_CONTROLLERS_PATH, FALSE);
 
     if (!$controller_to_include) {
-        if (session_db::check_user_level(['god', 'admin'])) {
-            $go_url = url::do_url("admin-url/");
-        } elseif (session_db::check_user_level(['user'])) {
-            $get_params = ["auth-code" => md5(\k1lib\K1MAGIC::get_value() . session_db::get_user_login())];
-            $go_url = url::do_url('/' . session_db::get_user_login() . "/", $get_params);
-        } else {
-            trigger_error("No idea how you do it!", E_USER_ERROR);
-        }
-        \k1lib\html\html_header_go($go_url);
+//        if (session_db::check_user_level(['god', 'admin'])) {
+//            $go_url = url::do_url("admin-url/");
+//        } elseif (session_db::check_user_level(['user'])) {
+//            $get_params = ["auth-code" => md5(\k1lib\K1MAGIC::get_value() . session_db::get_user_login())];
+//            $go_url = url::do_url('/' . session_db::get_user_login() . "/", $get_params);
+//        } else {
+//            trigger_error("No idea how you do it!", E_USER_ERROR);
+//        }
+        \k1lib\html\html_header_go('app/tablero');
     } else {
         require $controller_to_include;
     }

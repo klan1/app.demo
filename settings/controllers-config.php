@@ -59,7 +59,7 @@ class warehouses_config {
     /**
      * URLS
      */
-    const ROOT_URL = "bodegas";
+    const ROOT_URL = "app/bodegas";
     const BOARD_CREATE_URL = "crear";
     const BOARD_READ_URL = "detalles";
     const BOARD_UPDATE_URL = "actualizar";
@@ -101,34 +101,34 @@ class warehouses_config {
 
 class warehouse_columns_config extends warehouses_config {
 
-    const ROOT_URL = "bodega-columnas";
+    const ROOT_URL = "app/bodega-columnas";
 
 }
 class warehouse_positions_config extends warehouses_config {
 
-    const ROOT_URL = "bodega-posiciones";
+    const ROOT_URL = "app/bodega-posiciones";
 
 }
 class warehouse_columns_row_config extends warehouses_config {
 
-    const ROOT_URL = "bodega-columna-filas";
+    const ROOT_URL = "app/bodega-columna-filas";
 
 }
 
 class products_config extends warehouses_config {
 
-    const ROOT_URL = "productos";
+    const ROOT_URL = "app/productos";
 
 }
 
 class warehouses_inventory_config extends warehouses_config {
 
-    const ROOT_URL = "bodega-inventario";
+    const ROOT_URL = "app/bodega-inventario";
 
 }
 
 class users_config extends warehouses_config {
 
-    const ROOT_URL = "usuarios";
+    const ROOT_URL = "app/usuarios";
 
 }
