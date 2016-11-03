@@ -22,32 +22,28 @@ $content->append_h1(APP_TITLE);
 
 $content_grid = new \k1lib\html\foundation\grid(1, 2, $content);
 
-$col1 = $content_grid->row(1)->col(1)->large(6)->medium(6)->small(12);
-$col2 = $content_grid->row(1)->col(2)->large(6)->medium(6)->small(12);
+$col1 = $content_grid->row(1)->col(1)->large(7)->medium(7)->small(12)->set_class("text-centered");
+$col2 = $content_grid->row(1)->col(2)->large(5)->medium(5)->small(12)->set_class("text-centered");
 
 /**
  * COL 1
  */
 $col1->append_h4("Utilizacion por bodega");
-$warehouses = new \k1lib\crudlexs\class_db_table($db, "warehouses");
 if ($warehouse_url_value) {
-    $warehouse_filter = "WHERE product_position.warehouse_id = {$warehouse_url_value} AND product_position.product_exit IS NULL";
+    $warehouse_filter = "WHERE ID = {$warehouse_url_value}";
+    $product_filter = "WHERE product_position.warehouse_id = {$warehouse_url_value} AND product_position.product_exit IS NULL";
     $col1->append_p(new \k1lib\html\a("../", "Ver todas"));
 } else {
-    $warehouse_filter = 'WHERE product_position.product_exit IS NULL';
+    $warehouse_filter = '';
+    $product_filter = "WHERE product_position.product_exit IS NULL";
 }
 
-$sql_query = "SELECT warehouses.warehouse_id AS ID, 
-	warehouses.warehouse_name AS BODEGA, 
-	SUM(product_position.product_weight) as PESO
-FROM warehouses INNER JOIN product_position ON warehouses.warehouse_id = product_position.warehouse_id
-{$warehouse_filter}
-GROUP BY warehouses.warehouse_id
-ORDER BY warehouses.warehouse_id ASC";
+$sql_query = "SELECT *
+FROM view_warehouse_dashboard
+{$warehouse_filter}";
 
-$warehouses->set_custom_sql_query($sql_query);
 
-$warehouses_data = $warehouses->get_data(TRUE);
+$warehouses_data = \k1lib\sql\sql_query($db, $sql_query, TRUE, TRUE);
 
 if ($warehouses_data) {
     $wh_table = new \k1lib\html\foundation\table_from_data();
@@ -65,12 +61,12 @@ $col2->append_h4("Productos presentes");
 
 $products = new \k1lib\crudlexs\class_db_table($db, "products");
 
-$sql_query = "SELECT products.product_id AS COD, 
-	products.product_name AS PRODUCTO, 
+$sql_query = "SELECT A.product_id AS COD, 
+	A.product_name AS PRODUCTO, 
 	SUM(product_position.product_weight) AS PESO
-FROM products INNER JOIN product_position ON products.product_id = product_position.product_id
-{$warehouse_filter}
-GROUP BY products.product_id
+FROM products A INNER JOIN product_position ON A.product_id = product_position.product_id
+{$product_filter}
+GROUP BY COD
 ORDER BY PESO DESC";
 
 $products->set_custom_sql_query($sql_query);
