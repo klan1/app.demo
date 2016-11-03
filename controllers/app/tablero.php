@@ -26,8 +26,8 @@ $content->set_class("tablero");
  */
 $content_grid = new \k1lib\html\foundation\grid(2, 2, $content);
 
-$row1_col1 = $content_grid->row(1)->col(1)->large(7)->medium(7)->small(12);
-$row1_col2 = $content_grid->row(1)->col(2)->large(5)->medium(5)->small(12);
+$row1_col1 = $content_grid->row(1)->col(1)->large(6)->medium(6)->small(12);
+$row1_col2 = $content_grid->row(1)->col(2)->large(6)->medium(6)->small(12);
 
 $row2_col1 = $content_grid->row(2)->col(1)->large(6)->medium(6)->small(12);
 $row2_col2 = $content_grid->row(2)->col(2)->large(6)->medium(6)->small(12);
