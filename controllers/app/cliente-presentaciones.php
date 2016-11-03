@@ -1,6 +1,7 @@
 <?php
 
 namespace k1app;
+
 // This might be different on your proyect
 
 use \k1lib\templates\temply as temply;
@@ -52,11 +53,24 @@ $controller_object->finish_board();
 if ($controller_object->on_board_read()) {
     $related_div = $div->append_div("row k1lib-crudlexs-related-data");
     /**
-     * Related list
+     * Related list - LASTEST
+     */
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "presentation_specs");
+    $related_db_table->set_group_by(['spec_type']);
+    $related_db_table->set_order_by('datetime_in', 'DESC');
+    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Especificaciones Actuales", presentation_specs_config::ROOT_URL, presentation_specs_config::BOARD_CREATE_URL, presentation_specs_config::BOARD_READ_URL, presentation_specs_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+    /**
+     * Related list - ALL
+     * No reuso el objeto de tabla por que no tengo metodos (aun) para lipiar todo 
+     * sobre lo que se hizo SET_ en la anterior.
      */
     $related_db_table = new \k1lib\crudlexs\class_db_table($db, "presentation_specs");
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
-    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Especificaciones", presentation_specs_config::ROOT_URL, presentation_specs_config::BOARD_CREATE_URL, presentation_specs_config::BOARD_READ_URL, presentation_specs_config::BOARD_LIST_URL, TRUE);
+    $controller_object->board_read_object->set_related_show_new(FALSE);
+    $related_db_table->set_order_by('datetime_in', 'DESC');
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Historial de especificaciones", presentation_specs_config::ROOT_URL, presentation_specs_config::BOARD_CREATE_URL, presentation_specs_config::BOARD_READ_URL, presentation_specs_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
 }
 
