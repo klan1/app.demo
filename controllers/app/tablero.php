@@ -95,7 +95,7 @@ if ($products_data) {
 /**
  * GRID ROW 2
  */
-$table = new \k1lib\crudlexs\class_db_table($db, "product_position");
+$db_table = new \k1lib\crudlexs\class_db_table($db, "product_position");
 /**
  * GRID ROW 2 COL 1
  */
@@ -112,10 +112,10 @@ if ($warehouse_url_value) {
     $filter['warehouse_id'] = $warehouse_url_value;
 }
 
-$table->set_query_filter($filter, TRUE);
-$table->set_order_by('product_datetime_in', 'DESC');
+$db_table->set_query_filter($filter, TRUE);
+$db_table->set_order_by('product_datetime_in', 'DESC');
 
-$list = new \k1lib\crudlexs\listing($table, NULL);
+$list = new \k1lib\crudlexs\listing($db_table, NULL);
 if ($list->load_db_table_data('show-related')) {
     $list->apply_field_label_filter();
     $list->apply_label_filter();
@@ -139,7 +139,7 @@ $row2_col1->append_h4("ULTIMOS 10 PRODUCTOS INGRESADOS {$span_view_all_in}");
 /**
  * Present inventory
  */
-$table->clear_query_filter();
+$db_table->clear_query_filter();
 $filter = [
     'product_exit' => NULL,
 ];
@@ -152,12 +152,12 @@ $filter_exclude = [
     'wh_column_row_id' => NULL,
     'wh_column_row_position_id' => NULL,
 ];
-$table->set_query_filter($filter, TRUE);
-$table->set_query_filter_exclude($filter_exclude, TRUE);
-$table->set_order_by('product_datetime_in', 'ASC');
-$table->set_query_limit(10);
+$db_table->set_query_filter($filter, TRUE);
+$db_table->set_query_filter_exclude($filter_exclude, TRUE);
+$db_table->set_order_by('product_datetime_in', 'ASC');
+$db_table->set_query_limit(10);
 
-$list = new \k1lib\crudlexs\listing($table, NULL);
+$list = new \k1lib\crudlexs\listing($db_table, NULL);
 if ($list->load_db_table_data('show-related')) {
     $list->apply_field_label_filter();
     $list->apply_label_filter();
@@ -183,18 +183,18 @@ $row2_col2->append_h4("ULTIMOS 10 PRODUCTOS RETIRADOS {$span_view_all_out}");
 /**
  * Past inventory
  */
-$table->clear_query_filter();
+$db_table->clear_query_filter();
 $filter = [
     'product_exit' => NULL,
 ];
 if ($warehouse_url_value) {
     $filter['warehouse_id'] = $warehouse_url_value;
 }
-$table->set_query_filter_exclude($filter, TRUE);
-$table->set_order_by('product_datetime_in', 'ASC');
-$table->set_query_limit(10);
+$db_table->set_query_filter_exclude($filter, TRUE);
+$db_table->set_order_by('product_datetime_in', 'ASC');
+$db_table->set_query_limit(10);
 
-$list = new \k1lib\crudlexs\listing($table, NULL);
+$list = new \k1lib\crudlexs\listing($db_table, NULL);
 if ($list->load_db_table_data('show-related')) {
     $list->apply_field_label_filter();
     $list->apply_label_filter();
@@ -204,7 +204,7 @@ if ($list->load_db_table_data('show-related')) {
 
 
     $list->do_html_object();
-    $table = $list->get_html_table()
+    $db_table = $list->get_html_table()
             ->hide_fields(['user_login', 'product_valid', 'product_datetime_in'])
             ->append_to($row2_col2);
 } else {
