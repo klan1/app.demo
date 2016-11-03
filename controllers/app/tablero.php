@@ -132,8 +132,10 @@ if ($list->load_db_table_data('show-related')) {
     $row2_col1->append_div("callout primary")->set_value("Sin datos para mostrar");
 }
 
-$a_view_all_in = new \k1lib\html\a(url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_LIST_URL . '/'), "ver todos");
-$row2_col1->append_h4("ULTIMOS 10 PRODUCTOS INGRESADOS {$a_view_all_in}");
+
+$span_view_all_in = new \k1lib\html\span();
+$span_view_all_in->append_a(url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_LIST_URL . '/'), "(ver todos)");
+$row2_col1->append_h4("ULTIMOS 10 PRODUCTOS INGRESADOS {$span_view_all_in}");
 /**
  * Present inventory
  */
@@ -174,8 +176,10 @@ if ($list->load_db_table_data('show-related')) {
 /**
  * GRID ROW 2 COL 2
  */
-$a_view_all_out = new \k1lib\html\a(url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_LIST_URL . '/?modo=pasado'), "ver todos");
-$row2_col2->append_h4("ULTIMOS 10 PRODUCTOS RETIRADOS {$a_view_all_out}");
+$span_view_all_out = new \k1lib\html\span();
+$span_view_all_out->append_a(url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_LIST_URL . '/?modo=pasado'), "(ver todos)");
+
+$row2_col2->append_h4("ULTIMOS 10 PRODUCTOS RETIRADOS {$span_view_all_out}");
 /**
  * Past inventory
  */
