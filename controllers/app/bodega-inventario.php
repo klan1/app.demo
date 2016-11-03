@@ -45,8 +45,10 @@ $controller_object->read_url_keys_text_for_list("products", FALSE);
 if ($controller_object->on_board_list()) {
     if (isset($incoming['modo'])) {
         if ($incoming['modo'] == 'pasado') {
+            $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
             $controller_object->db_table->set_query_filter_exclude(['product_exit' => NULL], TRUE);
         } elseif ($incoming['modo'] == 'sin-ubicar') {
+            $controller_object->db_table->set_order_by('product_datetime_in', 'ASC');
             $filter = [
                 'wh_column_id' => NULL,
                 'wh_column_row_id' => NULL,
@@ -57,6 +59,7 @@ if ($controller_object->on_board_list()) {
             \k1lib\html\html_header_go(url::do_url($_SERVER['REQUEST_URI'], [], FALSE));
         }
     } else {
+        $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
         $filter = [
             'product_exit' => NULL,
         ];
@@ -101,7 +104,9 @@ if ($controller_object->on_object_list()) {
         $content->append_h5("Peso total: {$total_weight}");
     }
 //    $create_positions_button->append_to($controller_object->board_list_object->button_div_tag());
-
+    /**
+     * link insert
+     */
     $read_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_update_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
     $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, ['product_position_cod']);
 }
