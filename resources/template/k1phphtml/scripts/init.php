@@ -6,8 +6,7 @@ use k1lib\templates\temply as temply;
 use k1app\k1app_template as DOM;
 use \k1lib\html\script as script;
 
-// Link the K1.lib HTML with the local app template
-\k1lib\html\DOM::link_html(\k1app\k1app_template::html());
+DOM::start(K1LIB_LANG);
 
 $head = DOM::html()->head();
 $body = DOM::html()->body();
@@ -39,4 +38,3 @@ $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/responsive-tables.js"
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/k1app.js?time=" . time()));
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/custom-scripts.js?time=" . time()));
 
-DOM::off_canvas()->left()->set_class('reveal-for-large', TRUE);

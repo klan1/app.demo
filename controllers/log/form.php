@@ -10,6 +10,7 @@ use k1lib\session\session_db as session_db;
 if (!isset($app_session)) {
     $app_session = new session_db($db);
 }
+DOM::start_template_plain();
 
 $body = DOM::html()->body();
 

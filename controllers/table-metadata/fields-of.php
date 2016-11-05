@@ -28,16 +28,12 @@ $db_table = new \k1lib\crudlexs\class_db_table($db, $db_table_to_use);
  */
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
-$ul = new \k1lib\html\ul();
+$menu_left = DOM::menu_left();
+$auto_app_menu = DOM::menu_left()->add_sub_menu("#", "DB Tables");
 
-$li_auto_app_menu = DOM::html()->body()->header()->get_element_by_id("table-metadata-menu");
-if (empty($li_auto_app_menu)) {
-    $li_auto_app_menu = $top_bar->add_menu_item("#", "DB Tables");
+if (!isset($menu_left)) {
+    $menu_left = new \k1lib\html\foundation\top_bar(null);
 }
-if (!isset($top_bar)) {
-    $top_bar = new \k1lib\html\foundation\top_bar(null);
-}
-$sub_menu = $top_bar->add_sub_menu($li_auto_app_menu);
 foreach ($db_tables as $row_field => $row_value) {
     $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
     $table_alias = \k1lib\db\security\db_table_aliases::encode($table_to_link);
@@ -45,7 +41,7 @@ foreach ($db_tables as $row_field => $row_value) {
     if (strstr($table_to_link, "view_")) {
         continue;
     }
-    $top_bar->add_menu_item(url::do_url("../{$table_alias}/", [], FALSE), $table_to_link, $sub_menu);
+    $auto_app_menu->add_menu_item(url::do_url("../{$table_alias}/", [], FALSE), $table_to_link);
 }
 
 $div_result = new \k1lib\html\div();

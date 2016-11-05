@@ -78,8 +78,6 @@ if (isset($_GET['error']) || !empty($_GET['error'])) {
 switch (\k1app\APP_MODE) {
     case 'web':
         // Start the HTML DOM object
-        DOM::start(K1LIB_LANG);
-
         require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
         require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
 

@@ -4,6 +4,8 @@ namespace k1app;
 
 use k1lib\urlrewrite\url as url;
 
+k1app_template::start_template();
+
 $mysql_default_validation = array(
     'char' => 'mixed-symbols',
     'varchar' => 'mixed-symbols',
