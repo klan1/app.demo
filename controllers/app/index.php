@@ -20,7 +20,7 @@ if (session_db::is_logged()) {
 //        } else {
 //            trigger_error("No idea how you do it!", E_USER_ERROR);
 //        }
-        \k1lib\html\html_header_go('app/tablero');
+        \k1lib\html\html_header_go('app/tablero/');
     } else {
         require $controller_to_include;
     }

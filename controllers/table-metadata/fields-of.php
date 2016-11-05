@@ -31,9 +31,6 @@ $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 $menu_left = DOM::menu_left();
 $auto_app_menu = DOM::menu_left()->add_sub_menu("#", "DB Tables");
 
-if (!isset($menu_left)) {
-    $menu_left = new \k1lib\html\foundation\top_bar(null);
-}
 foreach ($db_tables as $row_field => $row_value) {
     $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
     $table_alias = \k1lib\db\security\db_table_aliases::encode($table_to_link);
