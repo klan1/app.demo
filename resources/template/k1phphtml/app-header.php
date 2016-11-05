@@ -27,12 +27,12 @@ if (!isset($_GET['just-controller'])) {
          */
 //        $li_warehouse = $menu_left->add_menu_item("#", "Bodegas");
 //        $sub_menu = $menu_left->add_sub_menu($li_warehouse);
-        $menu_left->add_menu_item(APP_URL . "app/tablero/", "Inicio");
-        $menu_left->add_menu_item(APP_URL . "app/productos/", "Productos");
-        $inventarios_menu = $menu_left->add_sub_menu("#", "Inventario");
-        $inventarios_menu->add_menu_item(APP_URL . "app/bodega-inventario/", "Inventario presente");
-        $inventarios_menu->add_menu_item(APP_URL . "app/bodega-inventario/?modo=pasado", "Historial");
-        $inventarios_menu->add_menu_item(APP_URL . "app/bodega-inventario/?modo=sin-ubicar", "Por ubicar");
+        $menu_left->add_menu_item(APP_URL . "app/tablero/", "Inicio", 'nav-index');
+        $menu_left->add_menu_item(APP_URL . "app/productos/", "Productos", 'nav-products');
+        $inventarios_menu = $menu_left->add_sub_menu("#", "Inventario", 'nav-inventory');
+        $inventarios_menu->add_menu_item(APP_URL . "app/bodega-inventario/", "Inventario presente", 'nav-inventory-present');
+        $inventarios_menu->add_menu_item(APP_URL . "app/bodega-inventario/?modo=pasado", "Historial", 'nav-inventory-past');
+        $inventarios_menu->add_menu_item(APP_URL . "app/bodega-inventario/?modo=sin-ubicar", "Por ubicar", 'nav-inventory-nonplaced');
 
         /**
          * APP Preferences

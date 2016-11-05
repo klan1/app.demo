@@ -6,7 +6,7 @@ namespace k1app;
 
 use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 use k1lib\session\session_db as session_db;
 
 $body = DOM::html()->body();
@@ -15,6 +15,8 @@ $content = DOM::html()->body()->content();
 include temply::load_template("header", APP_TEMPLATE_PATH);
 include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("app-footer", APP_TEMPLATE_PATH);
+
+DOM::menu_left()->set_active('nav-inventory');
 
 $db_table_to_use = "product_position";
 $controller_name = "Inventario de bodega";
@@ -45,9 +47,13 @@ $controller_object->read_url_keys_text_for_list("products", FALSE);
 if ($controller_object->on_board_list()) {
     if (isset($incoming['modo'])) {
         if ($incoming['modo'] == 'pasado') {
+            DOM::menu_left()->set_active('nav-inventory-past');
+
             $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
             $controller_object->db_table->set_query_filter_exclude(['product_exit' => NULL], TRUE);
         } elseif ($incoming['modo'] == 'sin-ubicar') {
+            DOM::menu_left()->set_active('nav-inventory-nonplaced');
+
             $controller_object->db_table->set_order_by('product_datetime_in', 'ASC');
             $filter = [
                 'wh_column_id' => NULL,
@@ -59,6 +65,7 @@ if ($controller_object->on_board_list()) {
             \k1lib\html\html_header_go(url::do_url($_SERVER['REQUEST_URI'], [], FALSE));
         }
     } else {
+        DOM::menu_left()->set_active('nav-inventory-present');
         $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
         $filter = [
             'product_exit' => NULL,
