@@ -4,7 +4,7 @@ namespace k1app;
 
 use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
@@ -15,7 +15,7 @@ include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 DOM::html()->head()->set_title(APP_TITLE . " | Auto APP");
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Tables of DB ");
-$top_bar->set_title(3, $span . \k1lib\sql\get_db_database_name($db));
+DOM::set_title(3, $span . \k1lib\sql\get_db_database_name($db));
 
 
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
