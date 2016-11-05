@@ -6,7 +6,7 @@ namespace k1app;
 
 use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
@@ -19,16 +19,9 @@ if (!isset($_GET['just-controller'])) {
      */
     $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
-    $ul = new \k1lib\html\ul();
+    $left_menu = DOM::off_canvas()->left_menu();
+    $auto_app_menu = DOM::off_canvas()->left_menu()->add_sub_menu("#", "DB Tables");
 
-    $li_auto_app_menu = DOM::html()->body()->header()->get_element_by_id("table-explorer-menu");
-    if (empty($li_auto_app_menu)) {
-        $li_auto_app_menu = $top_bar->add_menu_item("#", "DB Tables");
-    }
-    if (!isset($top_bar)) {
-        $top_bar = new \k1lib\html\foundation\top_bar(null);
-    }
-    $sub_menu = $top_bar->add_sub_menu($li_auto_app_menu);
     foreach ($db_tables as $row_field => $row_value) {
         $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
         $table_alias = \k1lib\db\security\db_table_aliases::encode($table_to_link);
@@ -36,15 +29,15 @@ if (!isset($_GET['just-controller'])) {
         if (strstr($table_to_link, "view_")) {
             continue;
         }
-        $top_bar->add_menu_item(url::do_url("../../{$table_alias}/", [], FALSE), $table_to_link, $sub_menu);
+        $auto_app_menu->add_menu_item(url::do_url("../../{$table_alias}/", [], FALSE), $table_to_link);
     }
 
     if (strstr($_SERVER['REQUEST_URI'], 'no-rules') === FALSE) {
         $no_follow_rules_url = str_replace("/crudlexs/", "/crudlexs-raw/", $_SERVER['REQUEST_URI']);
-        $top_bar->add_menu_item(url::do_url($no_follow_rules_url, ['no-rules' => 1], TRUE), "Don't follow rules");
+        $left_menu->add_menu_item(url::do_url($no_follow_rules_url, ['no-rules' => 1], TRUE), "Don't follow rules");
     } else {
         $follow_rules_url = str_replace("/crudlexs-raw/", "/crudlexs/", $_SERVER['REQUEST_URI']);
-        $top_bar->add_menu_item(url::do_url($follow_rules_url, [], TRUE, ['auth-code']), "Follow rules");
+        $left_menu->add_menu_item(url::do_url($follow_rules_url, [], TRUE, ['auth-code']), "Follow rules");
     }
     /**
      * END TOP BAR - Tables added to menu

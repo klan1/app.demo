@@ -3,7 +3,7 @@
 namespace k1app;
 
 use \k1lib\templates\temply as temply;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 use \k1lib\urlrewrite\url as url;
 
 $body = DOM::html()->body();
@@ -16,7 +16,7 @@ $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url:
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Field of: ");
-$top_bar->set_title(3, $span . $db_table_to_use);
+DOM::set_title(3, $span . $db_table_to_use);
 
 DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
 

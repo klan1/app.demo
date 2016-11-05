@@ -3,7 +3,7 @@
 namespace k1app;
 
 use \k1lib\templates\temply as temply;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
@@ -12,7 +12,7 @@ include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Load metada for: ");
-$top_bar->set_title(3, $span . \k1lib\sql\get_db_database_name($db));
+DOM::set_title(3, $span . \k1lib\sql\get_db_database_name($db));
 
 DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} " . \k1lib\sql\get_db_database_name($db));
 

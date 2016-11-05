@@ -5,7 +5,7 @@ namespace k1app;
 use k1lib\sql\profiler;
 use k1lib\sql\local_cache;
 use k1lib\session\session_db as k1lib_session;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 if (APP_VERBOSE > 0) {
     $div = $body->footer()->append_div("callout", "k1lib-session-data");

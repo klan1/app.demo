@@ -2,7 +2,7 @@
 
 namespace k1app;
 
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 if (!isset($_GET['just-controller'])) {
 

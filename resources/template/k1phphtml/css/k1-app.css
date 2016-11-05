@@ -12,8 +12,13 @@ and open the template in the editor.
 Prevent FOUC
 Flash of Unstyled Content
 */
+html {
+    /*height: 100%;*/
+
+}
 body {
-    position: relative;
+    /*height: 100%;*/
+    /*background-color: #444;*/
 }
 
 h1 {
@@ -59,7 +64,39 @@ section.k1lib-content {
 .no-js .top-bar {
     display: none;
 }
-
+/**
+OFF CANVAS CUSTOM STYLES
+*/
+.off-canvas {
+    background-color: #444;
+    height: 100vh;
+}
+.off-canvas-content {
+    box-shadow: none;
+    height: 100vh;
+}
+#app-left-header {
+    padding: 10px 5px;
+}
+#app-logo {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+#app-user-profile {
+    margin: 20px 0px;
+}
+#app-user-profile {
+    color: #FFF;
+    padding: 0px 10px 0px 10px;
+}
+#app-user-profile img{
+    vertical-align: bottom;
+    margin-right: 10px;
+}
+/**
+END OF CANVAS
+*/
 @media screen and (min-width: 40em) {
     .no-js .top-bar {
         display: block;
