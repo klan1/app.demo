@@ -5,6 +5,9 @@ namespace k1app;
 use k1lib\urlrewrite\url as url;
 use k1lib\session\session_db as session_db;
 
+
+k1app_template::start_template();
+
 if (session_db::is_logged()) {
     $controller_to_include = url::set_next_url_level(APP_CONTROLLERS_PATH, FALSE);
 

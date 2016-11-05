@@ -5,6 +5,7 @@ namespace k1app;
 use k1lib\html\foundation\off_canvas as off_canvas;
 use k1lib\html\foundation\title_bar as title_bar;
 use k1lib\html\foundation\top_bar as top_bar;
+use k1lib\html\foundation\menu as menu;
 
 class k1app_template extends \k1lib\html\DOM {
 
@@ -23,38 +24,51 @@ class k1app_template extends \k1lib\html\DOM {
      */
     static protected $top_bar;
 
-    static public function start($lang = "en", $left = TRUE, $right = FALSE) {
-        parent::start($lang);
-        self::$off_canvas = new off_canvas(self::html()->body());
-        if ($left) {
-            self::$off_canvas->left();
-            self::$off_canvas->left_menu_head();
-            self::$off_canvas->left_menu();
-            self::$off_canvas->left_menu_tail();
+
+    static public function start_template($bars = TRUE, $left = TRUE, $right = FALSE) {
+        if ($left || $right) {
+            self::$off_canvas = new off_canvas(self::html()->body());
+            if ($left) {
+                self::$off_canvas->left();
+                self::$off_canvas->menu_left_head();
+                self::$off_canvas->menu_left();
+                self::$off_canvas->menu_left_tail();
+            }
+            if ($right) {
+                self::$off_canvas->right();
+            }
+            self::html()->body()->init_sections(self::$off_canvas->content());
+        } else {
+            self::html()->body()->init_sections();
         }
-        if ($right) {
-            self::$off_canvas->right();
+
+        if ($bars) {
+            /**
+             * TITLE BAR
+             */
+            self::$title_bar = new title_bar();
+            self::$top_bar = new top_bar();
+
+            self::$title_bar->append_to(self::html()->body()->header());
+            self::$title_bar->set_class('hide-for-large', TRUE);
+            self::$title_bar->left_button()->set_attrib('data-open', 'offCanvasLeft');
+            self::$title_bar->title()->append_span("k1lib-title-1");
+            self::$title_bar->title()->append_span("k1lib-title-2");
+            self::$title_bar->title()->append_span("k1lib-title-3");
+
+            self::$top_bar->append_to(self::html()->body()->header());
+            self::$top_bar->set_class('show-for-large', TRUE);
+            self::$top_bar->title()->append_span("k1lib-title-1");
+            self::$top_bar->title()->append_span("k1lib-title-2");
+            self::$top_bar->title()->append_span("k1lib-title-3");
         }
-        self::html()->body()->init_sections(self::$off_canvas->content());
+    }
+    static public function start_template_plain() {
+        self::start_template(FALSE, FALSE, FALSE);
+    }
 
-        /**
-         * TITLE BAR
-         */
-        self::$title_bar = new title_bar();
-        self::$top_bar = new top_bar();
-
-        self::$title_bar->append_to(self::html()->body()->header());
-        self::$title_bar->set_class('hide-for-large', TRUE);
-        self::$title_bar->left_button()->set_attrib('data-open', 'offCanvasLeft');
-        self::$title_bar->title()->append_span("k1lib-title-1");
-        self::$title_bar->title()->append_span("k1lib-title-2");
-        self::$title_bar->title()->append_span("k1lib-title-3");
-
-        self::$top_bar->append_to(self::html()->body()->header());
-        self::$top_bar->set_class('show-for-large', TRUE);
-        self::$top_bar->title()->append_span("k1lib-title-1");
-        self::$top_bar->title()->append_span("k1lib-title-2");
-        self::$top_bar->title()->append_span("k1lib-title-3");
+    static public function start_template_full() {
+        self::start_template(TRUE, TRUE, TRUE);
     }
 
     /**
@@ -62,6 +76,42 @@ class k1app_template extends \k1lib\html\DOM {
      */
     static public function off_canvas() {
         return self::$off_canvas;
+    }
+
+    /**
+     * @return menu
+     */
+    static public function menu_left() {
+        if (!empty(self::$off_canvas)) {
+            return self::$off_canvas->menu_left();
+        } elseif (!empty(self::$top_bar)) {
+            return self::$top_bar->menu_left();
+        }
+        return NULL;
+    }
+
+    /**
+     * @return menu
+     */
+    static public function menu_left_head() {
+        if (!empty(self::$off_canvas)) {
+            return self::$off_canvas->menu_left_head();
+        } elseif (!empty(self::$top_bar)) {
+            return self::$top_bar->menu_left();
+        }
+        return NULL;
+    }
+
+    /**
+     * @return menu
+     */
+    static public function menu_left_tail() {
+        if (!empty(self::$off_canvas)) {
+            return self::$off_canvas->menu_left_tail();
+        } elseif (!empty(self::$top_bar)) {
+            return self::$top_bar->menu_left();
+        }
+        return NULL;
     }
 
     /**

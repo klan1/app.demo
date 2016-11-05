@@ -19,8 +19,8 @@ if (!isset($_GET['just-controller'])) {
      */
     $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
-    $left_menu = DOM::off_canvas()->left_menu();
-    $auto_app_menu = DOM::off_canvas()->left_menu()->add_sub_menu("#", "DB Tables");
+    $menu_left = DOM::menu_left();
+    $auto_app_menu = DOM::menu_left()->add_sub_menu("#", "DB Tables");
 
     foreach ($db_tables as $row_field => $row_value) {
         $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
@@ -34,10 +34,10 @@ if (!isset($_GET['just-controller'])) {
 
     if (strstr($_SERVER['REQUEST_URI'], 'no-rules') === FALSE) {
         $no_follow_rules_url = str_replace("/crudlexs/", "/crudlexs-raw/", $_SERVER['REQUEST_URI']);
-        $left_menu->add_menu_item(url::do_url($no_follow_rules_url, ['no-rules' => 1], TRUE), "Don't follow rules");
+        $menu_left->add_menu_item(url::do_url($no_follow_rules_url, ['no-rules' => 1], TRUE), "Don't follow rules");
     } else {
         $follow_rules_url = str_replace("/crudlexs-raw/", "/crudlexs/", $_SERVER['REQUEST_URI']);
-        $left_menu->add_menu_item(url::do_url($follow_rules_url, [], TRUE, ['auth-code']), "Follow rules");
+        $menu_left->add_menu_item(url::do_url($follow_rules_url, [], TRUE, ['auth-code']), "Follow rules");
     }
     /**
      * END TOP BAR - Tables added to menu
