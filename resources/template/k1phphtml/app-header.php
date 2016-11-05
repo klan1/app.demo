@@ -15,8 +15,6 @@ if (DOM::off_canvas()) {
 if (!isset($_GET['just-controller'])) {
 
     DOM::set_title(1, APP_TITLE);
-    DOM::set_title(2, " :: ");
-    DOM::set_title(3, "HOME");
 
     $menu_left = DOM::menu_left();
     $menu_left_tail = DOM::menu_left_tail();
