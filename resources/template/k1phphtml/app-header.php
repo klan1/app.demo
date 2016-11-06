@@ -15,6 +15,7 @@ if (DOM::off_canvas()) {
 if (!isset($_GET['just-controller'])) {
 
     DOM::set_title(1, APP_TITLE);
+    DOM::set_title(2, '::');
 
     $menu_left = DOM::menu_left();
     $menu_left_tail = DOM::menu_left_tail();
@@ -40,7 +41,8 @@ if (!isset($_GET['just-controller'])) {
             $admin_menu = $menu_left_tail->add_sub_menu('#', "App preferences", "separator");
 
             $admin_menu->add_menu_item(url::do_url(APP_URL . "app/usuarios/"), "Usuarios del App", $sub_menu);
-            $admin_menu->add_menu_item(APP_URL . "app/bodegas/", "Bodegas", $sub_menu);
+            $admin_menu->add_menu_item(APP_URL . "app/bodegas/", "Configurar Bodegas", $sub_menu);
+            $admin_menu->add_menu_item(APP_URL . "table-explorer/", "Explore tables");
             $admin_menu->add_menu_item(APP_URL . "table-metadata/show-tables/", "Manage tables");
             $admin_menu->add_menu_item(APP_URL . "table-metadata/export-field-comments/", "Export field comments")->set_attrib("target", "_blank");
             $admin_menu->add_menu_item(APP_URL . "table-metadata/load-field-comments/", "Load field comments");

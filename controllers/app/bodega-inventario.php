@@ -24,7 +24,7 @@ $controller_name = "Inventario de bodega";
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\warehouses_inventory_config");
 
 $incoming = \k1lib\forms\check_all_incomming_vars($_GET);
