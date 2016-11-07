@@ -14,13 +14,16 @@ include temply::load_template("header", APP_TEMPLATE_PATH);
 if (!isset($_GET['just-controller'])) {
     include temply::load_template("app-header", APP_TEMPLATE_PATH);
     include temply::load_template("app-footer", APP_TEMPLATE_PATH);
+
+    DOM::menu_left_tail()->set_active('nav-app-preferences');
+    DOM::menu_left_tail()->set_active('nav-table-explorer');
+
     /**
      * TOP BAR - Tables added to menu
      */
     $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
-    $menu_left = DOM::menu_left();
-    $auto_app_menu = DOM::menu_left()->add_sub_menu("#", "DB Tables");
+    $table_explorer_menu = DOM::menu_left_tail()->add_sub_menu("#", "DB Tables", 'nav-db-table-list', 'nav-table-explorer');
 
     foreach ($db_tables as $row_field => $row_value) {
         $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
@@ -29,15 +32,15 @@ if (!isset($_GET['just-controller'])) {
         if (strstr($table_to_link, "view_")) {
             continue;
         }
-        $auto_app_menu->add_menu_item(url::do_url("../../{$table_alias}/", [], FALSE), $table_to_link);
+        $table_explorer_menu->add_menu_item(url::do_url("../../{$table_alias}/", [], FALSE), $table_to_link, 'nav-' . $table_alias);
     }
 
     if (strstr($_SERVER['REQUEST_URI'], 'no-rules') === FALSE) {
         $no_follow_rules_url = str_replace("/crudlexs/", "/crudlexs-raw/", $_SERVER['REQUEST_URI']);
-        $menu_left->add_menu_item(url::do_url($no_follow_rules_url, ['no-rules' => 1], TRUE), "Don't follow rules");
+        DOM::menu_left_tail()->add_menu_item(url::do_url($no_follow_rules_url, ['no-rules' => 1], TRUE), "Don't follow rules", 'nav-dont-follow-rules', 'nav-table-explorer');
     } else {
         $follow_rules_url = str_replace("/crudlexs-raw/", "/crudlexs/", $_SERVER['REQUEST_URI']);
-        $menu_left->add_menu_item(url::do_url($follow_rules_url, [], TRUE, ['auth-code']), "Follow rules");
+        DOM::menu_left_tail()->add_menu_item(url::do_url($follow_rules_url, [], TRUE, ['auth-code']), "Follow rules", 'nav-follow-rules', 'nav-table-explorer');
     }
     /**
      * END TOP BAR - Tables added to menu
@@ -46,6 +49,7 @@ if (!isset($_GET['just-controller'])) {
 
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
+DOM::menu_left_tail()->set_active('nav-' . $table_alias);
 
 /**
  * ONE LINE config: less codign, more party time!

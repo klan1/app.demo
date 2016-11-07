@@ -98,17 +98,17 @@ ul.menu li  a{
     color: #FFF;
 }
 ul.menu li.has-submenu.active.is-accordion-submenu-parent a{
-    background-color: #2199FF;
+    /*background-color: #2199FF;*/
 }
 ul.menu li.has-submenu.active.is-accordion-submenu-parent ul li a{
-    background-color: inherit;
+    /*background-color: inherit;*/
 }
 ul.menu li.has-submenu.active.is-accordion-submenu-parent ul li.active a{
-    background-color: #999;
+    /*background-color: #999;*/
     /*font-weight: bold;*/
 }
 ul.menu li.has-submenu.active.is-accordion-submenu-parent ul{
-    display: block !important;
+    /*display: block !important;*/
 }
 /**
 END OF CANVAS

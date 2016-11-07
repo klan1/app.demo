@@ -17,6 +17,8 @@ DOM::set_title(3, $span . \k1lib\sql\get_db_database_name($db));
 
 DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} " . \k1lib\sql\get_db_database_name($db));
 
+DOM::menu_left_tail()->set_active('nav-app-preferences');
+DOM::menu_left_tail()->set_active('nav-manage-tables');
 
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 

@@ -14,6 +14,9 @@ include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
 DOM::html()->head()->set_title(APP_TITLE . " | Auto APP");
 
+DOM::menu_left_tail()->set_active('nav-app-preferences');
+DOM::menu_left_tail()->set_active('nav-table-explorer');
+
 $span = (new \k1lib\html\span("subheader"))->set_value("Tables of DB ");
 DOM::set_title(3, $span . \k1lib\sql\get_db_database_name($db));
 
