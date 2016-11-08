@@ -4,12 +4,13 @@ namespace k1app;
 
 use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 use k1lib\session\session_db as session_db;
 
 if (!isset($app_session)) {
     $app_session = new session_db($db);
 }
+DOM::start_template_plain();
 
 $body = DOM::html()->body();
 

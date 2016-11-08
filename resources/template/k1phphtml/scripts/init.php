@@ -3,8 +3,10 @@
 namespace k1app;
 
 use k1lib\templates\temply as temply;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 use \k1lib\html\script as script;
+
+DOM::start(K1LIB_LANG);
 
 $head = DOM::html()->head();
 $body = DOM::html()->body();
@@ -36,4 +38,3 @@ $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/responsive-tables.js"
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/k1app.js?time=" . time()));
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/custom-scripts.js?time=" . time()));
 
-$body->init_sections();

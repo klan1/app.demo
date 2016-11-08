@@ -4,6 +4,8 @@ namespace k1app;
 
 use \k1lib\urlrewrite\url as url;
 
+k1app_template::start_template();
+
 //\k1lib\session\session_db::is_logged(TRUE, url::do_url(APP_URL . "log/form/", ["back-url" => $_SERVER['REQUEST_URI']]));
 
 if (\k1lib\session\session_db::check_user_level(crudlexs_config::CONTROLLER_ALLOWED_LEVELS)) {

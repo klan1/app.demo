@@ -3,7 +3,7 @@
 namespace k1app;
 
 use \k1lib\templates\temply as temply;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 use \k1lib\urlrewrite\url as url;
 
 $body = DOM::html()->body();
@@ -12,11 +12,14 @@ include temply::load_template("header", APP_TEMPLATE_PATH);
 include temply::load_template("app-header", APP_TEMPLATE_PATH);
 include temply::load_template("app-footer", APP_TEMPLATE_PATH);
 
+DOM::menu_left_tail()->set_active('nav-app-preferences');
+DOM::menu_left_tail()->set_active('nav-manage-tables');
+
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Field of: ");
-$top_bar->set_title(3, $span . $db_table_to_use);
+DOM::set_title(3, $span . $db_table_to_use);
 
 DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
 
@@ -28,16 +31,9 @@ $db_table = new \k1lib\crudlexs\class_db_table($db, $db_table_to_use);
  */
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
-$ul = new \k1lib\html\ul();
+$menu_left = DOM::menu_left();
+$auto_app_menu = DOM::menu_left()->add_sub_menu("#", "DB Tables");
 
-$li_auto_app_menu = DOM::html()->body()->header()->get_element_by_id("table-metadata-menu");
-if (empty($li_auto_app_menu)) {
-    $li_auto_app_menu = $top_bar->add_menu_item("#", "DB Tables");
-}
-if (!isset($top_bar)) {
-    $top_bar = new \k1lib\html\foundation\top_bar(null);
-}
-$sub_menu = $top_bar->add_sub_menu($li_auto_app_menu);
 foreach ($db_tables as $row_field => $row_value) {
     $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
     $table_alias = \k1lib\db\security\db_table_aliases::encode($table_to_link);
@@ -45,7 +41,7 @@ foreach ($db_tables as $row_field => $row_value) {
     if (strstr($table_to_link, "view_")) {
         continue;
     }
-    $top_bar->add_menu_item(url::do_url("../{$table_alias}/", [], FALSE), $table_to_link, $sub_menu);
+    $auto_app_menu->add_menu_item(url::do_url("../{$table_alias}/", [], FALSE), $table_to_link);
 }
 
 $div_result = new \k1lib\html\div();

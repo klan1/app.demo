@@ -14,6 +14,7 @@ namespace k1app;
 use \k1lib\session\session_db as session_db;
 use \k1lib\templates\temply as temply;
 use k1lib\PROFILER as PROFILER;
+use k1app\k1app_template as DOM;
 
 PROFILER::start();
 
@@ -27,6 +28,7 @@ const IN_K1APP = TRUE;
 require_once 'settings/path-settings.php';
 require_once 'settings/config.php';
 
+require_once APP_TEMPLATE_PATH . '/definition.php';
 /*
  * DB CONNECTION
  */
@@ -76,15 +78,13 @@ if (isset($_GET['error']) || !empty($_GET['error'])) {
 switch (\k1app\APP_MODE) {
     case 'web':
         // Start the HTML DOM object
-        \k1lib\html\DOM::start(K1LIB_LANG);
-
         require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
         require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
 
         require temply::load_template("verbose-output", APP_TEMPLATE_PATH);
         require temply::load_template("end", APP_TEMPLATE_PATH . '/scripts');
 
-        echo \k1lib\html\DOM::generate();
+        echo DOM::generate();
         break;
     case 'ajax':
         // do nothing, yet
