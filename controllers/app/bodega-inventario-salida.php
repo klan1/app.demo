@@ -69,7 +69,6 @@ if ($controller_object->on_board_read()) {
     $controller_object->board_read_object->set_related_show_new(TRUE);
     $related_list = $controller_object->board_read_object->create_related_list($inventory, ['product_position_out'], "SALIDAS DE PRODUCTO", warehouses_inventory_config::ROOT_URL, warehouses_inventory_config::BOARD_CREATE_URL, warehouses_inventory_config::BOARD_UPDATE_URL, warehouses_inventory_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
-    
 }
 
 $body->content()->append_child($div);

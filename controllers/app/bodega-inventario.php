@@ -109,7 +109,7 @@ if ($controller_object->on_board_list()) {
     $controller_object->board_list_object->set_create_enable(FALSE);
     // CUSTOM SQL FOR VIEW USAGE
     $controller_object->db_table->set_custom_sql_query($custom_sql);
-    $controller_object->board_list_object->list_object->set_custom_field_labels($custom_field_labels);
+    $controller_object->object_list()->set_custom_field_labels($custom_field_labels);
     // LISTING TYPE AS 'MODO'
     if (isset($incoming['modo'])) {
         if ($incoming['modo'] == 'pasado') {
@@ -164,7 +164,7 @@ if ($controller_object->on_board_create() || $controller_object->on_board_update
 if ($controller_object->on_board_read()) {
     // CUSTOM SQL FOR VIEW USAGE
     $controller_object->db_table->set_custom_sql_query($custom_sql);
-    $controller_object->board_read_object->read_object->set_custom_field_labels($custom_field_labels);
+    $controller_object->object_read()->set_custom_field_labels($custom_field_labels);
 }
 
 /**
@@ -234,6 +234,18 @@ $controller_object->finish_board();
 if ($controller_object->on_board_read()) {
     $related_div = $div->append_div("row k1lib-crudlexs-related-data");
     $inventory = new \k1lib\crudlexs\class_db_table($db, "product_position_out");
+    $inventory->set_custom_sql_query('SELECT '
+            . 'product_position_id,'
+            . 'product_position_out_id,'
+            . 'product_name AS PRODUCTO,'
+            . 'product_weight_out AS `SALE(K)`,'
+            . 'product_weight_left AS `QUEDA(K)`,'
+            . 'product_quantity_out AS SALE,'
+            . 'product_quantity_left AS QUEDA,'
+            . 'product_datetime_out AS `FECHA SALIDA`'
+            . ' FROM view_inventory_out');
+    $inventory->set_order_by('product_datetime_out', 'DESC');
+
     $controller_object->board_read_object->set_related_rows_to_show(50);
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
     $controller_object->board_read_object->set_related_show_new(TRUE);
