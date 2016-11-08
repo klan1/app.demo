@@ -165,6 +165,7 @@ if ($controller_object->on_board_read()) {
     // CUSTOM SQL FOR VIEW USAGE
     $controller_object->db_table->set_custom_sql_query($custom_sql);
     $controller_object->object_read()->set_custom_field_labels($custom_field_labels);
+    $controller_object->object_read()->set_fields_to_hide(['product_position_id']);
 }
 
 /**
