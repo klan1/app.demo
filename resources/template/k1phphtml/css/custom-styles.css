@@ -192,3 +192,10 @@ table tfoot td, table tfoot th, table thead td, table thead th {
     color: #7b7b7b;
 }
 
+/** 
+LOS MONOS
+*/
+
+section.tablero table {
+    font-size: 0.9rem;
+}

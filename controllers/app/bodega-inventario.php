@@ -27,7 +27,67 @@ $controller_name = "Inventario de bodega";
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\warehouses_inventory_config");
 
+
 $incoming = \k1lib\forms\check_all_incomming_vars($_GET);
+
+/**
+ * CUSTOM SQL QUERY
+ */
+if (isset($incoming['modo'])) {
+    if ($incoming['modo'] == 'pasado') {
+        $custom_sql = 'SELECT '
+                . 'product_position_id,'
+                . 'product_position_cod,'
+                . 'warehouse_id,'
+                . 'wh_column_id,'
+                . 'wh_column_row_id,'
+                . 'wh_position_id,'
+                . 'product_name,'
+                . 'product_weight,'
+                . 'product_quantity,'
+                . 'user_login,'
+                . 'product_valid,'
+                . 'product_datetime_in'
+                . ' FROM view_inventory_in';
+    } elseif ($incoming['modo'] == 'sin-ubicar') {
+        $custom_sql = 'SELECT '
+                . 'product_position_id,'
+                . 'product_position_cod,'
+                . 'warehouse_id,'
+                . 'wh_column_id,'
+                . 'wh_column_row_id,'
+                . 'wh_position_id,'
+                . 'product_name,'
+                . 'product_weight,'
+                . 'product_quantity,'
+                . 'user_login,'
+                . 'product_datetime_in'
+                . ' FROM view_inventory_in';
+    }
+} else {
+    $custom_sql = 'SELECT '
+            . 'product_position_id,'
+            . 'product_position_cod,'
+            . 'warehouse_id,'
+            . 'wh_column_id,'
+            . 'wh_column_row_id,'
+            . 'wh_position_id,'
+            . 'product_name,'
+            . 'product_weight,'
+            . 'product_weight_left,'
+            . 'product_quantity,'
+            . 'product_quantity_left,'
+            . 'user_login,'
+            . 'product_valid,'
+            . 'product_datetime_in'
+            . ' FROM view_inventory_in';
+}
+
+$custom_field_labels = [
+    'product_name' => 'PRODUCTO',
+    'product_weight_left' => 'QUEDAN(K)',
+    'product_quantity_left' => 'QUEDAN'
+];
 
 /**
  * USER LOGIN AS CONSTANT
@@ -45,38 +105,54 @@ $controller_object->read_url_keys_text_for_list("products", FALSE);
  * MODE CONTROL ON LIST
  */
 if ($controller_object->on_board_list()) {
+    // NO CREATE
+    $controller_object->board_list_object->set_create_enable(FALSE);
+    // CUSTOM SQL FOR VIEW USAGE
+    $controller_object->db_table->set_custom_sql_query($custom_sql);
+    $controller_object->board_list_object->list_object->set_custom_field_labels($custom_field_labels);
+    // LISTING TYPE AS 'MODO'
     if (isset($incoming['modo'])) {
         if ($incoming['modo'] == 'pasado') {
             DOM::menu_left()->set_active('nav-inventory-past');
 
+            $filter = [
+                'product_weight_left' => 0,
+                'product_quantity_left' => 0,
+            ];
+            $controller_object->db_table->set_query_filter($filter, TRUE, FALSE);
+
             $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
-            $controller_object->db_table->set_query_filter_exclude(['product_exit' => NULL], TRUE);
         } elseif ($incoming['modo'] == 'sin-ubicar') {
             DOM::menu_left()->set_active('nav-inventory-nonplaced');
 
-            $controller_object->db_table->set_order_by('product_datetime_in', 'ASC');
             $filter = [
                 'wh_column_id' => NULL,
                 'wh_column_row_id' => NULL,
-                'wh_column_row_position_id' => NULL,
+                'wh_position_id' => NULL,
             ];
-            $controller_object->db_table->set_query_filter($filter, TRUE);
+            $controller_object->db_table->set_query_filter($filter, TRUE, FALSE);
+
+            $controller_object->db_table->set_order_by('product_datetime_in', 'ASC');
         } else {
             \k1lib\html\html_header_go(url::do_url($_SERVER['REQUEST_URI'], [], FALSE));
         }
     } else {
         DOM::menu_left()->set_active('nav-inventory-present');
-        $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
+
         $filter = [
-            'product_exit' => NULL,
         ];
+
         $filter_exclude = [
+            'product_weight_left' => 0,
+            'product_quantity_left' => 0,
             'wh_column_id' => NULL,
             'wh_column_row_id' => NULL,
-            'wh_column_row_position_id' => NULL,
+            'wh_position_id' => NULL,
         ];
-        $controller_object->db_table->set_query_filter($filter, TRUE);
-        $controller_object->db_table->set_query_filter_exclude($filter_exclude, TRUE);
+        $controller_object->db_table->set_query_filter($filter, TRUE, FALSE);
+        $controller_object->db_table->set_query_filter_exclude($filter_exclude, TRUE, FALSE);
+
+        $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
     }
 }
 
@@ -85,8 +161,10 @@ if ($controller_object->on_board_create() || $controller_object->on_board_update
     \k1lib\crudlexs\input_helper::set_fk_fields_to_skip(['warehouse_id', 'wh_column_id', 'wh_column_row_id', 'wh_position_id']);
 }
 // LIST
-if ($controller_object->on_object_list()) {
-    $controller_object->board_list_object->set_create_enable(FALSE);
+if ($controller_object->on_board_read()) {
+    // CUSTOM SQL FOR VIEW USAGE
+    $controller_object->db_table->set_custom_sql_query($custom_sql);
+    $controller_object->board_read_object->read_object->set_custom_field_labels($custom_field_labels);
 }
 
 /**
@@ -96,26 +174,28 @@ $controller_object->start_board();
 
 // LIST
 if ($controller_object->on_object_list()) {
+
+    /**
+     * link on table
+     */
+    $read_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_read_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
+    $edit_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_update_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
+
     if (isset($incoming['modo']) && $incoming['modo'] == 'pasado') {
         $content->append_h3("Inventario pasado");
-//        $create_positions_button = new \k1lib\html\a(url::do_url($_SERVER['REQUEST_URI'], [], FALSE), "Ver inventario presente", NULL, "button success");
+        $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, ['product_position_cod']);
     } else if (isset($incoming['modo']) && $incoming['modo'] == 'sin-ubicar') {
         $content->append_h3("Inventario sin ubicar");
-//        $create_positions_button = new \k1lib\html\a(url::do_url($_SERVER['REQUEST_URI'], [], FALSE), "Ver inventario presente", NULL, "button");
+        $controller_object->board_list_object->list_object->apply_link_on_field_filter($edit_url, ['product_position_cod']);
     } else {
         $content->append_h3("Inventario presente");
-//        $create_positions_button = new \k1lib\html\a($_SERVER['REQUEST_URI'] . "?modo=pasado", "Ver inventario pasado", NULL, "button warning");
+        $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, ['product_position_cod']);
     }
     $total_weight = $controller_object->db_table->get_field_operation("product_weight", "SUM");
     if (!empty($total_weight)) {
         $content->append_h5("Peso total: {$total_weight}");
     }
 //    $create_positions_button->append_to($controller_object->board_list_object->button_div_tag());
-    /**
-     * link insert
-     */
-    $read_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_update_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
-    $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, ['product_position_cod']);
 }
 // UPDATE
 if ($controller_object->on_board_update()) {
@@ -132,6 +212,12 @@ if ($controller_object->on_board_update()) {
  */
 $controller_object->exec_board();
 
+if ($controller_object->on_board_list()) {
+    $controller_object->board_list_object->list_object->get_html_table()
+            ->set_class('scroll')
+            ->hide_fields(['product_position_id']);
+}
+
 if ($controller_object->on_board_create()) {
     $new_keys = $controller_object->board_create_object->create_object->get_inserted_keys();
     if (!empty($new_keys)) {
@@ -144,5 +230,15 @@ if ($controller_object->on_board_create()) {
  * FINISH
  */
 $controller_object->finish_board();
+
+if ($controller_object->on_board_read()) {
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
+    $inventory = new \k1lib\crudlexs\class_db_table($db, "product_position_out");
+    $controller_object->board_read_object->set_related_rows_to_show(50);
+    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+    $controller_object->board_read_object->set_related_show_new(TRUE);
+    $related_list = $controller_object->board_read_object->create_related_list($inventory, [], "SALIDAS DE PRODUCTO", warehouses_inventory_out_config::ROOT_URL, warehouses_inventory_out_config::BOARD_CREATE_URL, warehouses_inventory_out_config::BOARD_UPDATE_URL, warehouses_inventory_out_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+}
 
 $body->content()->append_child($div);

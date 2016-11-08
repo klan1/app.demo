@@ -28,11 +28,13 @@ $content->set_class("tablero");
  */
 $content_grid = new \k1lib\html\foundation\grid(2, 2, $content);
 
-$row1_col1 = $content_grid->row(1)->col(1)->large(6)->medium(6)->small(12);
-$row1_col2 = $content_grid->row(1)->col(2)->large(6)->medium(6)->small(12);
+//$row1_col1 = $content_grid->row(1)->set_class('expanded')->col(1)->large(6)->medium(12)->small(12);
+$row1_col1 = $content_grid->row(1)->col(1)->large(6)->medium(12)->small(12);
+$row1_col2 = $content_grid->row(1)->col(2)->large(6)->medium(12)->small(12);
 
-$row2_col1 = $content_grid->row(2)->col(1)->large(6)->medium(6)->small(12);
-$row2_col2 = $content_grid->row(2)->col(2)->large(6)->medium(6)->small(12);
+//$row2_col1 = $content_grid->row(2)->set_class('expanded')->col(1)->large(6)->medium(12)->small(12);
+$row2_col1 = $content_grid->row(2)->set_class('expanded')->col(1)->large(6)->medium(12)->small(12);
+$row2_col2 = $content_grid->row(2)->set_class('expanded')->col(2)->large(6)->medium(12)->small(12);
 
 /**
  * GRID ROW 1
@@ -53,7 +55,7 @@ if ($warehouse_url_value) {
 }
 
 $sql_query = "SELECT *
-FROM view_warehouse_dashboard
+FROM view_dashboard_warehouses
 {$warehouse_filter}";
 
 
@@ -75,13 +77,10 @@ $row1_col2->append_h4("Productos presentes{$product_title_append}");
 
 $products = new \k1lib\crudlexs\class_db_table($db, "products");
 
-$sql_query = "SELECT A.product_id AS COD, 
-	A.product_name AS PRODUCTO, 
-	SUM(product_position.product_weight) AS PESO
-FROM products A INNER JOIN product_position ON A.product_id = product_position.product_id
-{$product_filter}
-GROUP BY COD
-ORDER BY PESO DESC";
+$sql_query = "SELECT COD, PRODUCTO, SUM(PESO) as PESO
+FROM view_dashboard_products
+{$warehouse_filter}
+GROUP BY PRODUCTO";
 
 $products_data = \k1lib\sql\sql_query($db, $sql_query, TRUE, TRUE);
 
@@ -101,7 +100,7 @@ $db_table = new \k1lib\crudlexs\class_db_table($db, "product_position");
 /**
  * GRID ROW 2 COL 1
  */
-$row2_col1->append_h4("PRODUCTOS POR UBICAR");
+$row2_col1->append_h4("PRODUCTOS POR UBICAR{$product_title_append}");
 /**
  * Non placed inventory
  */
@@ -137,42 +136,57 @@ if ($list->load_db_table_data('show-related')) {
 
 $span_view_all_in = new \k1lib\html\span();
 $span_view_all_in->append_a(url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_LIST_URL . '/'), "(ver todos)");
-$row2_col1->append_h4("ULTIMOS 10 PRODUCTOS INGRESADOS {$span_view_all_in}");
+$row2_col1->append_h4("ULTIMAS 10 ENTRADAS{$product_title_append} {$span_view_all_in}");
 /**
  * Present inventory
  */
-$db_table->clear_query_filter();
-$filter = [
-    'product_exit' => NULL,
-];
-if ($warehouse_url_value) {
-    $filter['warehouse_id'] = $warehouse_url_value;
-}
+$db_table = new \k1lib\crudlexs\class_db_table($db, "product_position");
+//$db_table->set_custom_sql_query('SELECT '
+//        . 'product_position_id,'
+//        . 'product_position_cod,'
+//        . 'warehouse_id,'
+//        . 'wh_column_id,'
+//        . 'wh_column_row_id,'
+//        . 'wh_position_id,'
+//        . 'product_name AS PRODUCTO,'
+//        . 'product_weight,'
+//        . 'product_quantity,'
+//        . 'product_datetime_in'
+//        . ' FROM view_inventory_in');
 
 $filter_exclude = [
     'wh_column_id' => NULL,
     'wh_column_row_id' => NULL,
     'wh_column_row_position_id' => NULL,
 ];
+if ($warehouse_url_value) {
+    $filter = [
+        'warehouse_id' => $warehouse_url_value,
+    ];
+} else {
+    $filter = [];
+}
 $db_table->set_query_filter($filter, TRUE);
 $db_table->set_query_filter_exclude($filter_exclude, TRUE);
-$db_table->set_order_by('product_datetime_in', 'ASC');
-$db_table->set_query_limit(10);
+$db_table->set_order_by('product_datetime_in', 'DESC');
 
 $list = new \k1lib\crudlexs\listing($db_table, NULL);
+$list->set_rows_per_page(10);
+
 if ($list->load_db_table_data('show-related')) {
-    $list->apply_field_label_filter();
+    $list->apply_field_label_filter(['product_id']);
     $list->apply_label_filter();
 
-    $read_url = url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_UPDATE_URL . "/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
+    $read_url = url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_READ_URL . "/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
     $list->apply_link_on_field_filter($read_url, ['product_position_cod']);
-
 
     $list->do_html_object();
     $list->get_html_table()
-            ->hide_fields(['user_login', 'product_valid', 'product_datetime_in'])
+            ->set_class('scroll')
+            ->hide_fields(['product_position_id', 'user_login', 'product_valid'])
             ->append_to($row2_col1);
 } else {
+//    \k1lib\notifications\on_DOM::queue_mesasage($db_table->generate_sql_query());
     $row2_col1->append_div("callout primary")->set_value("Sin datos para mostrar");
 }
 /**
@@ -181,34 +195,49 @@ if ($list->load_db_table_data('show-related')) {
 $span_view_all_out = new \k1lib\html\span();
 $span_view_all_out->append_a(url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_LIST_URL . '/?modo=pasado'), "(ver todos)");
 
-$row2_col2->append_h4("ULTIMOS 10 PRODUCTOS RETIRADOS {$span_view_all_out}");
+$row2_col2->append_h4("ULTIMAS 10 SALIDAS{$product_title_append} {$span_view_all_out}");
 /**
  * Past inventory
  */
-$db_table->clear_query_filter();
-$filter = [
-    'product_exit' => NULL,
-];
+$db_table = new \k1lib\crudlexs\class_db_table($db, "product_position");
+$db_table->set_custom_sql_query('SELECT '
+        . 'product_position_id,'
+        . 'product_position_cod,'
+        . 'warehouse_id,'
+        . 'product_name AS PRODUCTO,'
+        . 'product_weight_out AS `SALE(K)`,'
+        . 'product_weight_left AS `QUEDA(K)`,'
+        . 'product_quantity_out AS SALE,'
+        . 'product_quantity_left AS QUEDA,'
+        . 'product_datetime_out AS `FECHA SALIDA`'
+        . ' FROM view_inventory_out');
 if ($warehouse_url_value) {
-    $filter['warehouse_id'] = $warehouse_url_value;
+    $filter = [
+        'warehouse_id' => $warehouse_url_value,
+    ];
+} else {
+    $filter = [];
 }
-$db_table->set_query_filter_exclude($filter, TRUE);
-$db_table->set_order_by('product_datetime_in', 'ASC');
-$db_table->set_query_limit(10);
+$db_table->set_query_filter($filter, TRUE);
+$db_table->set_order_by('product_datetime_out', 'DESC');
 
 $list = new \k1lib\crudlexs\listing($db_table, NULL);
+$list->set_rows_per_page(10);
+
 if ($list->load_db_table_data('show-related')) {
-    $list->apply_field_label_filter();
     $list->apply_label_filter();
 
-    $read_url = url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_UPDATE_URL . "/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
+    $read_url = url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_READ_URL . "/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
     $list->apply_link_on_field_filter($read_url, ['product_position_cod']);
 
 
     $list->do_html_object();
-    $db_table = $list->get_html_table()
-            ->hide_fields(['user_login', 'product_valid', 'product_datetime_in'])
+    $table = $list->get_html_table()
+            ->set_class('scroll')
+            ->hide_fields(['product_position_id', 'user_login', 'product_valid', 'product_datetime_in'])
             ->append_to($row2_col2);
+//    \k1lib\notifications\on_DOM::queue_mesasage($db_table->generate_sql_query());
 } else {
+//    \k1lib\notifications\on_DOM::queue_mesasage($db_table->generate_sql_query());
     $row2_col2->append_div("callout primary")->set_value("Sin datos para mostrar");
 }

@@ -104,11 +104,13 @@ class warehouse_columns_config extends warehouses_config {
     const ROOT_URL = "app/bodega-columnas";
 
 }
+
 class warehouse_positions_config extends warehouses_config {
 
     const ROOT_URL = "app/bodega-posiciones";
 
 }
+
 class warehouse_columns_row_config extends warehouses_config {
 
     const ROOT_URL = "app/bodega-columna-filas";
@@ -124,6 +126,12 @@ class products_config extends warehouses_config {
 class warehouses_inventory_config extends warehouses_config {
 
     const ROOT_URL = "app/bodega-inventario";
+
+}
+
+class warehouses_inventory_out_config extends warehouses_config {
+
+    const ROOT_URL = "app/bodega-inventario-salida";
 
 }
 
