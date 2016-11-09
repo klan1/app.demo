@@ -14,3 +14,5 @@ if (!empty($run_info)) {
 }
 
 \k1lib\notifications\on_DOM::insert_messases_on_DOM();
+
+echo DOM::generate();

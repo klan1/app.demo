@@ -78,13 +78,10 @@ if (isset($_GET['error']) || !empty($_GET['error'])) {
 switch (\k1app\APP_MODE) {
     case 'web':
         // Start the HTML DOM object
-        template::load_template('init');
+        template::load_template('scripts/init');
         require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
-
         template::load_template('verbose-output');
-        template::load_template('end');
-
-        echo DOM::generate();
+        template::load_template('scripts/end');
         break;
     case 'ajax':
         // do nothing, yet
