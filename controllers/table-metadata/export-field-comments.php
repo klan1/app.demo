@@ -4,7 +4,7 @@ namespace k1app;
 
 header("Content-Type: text/plain");
 
-use \k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
