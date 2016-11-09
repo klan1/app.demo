@@ -4,15 +4,15 @@ namespace k1app;
 
 // This might be different on your proyect
 
-use \k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 use \k1lib\urlrewrite\url as url;
 use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
-include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("app-header", APP_TEMPLATE_PATH);
-include temply::load_template("app-footer", APP_TEMPLATE_PATH);
+template::load_template('header');
+template::load_template('app-header');
+template::load_template('app-footer');
 
 $db_table_to_use = "wh_positions";
 $controller_name = "Pisos de la fila de la columna de la bodega";

@@ -4,16 +4,16 @@ namespace k1app;
 
 // This might be different on your proyect
 
-use \k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 use \k1lib\urlrewrite\url as url;
 use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
-include temply::load_template("header", APP_TEMPLATE_PATH);
+template::load_template('header');
 if (!isset($_GET['just-controller'])) {
-    include temply::load_template("app-header", APP_TEMPLATE_PATH);
-    include temply::load_template("app-footer", APP_TEMPLATE_PATH);
+    template::load_template('app-header');
+    template::load_template('app-footer');
 
     DOM::menu_left_tail()->set_active('nav-app-preferences');
     DOM::menu_left_tail()->set_active('nav-table-explorer');
