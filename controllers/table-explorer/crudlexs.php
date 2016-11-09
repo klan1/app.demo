@@ -11,7 +11,6 @@ use k1app\k1app_template as DOM;
 $body = DOM::html()->body();
 template::load_template('header');
 
-//template::load_template('header');
 if (!isset($_GET['just-controller'])) {
     template::load_template('app-header');
     template::load_template('app-footer');
