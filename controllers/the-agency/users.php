@@ -70,9 +70,8 @@ if ($controller_object->on_object_update()) {
 
 $controller_object->start_board();
 d(\k1lib\urlrewrite\url::get_data());
-d(\k1lib\urlrewrite\url::get_url_level_value_by_name('row_key_text'));
 
-if (\k1lib\urlrewrite\url::get_url_level_value_by_name('row_key_text') == session_db::get_user_login()) {
+if (\k1lib\urlrewrite\url::get_url_level_value_by_name('row_keys_text') == session_db::get_user_login()) {
     DOM::menu_left()->set_active('nav-my-profile');
 } else {
     DOM::menu_left()->set_active('nav-agency-users');
