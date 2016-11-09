@@ -6,7 +6,7 @@ namespace k1app;
 
 use \k1lib\templates\temply as temply;
 use \k1lib\urlrewrite\url as url;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 use k1lib\session\session_db as session_db;
 
 \k1lib\session\session_db::is_logged(TRUE, APP_URL . 'log/form/');
