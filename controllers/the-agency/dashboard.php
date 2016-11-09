@@ -2,9 +2,9 @@
 
 namespace k1app;
 
-use k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 

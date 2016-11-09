@@ -10,16 +10,19 @@
 
 namespace k1app;
 
-use k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 use k1lib\urlrewrite\url as url;
 use k1lib\session\session_db as session_db;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
 template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
+
+DOM::menu_left()->set_active('nav-clients-menu');
+DOM::menu_left()->set_active('nav-clients-contracts');
 
 
 /**

@@ -10,16 +10,15 @@
 
 namespace k1app;
 
-use k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 use k1lib\session\session_db as session_db;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
 template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
-
 
 /**
  * ONE LINE config: less codign, more party time!
@@ -70,7 +69,14 @@ if ($controller_object->on_object_update()) {
 }
 
 $controller_object->start_board();
+d(\k1lib\urlrewrite\url::get_data());
+d(\k1lib\urlrewrite\url::get_url_level_value_by_name('row_key_text'));
 
+if (\k1lib\urlrewrite\url::get_url_level_value_by_name('row_key_text') == session_db::get_user_login()) {
+    DOM::menu_left()->set_active('nav-my-profile');
+} else {
+    DOM::menu_left()->set_active('nav-agency-users');
+}
 // LIST
 if ($controller_object->on_board_list()) {
     if ($controller_object->on_object_list()) {
