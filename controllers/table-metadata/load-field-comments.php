@@ -2,20 +2,22 @@
 
 namespace k1app;
 
-use \k1lib\templates\temply as temply;
-use \k1lib\html\DOM as DOM;
+use k1lib\html\template as template;
+use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
-include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("app-header", APP_TEMPLATE_PATH);
-include temply::load_template("app-footer", APP_TEMPLATE_PATH);
+template::load_template('header');
+template::load_template('app-header');
+template::load_template('app-footer');
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Load metada for: ");
-$top_bar->set_title(3, $span . \k1lib\sql\get_db_database_name($db));
+DOM::set_title(3, $span . \k1lib\sql\get_db_database_name($db));
 
 DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} " . \k1lib\sql\get_db_database_name($db));
 
+DOM::menu_left_tail()->set_active('nav-app-preferences');
+DOM::menu_left_tail()->set_active('nav-fields-metadata');
 
 $div_container = new \k1lib\html\div("row");
 

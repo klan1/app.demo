@@ -2,21 +2,24 @@
 
 namespace k1app;
 
-use \k1lib\templates\temply as temply;
-use \k1lib\html\DOM as DOM;
+use k1lib\html\template as template;
+use k1app\k1app_template as DOM;
 use \k1lib\urlrewrite\url as url;
 
 $body = DOM::html()->body();
 
-include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("app-header", APP_TEMPLATE_PATH);
-include temply::load_template("app-footer", APP_TEMPLATE_PATH);
+template::load_template('header');
+template::load_template('app-header');
+template::load_template('app-footer');
+
+DOM::menu_left_tail()->set_active('nav-app-preferences');
+DOM::menu_left_tail()->set_active('nav-manage-tables');
 
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);
 $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Field of: ");
-$top_bar->set_title(3, $span . $db_table_to_use);
+DOM::set_title(3, $span . $db_table_to_use);
 
 DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
 
@@ -28,26 +31,21 @@ $db_table = new \k1lib\crudlexs\class_db_table($db, $db_table_to_use);
  */
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
-$ul = new \k1lib\html\ul();
+$table_explorer_menu = DOM::menu_left_tail()->add_sub_menu("#", "DB Tables", 'nav-db-table-list', 'nav-manage-tables');
 
-$li_auto_app_menu = DOM::html()->body()->header()->get_element_by_id("table-metadata-menu");
-if (empty($li_auto_app_menu)) {
-    $li_auto_app_menu = $top_bar->add_menu_item("#", "DB Tables");
-}
-if (!isset($top_bar)) {
-    $top_bar = new \k1lib\html\foundation\top_bar(null);
-}
-$sub_menu = $top_bar->add_sub_menu($li_auto_app_menu);
 foreach ($db_tables as $row_field => $row_value) {
     $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
-    $table_alias = \k1lib\db\security\db_table_aliases::encode($table_to_link);
+    $table_alias_link = \k1lib\db\security\db_table_aliases::encode($table_to_link);
 
     if (strstr($table_to_link, "view_")) {
         continue;
     }
-    $top_bar->add_menu_item(url::do_url("../{$table_alias}/", [], FALSE), $table_to_link, $sub_menu);
+    $table_explorer_menu->add_menu_item(url::do_url("../{$table_alias_link}/", [], FALSE), $table_to_link, 'nav-' . $table_alias_link);
 }
-
+DOM::menu_left_tail()->set_active('nav-' . $table_alias);
+/**
+ * END TOP BAR - Tables added to menu
+ */
 $div_result = new \k1lib\html\div();
 $div_ok = $div_result->append_div();
 $p_fail = $div_result->append_p();

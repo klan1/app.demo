@@ -12,7 +12,7 @@
 namespace k1app;
 
 use \k1lib\session\session_db as session_db;
-use \k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 use k1lib\PROFILER as PROFILER;
 
 PROFILER::start();
@@ -27,17 +27,15 @@ const IN_K1APP = TRUE;
 require_once 'settings/path-settings.php';
 require_once 'settings/config.php';
 
+require_once APP_TEMPLATE_PATH . '/definition.php';
 /*
  * DB CONNECTION
  */
 if (\k1lib\db\handler::is_enabled()) {
     try {
-        // WFT - This is for ?
-        //define("PDO_DBNAME", 10113);
         $db = new \k1lib\db\handler();
         $db->set_verbose_level(APP_VERBOSE);
     } catch (\PDOException $e) {
-        //sleep(10);
         trigger_error($e->getMessage(), E_USER_ERROR);
     }
     $db->exec("set names utf8");
@@ -45,9 +43,6 @@ if (\k1lib\db\handler::is_enabled()) {
 
 /*
  * APP START
- */
-/**
- * @var \k1lib\session\session_db
  */
 $app_session = new session_db($db);
 $app_session->start_session();
@@ -61,38 +56,14 @@ if (!$url_controller) {
     $url_controller = "index";
 }
 
-/*
- * Error messaging form 
+/**
+ * TEMPLATE AND CONTROLLER LOAD
  */
-if (isset($_GET['error']) || !empty($_GET['error'])) {
-    $app_error = \k1lib\forms\check_single_incomming_var($_GET['error']);
-} else {
-    $app_error = NULL;
-}
-
-/*
- * CALLING THE MODULE OR NOTHIG IF IS AN AJAX CALL
- */
-switch (\k1app\APP_MODE) {
-    case 'web':
-        // Start the HTML DOM object
-        \k1lib\html\DOM::start(K1LIB_LANG);
-
-        require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
-        require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
-
-        require temply::load_template("verbose-output", APP_TEMPLATE_PATH);
-        require temply::load_template("end", APP_TEMPLATE_PATH . '/scripts');
-
-        echo \k1lib\html\DOM::generate();
-        break;
-    case 'ajax':
-        // do nothing, yet
-        break;
-    case 'shell':
-        // do nothing, yet
-        break;
-    default:
-        \k1lib\common\show_error('No \k1app\APP_MODE defined', __FILE__);
-        break;
-}
+// Template init
+template::load_template('scripts/init');
+// controller load
+require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
+// APP Debug output
+template::load_template('verbose-output');
+// Template end
+template::load_template('scripts/end');

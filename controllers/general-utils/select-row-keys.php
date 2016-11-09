@@ -12,13 +12,13 @@ namespace k1app;
 
 use k1lib\templates\temply as temply;
 use k1lib\urlrewrite\url as url;
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
-include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("app-header", APP_TEMPLATE_PATH);
-include temply::load_template("app-footer", APP_TEMPLATE_PATH);
+template::load_template('header');
+template::load_template('app-header');
+template::load_template('app-footer');
 
 $selector_title = "Select the Key";
 

@@ -2,7 +2,7 @@
 
 namespace k1app;
 
-use \k1lib\html\DOM as DOM;
+use k1app\k1app_template as DOM;
 
 $run_info = DOM::html()->body()->footer()->get_element_by_id("k1lib-run-info");
 
@@ -14,3 +14,5 @@ if (!empty($run_info)) {
 }
 
 \k1lib\notifications\on_DOM::insert_messases_on_DOM();
+
+echo DOM::generate();
