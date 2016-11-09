@@ -31,19 +31,21 @@ $db_table = new \k1lib\crudlexs\class_db_table($db, $db_table_to_use);
  */
 $db_tables = \k1lib\sql\sql_query($db, "show tables", TRUE);
 
-$menu_left = DOM::menu_left();
-$auto_app_menu = DOM::menu_left()->add_sub_menu("#", "DB Tables");
+$table_explorer_menu = DOM::menu_left_tail()->add_sub_menu("#", "DB Tables", 'nav-db-table-list', 'nav-manage-tables');
 
 foreach ($db_tables as $row_field => $row_value) {
     $table_to_link = $row_value["Tables_in_" . \k1lib\sql\get_db_database_name($db)];
-    $table_alias = \k1lib\db\security\db_table_aliases::encode($table_to_link);
+    $table_alias_link = \k1lib\db\security\db_table_aliases::encode($table_to_link);
 
     if (strstr($table_to_link, "view_")) {
         continue;
     }
-    $auto_app_menu->add_menu_item(url::do_url("../{$table_alias}/", [], FALSE), $table_to_link);
+    $table_explorer_menu->add_menu_item(url::do_url("../{$table_alias_link}/", [], FALSE), $table_to_link, 'nav-' . $table_alias_link);
 }
-
+DOM::menu_left_tail()->set_active('nav-' . $table_alias);
+/**
+ * END TOP BAR - Tables added to menu
+ */
 $div_result = new \k1lib\html\div();
 $div_ok = $div_result->append_div();
 $p_fail = $div_result->append_p();
