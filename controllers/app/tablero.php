@@ -77,18 +77,19 @@ $row1_col2->append_h4("Productos presentes{$product_title_append}");
 
 $products = new \k1lib\crudlexs\class_db_table($db, "products");
 
+
 $sql_query = "SELECT COD, PRODUCTO, SUM(PESO) as PESO
 FROM view_dashboard_products
 {$warehouse_filter}
 GROUP BY PRODUCTO";
 
 $products_data = \k1lib\sql\sql_query($db, $sql_query, TRUE, TRUE);
-
 if ($products_data) {
     $product_table = new \k1lib\html\foundation\table_from_data();
     $product_table->append_to($row1_col2);
 
     $product_table->set_data($products_data)->set_class('scroll');
+
     $product_table->set_fields_for_key_array_text(['COD']);
     $product_url = url::do_url(APP_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/{{field:COD}}/', ['auth-code' => '--authcode--', 'back-url' => $_SERVER['REQUEST_URI']]);
     $product_table->insert_tag_on_field(new \k1lib\html\a($product_url, "{{field:PRODUCTO}}"), ['PRODUCTO']);
@@ -204,13 +205,21 @@ $db_table->set_custom_sql_query('SELECT '
         . 'product_position_id,'
         . 'product_position_cod,'
         . 'warehouse_id,'
-        . 'product_name AS PRODUCTO,'
-        . 'product_weight_out AS `SALE(K)`,'
-        . 'product_weight_left AS `QUEDA(K)`,'
-        . 'product_quantity_out AS SALE,'
-        . 'product_quantity_left AS QUEDA,'
-        . 'product_datetime_out AS `FECHA SALIDA`'
+        . 'product_name,'
+        . 'product_weight_out,'
+        . 'product_weight_left,'
+        . 'product_quantity_out,'
+        . 'product_quantity_left,'
+        . 'product_datetime_out'
         . ' FROM view_inventory_out');
+$fields_labels = [
+    'product_name' => 'PRODUCTO',
+    'product_weight_out' => 'SALE(K)',
+    'product_weight_left' => 'QUEDA(K)',
+    'product_quantity_out' => 'SALE',
+    'product_quantity_left' => 'QUEDA',
+    'product_datetime_out' => 'FECHA SALIDA',
+];
 if ($warehouse_url_value) {
     $filter = [
         'warehouse_id' => $warehouse_url_value,
@@ -225,6 +234,7 @@ $list = new \k1lib\crudlexs\listing($db_table, NULL);
 $list->set_rows_per_page(10);
 
 if ($list->load_db_table_data('show-related')) {
+    $list->set_custom_field_labels($fields_labels);
     $list->apply_label_filter();
 
     $read_url = url::do_url(APP_URL . warehouses_inventory_config::ROOT_URL . '/' . warehouses_inventory_config::BOARD_READ_URL . "/--rowkeys--/", ["auth-code" => "--authcode--", "back-url" => $_SERVER['REQUEST_URI']]);
