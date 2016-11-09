@@ -59,7 +59,10 @@ const APP_VERBOSE = 0;
  */
 \k1lib\forms\file_uploads::enable(APP_UPLOADS_PATH, APP_UPLOADS_URL);
 //\k1lib\forms\file_uploads::set_overwrite_existent(FALSE);
-
+/**
+ * TEMPLATE CONFIG
+ */
+\k1lib\html\template::enable(APP_TEMPLATE_PATH);
 /*
  * DB CONFIG
  */

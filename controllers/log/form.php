@@ -2,7 +2,7 @@
 
 namespace k1app;
 
-use \k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 use \k1lib\urlrewrite\url as url;
 use k1app\k1app_template as DOM;
 use k1lib\session\session_db as session_db;
@@ -14,7 +14,7 @@ DOM::start_template_plain();
 
 $body = DOM::html()->body();
 
-include temply::load_template("header", APP_TEMPLATE_PATH);
+template::load_template('header');
 
 // Form behaivor values
 $form_magic_value = \k1lib\common\set_magic_value("login_form");

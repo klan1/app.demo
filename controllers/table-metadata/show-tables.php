@@ -2,15 +2,15 @@
 
 namespace k1app;
 
-use \k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 use \k1lib\urlrewrite\url as url;
 use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
 
-include temply::load_template("header", APP_TEMPLATE_PATH);
-include temply::load_template("app-header", APP_TEMPLATE_PATH);
-include temply::load_template("app-footer", APP_TEMPLATE_PATH);
+template::load_template('header');
+template::load_template('app-header');
+template::load_template('app-footer');
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Tables of DB: ");
 DOM::set_title(3, $span . \k1lib\sql\get_db_database_name($db));

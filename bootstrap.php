@@ -12,7 +12,7 @@
 namespace k1app;
 
 use \k1lib\session\session_db as session_db;
-use \k1lib\templates\temply as temply;
+use k1lib\html\template as template;
 use k1lib\PROFILER as PROFILER;
 use k1app\k1app_template as DOM;
 
@@ -78,13 +78,10 @@ if (isset($_GET['error']) || !empty($_GET['error'])) {
 switch (\k1app\APP_MODE) {
     case 'web':
         // Start the HTML DOM object
-        require temply::load_template("init", APP_TEMPLATE_PATH . '/scripts');
+        template::load_template('scripts/init');
         require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
-
-        require temply::load_template("verbose-output", APP_TEMPLATE_PATH);
-        require temply::load_template("end", APP_TEMPLATE_PATH . '/scripts');
-
-        echo DOM::generate();
+        template::load_template('verbose-output');
+        template::load_template('scripts/end');
         break;
     case 'ajax':
         // do nothing, yet
