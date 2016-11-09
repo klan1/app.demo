@@ -14,7 +14,6 @@ namespace k1app;
 use \k1lib\session\session_db as session_db;
 use k1lib\html\template as template;
 use k1lib\PROFILER as PROFILER;
-use k1app\k1app_template as DOM;
 
 PROFILER::start();
 
@@ -34,12 +33,9 @@ require_once APP_TEMPLATE_PATH . '/definition.php';
  */
 if (\k1lib\db\handler::is_enabled()) {
     try {
-        // WFT - This is for ?
-        //define("PDO_DBNAME", 10113);
         $db = new \k1lib\db\handler();
         $db->set_verbose_level(APP_VERBOSE);
     } catch (\PDOException $e) {
-        //sleep(10);
         trigger_error($e->getMessage(), E_USER_ERROR);
     }
     $db->exec("set names utf8");
@@ -47,9 +43,6 @@ if (\k1lib\db\handler::is_enabled()) {
 
 /*
  * APP START
- */
-/**
- * @var \k1lib\session\session_db
  */
 $app_session = new session_db($db);
 $app_session->start_session();
@@ -63,33 +56,14 @@ if (!$url_controller) {
     $url_controller = "index";
 }
 
-/*
- * Error messaging form 
+/**
+ * TEMPLATE AND CONTROLLER LOAD
  */
-if (isset($_GET['error']) || !empty($_GET['error'])) {
-    $app_error = \k1lib\forms\check_single_incomming_var($_GET['error']);
-} else {
-    $app_error = NULL;
-}
-
-/*
- * CALLING THE MODULE OR NOTHIG IF IS AN AJAX CALL
- */
-switch (\k1app\APP_MODE) {
-    case 'web':
-        // Start the HTML DOM object
-        template::load_template('scripts/init');
-        require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
-        template::load_template('verbose-output');
-        template::load_template('scripts/end');
-        break;
-    case 'ajax':
-        // do nothing, yet
-        break;
-    case 'shell':
-        // do nothing, yet
-        break;
-    default:
-        \k1lib\common\show_error('No \k1app\APP_MODE defined', __FILE__);
-        break;
-}
+// Template init
+template::load_template('scripts/init');
+// controller load
+require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
+// APP Debug output
+template::load_template('verbose-output');
+// Template end
+template::load_template('scripts/end');
