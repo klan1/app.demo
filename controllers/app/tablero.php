@@ -65,7 +65,7 @@ if ($warehouses_data) {
     $wh_table = new \k1lib\html\foundation\table_from_data();
     $wh_table->append_to($row1_col1);
 
-    $wh_table->set_data($warehouses_data)->set_class('scroll');
+    $wh_table->set_data($warehouses_data);
     if (!$warehouse_url_value) {
         $wh_table->insert_tag_on_field(new \k1lib\html\a('./{{field:ID}}/', "{{field:BODEGA}}"), ['BODEGA']);
     }
@@ -88,7 +88,7 @@ if ($products_data) {
     $product_table = new \k1lib\html\foundation\table_from_data();
     $product_table->append_to($row1_col2);
 
-    $product_table->set_data($products_data)->set_class('scroll');
+    $product_table->set_data($products_data);
 
     $product_table->set_fields_for_key_array_text(['COD']);
     $product_url = url::do_url(APP_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/{{field:COD}}/', ['auth-code' => '--authcode--', 'back-url' => $_SERVER['REQUEST_URI']]);
@@ -183,9 +183,8 @@ if ($list->load_db_table_data('show-related')) {
 
     $list->do_html_object();
     $list->get_html_table()
-            ->set_class('scroll')
             ->hide_fields(['product_position_id', 'user_login', 'product_valid'])
-            ->append_to($row2_col1);
+            ->append_to($row2_col1->append_div('scroll-x'));
 } else {
 //    \k1lib\notifications\on_DOM::queue_mesasage($db_table->generate_sql_query());
     $row2_col1->append_div("callout primary")->set_value("Sin datos para mostrar");
@@ -243,9 +242,8 @@ if ($list->load_db_table_data('show-related')) {
 
     $list->do_html_object();
     $table = $list->get_html_table()
-            ->set_class('scroll')
             ->hide_fields(['product_position_id', 'user_login', 'product_valid', 'product_datetime_in'])
-            ->append_to($row2_col2);
+            ->append_to($row2_col2->append_div('scroll-x'));
 //    \k1lib\notifications\on_DOM::queue_mesasage($db_table->generate_sql_query());
 } else {
 //    \k1lib\notifications\on_DOM::queue_mesasage($db_table->generate_sql_query());

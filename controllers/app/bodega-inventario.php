@@ -192,9 +192,10 @@ if ($controller_object->on_object_list()) {
         $content->append_h3("Inventario presente");
         $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, ['product_position_cod']);
     }
-    $total_weight = $controller_object->db_table->get_field_operation("product_weight", "SUM");
+    $total_weight = $controller_object->db_table->get_field_operation("product_weight_left", "SUM");
+    $total_quantity = $controller_object->db_table->get_field_operation("product_quantity_left", "SUM");
     if (!empty($total_weight)) {
-        $content->append_h5("Peso total: {$total_weight}");
+        $content->append_h5("{$total_weight} Kg en {$total_quantity} unidades");
     }
 //    $create_positions_button->append_to($controller_object->board_list_object->button_div_tag());
 }
@@ -214,9 +215,12 @@ if ($controller_object->on_board_update()) {
 $controller_object->exec_board();
 
 if ($controller_object->on_board_list()) {
-    $controller_object->board_list_object->list_object->get_html_table()
-            ->set_class('scroll')
-            ->hide_fields(['product_position_id']);
+    $html_table = $controller_object->board_list_object->list_object->get_html_table();
+    if (isset($incoming['modo']) && $incoming['modo'] == 'sin-ubicar') {
+        $html_table->hide_fields(['product_position_id','wh_column_id','wh_column_row_id','wh_position_id']);
+    } else {
+        $html_table->hide_fields(['product_position_id']);
+    }
 }
 
 if ($controller_object->on_board_create()) {
