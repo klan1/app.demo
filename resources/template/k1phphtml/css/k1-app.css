@@ -113,6 +113,7 @@ ul.menu li.has-submenu.active.is-accordion-submenu-parent ul{
 /**
 END OF CANVAS
 */
+
 @media screen and (min-width: 40em) {
     .no-js .top-bar {
         display: block;
@@ -122,7 +123,9 @@ END OF CANVAS
         display: none;
     }
 }
-
+/**
+UTILITIES CLASSES AND IDs
+*/
 #k1lib-content {
     padding: 20px 20px 60px 20px;
 }
@@ -130,6 +133,15 @@ END OF CANVAS
     font-size: 0.9em;
     color: #555;
 }
+.scroll-x {
+    overflow-x: auto;
+}
+.scroll-y {
+    overflow-y: auto;
+}
+/**
+UTILITIES CLASSES AND IDs
+*/
 
 .k1lib-uppercase {
     text-transform: uppercase;
@@ -295,6 +307,7 @@ LIST TABLE STYLES
 div.k1lib-crudlexs-list table tbody tr td {
     vertical-align: top;
 }
+
 /**
 TABLE MANAGER
 */
