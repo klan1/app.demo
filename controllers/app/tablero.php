@@ -10,6 +10,9 @@ use k1app\k1app_template as DOM;
 
 \k1lib\session\session_db::is_logged(TRUE, APP_URL . 'log/form/');
 
+\k1lib\sql\sql_query($db, "SET sql_mode='';");
+
+
 $content = DOM::html()->body()->content();
 
 template::load_template('header');

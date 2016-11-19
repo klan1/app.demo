@@ -14,6 +14,9 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
+DOM::menu_left_tail()->set_active('nav-app-preferences');
+DOM::menu_left_tail()->set_active('nav-configure-warehouses');
+
 /**
  * $_GET['do-floors'] capture and creation button
  */

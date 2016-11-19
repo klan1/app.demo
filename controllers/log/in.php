@@ -47,10 +47,7 @@ if ($post_data) {
         } else {
             trigger_error("Login with coockie not possible", E_USER_ERROR);
         }
-    } elseif ($app_session_check === NULL) {
-        DOM_notifications::queue_mesasage("No se han recibido datos", "warning");
-        exit;
-    } elseif ($app_session_check === FALSE) {
+    } elseif (empty($app_session_check)) {
         DOM_notifications::queue_mesasage("Usuario y/o contraseña incorrecta", "alert");
     }
 } elseif ($post_data === FALSE) {
