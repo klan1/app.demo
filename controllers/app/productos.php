@@ -30,6 +30,19 @@ $controller_object->set_config_from_class("\k1app\products_config");
  */
 $div = $controller_object->init_board();
 
+if ($controller_object->on_object_list()) {
+    \k1lib\sql\sql_query($db, "SET sql_mode='';");
+
+    $sql_products = 'SELECT '
+            . ' product_id, '
+            . ' product_name, '
+            . ' SUM(PESO) as PESO, '
+            . ' SUM(CANTIDAD) as CANTIDAD '
+            . ' FROM view_products ';
+    $controller_object->db_table->set_custom_sql_query($sql_products);
+    $controller_object->db_table->set_group_by(['product_id']);
+}
+
 $controller_object->start_board();
 
 // LIST
@@ -114,6 +127,9 @@ if ($controller_object->on_board_read()) {
     $total_weight = $inventory->get_field_operation("product_weight_left", "SUM");
     $total_quantity = $inventory->get_field_operation("product_quantity_left", "SUM");
     if (!empty($total_weight)) {
+        if (is_float($total_weight + 0)) {
+            $total_weight = round($total_weight, 1);
+        }
         $related_messaje_div = $related_list->get_elements_by_class('related-messaje');
         $related_messaje_div[0]->append_h5("{$total_weight} Kg en {$total_quantity} unidades");
     }

@@ -81,7 +81,7 @@ $row1_col2->append_h4("Productos presentes{$product_title_append}");
 $products = new \k1lib\crudlexs\class_db_table($db, "products");
 
 
-$sql_query = "SELECT COD, PRODUCTO, SUM(PESO) as PESO
+$sql_query = "SELECT COD, PRODUCTO, SUM(PESO) as PESO, SUM(CANTIDAD) as CANTIDAD
 FROM view_dashboard_products
 {$warehouse_filter}
 GROUP BY PRODUCTO";
