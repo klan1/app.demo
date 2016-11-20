@@ -155,11 +155,6 @@ if ($controller_object->on_board_list()) {
         $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
     }
 }
-
-// CREATE - UPDATE
-if ($controller_object->on_board_create() || $controller_object->on_board_update()) {
-    \k1lib\crudlexs\input_helper::set_fk_fields_to_skip(['warehouse_id', 'wh_column_id', 'wh_column_row_id', 'wh_position_id']);
-}
 // LIST
 if ($controller_object->on_board_read()) {
     // CUSTOM SQL FOR VIEW USAGE
@@ -167,6 +162,11 @@ if ($controller_object->on_board_read()) {
     $controller_object->object_read()->set_custom_field_labels($custom_field_labels);
     $controller_object->object_read()->set_fields_to_hide(['product_position_id']);
 }
+// CREATE - UPDATE
+if ($controller_object->on_board_create() || $controller_object->on_board_update()) {
+    \k1lib\crudlexs\input_helper::set_fk_fields_to_skip(['warehouse_id', 'wh_column_id', 'wh_column_row_id', 'wh_position_id']);
+}
+
 
 /**
  * START
@@ -201,23 +201,23 @@ if ($controller_object->on_object_list()) {
 }
 // UPDATE
 if ($controller_object->on_board_update()) {
-    if (isset($_POST)) {
-        $encoded_field_name = $controller_object->board_update_object->update_object->encrypt_field_name('wh_column_id');
-        if (isset($_POST[$encoded_field_name])) {
-            $_POST[$encoded_field_name] = strtoupper($_POST[$encoded_field_name]);
+    if ($controller_object->object_update()->get_post_data_catched()) {
+        $post_data = $controller_object->object_update()->get_post_data();
+        if (isset($post_data['wh_column_id'])) {
+            $controller_object->object_update()->set_post_incomming_value('wh_column_id', strtoupper($post_data['wh_column_id']));
         }
     }
 }
-
 /**
  * EXEC
  */
 $controller_object->exec_board();
 
+// LIST
 if ($controller_object->on_board_list()) {
     $html_table = $controller_object->board_list_object->list_object->get_html_table();
     if (isset($incoming['modo']) && $incoming['modo'] == 'sin-ubicar') {
-        $html_table->hide_fields(['product_position_id','wh_column_id','wh_column_row_id','wh_position_id']);
+        $html_table->hide_fields(['product_position_id', 'wh_column_id', 'wh_column_row_id', 'wh_position_id']);
     } else {
         $html_table->hide_fields(['product_position_id']);
     }
