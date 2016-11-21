@@ -4,9 +4,14 @@
 */
 
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans');*/
 
-
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(./fonts/Open-Sans.woff) format('woff');
+}
 
 body {
     font-family: 'Open Sans', sans-serif;
