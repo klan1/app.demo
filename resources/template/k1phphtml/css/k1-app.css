@@ -265,8 +265,11 @@ GENERAL
 /**
 LIST SEARCH
 */
-#search-modal {
-
+table tr th a.non-ordering {
+    color: #444;
+}
+table tr th a.ordering {
+    color: #111;
 }
 
 #search-iframe {
