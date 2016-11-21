@@ -19,6 +19,8 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
+DOM::set_title(3, "Inventario Web");
+
 DOM::menu_left()->set_active('nav-index');
 
 $warehouse_url_value = url::set_url_rewrite_var(url::get_url_level_count(), 'warehouse', FALSE);
