@@ -13,14 +13,18 @@ Prevent FOUC
 Flash of Unstyled Content
 */
 html {
-    /*height: 100%;*/
-
 }
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url(./fonts/Open-Sans.woff) format('woff');
+}
+
 body {
-    /*height: 100%;*/
-    /*background-color: #444;*/
+    font-family: 'Open Sans', sans-serif;
 }
-
 h1 {
     font-size: 1.5rem; }
 
