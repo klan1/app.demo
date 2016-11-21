@@ -121,7 +121,7 @@ if ($controller_object->on_board_list()) {
             ];
             $controller_object->db_table->set_query_filter($filter, TRUE, FALSE);
 
-            $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
+//            $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
         } elseif ($incoming['modo'] == 'sin-ubicar') {
             DOM::menu_left()->set_active('nav-inventory-nonplaced');
 
@@ -132,7 +132,7 @@ if ($controller_object->on_board_list()) {
             ];
             $controller_object->db_table->set_query_filter($filter, TRUE, FALSE);
 
-            $controller_object->db_table->set_order_by('product_datetime_in', 'ASC');
+//            $controller_object->db_table->set_order_by('product_datetime_in', 'ASC');
         } else {
             \k1lib\html\html_header_go(url::do_url($_SERVER['REQUEST_URI'], [], FALSE));
         }
@@ -152,7 +152,7 @@ if ($controller_object->on_board_list()) {
         $controller_object->db_table->set_query_filter($filter, TRUE, FALSE);
         $controller_object->db_table->set_query_filter_exclude($filter_exclude, TRUE, FALSE);
 
-        $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
+//        $controller_object->db_table->set_order_by('product_datetime_in', 'DESC');
     }
 }
 // LIST

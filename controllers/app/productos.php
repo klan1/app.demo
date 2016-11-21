@@ -95,7 +95,7 @@ if ($controller_object->on_board_read()) {
             . 'wh_column_row_id,'
             . 'wh_position_id,'
             . 'product_weight,'
-            . 'product_weight_left AS `QUEDA(K)`,'
+            . 'product_weight_left AS `QUEDA_K`,'
             . 'product_quantity,'
             . 'product_quantity_left AS QUEDA,'
             . 'user_login,'

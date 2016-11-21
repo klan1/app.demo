@@ -121,6 +121,7 @@ $db_table->set_query_filter($filter, TRUE);
 $db_table->set_order_by('product_datetime_in', 'DESC');
 
 $list = new \k1lib\crudlexs\listing($db_table, NULL);
+$list->set_do_orderby_headers(FALSE);
 if ($list->load_db_table_data('show-related')) {
     $list->apply_field_label_filter();
     $list->apply_label_filter();
@@ -175,6 +176,8 @@ $db_table->set_query_filter_exclude($filter_exclude, TRUE);
 $db_table->set_order_by('product_datetime_in', 'DESC');
 
 $list = new \k1lib\crudlexs\listing($db_table, NULL);
+$list->set_do_orderby_headers(FALSE);
+
 $list->set_rows_per_page(10);
 
 if ($list->load_db_table_data('show-related')) {
@@ -233,6 +236,8 @@ $db_table->set_query_filter($filter, TRUE);
 $db_table->set_order_by('product_datetime_out', 'DESC');
 
 $list = new \k1lib\crudlexs\listing($db_table, NULL);
+$list->set_do_orderby_headers(FALSE);
+
 $list->set_rows_per_page(10);
 
 if ($list->load_db_table_data('show-related')) {
