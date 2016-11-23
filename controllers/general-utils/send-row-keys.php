@@ -10,7 +10,6 @@
 
 namespace k1app;
 
-use k1lib\templates\temply as temply;
 use k1lib\urlrewrite\url as url;
 
 /**
