@@ -11,7 +11,7 @@
 namespace k1app;
 
 use k1lib\html\template as template;
-use k1lib\urlrewrite\url as url;
+use \k1lib\urlrewrite\url as url;
 use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();

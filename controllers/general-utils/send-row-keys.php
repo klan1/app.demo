@@ -10,7 +10,6 @@
 
 namespace k1app;
 
-use k1lib\html\template as template;
 use k1lib\urlrewrite\url as url;
 
 /**

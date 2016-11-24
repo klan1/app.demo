@@ -8,11 +8,8 @@ and open the template in the editor.
     Author     : J0hnD03
 */
 
-/**
-Prevent FOUC
-Flash of Unstyled Content
-*/
 html {
+    font-size: 15px;
 }
 
 @font-face {
@@ -174,6 +171,30 @@ label.k1lib-label-object {
     bottom:0; 
     width:100%;
     margin: 0;
+}
+#k1lib-footer-messager #k1lib-run-info {
+    padding-left: 2rem;
+    display: block;
+}
+
+#k1lib-footer-message.left-footer{
+    padding: 0rem 0.6rem;
+}
+#k1lib-footer-message.left-footer,
+#k1lib-footer-message.left-footer a,
+#k1lib-footer-message.left-footer span {
+    color:#FFF;
+}
+#k1lib-footer-message.left-footer a {
+    font-weight: bold;
+}
+#k1lib-footer-message.left-footer #k1lib-run-info {
+    padding-left: 0px;
+    display: block;
+}
+
+#k1lib-footer-message.left-footer h6 {
+    font-size: 0.8em;
 }
 #k1lib-footer-message h6 {
     font-size: 0.6em;
