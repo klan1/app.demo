@@ -80,5 +80,6 @@ if ($controller_object->on_object_create() && $controller_object->board_create_o
     task_order_state_send_email($db, $task_order_keys_text, $new_state_data);
 }
 
-$controller_object->finish_board(FALSE);
+$controller_object->finish_board();
+
 $body->content()->append_child($div);
