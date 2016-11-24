@@ -27,7 +27,7 @@ DOM::menu_left()->set_active('nav-agency-departaments');
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "departments", "Agency departments", $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "departments", "Agency departments", 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\agency_departments_config");
 
 $controller_object->db_table->set_query_filter(["agency_id" => session_db::get_user_data()['agency_id']], TRUE);

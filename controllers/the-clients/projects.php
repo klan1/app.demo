@@ -28,7 +28,7 @@ DOM::menu_left()->set_active('nav-clients-projects');
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "projects", "Agency projects", $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "projects", "Agency projects", 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\client_projects_config");
 $controller_object->db_table->set_order_by("project_datetime_in", "DESC");
 

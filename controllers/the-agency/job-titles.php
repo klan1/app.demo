@@ -27,7 +27,7 @@ DOM::menu_left()->set_active('nav-agency-job-titles');
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "job_titles", "Agency job titles", $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "job_titles", "Agency job titles", 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\agency_job_titles_config");
 
 $controller_object->db_table->set_query_filter(["agency_id" => session_db::get_user_data()['agency_id']], TRUE);

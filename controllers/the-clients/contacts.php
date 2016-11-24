@@ -29,7 +29,7 @@ DOM::menu_left()->set_active('nav-clients-contacts');
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "contacts", "Agency contacts", $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "contacts", "Agency contacts", 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\client_contacts_config");
 
 if (session_db::get_user_data()['user_level'] == 'client') {

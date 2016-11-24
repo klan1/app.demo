@@ -13,7 +13,6 @@ namespace k1app;
 use k1lib\html\template as template;
 use k1lib\urlrewrite\url as url;
 use k1lib\session\session_db as session_db;
-
 use k1app\k1app_template as DOM;
 
 $body = DOM::html()->body();
@@ -29,7 +28,7 @@ DOM::menu_left()->set_active('nav-clients-task-orders');
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "to_states", "Task Orders states", $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "to_states", "Task Orders states", 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\client_task_orders_states_config");
 
 /**
@@ -61,11 +60,13 @@ if ($controller_object->on_object_list()) {
  * SET DEFAULT value for to_state_state from the last state
  */
 if ($controller_object->on_object_create()) {
-    $to_info = new \k1lib\crudlexs\class_db_table($db, "view_user_task_orders");
-    $to_info->set_query_filter($task_order_keys_array, TRUE);
-    $to_info_data = $to_info->get_data(FALSE);
-    $controller_object->board_create_object->create_object->set_post_data(['to_state_state' => $to_info_data['to_state']]);
-    $controller_object->board_create_object->create_object->put_post_data_on_table_data();
+    if (!isset($_POST['to_state_state'])) {
+        $to_info = new \k1lib\crudlexs\class_db_table($db, "view_user_task_orders");
+        $to_info->set_query_filter($task_order_keys_array, TRUE);
+        $to_info_data = $to_info->get_data(FALSE);
+        $controller_object->board_create_object->create_object->set_post_data(['to_state_state' => $to_info_data['to_state']]);
+        $controller_object->board_create_object->create_object->put_post_data_on_table_data();
+    }
 }
 
 $controller_object->exec_board();
@@ -79,5 +80,5 @@ if ($controller_object->on_object_create() && $controller_object->board_create_o
     task_order_state_send_email($db, $task_order_keys_text, $new_state_data);
 }
 
-$controller_object->finish_board();
+$controller_object->finish_board(FALSE);
 $body->content()->append_child($div);

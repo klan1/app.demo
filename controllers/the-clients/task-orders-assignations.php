@@ -28,7 +28,7 @@ DOM::menu_left()->set_active('nav-clients-task-orders');
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "to_assignations", "Task Orders Assignations", $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "to_assignations", "Task Orders Assignations", 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\client_task_orders_assignations_config");
 
 

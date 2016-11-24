@@ -19,7 +19,7 @@ DOM::menu_left()->set_active('nav-agency-my');
 /**
  * ONE LINE config: less codign, more party time!
  */
-$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "agencies", "My agency", $top_bar);
+$controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, "agencies", "My agency", 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\agency_my_agency_config");
 \k1lib\crudlexs\listing::$rows_per_page = 5;
 
