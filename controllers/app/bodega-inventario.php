@@ -203,20 +203,33 @@ if ($controller_object->on_object_list()) {
 if ($controller_object->on_board_update()) {
     if ($controller_object->object_update()->get_post_data_catched()) {
         $post_data = $controller_object->object_update()->get_post_data();
+        $original_data = $controller_object->object_update()->get_db_table_data()[1];
         // COL UPPERCASE HACK
         if (isset($post_data['wh_column_id'])) {
             $controller_object->object_update()->set_post_incomming_value('wh_column_id', strtoupper($post_data['wh_column_id']));
         }
 
         // FREE WAREHOUSE STORAGE SLOT CHECK
-        if (!empty($post_data['warehouse_id']) && !empty($post_data['wh_column_id']) && !empty($post_data['wh_column_row_id']) && !empty($post_data['wh_position_id'])) {
-            $sql_check_free = "SELECT * FROM view_wh_positions_busy WHERE "
-                    . "warehouse_id = {$post_data['warehouse_id']} AND "
-                    . "wh_column_id = '{$post_data['wh_column_id']}' AND "
-                    . "wh_column_row_id = {$post_data['wh_column_row_id']} AND "
-                    . "wh_position_id = {$post_data['wh_position_id']}";
-            if (\k1lib\sql\sql_query($db, $sql_check_free)) {
-                $controller_object->object_update()->set_post_validation_errors(['wh_position_id' => 'La posicion esta ocupada']);
+        if (
+                !empty($post_data['warehouse_id']) &&
+                !empty($post_data['wh_column_id']) &&
+                !empty($post_data['wh_column_row_id']) &&
+                !empty($post_data['wh_position_id'])) {
+            //Check only if has changed
+            if (
+                    ($post_data['warehouse_id'] != $original_data['warehouse_id']) ||
+                    ($post_data['wh_column_id'] != $original_data['wh_column_id']) ||
+                    ($post_data['wh_column_row_id'] != $original_data['wh_column_row_id']) ||
+                    ($post_data['wh_position_id'] != $original_data['wh_position_id'])
+            ) {
+                $sql_check_free = "SELECT * FROM view_wh_positions_busy WHERE "
+                        . "warehouse_id = {$post_data['warehouse_id']} AND "
+                        . "wh_column_id = '{$post_data['wh_column_id']}' AND "
+                        . "wh_column_row_id = {$post_data['wh_column_row_id']} AND "
+                        . "wh_position_id = {$post_data['wh_position_id']}";
+                if (\k1lib\sql\sql_query($db, $sql_check_free)) {
+                    $controller_object->object_update()->set_post_validation_errors(['wh_position_id' => 'La posicion esta ocupada']);
+                }
             }
         }
     }
