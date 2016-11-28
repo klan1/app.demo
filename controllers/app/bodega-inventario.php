@@ -173,6 +173,26 @@ if ($controller_object->on_board_create() || $controller_object->on_board_update
  */
 $controller_object->start_board();
 
+if ($controller_object->on_board_read()) {
+    /**
+     * DO FULL OUT
+     */
+    $read_data = $controller_object->object_read()->get_db_table_data()[1];
+    if (isset($_GET['do-full-out']) && ($_GET['do-full-out'] == '1')) {
+        $out_data = [
+            'product_position_id' => $read_data['product_position_id'],
+            'product_weight' => $read_data['product_weight_left'],
+            'product_quantity' => $read_data['product_quantity_left'],
+            'user_login' => session_db::get_user_login(),
+        ];
+        if (\k1lib\sql\sql_insert($db, 'product_position_out', $out_data)) {
+            \k1lib\notifications\on_DOM::queue_mesasage('Fue retirado todo el invetario presente.');
+            unset($_GET['do-full-out']);
+            $return_url = url::do_url('./');
+            \k1lib\html\html_header_go($return_url);
+        }
+    }
+}
 // LIST
 if ($controller_object->on_object_list()) {
 
@@ -266,6 +286,19 @@ $controller_object->finish_board();
 
 if ($controller_object->on_board_read()) {
     $related_div = $div->append_div("row k1lib-crudlexs-related-data");
+
+    if (($read_data['product_weight_left'] + 0) > 0) {
+        $controller_object->board_read_object->set_related_show_new(TRUE);
+
+        $full_out_link = url::do_url($_SERVER['REQUEST_URI'], ['do-full-out' => 1]);
+        $button_make_full_out = new \k1lib\html\a($full_out_link, ' Salida completa', null, 'button fi-alert');
+        $out_confirmation_message = "¿Esta seguro que desea dar salida a {$read_data['product_weight_left']} kg en {$read_data['product_quantity_left']} cajas?";
+        $button_make_full_out->set_attrib('onClick', "return confirm('{$out_confirmation_message}')");
+        $button_make_full_out->append_to($related_div);
+    } else {
+        $controller_object->board_read_object->set_related_show_new(FALSE);
+    }
+
     $inventory = new \k1lib\crudlexs\class_db_table($db, "product_position_out");
     $inventory->set_custom_sql_query('SELECT '
             . 'product_position_id,'
@@ -281,7 +314,6 @@ if ($controller_object->on_board_read()) {
 
     $controller_object->board_read_object->set_related_rows_to_show(50);
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
-    $controller_object->board_read_object->set_related_show_new(TRUE);
     $related_list = $controller_object->board_read_object->create_related_list($inventory, [], "SALIDAS DE PRODUCTO", warehouses_inventory_out_config::ROOT_URL, warehouses_inventory_out_config::BOARD_CREATE_URL, warehouses_inventory_out_config::BOARD_UPDATE_URL, warehouses_inventory_out_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
 }
