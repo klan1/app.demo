@@ -38,6 +38,7 @@ const APP_VERBOSE = 0;
  */
 \k1lib\session\session_plain::enable();
 \k1lib\session\session_plain::set_session_name("K1APP-DEMO");
+\k1lib\session\session_plain::set_use_ip_in_userhash(FALSE);
 \k1lib\session\session_plain::set_app_user_levels([
     'god',
     'admin',
