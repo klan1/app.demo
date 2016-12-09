@@ -87,11 +87,19 @@ if ($controller_object->get_state()) {
 // LIST
     if ($controller_object->on_board_list()) {
         if ($controller_object->on_object_list()) {
-            $controller_object->board_list_object->list_object->apply_link_on_field_filter(APP_URL . "general-utils/send-row-keys/{$table_to_use}/--rowkeys--/{$reference_table_to_use}/", \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
+            $controller_object->board_list_object->list_object->apply_link_on_field_filter(
+                    APP_URL . "general-utils/send-row-keys/{$table_to_use}/--rowkeys--/{$reference_table_to_use}/"
+                    , \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS
+                    , NULL
+                    , '_parent'
+            );
         }
         if (isset($_GET['back-url'])) {
-            $back_link = \k1lib\html\get_link_button('javascript:history.back()', "Back");
-            $controller_object->board_list_object->button_div_tag()->append_child_head($back_link);
+            $close_search_buttom = new \k1lib\html\a(NULL, " " . \k1lib\common_strings::$button_cancel, "_parent");
+            $close_search_buttom->set_id("close-search-button");
+            $close_search_buttom->set_attrib("class", "button warning fi-page-close");
+            $close_search_buttom->set_attrib("onClick", "parent.close_fk_iframe();");
+            $controller_object->board_list_object->button_div_tag()->append_child_head($close_search_buttom);
         }
     }
 
