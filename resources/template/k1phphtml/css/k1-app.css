@@ -297,7 +297,7 @@ table tr th a.ordering {
     color: #111;
 }
 
-#search-iframe {
+.utility-iframe {
     position: absolute;
     overflow: scroll;
     display: none;
