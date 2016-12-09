@@ -178,6 +178,7 @@ if ($controller_object->on_board_read()) {
      * DO FULL OUT
      */
     $read_data = $controller_object->object_read()->get_db_table_data()[1];
+    $read_data['product_weight_left'] = round($read_data['product_weight_left'], 1);
     if (isset($_GET['do-full-out']) && ($_GET['do-full-out'] == '1')) {
         $out_data = [
             'product_position_id' => $read_data['product_position_id'],
