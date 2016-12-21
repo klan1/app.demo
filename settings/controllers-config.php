@@ -122,9 +122,15 @@ class products_config extends clients_config {
 
 }
 
-class client_has_presentation_config extends clients_config {
+class brands_config extends clients_config {
 
-    const ROOT_URL = "app/cliente-presentaciones";
+    const ROOT_URL = "app/marcas";
+
+}
+
+class brands_has_presentation_config extends clients_config {
+
+    const ROOT_URL = "app/marca-presentaciones";
 
 }
 

@@ -16,14 +16,14 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-$db_table_to_use = "clients_has_presentations";
-$controller_name = "Presentaciones de Cliente";
+$db_table_to_use = "brands_has_presentations";
+$controller_name = "Presentaciones de Marca";
 
 /**
  * ONE LINE config: less codign, more party time!
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
-$controller_object->set_config_from_class("\k1app\client_has_presentation_config");
+$controller_object->set_config_from_class("\k1app\brands_has_presentation_config");
 
 /**
  * USER LOGIN AS CONSTANT
@@ -35,8 +35,8 @@ $controller_object->db_table->set_field_constants(["user_login" => session_db::g
  */
 $div = $controller_object->init_board();
 
-$controller_object->read_url_keys_text_for_create("clients");
-$controller_object->read_url_keys_text_for_list("clients", TRUE);
+$controller_object->read_url_keys_text_for_create("brands");
+$controller_object->read_url_keys_text_for_list("brands", TRUE);
 
 $controller_object->start_board();
 

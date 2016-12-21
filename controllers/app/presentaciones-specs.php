@@ -34,8 +34,8 @@ $controller_object->db_table->set_field_constants(["user_login" => session_db::g
  */
 $div = $controller_object->init_board();
 
-$controller_object->read_url_keys_text_for_create("clients_has_presentations");
-$controller_object->read_url_keys_text_for_list("clients_has_presentations", TRUE);
+$controller_object->read_url_keys_text_for_create("brands_has_presentations");
+$controller_object->read_url_keys_text_for_list("brands_has_presentations", TRUE);
 
 $controller_object->start_board();
 

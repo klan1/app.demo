@@ -29,6 +29,7 @@ if (!isset($_GET['just-controller'])) {
             $menu_left->add_menu_item(APP_URL . 'app/clientes/', 'Clientes', 'nav-clients');
             $menu_left->add_menu_item(APP_URL . 'app/proveedores/', 'Provedores', 'nav-providers');
             $menu_left->add_menu_item(APP_URL . 'app/productos/', 'Productos', 'nav-products');
+            $menu_left->add_menu_item(APP_URL . 'app/marcas/', 'Marcas', 'nav-brands');
             $menu_left->add_menu_item(APP_URL . 'app/presentaciones/', 'Presentaciones', 'nav-presentations');
 
             /**
