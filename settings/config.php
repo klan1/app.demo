@@ -37,6 +37,7 @@ const APP_VERBOSE = 0;
  * SESSION CONFIG
  */
 \k1lib\session\session_plain::enable();
+\k1lib\session\session_plain::set_use_ip_in_userhash(FALSE);
 \k1lib\session\session_plain::set_session_name("K1APP-IMEPEX-SUITE");
 \k1lib\session\session_plain::set_app_user_levels([
     'god',
