@@ -98,6 +98,8 @@ if ($products_data) {
     $product_table->set_fields_for_key_array_text(['COD']);
     $product_url = url::do_url(APP_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/{{field:COD}}/', ['auth-code' => '--authcode--', 'back-url' => $_SERVER['REQUEST_URI']]);
     $product_table->insert_tag_on_field(new \k1lib\html\a($product_url, "{{field:PRODUCTO}}"), ['PRODUCTO']);
+} else {
+    $row1_col2->append_div("callout primary")->set_value("Sin datos para mostrar");
 }
 /**
  * GRID ROW 2
