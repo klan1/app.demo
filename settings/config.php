@@ -12,8 +12,8 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const APP_TITLE = "K1 App";
-const APP_DESCRIPTION = "K1.lib web app implementation demo";
+const APP_TITLE = "EEBunny eCards";
+const APP_DESCRIPTION = "eCard Control Panel";
 const APP_VERBOSE = 0;
 
 /**
@@ -67,11 +67,7 @@ const APP_VERBOSE = 0;
 /*
  * DB CONFIG
  */
-if ($_SERVER['SERVER_NAME'] != 'k1dev.local') {
-    include "config-db-remote.php";
-} else {
-    \k1lib\db\handler::enable("k1app_demo", 'k1dev', '', "localhost", "3306", "mysql");
-}
+\k1lib\db\handler::enable("k1app_eebunny_ecards", 'dev-k1.eebunny', 'DB4cc3ss', 'localhost', '3306', "mysql");
 /**
  * DB Security
  */
