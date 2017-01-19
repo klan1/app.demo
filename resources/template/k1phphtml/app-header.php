@@ -43,6 +43,13 @@ if (!isset($_GET['just-controller'])) {
                 $auth_code = '?auth-code=' . md5(\k1lib\K1MAGIC::get_value() . session_db::get_user_login());
                 $user_url = APP_URL . agency_users_config::ROOT_URL . '/' . agency_users_config::BOARD_READ_URL . '/' . session_db::get_user_login() . '/' . $auth_code;
                 $menu_left->add_menu_item($user_url, session_db::get_user_login(), 'nav-my-profile');
+                /**
+                 * TASK ORDERS
+                 */
+                if (\k1lib\session\session_db::check_user_level(['god', 'admin'])) {
+
+                    $menu_left->add_menu_item(APP_URL . 'the-clients/task-orders/', 'Task orders', 'nav-clients-task-orders');
+                }
 
                 /**
                  * THE AGENCY
@@ -66,14 +73,6 @@ if (!isset($_GET['just-controller'])) {
                 $clients_menu->add_menu_item(APP_URL . 'the-clients/contracts/', 'Contracts', 'nav-clients-contracts');
                 $clients_menu->add_menu_item(APP_URL . 'the-clients/projects/', 'Projects', 'nav-clients-projects');
             }
-            /**
-             * TASK ORDERS
-             */
-            if (\k1lib\session\session_db::check_user_level(['god', 'admin'])) {
-
-                $menu_left->add_menu_item(APP_URL . 'the-clients/task-orders/', 'Task orders', 'nav-clients-task-orders');
-            }
-
             /**
              * AUTO APP
              */
