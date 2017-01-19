@@ -9,7 +9,7 @@ AddOutputFilterByType DEFLATE application/javascript
 AddOutputFilterByType DEFLATE application/x-javascript
 
 #Remove this on Apache
-Options FollowSymLinks+
+Options FollowSymLinks
 
 RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME} !-d
