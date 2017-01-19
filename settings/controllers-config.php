@@ -59,7 +59,7 @@ class clients_config {
     /**
      * URLS
      */
-    const ROOT_URL = "app/clients";
+    const ROOT_URL = "app/clientes";
     const BOARD_CREATE_URL = "crear";
     const BOARD_READ_URL = "detalles";
     const BOARD_UPDATE_URL = "actualizar";

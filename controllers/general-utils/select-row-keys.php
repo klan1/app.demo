@@ -46,7 +46,7 @@ if ($controller_object->get_state()) {
      */
     if (isset($_POST) && !empty($_POST) && !isset($_POST['k1send'])) {
         $post_data = \k1lib\forms\check_all_incomming_vars($_POST, "post-data");
-        $back_url = \k1lib\urlrewrite\get_back_url();
+        $back_url = $_GET['back-url'];
         \k1lib\common\serialize_var($back_url, "back-url");
     }
     /**

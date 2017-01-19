@@ -40,6 +40,16 @@ if ($controller_object->on_object_list()) {
     $read_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_read_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--"]);
     $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
 }
+//READ
+if ($controller_object->on_object_read()) {
+    /**
+     * Custom Links
+     */
+    $agency_id = \k1lib\session\session_plain::get_user_data()['agency_id'];
+
+    // Project LINK
+    $controller_object->board_read_object->read_object->apply_link_on_field_filter(APP_BASE_URL . clients_config::ROOT_URL . '/' . clients_config::BOARD_READ_URL . "/--customfieldvalue--/?auth-code=--fieldauthcode--&back-url=" . urlencode($_SERVER['REQUEST_URI']), ['client_id'], ['client_id']);
+}
 
 $controller_object->exec_board();
 
