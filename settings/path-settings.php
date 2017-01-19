@@ -55,7 +55,11 @@ if (\k1app\APP_MODE != 'shell') {
     if (isset($_SERVER['CONTEXT_PREFIX'])) {
         define('APP_BASE_URL', $_SERVER['CONTEXT_PREFIX'] . '/');
     } else {
-        define('APP_BASE_URL', dirname(substr($_SERVER['SCRIPT_FILENAME'], strlen(DOCUMENT_ROOT))) . '/');
+        $app_base_url = dirname(substr($_SERVER['SCRIPT_FILENAME'], strlen(DOCUMENT_ROOT))) . '/';
+        if ($app_base_url == '//') {
+            $app_base_url = '/';
+        }
+        define('APP_BASE_URL', $app_base_url);
     }
 
     define('APP_DOMAIN_URL', 'http://' . \APP_DOMAIN);

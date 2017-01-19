@@ -41,12 +41,10 @@ $post_data = $app_session->catch_post();
 if ($post_data) {
     $app_session_check = $app_session->check_login();
     if ($app_session_check) {
-
-
         $user_data = array_merge($user_data, $app_session_check);
-//        unset($user_data[$login_password_field]);
+        // unset($user_data[$login_password_field]);
         // CLEAR ALL
-//        $app_session->unset_coockie(APP_BASE_URL);
+        // $app_session->unset_coockie(APP_BASE_URL);
         $app_session->end_session();
         // BEGIN ALL AGAIN
         $app_session->start_session();
@@ -64,8 +62,7 @@ if ($post_data) {
         }
     } elseif ($app_session_check === NULL) {
         DOM_notifications::queue_mesasage("No se han recibido datos", "warning");
-        exit;
-    } elseif ($app_session_check === FALSE) {
+    } elseif ($app_session_check === array()) {
         DOM_notifications::queue_mesasage("Usuario y/o contraseña incorrecta", "alert");
     }
 } elseif ($post_data === FALSE) {
