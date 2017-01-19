@@ -42,4 +42,17 @@ $controller_object->exec_board();
 
 $controller_object->finish_board();
 
+if ($controller_object->on_board_read()) {
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
+    /**
+     * Related list
+     */
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "presentations");
+    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Presentaciones", presentations_config::ROOT_URL, presentations_config::BOARD_CREATE_URL, presentations_config::BOARD_READ_URL, presentations_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+
+    $second_related_div = $div->append_div("row k1lib-crudlexs-related-data");
+}
+
 $body->content()->append_child($div);

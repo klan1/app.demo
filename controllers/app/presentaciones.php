@@ -1,6 +1,7 @@
 <?php
 
 namespace k1app;
+
 // This might be different on your proyect
 
 use k1lib\html\template as template;
@@ -36,6 +37,12 @@ $controller_object->db_table->set_field_constants(["user_login" => session_db::g
  */
 $div = $controller_object->init_board();
 
+// THIS IS ALWAYS NEEDED IF THE CREATE CALL COMES FROM ANOTHER TABLE
+$controller_object->read_url_keys_text_for_create('products');
+
+if ($controller_object->on_object_list()) {
+    $controller_object->board_list_object->set_create_enable(FALSE);
+}
 $controller_object->start_board();
 
 // LIST
@@ -48,4 +55,17 @@ $controller_object->exec_board();
 
 $controller_object->finish_board();
 
+if ($controller_object->on_board_read()) {
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
+    /**
+     * Related list
+     */
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "brands_has_presentations");
+    $controller_object->board_read_object->set_related_show_new(FALSE);
+    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Marcas asiganadas", brands_has_presentation_config::ROOT_URL, brands_has_presentation_config::BOARD_CREATE_URL, brands_has_presentation_config::BOARD_READ_URL, brands_has_presentation_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+
+    $second_related_div = $div->append_div("row k1lib-crudlexs-related-data");
+}
 $body->content()->append_child($div);
