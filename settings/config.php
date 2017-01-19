@@ -70,7 +70,7 @@ const APP_VERBOSE = 0;
 if ($_SERVER['SERVER_NAME'] != 'k1dev.local') {
     include "config-db-remote.php";
 } else {
-    \k1lib\db\handler::enable("k1app_los_monos_inventario", 'k1dev', '', "localhost", "3306", "mysql");
+    \k1lib\db\handler::enable("k1app_los_monos_inventario", 'k1dev', '', 'localhost', '3306', 'mysql', TRUE);
 }
 /**
  * DB Security
