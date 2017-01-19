@@ -30,6 +30,9 @@ $controller_object->set_config_from_class("\k1app\locations_config");
  */
 $div = $controller_object->init_board();
 
+// THIS IS ALWAYS NEEDED IF THE CREATE CALL COMES FROM ANOTHER TABLE
+$controller_object->read_url_keys_text_for_create('clients');
+
 $controller_object->start_board();
 
 // LIST
