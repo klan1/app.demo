@@ -104,6 +104,7 @@ class providers_config extends clients_config {
     const ROOT_URL = "app/proveedores";
 
 }
+
 class users_config extends clients_config {
 
     const ROOT_URL = "app/usuarios";
