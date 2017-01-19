@@ -23,8 +23,30 @@ if (!isset($_GET['just-controller'])) {
     if (!empty(DOM::off_canvas())) {
 
         /**
-         * AUTO APP
+         * EEBUNNY CONTROL PANEL NAV
          */
+        if (k1lib_session::check_user_level(['god', 'admin'])) {
+            $menu_left->add_menu_item(APP_URL . 'app/dashboard-admin/', 'Admin Dashboard', 'nav-dashboard');
+
+            $ecard_submenu = $menu_left->add_sub_menu("#", 'eCards', 'nav-ecards');
+            $ecard_submenu->add_menu_item(APP_URL . 'app/ecards/', 'Our eCards', 'nav-ecards-our');
+            $ecard_submenu->add_menu_item(APP_URL . 'app/ecards/', 'User sends', 'nav-ecards-user-sends');
+            $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-cateogries/', 'Categories', 'nav-ecards-categories');
+            $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-layouts/', 'Layouts', 'nav-ecards-layouts');
+
+            $user_submenu = $menu_left->add_sub_menu("#", 'Users', 'nav-users');
+            $user_submenu->add_menu_item(APP_URL . 'app/users/', 'Our Users', 'nav-users-our');
+            $user_submenu->add_menu_item(APP_URL . 'app/user-memberships/', 'User memberships', 'nav-user-memberships');
+            $user_submenu->add_menu_item(APP_URL . 'app/memberships/', 'Memberships', 'nav-memberships');
+
+            $user_submenu = $menu_left->add_sub_menu("#", 'Payments', 'nav-payments');
+            $user_submenu->add_menu_item(APP_URL . 'app/payments/', 'Payment history', 'nav-payments-history');
+            
+        } elseif (k1lib_session::check_user_level(['user'])) {
+            $menu_left->add_menu_item(APP_URL . 'app/dashboard-user/', 'User Dashboard', 'nav-dashboard');
+        } else {
+            trigger_error("No idea how you do it!", E_USER_ERROR);
+        }
         if (k1lib_session::is_logged()) {
             /**
              * APP Preferences
@@ -33,6 +55,7 @@ if (!isset($_GET['just-controller'])) {
 
                 $admin_menu = $menu_left_tail->add_sub_menu('#', 'App preferences', 'nav-app-preferences');
 
+                $admin_menu->add_menu_item(APP_URL . 'app/cp-users/', 'Control Panel Users', 'nav-cp-users');
                 $admin_menu->add_menu_item(APP_URL . 'table-explorer/show-tables/', 'Table Explorer', 'nav-table-explorer');
                 $admin_menu->add_menu_item(APP_URL . 'table-metadata/show-tables/', 'Manage tables', 'nav-manage-tables');
                 $admin_menu->add_menu_item(APP_URL . 'table-metadata/load-field-comments/', 'Load fields metadata', 'nav-fields-metadata');

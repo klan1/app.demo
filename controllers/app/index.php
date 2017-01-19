@@ -13,10 +13,9 @@ if (session_db::is_logged()) {
 
     if (!$controller_to_include) {
         if (session_db::check_user_level(['god', 'admin'])) {
-            $go_url = url::do_url("admin-url/");
+            $go_url = url::do_url("dashboard-admin/");
         } elseif (session_db::check_user_level(['user'])) {
-            $get_params = ["auth-code" => md5(\k1lib\K1MAGIC::get_value() . session_db::get_user_login())];
-            $go_url = url::do_url('/' . session_db::get_user_login() . "/", $get_params);
+            $go_url = url::do_url("dashboard-user/");
         } else {
             trigger_error("No idea how you do it!", E_USER_ERROR);
         }
