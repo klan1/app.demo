@@ -139,3 +139,9 @@ class presentation_specs_config extends clients_config {
     const ROOT_URL = "app/presentaciones-specs";
 
 }
+
+class locations_config extends clients_config {
+
+    const ROOT_URL = "app/ubicaciones";
+
+}
