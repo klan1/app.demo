@@ -15,16 +15,16 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left()->set_active('nav-memberships');
+DOM::menu_left()->set_active('nav-payments-history');
 
-$db_table_to_use = "membership";
-$controller_name = "Memberships";
+$db_table_to_use = "payment";
+$controller_name = "Payments";
 
 /**
  * ONE LINE config: less codign, more party time!
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
-$controller_object->set_config_from_class("\k1app\memberships_config");
+$controller_object->set_config_from_class("\k1app\payments_config");
 //
 ///**
 // * USER LOGIN AS CONSTANT
@@ -53,11 +53,10 @@ if ($controller_object->on_board_read()) {
     /**
      * Related list
      */
-    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "user_memberships");
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "payment_deatils");
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
-    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "User Memberships", user_memberships_config::ROOT_URL, user_memberships_config::BOARD_CREATE_URL, user_memberships_config::BOARD_READ_URL, user_memberships_config::BOARD_LIST_URL, TRUE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Payment Details", payment_details_config::ROOT_URL, payment_details_config::BOARD_CREATE_URL, payment_details_config::BOARD_READ_URL, payment_details_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
-    
 }
 
 $body->content()->append_child($div);
