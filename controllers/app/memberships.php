@@ -48,23 +48,16 @@ $controller_object->exec_board();
 
 $controller_object->finish_board();
 
-//if ($controller_object->on_board_read()) {
-//    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
-//    /**
-//     * Related list
-//     */
-//    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "brands");
-//    $controller_object->board_read_object->set_related_show_all_data(FALSE);
-//    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Marcas", brands_config::ROOT_URL, brands_config::BOARD_CREATE_URL, brands_config::BOARD_READ_URL, brands_config::BOARD_LIST_URL, TRUE);
-//    $related_list->append_to($related_div);
-//    
-//    $second_related_div = $div->append_div("row k1lib-crudlexs-related-data");
-//    /**
-//     * Related list
-//     */
-//    $second_related_db_table = new \k1lib\crudlexs\class_db_table($db, "locations");
-//    $second_related_list = $controller_object->board_read_object->create_related_list($second_related_db_table, NULL, "Ubicaciones", locations_config::ROOT_URL, locations_config::BOARD_CREATE_URL, locations_config::BOARD_READ_URL, locations_config::BOARD_LIST_URL, TRUE);
-//    $second_related_list->append_to($second_related_div);
-//}
+if ($controller_object->on_board_read()) {
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
+    /**
+     * Related list
+     */
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "user_memberships");
+    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "User Memberships", user_memberships_config::ROOT_URL, user_memberships_config::BOARD_CREATE_URL, user_memberships_config::BOARD_READ_URL, user_memberships_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+    
+}
 
 $body->content()->append_child($div);

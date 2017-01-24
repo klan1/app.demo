@@ -15,16 +15,16 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left()->set_active('nav-ecards-user-sends');
+DOM::menu_left()->set_active('nav-ecards-categories');
 
-$db_table_to_use = "ecard_sends";
-$controller_name = "User Sends";
+$db_table_to_use = "ecard_category";
+$controller_name = "Categories";
 
 /**
  * ONE LINE config: less codign, more party time!
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
-$controller_object->set_config_from_class("\k1app\ecards_sends_config");
+$controller_object->set_config_from_class("\k1app\ecard_categories_config");
 //
 ///**
 // * USER LOGIN AS CONSTANT
