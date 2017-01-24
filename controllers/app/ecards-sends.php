@@ -15,16 +15,16 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left()->set_active('nav-memberships');
+DOM::menu_left()->set_active('nav-ecards-our');
 
-$db_table_to_use = "membership";
-$controller_name = "Memberships";
+$db_table_to_use = "ecard";
+$controller_name = "eCards";
 
 /**
  * ONE LINE config: less codign, more party time!
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
-$controller_object->set_config_from_class("\k1app\memberships_config");
+$controller_object->set_config_from_class("\k1app\ecards_config");
 //
 ///**
 // * USER LOGIN AS CONSTANT
@@ -47,24 +47,5 @@ if ($controller_object->on_object_list()) {
 $controller_object->exec_board();
 
 $controller_object->finish_board();
-
-//if ($controller_object->on_board_read()) {
-//    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
-//    /**
-//     * Related list
-//     */
-//    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "brands");
-//    $controller_object->board_read_object->set_related_show_all_data(FALSE);
-//    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Marcas", brands_config::ROOT_URL, brands_config::BOARD_CREATE_URL, brands_config::BOARD_READ_URL, brands_config::BOARD_LIST_URL, TRUE);
-//    $related_list->append_to($related_div);
-//    
-//    $second_related_div = $div->append_div("row k1lib-crudlexs-related-data");
-//    /**
-//     * Related list
-//     */
-//    $second_related_db_table = new \k1lib\crudlexs\class_db_table($db, "locations");
-//    $second_related_list = $controller_object->board_read_object->create_related_list($second_related_db_table, NULL, "Ubicaciones", locations_config::ROOT_URL, locations_config::BOARD_CREATE_URL, locations_config::BOARD_READ_URL, locations_config::BOARD_LIST_URL, TRUE);
-//    $second_related_list->append_to($second_related_div);
-//}
 
 $body->content()->append_child($div);
