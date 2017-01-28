@@ -17,7 +17,7 @@ template::load_template('app-footer');
 
 DOM::menu_left()->set_active('nav-ecards-categories');
 
-$db_table_to_use = "ecard_category";
+$db_table_to_use = "ecard_categories";
 $controller_name = "Categories";
 
 /**
@@ -53,9 +53,9 @@ if ($controller_object->on_board_read()) {
     /**
      * Related list
      */
-    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "ecard");
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "ecards");
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
-    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "eCards", ecards_config::ROOT_URL, ecards_config::BOARD_CREATE_URL, ecards_config::BOARD_READ_URL, ecards_config::BOARD_LIST_URL, TRUE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "eCards", ecards_config::ROOT_URL, ecards_config::BOARD_CREATE_URL, ecards_config::BOARD_READ_URL, ecards_config::BOARD_LIST_URL);
     $related_list->append_to($related_div);
     
 }

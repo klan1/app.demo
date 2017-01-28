@@ -36,6 +36,10 @@ $controller_object->set_config_from_class('\k1app\ecards_sends_config');
  */
 $div = $controller_object->init_board();
 
+if ($controller_object->on_board_list()) {
+    $controller_object->board_list_object->set_create_enable(FALSE);
+}
+
 $controller_object->start_board();
 
 // LIST

@@ -17,7 +17,7 @@ template::load_template('app-footer');
 
 DOM::menu_left()->set_active('nav-users-our');
 
-$db_table_to_use = "user";
+$db_table_to_use = "users";
 $controller_name = "Our Users";
 
 /**

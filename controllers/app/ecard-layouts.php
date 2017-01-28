@@ -17,7 +17,7 @@ template::load_template('app-footer');
 
 DOM::menu_left()->set_active('nav-ecards-layouts');
 
-$db_table_to_use = "ecard_layout";
+$db_table_to_use = "ecard_layouts";
 $controller_name = "Layouts";
 
 /**

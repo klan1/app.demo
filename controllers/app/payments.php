@@ -17,7 +17,7 @@ template::load_template('app-footer');
 
 DOM::menu_left()->set_active('nav-payments-history');
 
-$db_table_to_use = "payment";
+$db_table_to_use = "payments";
 $controller_name = "Payments";
 
 /**

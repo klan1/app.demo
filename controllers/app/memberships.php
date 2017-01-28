@@ -17,7 +17,7 @@ template::load_template('app-footer');
 
 DOM::menu_left()->set_active('nav-memberships');
 
-$db_table_to_use = "membership";
+$db_table_to_use = "memberships";
 $controller_name = "Memberships";
 
 /**

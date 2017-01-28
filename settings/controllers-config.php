@@ -59,7 +59,7 @@ class ecards_config {
     /**
      * URLS
      */
-    const ROOT_URL = "app/ecard";
+    const ROOT_URL = "app/ecards";
     const BOARD_CREATE_URL = "create";
     const BOARD_READ_URL = "read";
     const BOARD_UPDATE_URL = "update";

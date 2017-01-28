@@ -36,6 +36,8 @@ $controller_object->set_config_from_class('\k1app\user_memberships_config');
  */
 $div = $controller_object->init_board();
 
+$controller_object->read_url_keys_text_for_create('users');
+
 $controller_object->start_board();
 
 // LIST
