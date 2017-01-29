@@ -16,8 +16,6 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left()->set_active('nav-inventory');
-
 $db_table_to_use = "product_position";
 $controller_name = "Inventario de bodega";
 
@@ -35,6 +33,8 @@ $incoming = \k1lib\forms\check_all_incomming_vars($_GET);
  */
 if (isset($incoming['modo'])) {
     if ($incoming['modo'] == 'pasado') {
+        DOM::menu_left()->set_active('nav-inventory-past');
+
         $custom_sql = 'SELECT '
                 . 'product_position_id,'
                 . 'product_position_cod,'
@@ -50,6 +50,7 @@ if (isset($incoming['modo'])) {
                 . 'product_datetime_in'
                 . ' FROM view_inventory_in';
     } elseif ($incoming['modo'] == 'sin-ubicar') {
+        DOM::menu_left()->set_active('nav-inventory-nonplaced');
         $custom_sql = 'SELECT '
                 . 'product_position_id,'
                 . 'product_position_cod,'
@@ -65,6 +66,7 @@ if (isset($incoming['modo'])) {
                 . ' FROM view_inventory_in';
     }
 } else {
+    DOM::menu_left()->set_active('nav-inventory-present');
     $custom_sql = 'SELECT '
             . 'product_position_id,'
             . 'product_position_cod,'
