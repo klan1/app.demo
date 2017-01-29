@@ -14,7 +14,6 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left_tail()->set_active('nav-app-preferences');
 DOM::menu_left_tail()->set_active('nav-app-users');
 
 $db_table_to_use = "users";
