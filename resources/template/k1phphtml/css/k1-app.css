@@ -129,6 +129,7 @@ UTILITIES CLASSES AND IDs
 */
 #k1lib-content {
     padding: 20px 20px 60px 20px;
+    min-height: 600px;
 }
 #k1lib-run-info {
     font-size: 0.9em;
