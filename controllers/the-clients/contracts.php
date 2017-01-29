@@ -21,9 +21,7 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left()->set_active('nav-clients-menu');
 DOM::menu_left()->set_active('nav-clients-contracts');
-
 
 /**
  * ONE LINE config: less codign, more party time!
