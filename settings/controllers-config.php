@@ -123,7 +123,7 @@ class ecard_layouts_config extends ecards_config {
 
 }
 
-class users_config extends ecards_config {
+class users_k1lib_config extends ecards_config {
 
     const ROOT_URL = "app/users";
 
