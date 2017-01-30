@@ -1,34 +1,46 @@
 <?php
 
 namespace k1app;
-
 // This might be different on your proyect
 
 use k1lib\html\template as template;
 use \k1lib\urlrewrite\url as url;
 use k1app\k1app_template as DOM;
+use k1lib\session\session_db as session_db;
 
+\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'log/form/');
 $body = DOM::html()->body();
 
 template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left_tail()->set_active('nav-cp-users');
+DOM::menu_left()->set_active('nav-ecards-messages');
 
-$db_table_to_use = "users_k1lib";
-$controller_name = "Control Panel Users";
+$db_table_to_use = "messages";
+$controller_name = "Predefined messages";
 
 /**
  * ONE LINE config: less codign, more party time!
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
-$controller_object->set_config_from_class('\k1app\users_k1lib_config');
+$controller_object->set_config_from_class('\k1app\ecard_messages');
+//
+///**
+// * USER LOGIN AS CONSTANT
+// */
+//$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
 
 /**
  * ALL READY, let's do it :)
  */
 $div = $controller_object->init_board();
+
+$controller_object->read_url_keys_text_for_create('ecard_categories');
+
+if ($controller_object->on_board_list()) {
+    $controller_object->board_list_object->set_create_enable(FALSE);
+}
 
 $controller_object->start_board();
 

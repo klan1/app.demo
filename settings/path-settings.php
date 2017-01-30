@@ -32,6 +32,7 @@ define('APP_SETTINGS_PATH', APP_ROOT . '/settings/');
 define('APP_UPLOADS_PATH', APP_RESOURCES_PATH . 'uploads/');
 define('APP_SHELL_SCRIPTS_PATH', APP_RESOURCES_PATH . '/shell-scripts/');
 define('APP_TEMPLATE_PATH', APP_RESOURCES_PATH . '/template/' . APP_TEMPLATE . '/');
+define('APP_FONTS_PATH', APP_RESOURCES_PATH . 'fonts/');
 
 /**
  * COMPOSER

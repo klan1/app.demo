@@ -117,13 +117,31 @@ class ecard_categories_config extends ecards_config {
 
 }
 
-class ecard_layouts_config extends ecards_config {
+class ecard_layouts_h_config extends ecards_config {
 
-    const ROOT_URL = "app/ecard-layouts";
+    const ROOT_URL = "app/ecard-layouts-h";
+
+}
+
+class ecard_layouts_v_config extends ecards_config {
+
+    const ROOT_URL = "app/ecard-layouts-v";
+
+}
+
+class ecard_messages extends ecards_config {
+
+    const ROOT_URL = "app/ecard-messages";
 
 }
 
 class users_k1lib_config extends ecards_config {
+
+    const ROOT_URL = "app/cp-users";
+
+}
+
+class users_config extends ecards_config {
 
     const ROOT_URL = "app/users";
 
