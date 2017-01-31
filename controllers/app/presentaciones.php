@@ -50,16 +50,20 @@ if ($controller_object->on_object_list()) {
     $read_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_read_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--"]);
     $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
 }
-/*
-// UPDATE
-if ($controller_object->on_board_update()) {
-    if ($controller_object->object_update()->get_post_data_catched()) {
-        $post_data = $controller_object->object_update()->get_post_data();
-        // POST HACK CODE
-        $controller_object->object_update()->set_post_incomming_value('POST_FIELD_NAME', 'VALUE TO INSERT');
-    }
+
+if ($controller_object->on_object_read()) {
+    /**
+     * Custom Links
+     */
+    $get_params = [
+        'auth-code' => '--fieldauthcode--',
+        'back-url' => $_SERVER['REQUEST_URI']
+    ];
+    
+    // Product LINK
+    $product_url = url::do_url(APP_BASE_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($product_url, ['product_id'], ['client_id']);
 }
- */
 
 $controller_object->exec_board();
 

@@ -46,6 +46,24 @@ if ($controller_object->on_object_list()) {
     $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
 }
 
+if ($controller_object->on_object_read()) {
+    /**
+     * Custom Links
+     */
+    $get_params = [
+        'auth-code' => '--fieldauthcode--',
+        'back-url' => $_SERVER['REQUEST_URI']
+    ];
+    
+    // Brand LINK
+    $brand_url = url::do_url(APP_BASE_URL . brands_config::ROOT_URL . '/' . brands_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($brand_url, ['brands_id'], ['brands_id']);
+    
+    // Presentation LINK
+    $presentation_url = url::do_url(APP_BASE_URL . presentations_config::ROOT_URL . '/' . presentations_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($presentation_url, ['presentation_id'], ['presentation_id']);
+}
+
 $controller_object->exec_board();
 
 $controller_object->finish_board();
@@ -61,17 +79,6 @@ if ($controller_object->on_board_read()) {
     //$controller_object->board_read_object->set_related_show_all_data(FALSE);
     $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Especificaciones Actuales", presentation_specs_config::ROOT_URL, presentation_specs_config::BOARD_CREATE_URL, presentation_specs_config::BOARD_READ_URL, presentation_specs_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
-    /**
-     * Related list - ALL
-     * No reuso el objeto de tabla por que no tengo metodos (aun) para lipiar todo 
-     * sobre lo que se hizo SET_ en la anterior.
-     */
-//    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "presentation_specs");
-//    $controller_object->board_read_object->set_related_show_all_data(FALSE);
-//    $controller_object->board_read_object->set_related_show_new(FALSE);
-//    $related_db_table->set_order_by('datetime_in', 'DESC');
-//    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Historial de especificaciones", presentation_specs_config::ROOT_URL, presentation_specs_config::BOARD_CREATE_URL, presentation_specs_config::BOARD_READ_URL, presentation_specs_config::BOARD_LIST_URL, TRUE);
-//    $related_list->append_to($related_div);
 }
 
 $body->content()->append_child($div);

@@ -45,6 +45,28 @@ if ($controller_object->on_object_list()) {
     $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
 }
 
+if ($controller_object->on_object_read()) {
+    /**
+     * Custom Links
+     */
+    $get_params = [
+        'auth-code' => '--fieldauthcode--',
+        'back-url' => $_SERVER['REQUEST_URI']
+    ];
+    
+    // Brand LINK
+    $brand_url = url::do_url(APP_BASE_URL . brands_config::ROOT_URL . '/' . brands_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($brand_url, ['brands_id'], ['brands_id']);
+    
+    // Presentation LINK
+    $presentation_url = url::do_url(APP_BASE_URL . presentations_config::ROOT_URL . '/' . presentations_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($presentation_url, ['presentation_id'], ['presentation_id']);
+    
+    // Provider LINK
+    $provider_url = url::do_url(APP_BASE_URL . providers_config::ROOT_URL . '/' . providers_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($provider_url, ['provider_id'], ['provider_id']);
+}
+
 $controller_object->exec_board();
 
 $controller_object->finish_board();

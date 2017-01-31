@@ -42,8 +42,17 @@ if ($controller_object->on_object_list()) {
 }
 //READ
 if ($controller_object->on_object_read()) {
-    // Project LINK
-    $controller_object->board_read_object->read_object->apply_link_on_field_filter(APP_BASE_URL . clients_config::ROOT_URL . '/' . clients_config::BOARD_READ_URL . "/--customfieldvalue--/?auth-code=--fieldauthcode--&back-url=" . urlencode($_SERVER['REQUEST_URI']), ['client_id'], ['client_id']);
+    /**
+     * Custom Links
+     */
+    $get_params = [
+        'auth-code' => '--fieldauthcode--',
+        'back-url' => $_SERVER['REQUEST_URI']
+    ];
+    
+    // Client LINK
+    $clients_url = url::do_url(APP_BASE_URL . clients_config::ROOT_URL . '/' . clients_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($clients_url, ['client_id'], ['client_id']);
 }
 
 $controller_object->exec_board();
