@@ -1,6 +1,7 @@
 <?php
 
 namespace k1app;
+
 // This might be different on your proyect
 
 use k1lib\html\template as template;
@@ -56,11 +57,11 @@ if ($controller_object->on_object_read()) {
         'auth-code' => '--fieldauthcode--',
         'back-url' => $_SERVER['REQUEST_URI']
     ];
-    
+
     // eCard LINK
     $ecard_url = url::do_url(APP_BASE_URL . ecards_config::ROOT_URL . '/' . ecards_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
     $controller_object->object_read()->apply_link_on_field_filter($ecard_url, ['ecard_id'], ['ecard_id']);
-    
+
     // User LINK
     $user_url = url::do_url(APP_BASE_URL . users_config::ROOT_URL . '/' . users_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
     $controller_object->object_read()->apply_link_on_field_filter($user_url, ['user_id'], ['user_id']);
@@ -71,6 +72,25 @@ $controller_object->exec_board();
 $controller_object->finish_board();
 
 if ($controller_object->on_board_read()) {
+    // LOAD ECARD CLASS
+    include 'ecard-generation.php';
+
+    $ecard_send_data = $controller_object->db_table->get_data(FALSE)[1];
+    d($ecard_send_data);
+    
+    $mode = ($ecard_send_data['ecard_mode'] == 'h') ? ECARD_HORIZONTAL : ECARD_VERTICAL;
+
+    $ecard = new ecard_generator($ecard_send_data['ecard_id'], $mode, $ecard_send_data['send_id']);
+
+    /**
+     * HTML OUTPUT
+     */
+    $cell = (new \k1lib\html\foundation\grid_cell())->append_to($div);
+    $cell->append_child(new \k1lib\html\h3('Preview'));
+    $cell->append_child($ecard->get_ecard_img_tag());
+}
+
+if ($controller_object->on_board_read()) {
     $related_div = $div->append_div("row k1lib-crudlexs-related-data");
     /**
      * Related list
@@ -79,7 +99,6 @@ if ($controller_object->on_board_read()) {
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
     $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "eCards", ecards_config::ROOT_URL, ecards_config::BOARD_CREATE_URL, ecards_config::BOARD_READ_URL, ecards_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
-    
 }
 
 $body->content()->append_child($div);

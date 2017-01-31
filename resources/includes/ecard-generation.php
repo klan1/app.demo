@@ -92,6 +92,7 @@ class ecard_generator {
 
         $this->ecard_id = $ecard_id;
         $this->ecard_mode = $mode;
+        $this->send_id = $send_id;
 
         $this->load_ecard_data();
     }
@@ -138,7 +139,7 @@ class ecard_generator {
              */
             if (!empty($ecard_file_name)) {
 
-                $this->load_message($send_id);
+                $this->load_message();
 
                 $ecard_file = \k1lib\forms\file_uploads::get_uploaded_file_path($ecard_file_name);
 
@@ -253,9 +254,11 @@ class ecard_generator {
         }
     }
 
-    public
-            function load_message($send_id = NULL, $custom_data = array()) {
+    public function load_message($send_id = NULL, $custom_data = array()) {
         if (!empty($send_id)) {
+            $this->send_id = $send_id;
+        }
+        if (!empty($this->send_id)) {
             global $db;
             $ecard_send_table = new \k1lib\crudlexs\class_db_table($db, 'ecard_sends');
             $ecard_send_table->set_query_filter(['send_id' => $send_id]);
