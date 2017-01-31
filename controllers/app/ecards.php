@@ -57,11 +57,11 @@ if ($controller_object->on_object_read()) {
         'back-url' => $_SERVER['REQUEST_URI']
     ];
     // Layout Horizaontal LINK
-    $horizontal_layout_url = url::do_url(APP_BASE_URL . ecard_layouts_h_config::ROOT_URL . '/' . ecard_layouts_h_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $horizontal_layout_url = url::do_url(APP_BASE_URL . ecard_layouts_h_config::ROOT_URL . '/' . ecard_layouts_h_config::BOARD_UPDATE_URL . '/--customfieldvalue--/', $get_params);
     $controller_object->object_read()->apply_link_on_field_filter($horizontal_layout_url, ['ecard_layout_h_id'], ['ecard_layout_h_id']);
 
     // Layout Horizaontal LINK
-    $vertical_layout_url = url::do_url(APP_BASE_URL . ecard_layouts_v_config::ROOT_URL . '/' . ecard_layouts_v_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $vertical_layout_url = url::do_url(APP_BASE_URL . ecard_layouts_v_config::ROOT_URL . '/' . ecard_layouts_v_config::BOARD_UPDATE_URL . '/--customfieldvalue--/', $get_params);
     $controller_object->object_read()->apply_link_on_field_filter($vertical_layout_url, ['ecard_layout_v_id'], ['ecard_layout_v_id']);
 }
 
