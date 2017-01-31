@@ -221,16 +221,25 @@ class ecard_generator {
                 // Set TO properties
                 $this->draw_to->setFont(APP_FONTS_PATH . $this->ecard_data['ecard_font']);
                 $this->draw_to->setFontSize($this->layout_data['el_to_size']);
+                if (empty($this->layout_data['el_to_rgb_color'])) {
+                    $this->layout_data['el_to_rgb_color'] = 'rgb(0,0,0)';
+                }
                 $this->draw_to->setFillColor($this->layout_data['el_to_rgb_color']);
 
                 // Set FROM properties
                 $this->draw_from->setFont(APP_FONTS_PATH . $this->ecard_data['ecard_font']);
                 $this->draw_from->setFontSize($this->layout_data['el_from_size']);
+                if (empty($this->layout_data['el_from_rgb_color'])) {
+                    $this->layout_data['el_from_rgb_color'] = 'rgb(0,0,0)';
+                }
                 $this->draw_from->setFillColor($this->layout_data['el_from_rgb_color']);
 
                 // Set font properties
                 $this->draw_message->setFont(APP_FONTS_PATH . $this->ecard_data['ecard_font']);
                 $this->draw_message->setFontSize($this->layout_data['el_message_size']);
+                if (empty($this->layout_data['el_message_rgb_color'])) {
+                    $this->layout_data['el_message_rgb_color'] = 'rgb(0,0,0)';
+                }
                 $this->draw_message->setFillColor($this->layout_data['el_message_rgb_color']);
                 $this->draw_message->settextinterlinespacing($this->layout_data['el_message_line_space']);
 
