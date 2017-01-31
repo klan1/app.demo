@@ -60,6 +60,10 @@ if ($controller_object->on_object_read()) {
     // eCard LINK
     $ecard_url = url::do_url(APP_BASE_URL . ecards_config::ROOT_URL . '/' . ecards_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
     $controller_object->object_read()->apply_link_on_field_filter($category_url, ['ecard_id'], ['ecard_id']);
+    
+    // User LINK
+    $user_url = url::do_url(APP_BASE_URL . users_config::ROOT_URL . '/' . users_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($user_url, ['user_id'], ['user_id']);
 }
 
 $controller_object->exec_board();
