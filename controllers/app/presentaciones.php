@@ -65,6 +65,16 @@ if ($controller_object->on_object_read()) {
     $controller_object->object_read()->apply_link_on_field_filter($product_url, ['product_id'], ['client_id']);
 }
 
+if ($controller_object->on_object_update()) {
+    if ($controller_object->object_update()->get_post_data_catched()) {
+        $post_data = $controller_object->object_update()->get_post_data();
+        d($post_data);
+        if (isset($post_data[''])) {
+            
+        }
+    }
+}
+
 $controller_object->exec_board();
 
 $controller_object->finish_board();
