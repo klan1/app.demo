@@ -62,16 +62,36 @@ if ($controller_object->on_object_read()) {
     
     // Product LINK
     $product_url = url::do_url(APP_BASE_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
-    $controller_object->object_read()->apply_link_on_field_filter($product_url, ['product_id'], ['client_id']);
+    $controller_object->object_read()->apply_link_on_field_filter($product_url, ['product_id'], ['product_id']);
 }
-
+//Set Presentation Name with fields
 if ($controller_object->on_object_update()) {
     if ($controller_object->object_update()->get_post_data_catched()) {
         $post_data = $controller_object->object_update()->get_post_data();
-        d($post_data);
-        if (isset($post_data[''])) {
-            
-        }
+
+        $product_table = new \k1lib\crudlexs\class_db_table($db, 'products');
+        $product_table->set_query_filter(['product_id'=>$post_data['product_id']], TRUE);
+        $product_table_data = $product_table->get_data(FALSE);
+
+        $presentation_name = $product_table_data['name'] . ' - ' . $post_data['weight'] . 'Kg' . ' - ' . $post_data['packaging_type'];
+
+        $post_data_new['name'] = $presentation_name;
+        $controller_object->object_update()->set_post_data($post_data_new);
+    }
+}
+
+if ($controller_object->on_object_create()) {
+    if ($controller_object->object_create()->get_post_data_catched()) {
+        $post_data = $controller_object->object_create()->get_post_data();
+
+        $product_table = new \k1lib\crudlexs\class_db_table($db, 'products');
+        $product_table->set_query_filter(['product_id'=>$post_data['product_id']], TRUE);
+        $product_table_data = $product_table->get_data(FALSE);
+
+        $presentation_name = $product_table_data['name'] . ' - ' . $post_data['weight'] . 'Kg' . ' - ' . $post_data['packaging_type'];
+
+        $post_data_new['name'] = $presentation_name;
+        $controller_object->object_create()->set_post_data($post_data_new);
     }
 }
 
@@ -92,4 +112,5 @@ if ($controller_object->on_board_read()) {
 
     $second_related_div = $div->append_div("row k1lib-crudlexs-related-data");
 }
+
 $body->content()->append_child($div);
