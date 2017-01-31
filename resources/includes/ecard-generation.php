@@ -85,6 +85,8 @@ class ecard_generator {
      */
     private $draw_watermark = NULL;
     private $image_proportion = 0.5;
+    private $no_img = APP_RESOURCES_URL . 'images/no-image-available.jpg';
+    private $make_shadow = TRUE;
 
     public function __construct($ecard_id, $mode = ECARD_HORIZONTAL, $send_id = NULL) {
 
@@ -97,15 +99,17 @@ class ecard_generator {
     public function load_ecard_data() {
         global $db;
 
+        /**
+         * ECARD DATA LOAD
+         */
         $ecard_table = new \k1lib\crudlexs\class_db_table($db, 'ecards');
-        $ecard_table->set_query_filter(['ecard_id' => $ecard_id]);
+        $ecard_table->set_query_filter(['ecard_id' => $this->ecard_id]);
         $this->ecard_data = $ecard_table->get_data(FALSE);
+
         if (!empty($this->ecard_data)) {
+
             /**
-             * HORIZONTAL IMAGE
-             */
-            /**
-             * LAYOUT INFO
+             * HORIZONTAL OR VERTICAL
              */
             if ($this->ecard_mode === ECARD_HORIZONTAL) {
                 $ecard_file_name = $this->ecard_data['ecards_image_h'];
@@ -117,16 +121,21 @@ class ecard_generator {
                 $layout_table_id_to_use = 'ecard_layout_v_id';
             }
 
+            /**
+             * LAYOUT INFO
+             */
             $layout_table = new \k1lib\crudlexs\class_db_table($db, $layout_table_to_use);
             $layout_table->set_query_filter([$layout_table_id_to_use => $this->ecard_data[$layout_table_id_to_use]]);
             $this->layout_data = $layout_table->get_data(FALSE);
 
             if (empty($this->layout_data)) {
                 $error = 'Layout data do not exist';
-                trigger_error($error, E_USER_WARNING);
                 DOM_notifications::queue_mesasage($error, "alert");
             }
 
+            /**
+             * IMAGE LOAD
+             */
             if (!empty($ecard_file_name)) {
 
                 $this->load_message($send_id);
@@ -146,7 +155,6 @@ class ecard_generator {
             }
         } else {
             $error = 'eCard ID do not exist';
-            trigger_error($error, E_USER_WARNING);
             DOM_notifications::queue_mesasage($error, "alert");
         }
     }
@@ -154,8 +162,12 @@ class ecard_generator {
     /**
      * @return \Imagick | boolean
      */
-    public function get_ecard_image() {
-        return $this->_compose_ecard();
+    public function get_ecard_imagick() {
+        if (!empty($this->imagick)) {
+            return $this->_compose_ecard();
+        } else {
+            return NULL;
+        }
     }
 
     /**
@@ -172,8 +184,25 @@ class ecard_generator {
     /**
      * @return string
      */
+    public function get_ecard_img_tag() {
+        if (!empty($this->imagick)) {
+            $img_tag = new \k1lib\html\img($this->get_ecard_src_base64(), 'eCard generated', 'ecard-img');
+            return $img_tag;
+        } else {
+            $img_tag = new \k1lib\html\img($this->no_img, 'eCard no file', 'ecard-img');
+            return $img_tag;
+        }
+    }
+
+    /**
+     * @return string
+     */
     public function get_ecard_src_base64() {
-        return 'data: image/jpg ;base64,' . $this->get_ecard_base64();
+        if (!empty($this->imagick)) {
+            return 'data: image/jpg ;base64,' . $this->get_ecard_base64();
+        } else {
+            return $this->no_img;
+        }
     }
 
     /**
@@ -217,8 +246,7 @@ class ecard_generator {
 
             return $this->imagick;
         } else {
-            $error = 'No image loaded to compose eCard';
-            trigger_error($error, E_USER_WARNING);
+            $error = 'No image present to compose eCard';
             DOM_notifications::queue_mesasage($error, "alert");
 
             return FALSE;
