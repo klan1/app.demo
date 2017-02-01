@@ -76,11 +76,11 @@ if ($controller_object->on_board_read()) {
     include 'ecard-generation.php';
 
     $ecard_send_data = $controller_object->db_table->get_data(FALSE)[1];
-    d($ecard_send_data);
     
     $mode = ($ecard_send_data['ecard_mode'] == 'h') ? ECARD_HORIZONTAL : ECARD_VERTICAL;
 
     $ecard = new ecard_generator($ecard_send_data['ecard_id'], $mode, $ecard_send_data['send_id']);
+    $ecard->set_image_proportion(0.8);
 
     /**
      * HTML OUTPUT
