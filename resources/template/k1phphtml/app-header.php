@@ -31,7 +31,7 @@ if (!isset($_GET['just-controller'])) {
             $ecard_submenu = $menu_left->add_sub_menu("#", 'eCards', 'nav-ecards');
             $ecard_submenu->add_menu_item(APP_URL . 'app/ecards/', 'Our eCards', 'nav-ecards-our');
             $ecard_submenu->add_menu_item(APP_URL . 'app/ecards-sends/', 'User Sends', 'nav-ecards-user-sends');
-            $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-cateogries/', 'Categories', 'nav-ecards-categories');
+            $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-categories/', 'Categories', 'nav-ecards-categories');
             $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-messages/', 'Messages', 'nav-ecards-messages');
             $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-layouts-h/', 'Horizontal layouts', 'nav-ecards-layouts-h');
             $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-layouts-v/', 'Vertical layouts', 'nav-ecards-layouts-v');
