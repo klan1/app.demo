@@ -131,6 +131,9 @@ class ecard_generator {
             $layout_table->set_query_filter([$layout_table_id_to_use => $this->ecard_data[$layout_table_id_to_use]]);
             $this->layout_data = $layout_table->get_data(FALSE);
 
+            $this->make_shadow = ($this->layout_data['el_use_shadow'] == '1') ? TRUE : FALSE;
+            $this->shadow_color = (!empty($this->layout_data['el_shadow_hex_color'])) ? $this->layout_data['el_shadow_hex_color'] : 'FFFFFF';
+
             if (empty($this->layout_data)) {
                 $error = 'Layout data do not exist';
                 DOM_notifications::queue_mesasage($error, "alert");
