@@ -146,3 +146,33 @@ class locations_config extends clients_config {
     const ROOT_URL = "app/ubicaciones";
 
 }
+
+class orders_config extends clients_config {
+
+    const ROOT_URL = "app/pedidos";
+
+}
+
+class quotes_config extends clients_config {
+
+    const ROOT_URL = "app/cotizaciones";
+
+}
+
+class quote_details_config extends clients_config {
+
+    const ROOT_URL = "app/cotizaciones-detalles";
+
+}
+
+class invoice_config extends clients_config {
+
+    const ROOT_URL = "app/facturas";
+
+}
+
+class purchase_order_config extends clients_config {
+
+    const ROOT_URL = "app/orden-compra";
+
+}
