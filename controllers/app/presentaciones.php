@@ -64,6 +64,7 @@ if ($controller_object->on_object_read()) {
     $product_url = url::do_url(APP_BASE_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
     $controller_object->object_read()->apply_link_on_field_filter($product_url, ['product_id'], ['product_id']);
 }
+
 //Set Presentation Name with fields
 if ($controller_object->on_object_update()) {
     if ($controller_object->object_update()->get_post_data_catched()) {

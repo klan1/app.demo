@@ -159,6 +159,12 @@ class quotes_config extends clients_config {
 
 }
 
+class quote_state_config extends clients_config {
+
+    const ROOT_URL = "app/cotizaciones-estados";
+    
+}
+
 class quote_details_config extends clients_config {
 
     const ROOT_URL = "app/cotizaciones-detalles";
