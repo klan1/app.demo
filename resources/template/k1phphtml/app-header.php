@@ -30,6 +30,10 @@ if (!isset($_GET['just-controller'])) {
             $menu_left->add_menu_item(APP_URL . 'app/proveedores/', 'Provedores', 'nav-providers');
             $menu_left->add_menu_item(APP_URL . 'app/productos/', 'Productos', 'nav-products');
             $menu_left->add_menu_item(APP_URL . 'app/presentaciones/', 'Presentaciones', 'nav-presentations');
+            $menu_left->add_menu_item(APP_URL . 'app/pedidos/', 'Pedidos', 'nav-orders');
+            $menu_left->add_menu_item(APP_URL . 'app/cotizaciones/', 'Cotizaciones', 'nav-quotes');
+            $menu_left->add_menu_item(APP_URL . 'app/orden-compra/', 'Ordenes de Compra', 'nav-pruchase-order');
+            $menu_left->add_menu_item(APP_URL . 'app/facturas/', 'Facturas', 'nav-invoice');
 
             /**
              * AUTO APP
