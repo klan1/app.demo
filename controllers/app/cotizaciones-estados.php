@@ -64,6 +64,13 @@ if ($controller_object->on_object_read()) {
 
 $controller_object->exec_board();
 
+if ($controller_object->on_object_create()) {
+    if ($controller_object->object_create()->get_post_data_catched()) {
+        $post_data = $controller_object->object_create()->get_post_data();
+        d($post_data);
+    }
+}
+
 $controller_object->finish_board();
 
 $body->content()->append_child($div);
