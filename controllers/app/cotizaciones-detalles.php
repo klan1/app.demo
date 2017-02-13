@@ -74,3 +74,5 @@ if ($controller_object->on_object_read()) {
 $controller_object->exec_board();
 
 $controller_object->finish_board();
+
+$body->content()->append_child($div);
