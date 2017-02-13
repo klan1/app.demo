@@ -15,7 +15,7 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left()->set_active('nav-quotes');
+DOM::menu_left()->set_active('nav-quotes-states');
 
 $db_table_to_use = "quote_states";
 $controller_name = "Estados de Cotización";
