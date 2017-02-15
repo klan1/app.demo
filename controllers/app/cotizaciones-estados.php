@@ -29,7 +29,7 @@ $controller_object->set_config_from_class("\k1app\quote_state_config");
 /**
  * USER LOGIN AS CONSTANT
  */ 
-$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]); 
+$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
 
 /**
  * ALL READY, let's do it :)
