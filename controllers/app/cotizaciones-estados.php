@@ -25,16 +25,19 @@ $controller_name = "Estados de Cotización";
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\quote_state_config");
-//
-///**
-// * USER LOGIN AS CONSTANT
-// */
-//$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
+
+/**
+ * USER LOGIN AS CONSTANT
+ */ 
+$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
 
 /**
  * ALL READY, let's do it :)
  */
 $div = $controller_object->init_board();
+
+// THIS IS ALWAYS NEEDED IF THE CREATE CALL COMES FROM ANOTHER TABLE
+$controller_object->read_url_keys_text_for_create('quotes');
 
 $controller_object->start_board();
 
