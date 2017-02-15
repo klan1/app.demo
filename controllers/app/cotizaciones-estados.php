@@ -42,7 +42,7 @@ $controller_object->read_url_keys_text_for_create('quotes');
 $controller_object->start_board();
 
 // LIST
-if ($controller_object->on_object_list()) {
+if ($controller_object->on_object_list()) { 
     $read_url = url::do_url($controller_object->get_controller_root_dir() . "{$controller_object->get_board_read_url_name()}/--rowkeys--/", ["auth-code" => "--authcode--"]);
     $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
 }
