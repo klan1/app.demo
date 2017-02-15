@@ -25,11 +25,11 @@ $controller_name = "Presentación de Cotización";
  */
 $controller_object = new \k1lib\crudlexs\controller_base(APP_BASE_URL, $db, $db_table_to_use, $controller_name, 'k1lib-title-3');
 $controller_object->set_config_from_class("\k1app\quote_details_config");
-//
-///**
-// * USER LOGIN AS CONSTANT
-// */
-//$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
+
+/**
+ * USER LOGIN AS CONSTANT
+ */
+$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
 
 /**
  * ALL READY, let's do it :)
