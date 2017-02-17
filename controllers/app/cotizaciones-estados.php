@@ -34,10 +34,12 @@ $controller_object->db_table->set_field_constants(["user_login" => session_db::g
 /**
  * ALL READY, let's do it :)
  */
+$related_keys_array = [];
+
 $div = $controller_object->init_board();
 
 // THIS IS ALWAYS NEEDED IF THE CREATE CALL COMES FROM ANOTHER TABLE
-$controller_object->read_url_keys_text_for_create('quotes');
+$controller_object->read_url_keys_text_for_create('quotes', $related_keys_array);
 
 $controller_object->start_board();
 
@@ -70,7 +72,25 @@ $controller_object->exec_board();
 if ($controller_object->on_object_create()) {
     if ($controller_object->object_create()->get_post_data_catched()) {
         $post_data = $controller_object->object_create()->get_post_data();
-        d($post_data);
+        
+        if($post_data['state'] == 'aprobada') {
+            $quote_detail_table = new \k1lib\crudlexs\class_db_table($db, 'quote_details');
+            $quote_detail_table->set_query_filter(['quote_id' => $related_keys_array['quote_id'], 'order_id' => $related_keys_array['order_id']], TRUE);
+            $quote_detail_data = $quote_detail_table->get_data(FALSE);
+            d($quote_detail_data);
+            $po_data = [
+            'quote_id' => $related_keys_array['quote_id'],
+            'order_id' => $related_keys_array['order_id'],
+            ];
+            
+            if (\k1lib\sql\sql_insert($db, 'purchase_order', $po_data)) {
+            \k1lib\notifications\on_DOM::queue_mesasage('Purshace Order creada a partir de Qoute.');
+//            unset($_GET['do-full-out']);
+//            $return_url = url::do_url('././');
+//            \k1lib\html\html_header_go($return_url); 
+            }
+        }
+        
     }
 }
 
