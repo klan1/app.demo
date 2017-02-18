@@ -43,14 +43,44 @@ $controller_object->exec_board();
 
 $controller_object->finish_board();
 
-//if ($controller_object->on_board_read()) {
-//    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
-//    /**
-//     * Related list
-//     */
-//    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "wh_positions");
-//    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Posiciones", warehouse_positions_config::ROOT_URL, warehouse_positions_config::BOARD_CREATE_URL, warehouse_positions_config::BOARD_READ_URL, warehouse_positions_config::BOARD_LIST_URL, TRUE);
-//    $related_list->append_to($related_div);
-//}
+if ($controller_object->on_board_read()) {
+    $related_div = $div->append_div("row k1lib-crudlexs-related-data");
+    /**
+     * Related list
+     */
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "product_position");
+
+    $custom_sql = 'SELECT '
+            . 'product_position_id,'
+            . 'product_position_cod,'
+            . 'warehouse_id,'
+            . 'wh_column_id,'
+            . 'wh_column_row_id,'
+            . 'wh_position_id,'
+            . 'product_name,'
+            . 'product_weight,'
+            . 'product_weight_left,'
+            . 'product_quantity,'
+            . 'product_quantity_left,'
+            . 'user_login,'
+            . 'product_valid,'
+            . 'product_datetime_in'
+            . ' FROM view_inventory_in';
+    $related_db_table->set_custom_sql_query($custom_sql);
+
+    $custom_field_labels = [
+        'product_name' => 'PRODUCTO',
+        'product_weight_left' => 'QUEDAN(K)',
+        'product_quantity_left' => 'QUEDAN'
+    ];
+    $controller_object->board_read_object->set_related_custom_field_labels($custom_field_labels);
+
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, ['product_position_cod'], "Historial de posicion", warehouses_inventory_config::ROOT_URL, warehouses_inventory_config::BOARD_CREATE_URL, warehouses_inventory_config::BOARD_READ_URL, warehouses_inventory_config::BOARD_LIST_URL, TRUE);
+    if (!empty($table_html)) {
+        $table_html->object_list()->set_custom_field_labels($custom_field_labels);
+    }
+
+    $related_list->append_to($related_div);
+}
 
 $body->content()->append_child($div);

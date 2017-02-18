@@ -195,6 +195,17 @@ if ($controller_object->on_board_read()) {
             \k1lib\html\html_header_go($return_url);
         }
     }
+    /**
+     * Custom Links
+     */
+    $get_params = [
+        'auth-code' => '--fieldauthcode--',
+        'back-url' => $_SERVER['REQUEST_URI']
+    ];
+
+    // Position LINK
+    $position_url = url::do_url(APP_BASE_URL . warehouse_positions_config::ROOT_URL . '/' . warehouse_positions_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($position_url, ['wh_position_id'], ['warehouse_id', 'wh_column_id', 'wh_column_row_id', 'wh_position_id']);
 }
 // LIST
 if ($controller_object->on_object_list()) {
