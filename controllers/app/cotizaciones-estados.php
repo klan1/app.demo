@@ -60,7 +60,7 @@ if ($controller_object->on_object_read()) {
     
     // quote LINK
     $quote_url = url::do_url(APP_BASE_URL . quotes_config::ROOT_URL . '/' . quotes_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
-    $controller_object->object_read()->apply_link_on_field_filter($quote_url, ['quote_id'], ['quote_id']);
+    $controller_object->object_read()->apply_link_on_field_filter($quote_url, ['order_id', 'quote_id'], ['order_id', 'quote_id']);
     
     // order LINK
     $order_url = url::do_url(APP_BASE_URL . orders_config::ROOT_URL . '/' . orders_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);

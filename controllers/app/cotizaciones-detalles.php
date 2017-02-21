@@ -29,7 +29,7 @@ $controller_object->set_config_from_class("\k1app\quote_details_config");
 /**
  * USER LOGIN AS CONSTANT
  */
-$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
+//$controller_object->db_table->set_field_constants(["user_login" => session_db::get_user_login()]);
 
 /**
  * ALL READY, let's do it :)
@@ -37,7 +37,7 @@ $controller_object->db_table->set_field_constants(["user_login" => session_db::g
 $div = $controller_object->init_board();
 
 // THIS IS ALWAYS NEEDED IF THE CREATE CALL COMES FROM ANOTHER TABLE
-$controller_object->read_url_keys_text_for_create('quote');
+$controller_object->read_url_keys_text_for_create('quotes');
 
 $controller_object->start_board();
 
@@ -58,8 +58,8 @@ if ($controller_object->on_object_read()) {
     ];
     
     // quote LINK
-    $quote_url = url::do_url(APP_BASE_URL . quotes_config::ROOT_URL . '/' . quotes_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
-    $controller_object->object_read()->apply_link_on_field_filter($quote_url, ['quote_id'], ['quote_id']);
+//    $quote_url = url::do_url(APP_BASE_URL . quotes_config::ROOT_URL . '/' . quotes_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+//    $controller_object->object_read()->apply_link_on_field_filter($quote_url, ['order_id', 'quote_id'], ['order_id', 'quote_id']);
     
     // order LINK
     $order_url = url::do_url(APP_BASE_URL . orders_config::ROOT_URL . '/' . orders_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
