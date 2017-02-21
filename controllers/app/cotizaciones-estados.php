@@ -74,16 +74,11 @@ if ($controller_object->on_object_create()) {
         $post_data = $controller_object->object_create()->get_post_data();
         
         if($post_data['state'] == 'aprobada') {
-            $quote_detail_table = new \k1lib\crudlexs\class_db_table($db, 'quote_details');
-            $quote_detail_table->set_query_filter(['quote_id' => $related_keys_array['quote_id'], 'order_id' => $related_keys_array['order_id']], TRUE);
-            $quote_detail_data = $quote_detail_table->get_data(FALSE);
-            d($quote_detail_data);
-            $po_data = [
-            'quote_id' => $related_keys_array['quote_id'],
-            'order_id' => $related_keys_array['order_id'],
-            ];
-            
-            if (\k1lib\sql\sql_insert($db, 'purchase_order', $po_data)) {
+            $order_table = new \k1lib\crudlexs\class_db_table($db, 'orders');
+            $order_state_update['order_state'] = 'en orden de compra';
+            $order_table->update_data($order_state_update, ['order_id' => $related_keys_array['order_id']]);
+        
+            if (\k1lib\sql\sql_insert($db, 'purchase_order', $related_keys_array)) {
             \k1lib\notifications\on_DOM::queue_mesasage('Purshace Order creada a partir de Qoute.');
 //            unset($_GET['do-full-out']);
 //            $return_url = url::do_url('././');

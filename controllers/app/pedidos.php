@@ -72,6 +72,21 @@ if ($controller_object->on_board_read()) {
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
     $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Cotizaciones", quotes_config::ROOT_URL, quotes_config::BOARD_CREATE_URL, quotes_config::BOARD_READ_URL, quotes_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
+    /**
+     * Related list
+     */
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "purchase_order");
+    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Orden de Compra", purchase_order_config::ROOT_URL, purchase_order_config::BOARD_CREATE_URL, purchase_order_config::BOARD_READ_URL, purchase_order_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+    /**
+     * Related list
+     */
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "invoice");
+    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Factura", invoice_config::ROOT_URL, invoice_config::BOARD_CREATE_URL, invoice_config::BOARD_READ_URL, invoice_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
+    
 }
 
 $body->content()->append_child($div);

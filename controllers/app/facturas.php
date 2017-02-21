@@ -34,10 +34,12 @@ $controller_object->set_config_from_class("\k1app\invoice_config");
 /**
  * ALL READY, let's do it :)
  */
+$related_keys_array = [];
+
 $div = $controller_object->init_board();
 
 // THIS IS ALWAYS NEEDED IF THE CREATE CALL COMES FROM ANOTHER TABLE
-$controller_object->read_url_keys_text_for_create('orders');
+$controller_object->read_url_keys_text_for_create('orders', $related_keys_array);
 
 $controller_object->start_board();
 
@@ -71,6 +73,14 @@ if ($controller_object->on_object_read()) {
 }
 
 $controller_object->exec_board();
+
+if ($controller_object->on_object_create()) { 
+    
+    $order_table = new \k1lib\crudlexs\class_db_table($db, 'orders');
+    $order_state_update['order_state'] = 'facturado';
+    $order_table->update_data($order_state_update, ['order_id' => $related_keys_array['order_id']]);
+        
+}
 
 $controller_object->finish_board();
 
