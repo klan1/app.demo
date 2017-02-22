@@ -12,7 +12,6 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::menu_left_tail()->set_active('nav-app-preferences');
 DOM::menu_left_tail()->set_active('nav-manage-tables');
 
 $table_alias = \k1lib\urlrewrite\url::set_url_rewrite_var(\k1lib\urlrewrite\url::get_url_level_count(), "row_key_text", FALSE);

@@ -2,6 +2,16 @@
 
 namespace k1app;
 
+use k1lib\html\template as template;
+
+// Template init
+template::load_template('scripts/init');
+
 k1app_template::start_template_plain();
 
 require \k1lib\urlrewrite\url::set_next_url_level(APP_CONTROLLERS_PATH, TRUE);
+
+// APP Debug output
+template::load_template('verbose-output');
+// Template end
+template::load_template('scripts/end');
