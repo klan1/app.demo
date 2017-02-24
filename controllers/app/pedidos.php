@@ -86,6 +86,13 @@ if ($controller_object->on_board_read()) {
     $controller_object->board_read_object->set_related_show_all_data(FALSE);
     $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Factura", invoice_config::ROOT_URL, invoice_config::BOARD_CREATE_URL, invoice_config::BOARD_READ_URL, invoice_config::BOARD_LIST_URL, TRUE);
     $related_list->append_to($related_div);
+    /**
+     * Related list
+     */
+    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "payment");
+    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Pago", payment_config::ROOT_URL, payment_config::BOARD_CREATE_URL, payment_config::BOARD_READ_URL, payment_config::BOARD_LIST_URL, TRUE);
+    $related_list->append_to($related_div);
     
 }
 

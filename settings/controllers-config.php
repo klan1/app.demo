@@ -182,3 +182,9 @@ class purchase_order_config extends clients_config {
     const ROOT_URL = "app/orden-compra";
 
 }
+
+class payment_config extends clients_config {
+
+    const ROOT_URL = "app/pagos";
+
+}
