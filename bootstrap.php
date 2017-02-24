@@ -12,7 +12,6 @@
 namespace k1app;
 
 use \k1lib\session\session_db as session_db;
-use k1lib\html\template as template;
 use k1lib\PROFILER as PROFILER;
 
 PROFILER::start();
@@ -59,11 +58,5 @@ if (!$url_controller) {
 /**
  * TEMPLATE AND CONTROLLER LOAD
  */
-// Template init
-template::load_template('scripts/init');
 // controller load
 require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
-// APP Debug output
-template::load_template('verbose-output');
-// Template end
-template::load_template('scripts/end');
