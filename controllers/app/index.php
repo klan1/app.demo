@@ -7,9 +7,10 @@ use k1lib\session\session_db as session_db;
 use k1lib\html\template as template;
 
 
-k1app_template::start_template();
 // Template init
 template::load_template('scripts/init');
+
+k1app_template::start_template();
 
 if (session_db::is_logged()) {
     $controller_to_include = url::set_next_url_level(APP_CONTROLLERS_PATH, FALSE, 'controler-name');
