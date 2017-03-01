@@ -84,11 +84,12 @@ class ecard_generator {
      * @var \ImagickDraw
      */
     private $draw_watermark = NULL;
-    private $image_proportion = 0.5;
+    private $image_proportion = 1;
     private $no_img = APP_RESOURCES_URL . 'images/no-image-available.jpg';
     private $make_shadow = TRUE;
     private $shadow_offset = 3;
     private $shadow_color = 'FFFFFF';
+    private $generated = FALSE;
 
     public function __construct($ecard_id, $mode = ECARD_HORIZONTAL, $send_id = NULL) {
 
@@ -179,7 +180,10 @@ class ecard_generator {
     /**
      * @return string
      */
-    public function get_ecard_base64() {
+    public function get_ecard_base64($image_proportion = NULL) {
+        if (($image_proportion > 0) && ($image_proportion < 1)) {
+            $this->image_proportion = $image_proportion;
+        }
         if ($this->_compose_ecard()) {
             return base64_encode($this->imagick);
         } else {
@@ -205,7 +209,7 @@ class ecard_generator {
      */
     public function get_ecard_src_base64() {
         if (!empty($this->imagick)) {
-            return 'data: image/jpg ;base64,' . $this->get_ecard_base64();
+            return 'data:image/jpg;base64,' . $this->get_ecard_base64();
         } else {
             return $this->no_img;
         }
@@ -215,7 +219,9 @@ class ecard_generator {
      * @return \Imagick | boolean
      */
     private function _compose_ecard() {
-
+        if ($this->generated) {
+            $this->load_ecard_data();
+        }
         if (!empty($this->imagick)) {
             if (!empty($this->layout_data)) {
                 // Create a new drawing palette
@@ -285,10 +291,13 @@ class ecard_generator {
 
 
                 $this->imagick->drawimage($this->draw_message);
+                $this->generated = TRUE;
             }
 
             // Set output image format
-            $this->imagick->thumbnailImage($this->imagick->getimagewidth() * $this->image_proportion, $this->imagick->getimageheight() * $this->image_proportion);
+            if (($this->image_proportion > 0) && ($this->image_proportion < 1)) {
+                $this->imagick->thumbnailImage($this->imagick->getimagewidth() * $this->image_proportion, $this->imagick->getimageheight() * $this->image_proportion);
+            }
             $this->imagick->setimageformat('jpg');
 
             return $this->imagick;
@@ -309,7 +318,7 @@ class ecard_generator {
         if (!empty($this->send_id)) {
             global $db;
             $ecard_send_table = new \k1lib\crudlexs\class_db_table($db, 'ecard_sends');
-            $ecard_send_table->set_query_filter(['send_id' => $send_id]);
+            $ecard_send_table->set_query_filter(['send_id' => $this->send_id]);
             $this->send_data = $ecard_send_table->get_data(FALSE);
 
             if (empty($this->send_data)) {
@@ -354,6 +363,61 @@ class ecard_generator {
             $lines .= $line . "\n";
         }
         return $lines;
+    }
+
+    function send_email($send_to = NULL, $dev_copy = FALSE) {
+        if ($send_to == NULL) {
+            $send_to = $this->send_data['send_to_email'];
+        }
+
+        $mail = new \PHPMailer;
+
+        $mail->IsSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'smtp.mandrillapp.com';                 // Specify main and backup server
+        $mail->Port = 587;                                    // Set the SMTP port
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'EEBunny';                // SMTP username
+        $mail->Password = 'Gn5TA04jtDb5EDwf1tZwKQ';                  // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
+
+        $mail->From = 'noreply@eebunny.com';
+        $mail->FromName = $this->send_data['send_from_name'];
+        $mail->AddAddress($send_to, $this->send_data['send_to_name']);  // Add a recipient
+        if ($dev_copy) {
+            $mail->AddAddress('alejo@klan1.com', "God developer");  // Add a recipient
+        }
+
+        $mail->IsHTML(true);                                  // Set email format to HTML
+
+        $mail->Subject = 'Ecard from ' . $this->send_data['send_from_name'];
+        $mail->Body = $this->make_email_html();
+        $mail->addStringAttachment($this->get_ecard_imagick(), 'ecard-attached.jpg', 'base64', 'image/jpg', 'attachment');
+        $mail->addStringEmbeddedImage($this->get_ecard_imagick(), "000ECARD000", 'ecard-inline.jpg', 'base64', 'image/jpg');
+        $mail->AltBody = 'You have received an Electronic Easter Bunny Card!';
+
+        if ($mail->Send()) {
+            DOM_notifications::queue_mesasage('Message has been sent', 'sucess');
+        } else {
+            DOM_notifications::queue_mesasage('Message could not be sent.', 'alert');
+            DOM_notifications::queue_mesasage('Mailer Error: ' . $mail->ErrorInfo, 'alert');
+        }
+    }
+
+    function make_email_html() {
+        $doc_type = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+        $html = new \k1lib\html\html('en');
+        $html->set_attrib('xmlns', 'http://www.w3.org/1999/xhtml');
+
+        $body = new \k1lib\html\body();
+        $body->append_to($html);
+
+        $body->append_h3('Enjoy your eCard!');
+
+        $ecard_img_tag = new \k1lib\html\img('cid:000ECARD000');
+        $ecard_img_tag->set_style('max-width:100%');
+
+        $body->append_child($ecard_img_tag);
+        return $doc_type . "\n" . $html->generate();
     }
 
     function get_layout_data() {

@@ -74,20 +74,32 @@ $controller_object->finish_board();
 if ($controller_object->on_board_read()) {
     // LOAD ECARD CLASS
     include 'ecard-generation.php';
+//    include 'emailer.php';
 
     $ecard_send_data = $controller_object->db_table->get_data(FALSE)[1];
-    
+
     $mode = ($ecard_send_data['ecard_mode'] == 'h') ? ECARD_HORIZONTAL : ECARD_VERTICAL;
 
     $ecard = new ecard_generator($ecard_send_data['ecard_id'], $mode, $ecard_send_data['send_id']);
     $ecard->set_image_proportion(0.8);
 
+    if (\k1lib\forms\check_single_incomming_var($_GET['action']) == 'send-email') {
+//        $ecard->send_email('alejo@klan1.com');
+        $ecard->send_email(NULL, TRUE);
+    }
+
     /**
      * HTML OUTPUT
      */
-    $cell = (new \k1lib\html\foundation\grid_cell())->append_to($div);
-    $cell->append_child(new \k1lib\html\h3('Preview'));
-    $cell->append_child($ecard->get_ecard_img_tag());
+    $grid = new \k1lib\html\foundation\grid();
+    $grid->append_to($div);
+    $row = $grid->append_row()->col(1)->set_value("&nbsp;");
+    $row = $grid->append_row();
+    $row->append_a(url::do_url($_SERVER['REQUEST_URI'], ['action' => 'send-email']), " Send ecard", NULL, 'button success fi-mail');
+
+    $row = $grid->append_row();
+    $row->col(1)->append_child(new \k1lib\html\h3('Preview'));
+    $row->col(1)->append_child($ecard->get_ecard_img_tag());
 }
 
 if ($controller_object->on_board_read()) {
