@@ -86,4 +86,4 @@ include_once 'controllers-config.php';
 \k1lib\html\html::set_use_log(FALSE);
 //ini_set('memory_limit', '100M');
 //ROUND numbers on all html foundation tables
-\k1lib\html\foundation\table_from_data::$float_round_default = 1;
+\k1lib\html\foundation\table_from_data::$float_round_default = 2;
