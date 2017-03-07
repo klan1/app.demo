@@ -271,6 +271,32 @@ if ($controller_object->on_board_update()) {
 /**
  * EXEC
  */
+
+if ($controller_object->on_object_read()) {
+    /**
+     * Custom Links
+     */
+    $get_params = [
+        'auth-code' => '--fieldauthcode--',
+        'back-url' => $_SERVER['REQUEST_URI']
+    ];
+    
+    $warehouse_url = url::do_url(APP_BASE_URL . warehouses_config::ROOT_URL . '/' . warehouses_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($warehouse_url, ['warehouse_id'], ['warehouse_id']);
+    
+    $wh_columns_url = url::do_url(APP_BASE_URL . warehouse_columns_config::ROOT_URL . '/' . warehouse_columns_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($wh_columns_url, ['wh_column_id'], ['wh_column_id']);
+    
+    $wh_columns_row_url = url::do_url(APP_BASE_URL . warehouse_columns_row_config::ROOT_URL . '/' . warehouse_columns_row_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($wh_columns_row_url, ['wh_column_row_id'], ['wh_column_row_id']);
+    
+    $wh_position_url = url::do_url(APP_BASE_URL . warehouse_positions_config::ROOT_URL . '/' . warehouse_positions_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($wh_position_url, ['wh_position_id'], ['wh_position_id']);
+    
+    $product_url = url::do_url(APP_BASE_URL . products_config::ROOT_URL . '/' . products_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($product_url, ['product_id'], ['product_id']);
+}
+
 $controller_object->exec_board();
 
 // LIST

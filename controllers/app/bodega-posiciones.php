@@ -39,6 +39,26 @@ if ($controller_object->on_object_list()) {
     $controller_object->board_list_object->list_object->apply_link_on_field_filter($read_url, \k1lib\crudlexs\crudlexs_base::USE_LABEL_FIELDS);
 }
 
+if ($controller_object->on_object_read()) {
+    /**
+     * Custom Links
+     */
+    $get_params = [
+        'auth-code' => '--fieldauthcode--',
+        'back-url' => $_SERVER['REQUEST_URI']
+    ];
+    
+    $warehouse_url = url::do_url(APP_BASE_URL . warehouses_config::ROOT_URL . '/' . warehouses_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($warehouse_url, ['warehouse_id'], ['warehouse_id']);
+    
+    $wh_columns_url = url::do_url(APP_BASE_URL . warehouse_columns_config::ROOT_URL . '/' . warehouse_columns_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($wh_columns_url, ['wh_column_id'], ['wh_column_id']);
+    
+    $wh_columns_row_url = url::do_url(APP_BASE_URL . warehouse_columns_row_config::ROOT_URL . '/' . warehouse_columns_row_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+    $controller_object->object_read()->apply_link_on_field_filter($wh_columns_row_url, ['wh_column_row_id'], ['wh_column_row_id']);
+    
+}
+
 $controller_object->exec_board();
 
 $controller_object->finish_board();
