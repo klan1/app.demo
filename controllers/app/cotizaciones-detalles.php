@@ -74,6 +74,25 @@ if ($controller_object->on_object_read()) {
     $controller_object->object_read()->apply_link_on_field_filter($presentation_url, ['presentation_id'], ['presentation_id']);
 }
 
+if ($controller_object->on_object_create()) {
+    if ($controller_object->object_create()->get_post_data_catched()) {
+        $post_data = $controller_object->object_create()->get_post_data();
+        
+        if($post_data['profit_margin']=='' || $post_data['profit_margin']==NULL) {
+            $post_data_new['profit_margin'] = ($post_data['sale_price']/$post_data['initial_cost'])-1;
+        } else {
+            $post_data_new['sale_price'] = $post_data['initial_cost'] + ($post_data['initial_cost'] * $post_data['profit_margin']);
+        }
+        if(!$post_data['discount']=='' || !$post_data['discount']==NULL) {
+            d($post_data_new);
+            $sale_price_off = $post_data_new['sale_price'] - ($post_data_new['sale_price'] * $post_data['discount']);
+            $post_data_new['sale_price'] = $sale_price_off;
+        }
+        d($post_data);
+        $controller_object->object_create()->set_post_data($post_data_new);
+    }
+}
+
 $controller_object->exec_board();
 
 $controller_object->finish_board();
