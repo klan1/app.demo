@@ -10,7 +10,11 @@ $server_name = $_SERVER['SERVER_NAME'];
 /**
  * TEMPLATE NAME
  */
-const APP_TEMPLATE = 'k1phphtml';
+if (strstr($_SERVER['REQUEST_URI'], '/site/') === FALSE) {
+    $app_template = 'k1phphtml';
+} else {
+    $app_template = 'frontend';
+}
 
 // AUTO CONFIGURATED PATHS
 define('APP_ROOT', str_replace('\\', '/', dirname(dirname(__FILE__))));
@@ -31,7 +35,7 @@ define('APP_RESOURCES_PATH', APP_ROOT . '/resources/');
 define('APP_SETTINGS_PATH', APP_ROOT . '/settings/');
 define('APP_UPLOADS_PATH', APP_RESOURCES_PATH . 'uploads/');
 define('APP_SHELL_SCRIPTS_PATH', APP_RESOURCES_PATH . '/shell-scripts/');
-define('APP_TEMPLATE_PATH', APP_RESOURCES_PATH . '/template/' . APP_TEMPLATE . '/');
+define('APP_TEMPLATE_PATH', APP_RESOURCES_PATH . '/template/' . $app_template . '/');
 define('APP_FONTS_PATH', APP_RESOURCES_PATH . 'fonts/');
 
 /**
@@ -71,7 +75,7 @@ if (\k1app\APP_MODE != 'shell') {
     define('APP_VIEWS_URL', APP_URL . 'views/');
     define('APP_RESOURCES_URL', APP_URL . 'resources/');
     define('APP_UPLOADS_URL', APP_RESOURCES_URL . 'uploads/');
-    define('APP_TEMPLATE_URL', APP_RESOURCES_URL . 'template/' . APP_TEMPLATE . '/');
+    define('APP_TEMPLATE_URL', APP_RESOURCES_URL . 'template/' . $app_template . '/');
     define('APP_TEMPLATE_IMAGES_URL', APP_TEMPLATE_URL . 'img/');
 
     /**
