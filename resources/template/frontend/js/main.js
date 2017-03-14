@@ -3,8 +3,8 @@ jQuery(document).ready(function($){
 	//slik (carousel) start and settings
 	$('.carousel ul').slick({
  	dots: false,
- 	prevArrow: '<a class="prev"><img src="img/prev.png" alt="<<"/></a>',
-	nextArrow: '<a class="next"><img src="img/next.png" alt=">>"/></a>',
+ 	prevArrow: '<a class="prev"><img src="//eebunny.com/ecards/resources/template/frontend/img/prev.png" alt="<<"/></a>',
+	nextArrow: '<a class="next"><img src="//eebunny.com/ecards/resources/template/frontend/img/next.png" alt=">>"/></a>',
 	infinite: true,
 	speed: 300,
 	slidesToShow: 5,

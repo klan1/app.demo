@@ -106,7 +106,8 @@ class ecard_generator {
         /**
          * ECARD DATA LOAD
          */
-        $ecard_table = new \k1lib\crudlexs\class_db_table($db, 'ecards');
+        $ecards_table = 'ecards';
+        $ecard_table = new \k1lib\crudlexs\class_db_table($db, $ecards_table);
         $ecard_table->set_query_filter(['ecard_id' => $this->ecard_id]);
         $this->ecard_data = $ecard_table->get_data(FALSE);
 
@@ -147,7 +148,7 @@ class ecard_generator {
 
                 $this->load_message();
 
-                $ecard_file = \k1lib\forms\file_uploads::get_uploaded_file_path($ecard_file_name);
+                $ecard_file = \k1lib\forms\file_uploads::get_uploaded_file_path($ecard_file_name,$ecards_table);
 
                 if (file_exists($ecard_file)) {
 //                    $ecard_url = \k1lib\forms\file_uploads::get_uploaded_file_url($ecard_file_name);

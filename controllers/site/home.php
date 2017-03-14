@@ -15,6 +15,7 @@ template::load_template('html-head');
 template::load_template('app-header');
 
 $body->content()->set_class('home');
+$body->content()->load_file(APP_TEMPLATE_PATH . 'html/home-slider.php');
 $body->content()->load_file(APP_TEMPLATE_PATH . 'html/home-carusel.php');
 $body->content()->load_file(APP_TEMPLATE_PATH . 'html/home-categories.php');
 

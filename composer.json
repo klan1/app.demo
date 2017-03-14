@@ -22,7 +22,8 @@
         "zurb/foundation": "6.2.1",
         "mexitek/phpcolors": "dev-master",
         "mandrill/mandrill": "1.0.55",
-        "phpmailer/phpmailer": "v5.2.22"
+        "phpmailer/phpmailer": "v5.2.22",
+        "gabrielgil/timthumb": "dev-master"
     },
     "require-dev": {
     }

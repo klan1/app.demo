@@ -3,7 +3,7 @@
         <header class="site-header">
             <div class="container clearfix">
                 <div class="left">
-                    <a class="logo" href="#"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/logo-ebunny.png" width="169" height="137"/></a>
+                    <a class="logo" href="<?php echo APP_URL . 'site/' ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/logo-ebunny.png" width="169" height="137"/></a>
                 </div>
                 <div class="right">
                     <div class="searchbox">
@@ -13,9 +13,9 @@
                         </form>
                     </div>
                     <div class="login-box">
-                        <a class="my-account-btn" href="#my_account"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/my-acount.png" alt="my-account"/></a>
-                        <a class="my-login-btn has-popup" href="#login" data-popup-id="login-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/login.png" alt="login"/></a>
-                        <a class="join-now-btn has-popup" href="#join_now" data-popup-id="join-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/join-now.png" alt="join now"/></a>
+                        <a class="my-account-btn" href="<?php echo APP_URL . 'site/pages/my-account/' ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/my-acount.png" alt="my-account"/></a>
+                        <a class="my-login-btn has-popup" href="<?php echo APP_URL . 'site/pages/login/' ?>" data-popup-id="login-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/login.png" alt="login"/></a>
+                        <a class="join-now-btn has-popup" href="<?php echo APP_URL . 'site/pages/join-now/' ?>" data-popup-id="join-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/join-now.png" alt="join now"/></a>
                         <div id="join-popup" style="display:none;">
                             <table>
                                 <tr>
@@ -36,17 +36,18 @@
         <nav class="main-menu">
             <div class="container clearfix">
                 <ul class="menu">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Prime Cards</a></li>
-                    <li><a href="#">Payments</a></li>
-                    <li><a href="#">Messages</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/' ?>">Home</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/pages/about-us/' ?>">About</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/pages/all-ecards/' ?>">All cards</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/pages/payments/' ?>">Payments</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/pages/messages/' ?>">Messages</a></li>
                 </ul>
                 <ul class="social-links">
-                    <li class="fb"><a href="#"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-facebook.png" alt="Facebook"/></a></li>
-                    <li class="pi"><a href="#"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-pinterest.png" alt="Pinterest"/></a></li>
-                    <li class="yt"><a href="#"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-youtube.png" alt="Youtube"/></a></li>
-                    <li class="ig"><a href="#"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-instagram.png" alt="Instagram"/></a></li>
-                    <li class="tw"><a href="#"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-twitter.png" alt="Twitter"/></a></li>
+                    <li class="fb"><a target="_blank" href="https://facebook.com/EeBunny"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-facebook.png" alt="Facebook"/></a></li>
+                    <li class="pi"><a target="_blank" href="https://pinterest.com/eebunny"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-pinterest.png" alt="Pinterest"/></a></li>
+                    <li class="yt"><a target="_blank" href="https://youtube.com/channel/UC7sP1ZZJada14AjoDQ_bwQw"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-youtube.png" alt="Youtube"/></a></li>
+                    <li class="ig"><a target="_blank" href="https://instagram.com/ee.bunny"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-instagram.png" alt="Instagram"/></a></li>
+                    <li class="tw"><a target="_blank" href="https://twitter.com/eebunny_"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-twitter.png" alt="Twitter"/></a></li>
                 </ul>
             </div>
         </nav>        

@@ -355,11 +355,6 @@ ul.social-links {
     text-shadow: 1px 3px 2px #636363;
     width: 75%;
 }
-#eggs .header-left { text-shadow: 1px 3px 2px #8b6fc5; }
-#watercolor .header-left { text-shadow: 1px 3px 2px #b94937; }
-#vintage .header-left { text-shadow: 1px 3px 7px #bf6447; }
-#lines .header-left { text-shadow: 1px 3px 7px #733682; }
-#vines .header-left { text-shadow: 1px 3px 7px #276612; }
 .cards-section .header-right {
     float: right;
     width: 25%;
@@ -429,11 +424,10 @@ ul.social-links {
     -moz-transition: .2s all ease;
     transition: .2s all ease;
 }
-#trees .more { color: #a7bfa5; }
-#watercolor .more { color: #d4898e; }
+/*#trees .more { color: #a7bfa5; }
 #vintage .more { color: #c3aea4; }
 #art .more { color: #9cafb6; }
-#flowers .more { color: #bb9faa; } 
+#flowers .more { color: #bb9faa; } */
 
 
 .margin-line {
@@ -445,12 +439,7 @@ ul.social-links {
     margin: -25px 0 20px;
     width: 100%;
 }
-#eggs { background: #d2e3f4 url(../img/eggs-bg.jpg) no-repeat center center scroll; }
 #trees { background: #cbefc8 url(../img/trees-bg.png) no-repeat center center scroll; background-size: cover; }
-#watercolor { background: #f2c2c5 url(../img/watercolor-bg.jpg) repeat-y center center scroll; }
-#vintage { background: #f3d9cc url(../img/vintage-bg.jpg) repeat scroll; }
-#lines { background: #f2cedc url(../img/lines-bg.jpg) repeat scroll; }
-#vines { background: #c1d9e1 url(../img/vines-bg.jpg) repeat center center scroll; }
 
 .site-footer {
     background-color: #ffc9dc;
@@ -636,8 +625,6 @@ ul.social-links {
         text-align: center;
     }
     #trees { background-attachment: scroll }
-    #watercolor { background-attachment: scroll }
-    #vintage { background-attachment: scroll }
     #flowers { background-attachment: scroll }
     #art { background-attachment: scroll }
     .margin-line {
@@ -786,6 +773,12 @@ K1LIB CLASES
 */
 
 #k1lib-content {
+}
+#k1lib-content a{
+    color:#3366ff
+}
+#k1lib-content a:hover{
+    color:#ff33cc
 }
 #k1lib-content.home{
 }

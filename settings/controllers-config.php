@@ -135,12 +135,6 @@ class ecard_messages extends ecards_config {
 
 }
 
-class users_k1lib_config extends ecards_config {
-
-    const ROOT_URL = "app/cp-users";
-
-}
-
 class users_config extends ecards_config {
 
     const ROOT_URL = "app/users";
@@ -162,5 +156,27 @@ class payments_config extends ecards_config {
 class payment_details_config extends ecards_config {
 
     const ROOT_URL = "app/payment-details";
+
+}
+
+class users_k1lib_config extends ecards_config {
+
+    const ROOT_URL = "app/cp-users";
+
+    /**
+     * ALLOWED LEVELS
+     */
+    const BOARD_CREATE_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_READ_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_UPDATE_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_DELETE_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_EXPORT_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin'];
+
+}
+
+class pages_config extends users_k1lib_config {
+
+    const ROOT_URL = "app/cp-frontend-pages";
 
 }
