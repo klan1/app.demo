@@ -5,7 +5,7 @@
                 <nav class="footer-nav">
                     <ul class="menu">
                         <li><a href="<?php echo APP_URL . 'site/pages/about-us/' ?>">About</a></li>
-                        <li><a href="<?php echo APP_URL . 'site/pages/all-ecards/' ?>">All E-Cards</a></li>
+                        <li><a href="<?php echo APP_URL . 'site/category/all/' ?>">All E-Cards</a></li>
                         <li><a href="<?php echo APP_URL . 'site/pages/contact-us/' ?>"">Contact</a></li>
                         <li><a href="<?php echo APP_URL . 'site/pages/Support/' ?>"">Support</a></li>
                         <li><a href="<?php echo APP_URL . '/site/pages/terms-of-use' ?>">Terms</a></li>
@@ -30,3 +30,6 @@
                 </div>
             </div>
         </footer>
+        <script>
+            img_dir_url = '<?php echo APP_TEMPLATE_IMAGES_URL; ?>';
+        </script>

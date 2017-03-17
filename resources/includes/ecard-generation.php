@@ -11,6 +11,8 @@ use k1lib\notifications\on_DOM as DOM_notifications;
 
 const ECARD_HORIZONTAL = 1;
 const ECARD_VERTICAL = 2;
+const ECARD_THUMB_WIDTH = 246;
+const ECARD_THUMB_HEIGHT = 143;
 
 /**
  * 
@@ -49,6 +51,38 @@ function message_to_lines(\Imagick $canvas, \ImagickDraw $draw, $text, $max_widt
     }
 
     return $lines;
+}
+
+function get_ecard_thumbnail($filename, $width = ECARD_THUMB_WIDTH, $height = ECARD_THUMB_HEIGHT) {
+    $ecards_table = 'ecards';
+    $thumbnail_resize_folder = APP_RESOURCES_PATH . 'images/thumbnails/';
+    $thumbnail_resize_url = APP_RESOURCES_URL . 'images/thumbnails/';
+    $thumbnail_file = \k1lib\forms\file_uploads::get_uploaded_file_path($filename, $ecards_table);
+
+    if (!empty($filename) && file_exists($thumbnail_file)) {
+        $just_filename = strstr(basename($filename), '.', TRUE);
+
+        $thumbnail_file_resized = $thumbnail_resize_folder . $just_filename . '_' . $width . 'x' . $height . '.jpg';
+        $thumbnail_file_resized_url = $thumbnail_resize_url . $just_filename . '_' . $width . 'x' . $height . '.jpg';
+        if (file_exists($thumbnail_file_resized)) {
+            return $thumbnail_file_resized_url;
+        } else {
+            try {
+                $imagick = new \Imagick();
+                $imagick->readImage($thumbnail_file);
+            } catch (Exception $e) {
+                DOM_notifications::queue_mesasage('Error when loading the thumbnail file: ' . $e->getMessage(), "alert");
+            }
+            $imagick->thumbnailimage($width, $height);
+            $imagick->setformat('jpg');
+            $imagick->setcompression(\Imagick::COMPRESSION_JPEG);
+            $imagick->setimagecompressionquality(80);
+            $imagick->writeimage($thumbnail_file_resized);
+            return $thumbnail_file_resized_url;
+        }
+    } else {
+        return $thumbnail_resize_url . 'no-thumbnail.jpg';
+    }
 }
 
 class ecard_generator {
@@ -148,7 +182,7 @@ class ecard_generator {
 
                 $this->load_message();
 
-                $ecard_file = \k1lib\forms\file_uploads::get_uploaded_file_path($ecard_file_name,$ecards_table);
+                $ecard_file = \k1lib\forms\file_uploads::get_uploaded_file_path($ecard_file_name, $ecards_table);
 
                 if (file_exists($ecard_file)) {
 //                    $ecard_url = \k1lib\forms\file_uploads::get_uploaded_file_url($ecard_file_name);

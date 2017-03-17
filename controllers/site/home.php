@@ -11,6 +11,8 @@ use k1lib\notifications\on_frontend as frontend_notifications;
 
 $body = frontend::html()->body();
 
+$body->set_class('home-page');
+
 template::load_template('html-head');
 template::load_template('app-header');
 

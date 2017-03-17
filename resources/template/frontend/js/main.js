@@ -78,4 +78,39 @@ jQuery(document).ready(function($){
             });
         };
     });
+    //implements select input using links and a hidden field
+    $('.orientation .horizontal,.orientation .vertical').click(function(e){
+        e.preventDefault();
+        if(!$(this).hasClass('selected')){
+            $(this).addClass('selected').siblings().removeClass('selected');
+            var orientation_value = $(this).data('orientation');
+            $('#users-data .card-orientation').val(orientation_value);
+        }
+    });
+    // hide/show thumbnails for categories
+    function select_items_from(cat) {
+        $('.categories .carousel a[href$="'+cat+'"]').click(function(e){
+            e.preventDefault();
+            $('.thumb-set a').hide(0);
+            $('.thumb-set a.' + cat).show(0);
+        });
+    }
+    select_items_from('eggs');
+    select_items_from('watercolor');
+    select_items_from('vintage');
+    select_items_from('lines');
+    select_items_from('vines');
+    
+    //place a magnifying glass when pointer hover thumbnails
+    th = $('.thumb-set .preview-box').css('height');
+    $('.thumb-set .preview-box').prepend('<div class="overlay-table"><div class="overlay-cell"><img src="' + img_dir_url + 'mglass.png"></div></div>');
+    $('.overlay-table').css('height',th);
+    
+    //.seemore and .seeall buttons toggle visible .preview-box hidden items
+    $('.seemore').click(function(e){
+        e.preventDefault();
+        $(this).parent().siblings('.preview-box').removeClass('hidden');
+        $(this).siblings('.seeall').removeClass('hidden');
+        $(this).addClass('hidden');
+    });
 });

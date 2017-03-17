@@ -38,7 +38,7 @@
                 <ul class="menu">
                     <li><a href="<?php echo APP_URL . 'site/' ?>">Home</a></li>
                     <li><a href="<?php echo APP_URL . 'site/pages/about-us/' ?>">About</a></li>
-                    <li><a href="<?php echo APP_URL . 'site/pages/all-ecards/' ?>">All cards</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/category/all/' ?>">All E-Cards</a></li>
                     <li><a href="<?php echo APP_URL . 'site/pages/payments/' ?>">Payments</a></li>
                     <li><a href="<?php echo APP_URL . 'site/pages/messages/' ?>">Messages</a></li>
                 </ul>
