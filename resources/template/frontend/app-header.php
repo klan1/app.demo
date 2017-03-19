@@ -9,5 +9,5 @@ $body = frontend::html()->body();
 
 $body->header()->append_div(null, 'k1app-output');
 
-$body->header()->load_file(APP_TEMPLATE_PATH . 'html/body-header.php');
+$body->header()->load_file(APP_TEMPLATE_PATH . 'sections/body-header.php');
 

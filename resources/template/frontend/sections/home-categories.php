@@ -64,13 +64,13 @@ foreach ($categories_data as $category_data) :
                 <?php foreach ($ecards_data as $ecard) : // ECARD THUMBNAIL ?>
                 <div class="preview-box">
                     <h3 class="card-preview-title">&nbsp;</h3>
-                    <img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/>
+                    <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/'?>" class="thumb-link"><img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/></a>
                 </div>
                 <?php endforeach ?>
                 <?php foreach ($ecards_data_hidden as $ecard) : // ECARD THUMBNAIL ?>
                 <div class="preview-box hidden">
                     <h3 class="card-preview-title">&nbsp;</h3>    
-                    <img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/>
+                    <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/'?>" class="thumb-link"><img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/></a>
                 </div>
                 <?php endforeach ?>
                 <div class="more-wrapper">

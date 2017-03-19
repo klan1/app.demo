@@ -73,10 +73,10 @@ textarea {
 @font-face {
     font-family:'Myriad Pro';
     src: url('../fonts/MyriadPro-Regular.eot');
-	src: url('../fonts/MyriadPro-Regular.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/MyriadPro-Regular.woff2') format('woff2'),
-		url('../fonts/MyriadPro-Regular.woff') format('woff'),
-		url('../fonts/MyriadPro-Regular.svg#MyriadPro-Regular') format('svg');
+    src: url('../fonts/MyriadPro-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MyriadPro-Regular.woff2') format('woff2'),
+        url('../fonts/MyriadPro-Regular.woff') format('woff'),
+        url('../fonts/MyriadPro-Regular.svg#MyriadPro-Regular') format('svg');
     font-weight: 400;
     font-style: normal;
     font-stretch: normal;
@@ -86,10 +86,10 @@ textarea {
 @font-face {
     font-family:'Myriad Pro semibold';
     src: url('../fonts/MyriadPro-Semibold.eot');
-	src: url('../fonts/MyriadPro-Semibold.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/MyriadPro-Semibold.woff2') format('woff2'),
-		url('../fonts/MyriadPro-Semibold.woff') format('woff'),
-		url('../fonts/MyriadPro-Semibold.svg#MyriadPro-Semibold') format('svg');
+    src: url('../fonts/MyriadPro-Semibold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MyriadPro-Semibold.woff2') format('woff2'),
+        url('../fonts/MyriadPro-Semibold.woff') format('woff'),
+        url('../fonts/MyriadPro-Semibold.svg#MyriadPro-Semibold') format('svg');
     font-weight: 600;
     font-style: normal;
     font-stretch: normal;
@@ -99,10 +99,10 @@ textarea {
 @font-face {
     font-family:'Myriad Pro Bold';
     src: url('../fonts/MyriadPro-Bold.eot');
-	src: url('../fonts/MyriadPro-Bold.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/MyriadPro-Bold.woff2') format('woff2'),
-		url('../fonts/MyriadPro-Bold.woff') format('woff'),
-		url('../fonts/MyriadPro-Bold.svg#MyriadPro-Bold') format('svg');
+    src: url('../fonts/MyriadPro-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/MyriadPro-Bold.woff2') format('woff2'),
+        url('../fonts/MyriadPro-Bold.woff') format('woff'),
+        url('../fonts/MyriadPro-Bold.svg#MyriadPro-Bold') format('svg');
     font-weight: 700;
     font-style: normal;
     font-stretch: normal;
@@ -116,16 +116,18 @@ html {
     font-size:62.5%;
 }
 a {
-    color:#3366ff;
+    /*color:#3366ff;*/
+    color: #fff;
+    text-decoration: none;
 }
 a:hover {
     color:#ff33cc;
 }
 body {
-    color: #222;
-    font-family: 'Myriad Pro', Arial;
-    font-size: 15px; font-size: 1.5rem;
-    font-weight: 400;
+    color: #fff; /*#222;*/
+    font-family: 'Myriad Pro semibold', Arial; /*'Myriad Pro', Arial;*/
+    font-size: 16px; font-size: 1.6rem; /*15px; font-size: 1.5rem;*/
+    font-weight: 600; /*400;*/
     /*padding: 3rem 2rem;*/
 }
 body.home-page {
@@ -290,8 +292,8 @@ body.categories .title {
     margin-right: 1px;
     padding: 0px 11px 3px;
     text-decoration: none;
-    
-    
+
+
     -webkit-transition: 1s all ease;
     -moz-transition: 1s all ease;
     transition: 1s all ease;
@@ -299,7 +301,7 @@ body.categories .title {
 .main-menu ul.menu li a:hover {
     background-color: #925467;
     /*padding: 0px 16px 3px;*/
-    
+
     -webkit-transition: .2s all ease;
     -moz-transition: .2s all ease;
     transition: .2s all ease;
@@ -345,7 +347,7 @@ ul.social-links {
 .carousel ul li .wrap {
     display: inline-block;
     outline: 0;
-    
+
     /*-moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
@@ -358,12 +360,12 @@ ul.social-links {
     /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
     /*Element should have a background-color*/
     /*All filters must be placed together*/
-    
+
     height: 133px;
     margin-bottom: 9px; /*2px;*/
     overflow: hidden;
     width: 133px;
-    
+
     -webkit-transition: 1s all ease;
     -moz-transition: 1s all ease;
     transition: 1s all ease;
@@ -382,7 +384,7 @@ ul.social-links {
 }
 .carousel ul li a:hover .wrap {
     transform: scale(1.15);
-    
+
     -webkit-transition: .2s all ease;
     -moz-transition: .2s all ease;
     transition: .2s all ease;
@@ -460,7 +462,7 @@ ul.social-links {
     -webkit-border-radius: 50%;
     border-radius: 50%;*/
     margin-top: 20px;
-    
+
     /*moz-box-shadow: 2px 2px 4px 3px #c1c1c1;
     -webkit-box-shadow: 2px 2px 4px 3px #c1c1c1;
     box-shadow: 2px 2px 4px 3px #c1c1c1;*/
@@ -558,14 +560,14 @@ ul.social-links {
     box-shadow: 2px 2px 7px 2px #a9a9a9;
     filter: progid:DXImageTransform.Microsoft.Shadow(strength = 2, direction = 135, color = '#a9a9a9');
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(strength = 2, Direction = 135, Color = '#a9a9a9')";
-    
+
     -webkit-transition: 1s all ease;
     -moz-transition: 1s all ease;
     transition: 1s all ease;
 }
 .cards-section .more:hover {
     background: #fff;
-    
+
     -webkit-transition: .2s all ease;
     -moz-transition: .2s all ease;
     transition: .2s all ease;
@@ -621,7 +623,7 @@ ul.social-links {
     text-decoration: none;
 }
 .footer-nav ul.menu li a:hover {
-    
+
 }
 
 .footer-nav ul.menu li a::before {
@@ -702,15 +704,15 @@ ul.steps li {
     width: 30%;
 }
 ul.steps li a {
-     background: #a6dbd7 url(../img/step-item-normal-bg.png) repeat;
-     box-sizing: border-box;
-     display: block;
-     padding: 22px 0 15px;
-     
+    background: #a6dbd7 url(../img/step-item-normal-bg.png) repeat;
+    box-sizing: border-box;
+    display: block;
+    padding: 22px 0 15px;
+
 }
 ul.steps li a:hover,
 ul.steps li.selected a {
-     background: #a6dbd7 url(../img/step-item-hover-bg.png) repeat;
+    background: #a6dbd7 url(../img/step-item-hover-bg.png) repeat;
 }
 ul.steps li:last-child {
     border-right: 0 none;
@@ -723,11 +725,11 @@ ul.steps li a span {
     line-height: .8;
 }
 ul.cat_steps {
-   display: inline-block;
-   font-size: 0;
-   margin: 0;
-   padding: 0;
-   width: 100%;
+    display: inline-block;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 ul.cat_steps li {
     display: inline-block;
@@ -756,7 +758,7 @@ ul.cat_steps li a {
     background: -webkit-linear-gradient(left, #8bdcd8 0%,#82ccc8 100%);
     background: linear-gradient(to right, #8bdcd8 0%,#82ccc8 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8bdcd8', endColorstr='#82ccc8',GradientType=1 );
-    
+
     box-sizing: border-box;
     color: #fff;
     display: block;
@@ -801,6 +803,7 @@ body.step3 .inner-content {
     display: block;
     font-family:'trendsetter', Arial;
     font-size: 42px; font-size: 4.2rem;
+    font-weight: 400;
     height: 58px;
     margin-bottom: 24px;
     margin-left: auto;
@@ -869,7 +872,7 @@ body.step3 .inner-content {
     position: relative;
     max-width: 380px;
     width: 33.3%;*/
-    
+
     -webkit-transition: .8s all ease;
     -moz-transition: .8s all ease;
     transition: .8s all ease
@@ -878,14 +881,14 @@ body.step3 .inner-content {
     display: inline-block;
     height: auto;
     max-width: 100%;
-    
+
     -webkit-transition: 1s all ease;
     -moz-transition: 1s all ease;
     transition: s all ease
 }
 .thumb-link:hover .thumb-img {
     /*transform: scale(1.2);*/
-    
+
     -webkit-transition: .2s all ease;
     -moz-transition: .2s all ease;
     transition: .2s all ease
@@ -900,14 +903,14 @@ body.step3 .inner-content {
     top: 0;
     width: 100%;
     z-index: 1;
-    
+
     -webkit-transition: 1s all ease;
     -moz-transition: 1s all ease;
     transition: 1s all ease;
 }
 .preview-box:hover .overlay-table {
     //background: rgba(0, 0, 0, 0.08);
-    
+
     -webkit-transition: .2s all ease;
     -moz-transition: .2s all ease;
     transition: .2s all ease;
@@ -918,7 +921,7 @@ body.step3 .inner-content {
     position: relative;
     transform: scale(2);
     vertical-align: middle;
-    
+
     -webkit-transition: 1s all ease;
     -moz-transition: 1s all ease;
     transition: 1s all ease;
@@ -926,7 +929,7 @@ body.step3 .inner-content {
 .preview-box:hover .overlay-cell {
     opacity: 1;
     transform: scale(.8);
-    
+
     -webkit-transition: .3s all ease;
     -moz-transition: .3s all ease;
     transition: .3s all ease;
@@ -972,6 +975,12 @@ body.step3 .inner-content {
     color: #b76f80;
     display: block;
     font-size: 17px; font-size: 1.7rem;
+    outline: 0;
+    width: 100%;
+}
+.eebunny-form textarea {
+    border: 0 none;
+    color: #b76f80;
     outline: 0;
     width: 100%;
 }
@@ -1022,15 +1031,15 @@ body.step3 .inner-content {
     color:    #f2c3d4;
 }
 .eebunny-form :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:    #f2c3d4;
-   opacity:  1;
+    color:    #f2c3d4;
+    opacity:  1;
 }
 .eebunny-form ::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:    #f2c3d4;
-   opacity:  1;
+    color:    #f2c3d4;
+    opacity:  1;
 }
 .eebunny-form :-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color:    #f2c3d4;
+    color:    #f2c3d4;
 }
 .eebunny-form table {
     width: 100%;
@@ -1068,9 +1077,32 @@ body.step3 .inner-content {
     padding: 9px 47px;
     text-align: center;
     text-transform: uppercase;
-    
+
     -webkit-box-shadow: 2px 2px 6px 1px #933d57;
     box-shadow: 2px 2px 6px 1px #933d57;
+}
+/* ==========================================================================
+   Informative pages
+   ========================================================================== */
+
+#k1lib-content {
+}
+#k1lib-content a {
+    color:#3366ff
+}
+#k1lib-content a:hover{
+    color:#ff33cc
+}
+#k1lib-content .slide-inner a,
+#k1lib-content .slide-inner a:hover {
+    color: #fff;
+}
+#k1lib-content.page {
+    color: #222;
+    font-family: 'Myriad Pro', Arial;
+    font-size: 1.5rem;
+    font-weight: normal;
+    padding: 3rem 2rem;
 }
 
 /* ==========================================================================
@@ -1101,9 +1133,9 @@ body.step3 .inner-content {
 }
 
 @media print,
-       (-o-min-device-pixel-ratio: 5/4),
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 120dpi) {
+(-o-min-device-pixel-ratio: 5/4),
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi) {
 
 }
 @media only screen and (max-width: 1280px) {
@@ -1252,7 +1284,7 @@ body.step3 .inner-content {
     .sender-name {
         font-size: 40px;
     }
-    
+
 }
 @media only screen and (max-width: 440px) {
     .main-menu ul.menu li {
@@ -1372,24 +1404,3 @@ body.step3 .inner-content {
     }
 }
 
-/**
-K1LIB CLASES
-*/
-
-#k1lib-content {
-}
-#k1lib-content a{
-    color:#3366ff
-}
-#k1lib-content a:hover{
-    color:#ff33cc
-}
-#k1lib-content.home{
-}
-#k1lib-content.page{
-    color: #222;
-    font-family: 'Myriad Pro', Arial;
-    font-size: 1.5rem;
-    font-weight: normal;
-    padding: 3rem 2rem;
-}

@@ -25,7 +25,7 @@ $head->link_css(APP_TEMPLATE_URL . "css/main.css");
 $head->append_child(new script(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js"));
 $head->append_child(new script(APP_TEMPLATE_URL . "js/vendor/modernizr-2.8.3.min.js"));
 
-$head->load_file(APP_TEMPLATE_PATH . 'html/header-favicon.php', \k1lib\html\INSERT_ON_BEFORE_TAG_CLOSE);
+$head->load_file(APP_TEMPLATE_PATH . 'sections/header-favicon.php', \k1lib\html\INSERT_ON_BEFORE_TAG_CLOSE);
 
 /**
  * HTML BODY
@@ -33,5 +33,5 @@ $head->load_file(APP_TEMPLATE_PATH . 'html/header-favicon.php', \k1lib\html\INSE
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/jquery-3.1.1.min.js"));
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/plugins.js"));
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/slick.min.js"));
-$body->append_child_tail(new script(APP_TEMPLATE_URL . "js/main.js"));
+$body->append_child_tail(new script(APP_TEMPLATE_URL . "js/main.js?time=" . time()));
 

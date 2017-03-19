@@ -36,7 +36,7 @@ if ($category_slug) {
 
         $container->append_div('title')->set_value('CATEGORIES');
 
-        $container->append_div()->load_file(APP_TEMPLATE_PATH . 'html/home-carusel.php');
+        $container->append_div()->load_file(APP_TEMPLATE_PATH . 'sections/home-carusel.php');
 
         if ($category_slug == 'all') {
             $category_name = 'ALL E-CARDS';
@@ -44,7 +44,7 @@ if ($category_slug) {
             $category_name = strtoupper($category_data['ecc_name']);
         }
         $container->append_div('title')->set_value($category_name)->set_style('margin:2em 0em 1em 0em');
-        $container->append_div()->load_file(APP_TEMPLATE_PATH . 'html/category-content.php');
+        $container->append_div()->load_file(APP_TEMPLATE_PATH . 'sections/category-content.php');
     } else {
         \k1lib\controllers\error_404($category_slug);
     }

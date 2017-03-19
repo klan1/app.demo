@@ -14,6 +14,60 @@ const ECARD_VERTICAL = 2;
 const ECARD_THUMB_WIDTH = 246;
 const ECARD_THUMB_HEIGHT = 143;
 
+function get_ecard_fonts() {
+    return [
+        'DK-Innuendo.otf' => 'DK Innuendo',
+        'Janesville-Script.ttf' => 'Janesville Script',
+        'Light-up-the-World.ttf' => 'Light up the World',
+        'LillyBelle_2.ttf' => 'LillyBelle 2',
+        'Snaps-Taste.otf' => 'Snaps Taste',
+        'Tinfoil-Tiara.otf' => 'Tinfoil Tiara',
+        'Xiomara-Script.ttf' => 'Xiomara Script',
+    ];
+}
+
+function get_ecard_font_by_name($font_name) {
+    $fonts = get_ecard_fonts();
+    $fonts_flip = array_flip($fonts);
+    if (key_exists($font_name, $fonts_flip)) {
+        return $fonts_flip[$font_name];
+    } else {
+        return NULL;
+    }
+}
+
+function get_ecard_font_sizes($font_name = NULL) {
+    $fonts = get_ecard_fonts();
+    $fonts_flip = array_flip($fonts);
+    $fonts_base_size = [
+        'DK-Innuendo.otf' => 50,
+        'Janesville-Script.ttf' => 140,
+        'Light-up-the-World.ttf' => 70,
+        'LillyBelle_2.ttf' => 50,
+        'Snaps-Taste.otf' => 50,
+        'Tinfoil-Tiara.otf' => 100,
+        'Xiomara-Script.ttf' => 60,
+    ];
+    if (empty($font_name)) {
+        $size_array = [
+            50 => '-2',
+            60 => '-1',
+            70 => '0',
+            80 => '1',
+            90 => '2'
+        ];
+    } else {
+        $size_array = [
+            ($fonts_base_size[$fonts_flip[$font_name]]) - 20 => '-2',
+            ($fonts_base_size[$fonts_flip[$font_name]]) - 10 => '-1',
+            ($fonts_base_size[$fonts_flip[$font_name]]) => '0',
+            ($fonts_base_size[$fonts_flip[$font_name]]) + 10 => '1',
+            ($fonts_base_size[$fonts_flip[$font_name]]) + 20 => '2'
+        ];
+    }
+    return $size_array;
+}
+
 /**
  * 
  * @param \Imagick $canvas
@@ -120,10 +174,27 @@ class ecard_generator {
     private $draw_watermark = NULL;
     private $image_proportion = 1;
     private $no_img = APP_RESOURCES_URL . 'images/no-image-available.jpg';
+    private $watermark_img = APP_RESOURCES_PATH . 'images/ecards-watermark.png';
+    private $watermark_imagick = NULL;
     private $make_shadow = TRUE;
     private $shadow_offset = 3;
     private $shadow_color = 'FFFFFF';
     private $generated = FALSE;
+    private $quality = 50;
+
+    /**
+     * CUSTOMIZATION
+     */
+    private $custom_font_file = NULL;
+    private $custom_font_color = NULL;
+    private $custom_font_size = NULL;
+
+    /**
+     * SENDER and receiver font    
+     */
+    private $names_font = 'Snaps-Taste.otf';
+    private $to_text = 'To: ';
+    private $from_text = 'From: ';
 
     public function __construct($ecard_id, $mode = ECARD_HORIZONTAL, $send_id = NULL) {
 
@@ -264,8 +335,16 @@ class ecard_generator {
                 $this->draw_from = new \ImagickDraw();
                 $this->draw_message = new \ImagickDraw();
 
+                // CUSTOM COLOR FOR ALL
+                if (!empty($this->custom_font_color)) {
+                    $custom_color = new Color($this->custom_font_color);
+                    $custom_color_rgb = $custom_color->getRgbString();
+                } else {
+                    $custom_color_rgb = NULL;
+                }
+
                 // Set TO properties
-                $this->draw_to->setFont(APP_FONTS_PATH . $this->ecard_data['ecard_font']);
+                $this->draw_to->setFont(APP_FONTS_PATH . $this->names_font);
                 $this->draw_to->setFontSize($this->layout_data['el_to_size']);
                 if (empty($this->layout_data['el_to_hex_color'])) {
                     $this->layout_data['el_to_hex_color'] = '#000000';
@@ -277,7 +356,7 @@ class ecard_generator {
                 }
 
                 // Set FROM properties
-                $this->draw_from->setFont(APP_FONTS_PATH . $this->ecard_data['ecard_font']);
+                $this->draw_from->setFont(APP_FONTS_PATH . $this->names_font);
                 $this->draw_from->setFontSize($this->layout_data['el_from_size']);
                 if (empty($this->layout_data['el_from_hex_color'])) {
                     $this->layout_data['el_from_hex_color'] = '#000000';
@@ -289,8 +368,19 @@ class ecard_generator {
                 }
 
                 // Set font properties
-                $this->draw_message->setFont(APP_FONTS_PATH . $this->ecard_data['ecard_font']);
-                $this->draw_message->setFontSize($this->layout_data['el_message_size']);
+                if (!empty($this->custom_font_file) && file_exists(APP_FONTS_PATH . $this->custom_font_file)) {
+                    $message_font = APP_FONTS_PATH . $this->custom_font_file;
+                } else {
+                    $message_font = APP_FONTS_PATH . $this->ecard_data['ecard_font'];
+                }
+                $this->draw_message->setFont($message_font);
+                // SET font size
+                if (!empty($this->custom_font_size) && is_numeric($this->custom_font_size)) {
+                    $font_size = $this->custom_font_size;
+                } else {
+                    $font_size = $this->layout_data['el_message_size'];
+                }
+                $this->draw_message->setFontSize($font_size);
                 if (empty($this->layout_data['el_message_hex_color'])) {
                     $this->layout_data['el_message_hex_color'] = '#000000';
                 }
@@ -305,23 +395,23 @@ class ecard_generator {
                 if ($this->make_shadow) {
                     $shadow_color = new Color($this->shadow_color);
                     $this->draw_to->setFillColor($shadow_color->getRgbString());
-                    $this->imagick->annotateImage($this->draw_to, $this->layout_data['el_to_x'] + $this->shadow_offset, $this->layout_data['el_to_y'] + $this->shadow_offset, 0, $this->send_data['send_to_name']);
+                    $this->imagick->annotateImage($this->draw_to, $this->layout_data['el_to_x'] + $this->shadow_offset, $this->layout_data['el_to_y'] + $this->shadow_offset, 0, $this->to_text . $this->send_data['send_to_name']);
                 }
-                $this->draw_to->setFillColor($color_to->getRgbString());
-                $this->imagick->annotateImage($this->draw_to, $this->layout_data['el_to_x'], $this->layout_data['el_to_y'], 0, $this->send_data['send_to_name']);
+                $this->draw_to->setFillColor((!empty($custom_color_rgb)) ? $custom_color_rgb : $color_to->getRgbString());
+                $this->imagick->annotateImage($this->draw_to, $this->layout_data['el_to_x'], $this->layout_data['el_to_y'], 0, $this->to_text . $this->send_data['send_to_name']);
 
                 if ($this->make_shadow) {
                     $this->draw_from->setFillColor($shadow_color->getRgbString());
-                    $this->imagick->annotateImage($this->draw_from, $this->layout_data['el_from_x'] + $this->shadow_offset, $this->layout_data['el_from_y'] + $this->shadow_offset, 0, $this->send_data['send_from_name']);
+                    $this->imagick->annotateImage($this->draw_from, $this->layout_data['el_from_x'] + $this->shadow_offset, $this->layout_data['el_from_y'] + $this->shadow_offset, 0, $this->from_text . $this->send_data['send_from_name']);
                 }
-                $this->draw_from->setFillColor($color_from->getRgbString());
-                $this->imagick->annotateImage($this->draw_from, $this->layout_data['el_from_x'], $this->layout_data['el_from_y'], 0, $this->send_data['send_from_name']);
+                $this->draw_from->setFillColor((!empty($custom_color_rgb)) ? $custom_color_rgb : $color_from->getRgbString());
+                $this->imagick->annotateImage($this->draw_from, $this->layout_data['el_from_x'], $this->layout_data['el_from_y'], 0, $this->from_text . $this->send_data['send_from_name']);
 
                 if ($this->make_shadow) {
                     $this->draw_message->setFillColor($shadow_color->getRgbString());
                     $this->imagick->annotateImage($this->draw_message, $this->layout_data['el_message_x'] + $this->shadow_offset, $this->layout_data['el_message_y'] + $this->shadow_offset, 0, $this->message_to_lines());
                 }
-                $this->draw_message->setFillColor($color_message->getRgbString());
+                $this->draw_message->setFillColor((!empty($custom_color_rgb)) ? $custom_color_rgb : $color_message->getRgbString());
                 $this->imagick->annotateImage($this->draw_message, $this->layout_data['el_message_x'], $this->layout_data['el_message_y'], 0, $this->message_to_lines());
 
 
@@ -329,17 +419,40 @@ class ecard_generator {
                 $this->generated = TRUE;
             }
 
-            // Set output image format
+
+            // WATERMARK
+            if (!empty($this->watermark_imagick)) {
+                $this->imagick->compositeimage($this->watermark_imagick, \Imagick::COMPOSITE_OVER, 0, 0);
+            }
             if (($this->image_proportion > 0) && ($this->image_proportion < 1)) {
                 $this->imagick->thumbnailImage($this->imagick->getimagewidth() * $this->image_proportion, $this->imagick->getimageheight() * $this->image_proportion);
             }
+            // Set output image format
             $this->imagick->setimageformat('jpg');
+            $this->imagick->setcompression(\Imagick::COMPRESSION_JPEG);
+            $this->imagick->setimagecompressionquality($this->quality);
 
             return $this->imagick;
         } else {
             $error = 'No image present to compose eCard';
             DOM_notifications::queue_mesasage($error, "alert");
 
+            return FALSE;
+        }
+    }
+
+    function use_watermark($custom_watermark = NULL) {
+        if (file_exists($this->watermark_img)) {
+            $this->watermark_imagick = new \Imagick();
+            $this->watermark_imagick->readimage($this->watermark_img);
+        }
+        if (!empty($custom_watermark) && file_exists($custom_watermark)) {
+            $this->watermark_imagick = new \Imagick();
+            $this->watermark_imagick->readimage($custom_watermark);
+        }
+        if (!empty($this->watermark_imagick)) {
+            return TRUE;
+        } else {
             return FALSE;
         }
     }
@@ -455,6 +568,22 @@ class ecard_generator {
         return $doc_type . "\n" . $html->generate();
     }
 
+    function set_custom_font_color($custom_font_color) {
+        $this->custom_font_color = $custom_font_color;
+    }
+
+    function set_custom_font_size($custom_font_size) {
+        $this->custom_font_size = $custom_font_size;
+    }
+
+    function set_quality($quality) {
+        $this->quality = $quality;
+    }
+
+    function set_custom_font_file($custom_font_file) {
+        $this->custom_font_file = $custom_font_file;
+    }
+
     function get_layout_data() {
         return $this->layout_data;
     }
@@ -537,7 +666,12 @@ class Color extends \Mexitek\PHPColors\Color {
         } else {
             $rgb = $this->getRgb();
         }
-        return "rgb({$rgb['R']}, {$rgb['G']}, {$rgb['B']})";
+        return "rgb({$rgb['R']
+                }, {$rgb['G']
+                }
+
+, {$rgb['B']
+                })";
     }
 
     public function inverse() {

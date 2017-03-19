@@ -15,8 +15,8 @@ $category_slug = url::get_url_level_value_by_name('category-slug');
         <?php foreach ($ecards_data as $ecard) : // ECARD THUMBNAIL   ?>
             <div class="eggs preview-box">
                 <h3 class="card-preview-title">&nbsp;</h3>
-                <a href="#" class="thumb-link"><img class="thumb-img preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""></a>
+                <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/'?>" class="thumb-link"><img class="thumb-img preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""></a>
             </div>
-            <?php endforeach ?>                   
+        <?php endforeach ?>                   
     </div>                
 <?php endif; ?>
