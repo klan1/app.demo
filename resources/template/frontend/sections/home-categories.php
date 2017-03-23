@@ -41,7 +41,10 @@ foreach ($categories_data as $category_data) :
             </div>
             <div class="right">
                 <header class="section-header clearfix">
-                    <div class="header-left">
+                    <div class="header-left clearfix">
+                        <div id="join-<?php echo $cat_slug ?>-wrapper" class="join-wrapper-home">
+                            <a href="#" class="join-btn">JOIN</a>
+                        </div>
                         <hr class="margin-line"/>
                         <p><?php echo $category_data['ecc_description'] ?></p>  
                     </div>

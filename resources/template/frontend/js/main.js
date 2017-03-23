@@ -107,7 +107,7 @@ jQuery(document).ready(function ($) {
     $('.thumb-set .preview-box').prepend('<div class="overlay-table"><div class="overlay-cell"><img src="' + img_dir_url + 'mglass.png"></div></div>');
     $('.overlay-table').css('height', th);*/
 
-    //.seemore and .seeall buttons toggle visible .preview-box hidden items
+    //.seemore and .seeall buttons toggle visibility for .preview-box hidden items
     $('.seemore').click(function (e) {
         e.preventDefault();
         $(this).parent().siblings('.preview-box').removeClass('hidden');
@@ -122,5 +122,32 @@ jQuery(document).ready(function ($) {
     $('#ecard-customizer #btn-send').click(function(e){
         $('#form-mode').attr('value','send');
         $('#ecard-customizer').submit();
+    });
+    //this enables .close-button to close their container .callout
+    $('.callout .close-button').click(function(e){
+        e.preventDefault();
+        $(this).parent().hide(0);
+    });
+    //detect text color change on "step1" page and set #form-mode hidden field accordingly
+    initial_color = $('body.step1 .jscolor').css('background-color');
+    //console.log(initial_color);
+    $('body.step1 #ecard-customizer').on('submit',function(e){
+        //e.preventDefault();
+        if($('body.step1 .jscolor').css('background-color') !== initial_color){
+            $('#form-mode').attr('value','preview');
+        }
+    });
+    //following lines trigger form submit when some imputs change.
+    $('body.step1 #ecard-customizer select[name="font"]').on('change',function(){
+        $('#form-mode').attr('value','preview');
+        $('#ecard-customizer').trigger('submit');
+    });
+    $('body.step1 #ecard-customizer select[name="size"]').on('change',function(){
+        $('#form-mode').attr('value','preview');
+        $('#ecard-customizer').trigger('submit');
+    });
+    $('body.step1 #ecard-customizer .jscolor').on('change',function(){
+        $('#form-mode').attr('value','preview');
+        $('#ecard-customizer').trigger('submit');
     });
 });

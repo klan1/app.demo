@@ -30,9 +30,13 @@ if ($ecard_id) {
 
     $ecard_data = $ecards_table->get_data(FALSE);
 
-    if (!empty($send_step)) {
-        $body->set_class('send-steps ' . $send_step);
-        $body->content()->load_file(APP_TEMPLATE_PATH . "sections/{$send_step}-content.php");
+    if (!empty($ecard_data)) {
+        if (!empty($send_step)) {
+            $body->set_class('send-steps ' . $send_step);
+            $body->content()->load_file(APP_TEMPLATE_PATH . "sections/{$send_step}-content.php");
+        }
+    } else {
+        \k1lib\controllers\error_404($ecard_data);
     }
 
 //    d($ecard_data);

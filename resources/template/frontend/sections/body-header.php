@@ -14,7 +14,7 @@
                     </div>
                     <div class="login-box">
                         <a class="my-account-btn" href="<?php echo APP_URL . 'site/pages/my-account/' ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/my-acount.png" alt="my-account"/></a>
-                        <a class="my-login-btn has-popup" href="<?php echo APP_URL . 'site/pages/login/' ?>" data-popup-id="login-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/login.png" alt="login"/></a>
+                        <a class="my-login-btn" href="<?php echo APP_URL . 'site/pages/login/' ?>" data-popup-id="login-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/login.png" alt="login"/></a>
                         <a class="join-now-btn has-popup" href="<?php echo APP_URL . 'site/pages/join-now/' ?>" data-popup-id="join-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/join-now.png" alt="join now"/></a>
                         <div id="join-popup" style="display:none;">
                             <table>
