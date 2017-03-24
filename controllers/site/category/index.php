@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * CATEGORY.PHP
+ */
 namespace k1app;
 
 use k1lib\urlrewrite\url as url;
@@ -18,6 +20,7 @@ $actual_url = url::get_this_url();
 $category_slug = url::set_url_rewrite_var($next_url_level, "category-slug");
 
 if ($category_slug) {
+    $body->set_class('category-' . $category_slug, TRUE);
     template::load_template('category-page');
 } else {
     \k1lib\controllers\error_404($category_slug);

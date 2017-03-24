@@ -17,7 +17,7 @@ $categories_table->set_order_by('ecc_order', 'ASC');
 $categories_data = $categories_table->get_data(TRUE, FALSE);
 ?>
 <!-- <?php echo basename(__FILE__) ?> -->
-<div class="carousel container">
+<div class="carousel <?php echo (empty($category_slug)) ? 'container' : ''  ?>">
     <ul>
         <?php foreach ($categories_data as $category_data) : ?>
             <?php

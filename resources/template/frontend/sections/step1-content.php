@@ -12,7 +12,7 @@ $head = frontend::html()->head();
 
 $head->append_child_tail(new script(APP_TEMPLATE_URL . "js/jscolor.min.js"));
 
-global $ecard_data, $ecard_mode;
+global $ecard_data, $ecard_mode, $category_data;
 
 if (!empty($ecard_data)) :
 
@@ -163,7 +163,7 @@ if (!empty($ecard_data)) :
                 <div class="card" id="preview">
                     <?php echo $ecard->get_ecard_img_tag(); ?>
 
-                    <span class="eggs">Eggs</span>
+                    <span class="eggs"><?php echo $category_data['ecc_name'] ?></span>
                 </div>
                 <div class="orientation">
                     <a href="../h/" class="horizontal selected" data-orientation="horizontal">

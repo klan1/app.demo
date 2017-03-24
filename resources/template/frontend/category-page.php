@@ -32,19 +32,18 @@ if ($category_slug) {
 
         $inner_content = $body->content()->append_div('inner-content');
 
-        $container = $inner_content->append_div('container');
+        $container_up = $inner_content->append_div(NULL, 'up-section')->append_div('container');
+        $container_up->append_div('title')->set_value('CATEGORIES');
+        $container_up->append_div()->load_file(APP_TEMPLATE_PATH . 'sections/home-carusel.php');
 
-        $container->append_div('title')->set_value('CATEGORIES');
-
-        $container->append_div()->load_file(APP_TEMPLATE_PATH . 'sections/home-carusel.php');
-
+        $container_down = $inner_content->append_div(NULL, 'down-section')->append_div('container');
         if ($category_slug == 'all') {
             $category_name = 'ALL E-CARDS';
         } else {
             $category_name = strtoupper($category_data['ecc_name']);
         }
-        $container->append_div('title')->set_value($category_name)->set_style('margin:2em 0em 1em 0em');
-        $container->append_div()->load_file(APP_TEMPLATE_PATH . 'sections/category-content.php');
+        $container_down->append_div('title')->set_value($category_name)->set_style('margin:2em 0em 1em 0em');
+        $container_down->append_div()->load_file(APP_TEMPLATE_PATH . 'sections/category-content.php');
     } else {
         \k1lib\controllers\error_404($category_slug);
     }

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * VIEW-ECARD.PHP
+ */
 namespace k1app;
 
 use k1lib\urlrewrite\url as url;
@@ -31,8 +33,13 @@ if ($ecard_id) {
     $ecard_data = $ecards_table->get_data(FALSE);
 
     if (!empty($ecard_data)) {
+        $ecard_categories_table = new \k1lib\crudlexs\class_db_table($db, "ecard_categories");
+        $ecard_categories_table->set_query_filter(['ecard_category_id' => $ecard_data['ecard_category_id']], TRUE);
+        $category_data = $ecard_categories_table->get_data(FALSE);
+
         if (!empty($send_step)) {
             $body->set_class('send-steps ' . $send_step);
+            $body->set_class('customizing-'. $category_data['ecc_slug'], TRUE);
             $body->content()->load_file(APP_TEMPLATE_PATH . "sections/{$send_step}-content.php");
         }
     } else {

@@ -27,7 +27,8 @@ if ($page_url) {
 
         $body->content()->set_class('page');
 
-        $body->content()->set_value($page_data['page_content']);
+        $body->content()->append_div('container')
+                ->set_value($page_data['page_content']);
     } else {
         \k1lib\controllers\error_404($page_url);
     }
