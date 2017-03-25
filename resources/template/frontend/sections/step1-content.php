@@ -4,15 +4,19 @@ namespace k1app;
 
 use \k1lib\urlrewrite\url as url;
 use \k1lib\html\script as script;
+use k1lib\notifications\on_DOM as DOM_notifications;
 
 require 'ecard-generation.php';
+
+global $ecard_data, $ecard_mode, $category_data;
 
 $body = frontend::html()->body();
 $head = frontend::html()->head();
 
 $head->append_child_tail(new script(APP_TEMPLATE_URL . "js/jscolor.min.js"));
 
-global $ecard_data, $ecard_mode, $category_data;
+// Alerts DIV
+$messages_output = new \k1lib\html\div("messages {$send_step}", 'messages-area');
 
 if (!empty($ecard_data)) :
 
@@ -37,13 +41,11 @@ if (!empty($ecard_data)) :
         $post_data = \k1lib\common\unserialize_var('step1-data');
         if (empty($post_data) && \k1lib\session\session_db::is_logged()) {
             $temp_step1_data_file = APP_RESOURCES_PATH . 'tmp/' . md5(\k1lib\session\session_db::get_user_login()) . '-step1-data';
-            d(\k1lib\session\session_db::get_user_login());
-            d($temp_step1_data_file);
             if (file_exists($temp_step1_data_file)) {
-                d('existe');
                 $post_data = unserialize(file_get_contents($temp_step1_data_file));
             }
         }
+        $post_data['mode'] = '';
     }
     $default_message = 'Please write your custom message using form below this Ecard.';
 
@@ -52,7 +54,7 @@ if (!empty($ecard_data)) :
         $custom_data = [
             'send_to_name' => $post_data['sender_name'],
             'send_from_name' => $post_data['recipent_name'],
-            'send_message' => (!empty($post_data['user_message'] && strlen($post_data['user_message']) > 5) ? $post_data['user_message'] : $default_message),
+            'send_message' => (!empty($post_data['user_message'] && strlen($post_data['user_message']) >= 5) ? $post_data['user_message'] : $default_message),
         ];
     } else {
 //        $post_data['mode'] = '';
@@ -69,9 +71,32 @@ if (!empty($ecard_data)) :
         ];
     }
     // VALIDATE VALID ECARDS VALUES
-    //TODO: check every value is is allowed
+    $post_errors = [];
+    // FROM
+    $from_error = \k1lib\forms\check_value_type($post_data['sender_name'], 'letters');
+    if ($from_error !== '' || strlen($post_data['sender_name']) < 2) {
+        $post_errors['sender_name'] = "'TO' should be only letters and more than 2 characters.";
+        DOM_notifications::queue_mesasage($post_errors['sender_name'], 'warning', 'messages-area', 'Please correct the following errors:');
+    }
+    // TO
+    $to_error = \k1lib\forms\check_value_type($post_data['recipent_name'], 'letters');
+    if ($to_error !== '' || strlen($post_data['recipent_name']) < 2) {
+        $post_errors['recipent_name'] = "'FROM' should be only letters and more than 2 characters.";
+        DOM_notifications::queue_mesasage($post_errors['recipent_name'], 'warning', 'messages-area', 'Please correct the following errors:');
+    }
+    // EMAIL
+    $email_error = \k1lib\forms\check_value_type($custom_data['send_message'], 'letters-symbols');
+    if ($email_error !== '') {
+        $post_errors['send_message'] = 'Message must have more than 5 letters.';
+        DOM_notifications::queue_mesasage($post_errors['send_message'], 'warning', 'messages-area', 'Please correct the following errors:');
+    }
+    // MESSAGE
+    if (strlen($post_data['user_message']) < 5) {
+        $post_errors['recipent_email'] = 'Message too short, must be at least 5 letters.';
+        DOM_notifications::queue_mesasage($post_errors['recipent_email'], 'warning', 'messages-area', 'Please correct the following errors:');
+    }
     // SEND MODE
-    if ($post_data['mode'] == 'send') {
+    if (($post_data['mode'] == 'send') && empty($post_errors)) {
         $send_data = [
             'ecard_id' => $ecard_data['ecard_id'],
             'ecard_data_array' => $ecard_data,
@@ -89,6 +114,7 @@ if (!empty($ecard_data)) :
         $new_url = str_replace('step1', 'step2', APP_URL . url::get_this_url());
 
         \k1lib\html\html_header_go($new_url);
+//    } else if (!empty($post_errors)) {
     } elseif (($post_data['mode'] == 'preview') || (empty($post_data['mode']))) {     // PREVIEW MODE
 
         /**
@@ -184,6 +210,7 @@ if (!empty($ecard_data)) :
                     </a>
                 </div>
                 <div class="title">Select</div>
+                <?php echo $messages_output ?>
                 <form id="ecard-customizer" class="eebunny-form users-data clearfix" method="post" action="./#preview">
                     <div class="col1">
                         <!--<input type="hidden" class="card-orientation" name="orientation" value="">-->
@@ -242,7 +269,7 @@ if (!empty($ecard_data)) :
                         <div class="buttons-wrap">
                             <input id="form-mode" type="hidden" name="mode" value="preview">
                             <input id="btn-preview" type="button" name="preview" value="Preview"/>
-                            <?php if (($post_data['mode'] == 'preview')) : // PREVIEW MODE    ?>
+                            <?php if (($post_data['mode'] == 'preview') && empty($post_errors)) : // PREVIEW MODE     ?>
                                 <input id="btn-send" type="button" name="send" value="Send"/>
                             <?php endif ?>
                         </div>
@@ -251,5 +278,5 @@ if (!empty($ecard_data)) :
 
             </div>
         </div>                
-    <?php } // PREVIEW MODE      ?>
+    <?php } // PREVIEW MODE       ?>
 <?php endif; ?>
