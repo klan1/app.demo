@@ -40,19 +40,20 @@ if (!empty($ecard_data)) :
 
     if (!empty($post_data)) {
         $_POST = $post_data;
-        $post_data['mode'] = '';
         $custom_data = [
             'send_to_name' => $post_data['sender_name'],
             'send_from_name' => $post_data['recipent_name'],
-            'send_message' => (!empty($post_data['user_message'] && strlen($post_data['user_message']) > 50) ? $post_data['user_message'] : $default_message),
+            'send_message' => (!empty($post_data['user_message'] && strlen($post_data['user_message']) > 5) ? $post_data['user_message'] : $default_message),
         ];
     } else {
+//        $post_data['mode'] = '';
         $custom_data = [
             'send_to_name' => '',
             'send_from_name' => '',
             'send_message' => $default_message,
         ];
         $post_data = [
+            'mode' => '',
             'color' => '000000',
             'recipent_email' => '',
             'size' => '0',

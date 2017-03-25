@@ -12,6 +12,7 @@ global $db, $ecard_id, $send_step, $ecard_mode, $ecard_data;
 
 // Step 1 URL
 $step1_url = str_replace('step2', 'step1', APP_URL . url::get_this_url());
+$step3_url = str_replace('step2', 'step3', APP_URL . url::get_this_url());
 
 // STEPS CONTROL
 if (!empty($ecard_id) && !empty($send_step && !empty($ecard_mode))) {
@@ -24,10 +25,15 @@ if (!empty($ecard_id) && !empty($send_step && !empty($ecard_mode))) {
 } else {
     $on_send_process = FALSE;
     $this_url = url::get_url_level_value();
-    if ($this_url == 'register') {
+    if ($this_url == 'join-now') {
         $on_register = TRUE;
+        $on_login = FALSE;
     } else if ($this_url == 'login') {
-        
+        $on_register = FALSE;
+        $on_login = TRUE;
+    } else {
+        $on_register = FALSE;
+        $on_login = FALSE;
     }
 }
 
@@ -36,6 +42,7 @@ $head = frontend::html()->head();
 
 // FORM action from URL
 $form_action = url::set_url_rewrite_var(url::get_url_level_count(), "form_action", FALSE);
+$form_magic_value = \k1lib\common\set_magic_value("login_form");
 
 // Alerts DIV
 $messages_output = new \k1lib\html\div("messages {$send_step}", 'messages-area');
@@ -92,24 +99,27 @@ if (!empty($_POST) && !empty($form_action)) {
                 } else {
                     // DO REGISTRATION
                     unset($post_data['join']);
-                    /**
-                     * array (
-                      'new_user_name' => 'Alejandro',
-                      'new_user_last_name' => 'Trujillo',
-                      'new_user_email' => 'alejo@klan1.com',
-                      'new_user_password' => 'alejo0013',
-                      'new_user_password_confirm' => 'alejo0013',
-                      )
-                     */
                     $new_user = [
                         'user_name' => $post_data['new_user_name'],
                         'user_last_name' => $post_data['new_user_last_name'],
                         'user_email' => $post_data['new_user_email'],
                         'user_password' => md5($post_data['new_user_password']),
                     ];
-                    if ($user_table->insert_data($new_user)) {
+                    $user_id = $user_table->insert_data($new_user);
+                    if ($user_id) {
                         $do_login = TRUE;
-                        DOM_notifications::queue_mesasage("Registration successfully done.", 'success', 'messages-area', 'Please correct the following errors:');
+                        // RE DO THE POST ARRAY TO LOGIN PROCESS
+                        $_POST = [
+                            'magic_value' => $post_data['magic_value'],
+                            'login_email' => $post_data['new_user_email'],
+                            'login_password' => md5($post_data['new_user_password']),
+                            'remember-me' => 0
+                        ];
+                        DOM_notifications::queue_mesasage("Registration successfully done.", 'success', 'messages-area', '');
+                        /**
+                         * APPLY FREE SUSBCRIPTION 
+                         */
+                        
                     } else {
                         $do_login = FALSE;
                         d($new_user, TRUE);
@@ -130,23 +140,8 @@ if (!empty($_POST) && !empty($form_action)) {
                 DOM_notifications::queue_mesasage("Password have to be 6 or more characters.", 'warning', 'messages-area', 'Please correct the following errors:');
                 $post_errors['login_password'] = 'Password have to be 6 or more characters.';
             }
-            /**
-             * DO LOGIN
-             */
-            /**
-             * REGISTRATION PROCESS
-             */
-            $user_table = new \k1lib\crudlexs\class_db_table($db, 'login_email');
-
-            // CHECK EXISISTING
-            $user_table->set_query_filter(['user_email' => $post_data['login_email'], 'user_password' => $post_data['login_password']]);
-            if (!empty($user_table->get_data(FALSE))) {
-                // EMAIL exist
+            if (empty($post_errors)) {
                 $do_login = TRUE;
-            } else {
-                $do_login = FALSE;
-                DOM_notifications::queue_mesasage("E-Mail or password incorrect.", 'warning', 'messages-area', 'Please correct the following errors:');
-                $post_errors['login_password'] = 'Password have to be 6 or more characters.';
             }
             break;
 
@@ -158,14 +153,80 @@ if (!empty($_POST) && !empty($form_action)) {
         \k1lib\common\serialize_var($post_errors, 'post-errors');
         \k1lib\html\html_header_go('../');
     } else {
-        // DO LOGIN
+        /**
+         * LOGIN PROCEDURE
+         */
         if ($do_login) {
-            
+            d("doing-login...");
+            d($_POST);
+            d($_SESSION);
+            $login_user_input = "login_email";
+            $login_password_input = "login_password";
+            $login_remember_me = "remember-me";
+
+            $user_data = [];
+            $login_table = "users";
+            $login_user_field = "user_email";
+            $login_password_field = "login_password";
+            $login_level_field = "user_level";
+            if (!isset($app_session)) {
+                $app_session = new \k1lib\session\session_db($db);
+            }
+            $app_session->set_config($login_table, $login_user_field, $login_password_field, $login_level_field);
+            $app_session->set_inputs($login_user_input, $login_password_input, $login_remember_me);
+
+            // chekc the magic value
+            $post_data = $app_session->catch_post(TRUE);
+            if ($post_data) {
+                $app_session_check = $app_session->check_login();
+                if ($app_session_check) {
+                    $user_data = array_merge($user_data, $app_session_check);
+                    // BEFORE CLEAR ... SAVE THE SEND DATA
+                    if (!empty($send_data)) {
+                        $send_data = \k1lib\common\unserialize_var('send-data');
+                        $temp_send_data_file = APP_RESOURCES_PATH . 'tmp/' . md5($post_data['login_email']);
+                        $send_data_saved = file_put_contents($temp_send_data_file, serialize($send_data));
+                    }
+                    // CLEAR ALL
+                    $app_session->end_session();
+                    // BEGIN ALL AGAIN
+                    $app_session->start_session();
+                    // SET THE LOGGED SESSION
+                    $app_session->save_data_to_coockie(APP_BASE_URL);
+                    if ($app_session->load_data_from_coockie($db)) {
+                        // SAVE THE SEND DATA IF EXIST
+                        if ($send_data_saved !== FALSE) {
+                            if (file_exists($temp_send_data_file)) {
+                                $send_data = unserialize(file_get_contents($temp_send_data_file));
+                            }
+                        }
+                        DOM_notifications::queue_mesasage("Wellcome!", "success");
+                        if (\k1lib\urlrewrite\get_back_url(TRUE)) {
+                            \k1lib\html\html_header_go(url::do_url(\k1lib\urlrewrite\get_back_url(TRUE)));
+                        } else {
+                            if ($on_send_process) {
+                                \k1lib\html\html_header_go(url::do_url($step3_url));
+                            } else {
+                                \k1lib\html\html_header_go(url::do_url(APP_URL . 'site/'));
+                            }
+                        }
+                    } else {
+                        trigger_error("Login with coockie not possible", E_USER_ERROR);
+                    }
+                } elseif ($app_session_check === NULL) {
+                    DOM_notifications::queue_mesasage("Empty data", "warning");
+                } elseif ($app_session_check === array()) {
+                    DOM_notifications::queue_mesasage("Bad password or login", "alert");
+                }
+            } elseif ($post_data === FALSE) {
+                DOM_notifications::queue_mesasage("BAD, BAD Magic!!", "warning");
+            } elseif ($post_data === NULL) {
+                DOM_notifications::queue_mesasage("Empty data", "warning");
+            }
         }
     }
 } else {
     $post_data = \k1lib\common\unserialize_var('step2_data');
-
     $post_errors = \k1lib\common\unserialize_var('post-errors');
     if (!empty($post_errors)) {
         
@@ -194,6 +255,8 @@ if (!empty($_POST) && !empty($form_action)) {
     $new_user_password2 = new \k1lib\html\input('password', 'new_user_password_confirm', NULL);
     $new_user_password2->set_attrib('placeholder', 'Confirm Password');
     $new_user_password2->set_attrib('required', TRUE);
+    // MAGIC
+    $magic_value = new \k1lib\html\input("hidden", "magic_value", $form_magic_value);
 
     /**
      * INPUTS - login
@@ -221,43 +284,46 @@ if (!empty($_POST) && !empty($form_action)) {
         <div class="container">
             <div class="row clearfix">
                 <?php echo $messages_output ?>
-                <div class="two_third">
-                    <form id="join-data" class="eebunny-form clearfix" method="post" action="./do-register/">
-                        <div class="row clearfix">
-                            <div class="one_half">
-                                <label>Join Now</label>
-                                <div class="input-wrap">
-                                    <?php echo $new_user_name ?>
+                <?php if (($on_send_process) || (!$on_send_process && $on_register)) : ?>
+                    <div class="two_third">
+                        <form id="join-data" class="eebunny-form clearfix" method="post" action="./do-register/">
+                            <div class="row clearfix">
+                                <div class="one_half">
+                                    <label>Join Now</label>
+                                    <div class="input-wrap">
+                                        <?php echo $new_user_name ?>
+                                    </div>
+                                </div>
+                                <div class="one_half last">
+                                    <label class="empty-label">&nbsp;</label>
+                                    <div class="input-wrap">
+                                        <?php echo $new_user_last_name ?>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="one_half last">
-                                <label class="empty-label">&nbsp;</label>
+                            <div class="row clearfix">
                                 <div class="input-wrap">
-                                    <?php echo $new_user_last_name ?>
+                                    <?php echo $new_user_email ?>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="input-wrap">
-                                <?php echo $new_user_email ?>
+                            <div class="row clearfix">
+                                <div class="input-wrap">
+                                    <?php echo $new_user_password1 ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="input-wrap">
-                                <?php echo $new_user_password1 ?>
+                            <div class="row clearfix">
+                                <div class="input-wrap">
+                                    <?php echo $new_user_password2 ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="input-wrap">
-                                <?php echo $new_user_password2 ?>
+                            <div class="buttons-wrap">
+                                <?php echo $magic_value ?>
+                                <input type="submit" name="join" value="Join"/>
                             </div>
-                        </div>
-                        <div class="buttons-wrap">
-                            <input type="submit" name="join" value="Join"/>
-                        </div>
-                    </form>
-                </div>
-                <?php if (($on_send_process) || (!$on_send_process && $)) : ?>
+                        </form>
+                    </div>
+                <?php endif; ?>
+                <?php if (($on_send_process) || (!$on_send_process && $on_login)) : ?>
                     <div class="one_third last">
                         <form id="login-data" class="eebunny-form clearfix"  method="post" action="./do-login/">
                             <div class="row clearfix">
@@ -272,6 +338,7 @@ if (!empty($_POST) && !empty($form_action)) {
                                 </div>
                             </div>
                             <div class="buttons-wrap">
+                                <?php echo $magic_value ?>
                                 <input type="submit" name="login" value="Login"/>
                             </div>
                         </form>

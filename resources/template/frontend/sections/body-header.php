@@ -6,16 +6,16 @@
                     <a class="logo" href="<?php echo APP_URL . 'site/' ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/logo-ebunny.png" width="169" height="137"/></a>
                 </div>
                 <div class="right">
-                    <div class="searchbox">
+                    <!--div class="searchbox">
                         <form class="searchform" method="post" action="search.php">
                             <input type="text" value="" name="s" id="search"/>
                             <input type="image" id="search-btn" src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/lupa.png" alt="search"/>
                         </form>
-                    </div>
+                    </div-->
                     <div class="login-box">
-                        <a class="my-account-btn" href="<?php echo APP_URL . 'site/pages/my-account/' ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/my-acount.png" alt="my-account"/></a>
-                        <a class="my-login-btn" href="<?php echo APP_URL . 'site/pages/login/' ?>" data-popup-id="login-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/login.png" alt="login"/></a>
-                        <a class="join-now-btn has-popup" href="<?php echo APP_URL . 'site/pages/join-now/' ?>" data-popup-id="join-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/join-now.png" alt="join now"/></a>
+                        <?php if (!\k1lib\session\session_db::is_logged()) : ?>
+                        <a class="my-login-btn" href="<?php echo APP_URL . 'site/login/' ?>" data-popup-id="login-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/login.png" alt="login"/></a>
+                        <a class="join-now-btn has-popup" href="<?php echo APP_URL . 'site/join-now/' ?>" data-popup-id="join-popup"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/join-now.png" alt="join now"/></a>
                         <div id="join-popup" style="display:none;">
                             <table>
                                 <tr>
@@ -23,12 +23,16 @@
                                         <img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/exclamation.png" class="exclamation" />
                                     </td>
                                     <td>
-                                        <h4>Become a member!</h4><span>consectetur adipisicing elit.</span>
+                                        <h4>Become a member!</h4><span>And send the cutest bunny's.</span>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div id="login-popup" style="display:none;"><span>consectetur adipisicing elit.</span></div>
+                        <?php else: ?>
+                        <a class="my-account-btn" href="<?php echo APP_URL . 'site/pages/my-account/' ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/my-acount.png" alt="my-account"/></a>
+                        <a class="my-login-btn" href="<?php echo APP_URL . 'site/logout/' ?>" data-popup-id="login-popup">Logout</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
