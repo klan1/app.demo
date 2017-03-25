@@ -9,8 +9,8 @@
 //$body->append_child_tail(new script(APP_TEMPLATE_URL . "js/jquery-3.1.1.min.js"));
 ?>
         <!-- <?php echo basename(__FILE__) ?> -->
-        <div class="slide old-space">
-            <div class="slide" style="background-image: url(<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2a.jpg)"></div>
-            <div class="slide" style="display:none; background-image: url(<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2b.jpg)"></div>
-            <div class="slide" style="display:none; background-image: url(<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2c.jpg)"></div>
+        <div class="header-slider slide old-space">
+            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2a.jpg" alt="EeBunny Ecards"/></div>
+            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2b.jpg" alt="EeBunny Ecards"/></div>
+            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2c.jpg" alt="EeBunny Ecards"/></div>
         </div>

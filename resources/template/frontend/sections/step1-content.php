@@ -32,9 +32,18 @@ if (!empty($ecard_data)) :
 
     // POST MANAGEMENT AND DEFAULTS VALUES
     if (!empty($_POST)) {
-        $post_data = \k1lib\forms\check_all_incomming_vars($_POST, 'last_post');
+        $post_data = \k1lib\forms\check_all_incomming_vars($_POST, 'step1-data');
     } else {
-        $post_data = \k1lib\common\unserialize_var('last_post');
+        $post_data = \k1lib\common\unserialize_var('step1-data');
+        if (empty($post_data) && \k1lib\session\session_db::is_logged()) {
+            $temp_step1_data_file = APP_RESOURCES_PATH . 'tmp/' . md5(\k1lib\session\session_db::get_user_login()) . '-step1-data';
+            d(\k1lib\session\session_db::get_user_login());
+            d($temp_step1_data_file);
+            if (file_exists($temp_step1_data_file)) {
+                d('existe');
+                $post_data = unserialize(file_get_contents($temp_step1_data_file));
+            }
+        }
     }
     $default_message = 'Please write your custom message using form below this Ecard.';
 
@@ -156,7 +165,7 @@ if (!empty($ecard_data)) :
         <div class="inner-content">
             <div class="container">
                 <div class="title">
-                    Eebunny - Ecards
+                    EeBunny - Ecards
                 </div>
                 <div class="subtitle">
                     Custom your Ecard
@@ -233,7 +242,7 @@ if (!empty($ecard_data)) :
                         <div class="buttons-wrap">
                             <input id="form-mode" type="hidden" name="mode" value="preview">
                             <input id="btn-preview" type="button" name="preview" value="Preview"/>
-                            <?php if (($post_data['mode'] == 'preview')) : // PREVIEW MODE  ?>
+                            <?php if (($post_data['mode'] == 'preview')) : // PREVIEW MODE    ?>
                                 <input id="btn-send" type="button" name="send" value="Send"/>
                             <?php endif ?>
                         </div>
@@ -242,5 +251,5 @@ if (!empty($ecard_data)) :
 
             </div>
         </div>                
-    <?php } // PREVIEW MODE     ?>
+    <?php } // PREVIEW MODE      ?>
 <?php endif; ?>

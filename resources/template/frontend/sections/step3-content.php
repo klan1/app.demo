@@ -17,10 +17,11 @@ $step1_url = str_replace('step3', 'step1', APP_URL . url::get_this_url());
 if (!empty($ecard_id) && !empty($send_step && !empty($ecard_mode))) {
     $on_send_process = TRUE;
     // IS THERE IS NO INFO ABOUT THE CARD PREVIEW, WE HAVE TO BACK RIGHT NOW
-    $temp_send_data_file = APP_RESOURCES_PATH . 'tmp/' . md5(\k1lib\session\session_db::get_user_login());
+    $temp_send_data_file = APP_RESOURCES_PATH . 'tmp/' . md5(\k1lib\session\session_db::get_user_login()) . '-send-data';
     if (file_exists($temp_send_data_file)) {
         $send_data = unserialize(file_get_contents($temp_send_data_file));
         \k1lib\common\serialize_var($send_data, 'send-data');
+        d($send_data);
     } else {
         $send_data = NULL;
     }
@@ -191,30 +192,6 @@ if (!empty($_POST) && !empty($form_action)) {
             </ul>
         </div>
     <?php endif ?>
-    <div class="inner-content">
-        <form id="payment-data" class="eebunny-form clearfix" method="post" action="./do-register/">
-            <div class="container">
-                <div class="row clearfix">
-                    <?php echo $messages_output ?>
-                    <div class="two_third">
-                        <h1>Choose your payment option</h1>
-                        <p>Send a single card by only $1.99 USD</p>
-                        <p>You can buy a monthly subscription and send each ecard as low as $0.99 USD</p>
-                    </div>
-                    <div class="one_third last">
-                        <div class="row clearfix">
-                            <input type="radio" name="gender" value="male" checked> Single card: $ 1.99 USD<br>
-                            <input type="radio" name="gender" value="female"> Subscription 5/month: $ 4.99 USD<br>
-                            <input type="radio" name="gender" value="other"> Subscription 10/month: $ 10.99 USD
-                        </div>
-                        <div class="buttons-wrap">
-                            <?php echo $magic_value ?>
-                            <input type="button" name="login" value="Begin payment"/>
-                        </div>
-                    </div>
-                </div>                        
-            </div>
-        </form>
-    </div>               
+    <?php include 'step3-choice-payment.php'; ?>            
     <?php
 } // no post ?>

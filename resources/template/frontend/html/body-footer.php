@@ -25,7 +25,7 @@
             </div>
             <div class="copyright">
                 <div class="container clearfix">
-                    <div class="left">&copy; EeBunny LLC All rights reserved</div>
+                    <div class="left">&copy; EeBunny All rights reserved</div>
                     <div class="right">Developed by <a href="http://klan1.com" target="_blank"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/klan1.png" alt="klan1"/></a></div>
                 </div>
             </div>

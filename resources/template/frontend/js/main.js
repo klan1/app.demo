@@ -35,6 +35,14 @@ jQuery(document).ready(function ($) {
             } // You can unslick at a given breakpoint now by adding:  // settings: "unslick" // instead of a settings object
         ]
     });
+    //slick carousel for header
+    $('.header-slider').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        fade: true,
+        cssEase: 'linear'
+    });
     //following lines make smooth-scroll for internal links
     $('a[href*="#"]:not([href="#"])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {

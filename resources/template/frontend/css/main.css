@@ -335,7 +335,7 @@ ul.social-links {
 .slide {
     background: #cc7082 url(../img/slide.png) repeat center center;
     display: block;
-    min-height: 305px;
+    /*min-height: 305px;*/
 }
 .slide-inner {
     background: #f2c3d4 url(../img/inner-slide-bg.png) repeat;
@@ -419,7 +419,12 @@ ul.social-links {
     position: absolute;
     top: 50%;
 }
-
+/* ========== Banner slider ============= */
+.header-slider img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
 .cards-section { min-height: 600px; font-size: 17px; font-size: 1.7rem; }
 .cards-section h2 {
     font-family:'trendsetter';
@@ -1122,6 +1127,49 @@ body.step3 .inner-content {
     box-shadow: 2px 2px 6px 1px #933d57;
 }
 /* ==========================================================================
+   Category pages
+   ========================================================================== */
+.inner-content {
+    padding: 0;
+}
+#up-section {
+    background: #fff;
+    padding-top: 35px;
+}
+#down-section {
+    padding-bottom: 40px;
+    padding-top: 1px;
+}
+body.categories .title { color: #cf7082; }
+.categories .inner-content .title { text-shadow: 0px 3px 5px #5d2832; /*#cf7082;*/ }
+.categories #down-section .title { color: #fff; }
+
+.category-eggs #down-section { background: #ffe88b; }
+.category-watercolor #down-section { background: #abeda6; }
+.category-vintage #down-section { background: #ffbbd1; /*#ff7da7;*/ }
+.category-lines #down-section { background: #a0dce6; }
+.category-vines #down-section { background: #fcbfaa; }
+.cagegory-art #down-section { background: #95c1dd; }
+.category-flower #down-section { background: #80d8d9; }
+.category-trees #down-section { background: #f4e59c; }
+.category-flower-power #down-section { background: #f8aec0; }
+.category-mosaics #down-section { background: #ffb797; }
+.category-retro #down-section { background: #9bedaf; }
+
+.category-all .inner-content #down-section .title { text-shadow: 0px 3px 5px #385971; }
+.category-eggs .inner-content #down-section .title { text-shadow: 0px 3px 5px #826c13; }
+.category-watercolor .inner-content #down-section .title { text-shadow: 0px 3px 5px #3e8238; }
+.category-art .inner-content #down-section .title { text-shadow: 0px 3px 5px #2d5673; }
+.category-flower .inner-content #down-section .title { text-shadow: 0px 3px 5px #125454; }
+.category-trees .inner-content #down-section .title { text-shadow: 0px 3px 5px #736729; }
+
+.category-mosaics .inner-content #down-section .title { text-shadow: 0px 3px 5px #985435; }
+.category-retro .inner-content #down-section .title { text-shadow: 0px 3px 5px #20582e; }
+
+.category-lines .inner-content #down-section .title { text-shadow: 0px 3px 5px #4e818a; }
+
+
+/* ==========================================================================
    Informative pages
    ========================================================================== */
 
@@ -1139,6 +1187,7 @@ body.step3 .inner-content {
 }
 #k1lib-content.page {
     color: #222;
+    color: #cf7082;
     font-family: 'Myriad Pro', Arial;
     font-size: 1.5rem;
     font-weight: normal;

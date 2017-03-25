@@ -12,7 +12,7 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const APP_TITLE = "EEBunny eCards";
+const APP_TITLE = "EeBunny eCards";
 const APP_DESCRIPTION = "eCard Control Panel";
 const APP_VERBOSE = 0;
 
