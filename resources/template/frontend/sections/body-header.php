@@ -23,7 +23,7 @@
                                         <img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/exclamation.png" class="exclamation" />
                                     </td>
                                     <td>
-                                        <h4>Become a member!</h4><span>And send the cutest bunny's.</span>
+                                        <h4>Become a member!</h4><span>Send The Most Amazing Bunny Ecards Ever!</span>
                                     </td>
                                 </tr>
                             </table>

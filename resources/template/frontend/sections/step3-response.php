@@ -207,6 +207,12 @@ if (!empty($_GET['token-id'])) {
             <?php if ($payment_acepted) : ?>
                 <div class="row clearfix">
                     <div class="title">Payment has been applied</div>
+                    <p>
+                        PAYLINE transaction ID: <?php echo $response_array['transaction-id'] ?>
+                    </p>
+                    <p>
+                        PAYLINE Authorization number: <?php echo $response_array['authorization-code'] ?>
+                    </p>
                     <p> 
                         <a href="<?php echo APP_URL . 'site/' ?>">Back home</a>
                     </p>

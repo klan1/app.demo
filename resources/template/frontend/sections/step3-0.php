@@ -52,6 +52,7 @@ if (empty($_POST)) {
         switch ($post_data['payment_option']) {
             case 1:
                 $payment['type'] = 'ECARD';
+                $payment['membership_id'] = NULL;
                 if (($user_data['membership_id'] === 3) || ($user_data['membership_id'] === 4)) {
                     $payment['description'] = 'SINGLE CARD - MEMBER DISCOUNT';
                     $payment['price'] = '0.88';
@@ -61,12 +62,14 @@ if (empty($_POST)) {
                 }
                 break;
             case 2:
-                $payment['description'] = 'MONTHLY SUSBCRIPTION';
+                $payment['description'] = 'MONTHLY SUBSCRIPTION';
+                $payment['membership_id'] = 3;
                 $payment['type'] = 'MEMBERSHIP';
                 $payment['price'] = '4.99';
                 break;
             case 3:
-                $payment['description'] = 'MONTHLY SUSBCRIPTION';
+                $payment['description'] = 'MONTHLY SUBSCRIPTION';
+                $payment['membership_id'] = 4;
                 $payment['type'] = 'MEMBERSHIP';
                 $payment['price'] = '10.99';
                 break;
@@ -182,26 +185,61 @@ if (empty($_POST)) {
             }
         }
         if (!empty($payment_id) && (empty($payment_transaction_id) && empty($payment_gateway))) {
-
             //ENUM('MEMBERSHIP', 'ECARD')
             // Initiate Step One: Now that we've collected the non-sensitive payment information, we can combine other order information and build the XML format.
             $xmlRequest = new \DOMDocument('1.0', 'UTF-8');
-
             $xmlRequest->formatOutput = true;
-            $xmlSale = $xmlRequest->createElement('sale');
 
-            // Amount, authentication, and Redirect-URL are typically the bare minimum.
-            appendXmlNode($xmlRequest, $xmlSale, 'api-key', PAYLINE_APIKEY);
-            appendXmlNode($xmlRequest, $xmlSale, 'redirect-url', $step3_redirect_url);
-            appendXmlNode($xmlRequest, $xmlSale, 'amount', $payment['price']);
-            appendXmlNode($xmlRequest, $xmlSale, 'ip-address', $_SERVER["REMOTE_ADDR"]);
-            appendXmlNode($xmlRequest, $xmlSale, 'currency', 'USD');
+            switch ($payment['type']) {
+                case 'ECARD':
+                    // SALE
+                    $xmlSale = $xmlRequest->createElement('sale');
 
-            // Some additonal fields may have been previously decided by user
-            appendXmlNode($xmlRequest, $xmlSale, 'order-id', $payment_id);
-            appendXmlNode($xmlRequest, $xmlSale, 'order-description', $payment['description']);
-            appendXmlNode($xmlRequest, $xmlSale, 'tax-amount', '0.00');
-            appendXmlNode($xmlRequest, $xmlSale, 'shipping-amount', '0.00');
+                    // Amount, authentication, and Redirect-URL are typically the bare minimum.
+                    appendXmlNode($xmlRequest, $xmlSale, 'api-key', PAYLINE_APIKEY);
+                    appendXmlNode($xmlRequest, $xmlSale, 'redirect-url', $step3_redirect_url);
+                    appendXmlNode($xmlRequest, $xmlSale, 'amount', $payment['price']);
+                    appendXmlNode($xmlRequest, $xmlSale, 'ip-address', $_SERVER["REMOTE_ADDR"]);
+                    appendXmlNode($xmlRequest, $xmlSale, 'currency', 'USD');
+
+                    // Some additonal fields may have been previously decided by user
+                    appendXmlNode($xmlRequest, $xmlSale, 'order-id', $payment_id);
+                    appendXmlNode($xmlRequest, $xmlSale, 'order-description', $payment['description']);
+                    appendXmlNode($xmlRequest, $xmlSale, 'tax-amount', '0.00');
+                    appendXmlNode($xmlRequest, $xmlSale, 'shipping-amount', '0.00');
+
+
+                    break;
+
+                case 'MEMBERSHIP':
+                    // ADD-SUBCRIPTION
+                    $xmlSale = $xmlRequest->createElement('add-subscription');
+
+                    // Amount, authentication, and Redirect-URL are typically the bare minimum.
+                    appendXmlNode($xmlRequest, $xmlSale, 'api-key', PAYLINE_APIKEY);
+                    appendXmlNode($xmlRequest, $xmlSale, 'redirect-url', $step3_redirect_url);
+                    appendXmlNode($xmlRequest, $xmlSale, 'start-date', date('Ymn'));
+//                    appendXmlNode($xmlRequest, $xmlSale, 'amount', $payment['price']);
+//                    appendXmlNode($xmlRequest, $xmlSale, 'ip-address', $_SERVER["REMOTE_ADDR"]);
+                    appendXmlNode($xmlRequest, $xmlSale, 'currency', 'USD');
+
+                    // Some additonal fields may have been previously decided by user
+                    appendXmlNode($xmlRequest, $xmlSale, 'order-id', $payment_id);
+                    appendXmlNode($xmlRequest, $xmlSale, 'order-description', $payment['description']);
+                    appendXmlNode($xmlRequest, $xmlSale, 'tax-amount', '0.00');
+                    appendXmlNode($xmlRequest, $xmlSale, 'shipping-amount', '0.00');
+
+                    $xmlPlan = $xmlRequest->createElement('plan');
+
+                    // Amount, authentication, and Redirect-URL are typically the bare minimum.
+                    appendXmlNode($xmlRequest, $xmlPlan, 'plan', $payment['membership_id']);
+                    break;
+
+                default:
+                    break;
+            }
+
+
 
 
             // Set the Billing and Shipping from what was collected on initial shopping cart form
@@ -327,7 +365,6 @@ if (empty($_POST)) {
                                     // US STATES SELECT
 // STATE
                                     $us_states = array(
-                                        '' => 'SELECT ONE',
                                         'AL' => 'ALABAMA',
                                         'AK' => 'ALASKA',
                                         'AS' => 'AMERICAN SAMOA',
@@ -424,7 +461,8 @@ if (empty($_POST)) {
 
                         <div class="one_half">
                             <form id="payment-data" class="eebunny-form clearfix" method="post" action="./">
-
+                                <p>You are about to pay: <strong><?php echo $payment['description'] ?></strong></p>
+                                <br/>
                                 <ul class="p-options">
                                     <?php if ($post_data['payment_option'] + 0 === 1) : ?>
                                         <li>

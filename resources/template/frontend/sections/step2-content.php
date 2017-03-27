@@ -119,14 +119,14 @@ if (!empty($_POST) && !empty($form_action)) {
                         ];
                         DOM_notifications::queue_mesasage("Registration successfully done.", 'success', 'messages-area', '');
                         /**
-                         * APPLY FREE SUSBCRIPTION 
+                         * APPLY FREE SUBSCRIPTION 
                          */
-                        $susbcription_data = [
+                        $subscription_data = [
                             'user_id' => $user_id,
                             'membership_id' => 2,
                             'membership_active' => 1
                         ];
-                        if (\k1lib\sql\sql_insert($db, 'user_memberships', $susbcription_data)) {
+                        if (\k1lib\sql\sql_insert($db, 'user_memberships', $subscription_data)) {
                             $do_login = TRUE;
                             DOM_notifications::queue_mesasage("Registration successfully done.", 'success', 'messages-area', '');
                         } else {
