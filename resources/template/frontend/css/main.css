@@ -812,7 +812,7 @@ ul.cat_steps li.curr-step::after {
     padding-top: 35px;
 }
 body.step3 .inner-content {
-    background: #b76f80 url(../img/inner-content-step3-bg.png) repeat;
+    background: #bfe1f2; /*#b76f80 url(../img/inner-content-step3-bg.png) repeat;*/
     padding-bottom: 170px;
     padding-top: 133px;
     text-align: center;
@@ -1079,6 +1079,15 @@ body.step3 .inner-content {
     padding: 20px;
     position: relative;
 }
+.callout.warning {
+    background: #ffc4d6;
+}
+.callout.success {
+    background: #c4ffd1;
+}
+.callout.alert {
+    background: #feffc4;
+}
 .callout .close-button {
     position: absolute;
     right: 20px;
@@ -1141,33 +1150,115 @@ body.step3 .inner-content {
     padding-top: 1px;
 }
 body.categories .title { color: #cf7082; }
-.categories .inner-content .title { text-shadow: 0px 3px 5px #5d2832; /*#cf7082;*/ }
+.categories .inner-content .title { text-shadow: 0px 3px 5px #cf7082; }
 .categories #down-section .title { color: #fff; }
 
-.category-eggs #down-section { background: #ffe88b; }
-.category-watercolor #down-section { background: #abeda6; }
-.category-vintage #down-section { background: #ffbbd1; /*#ff7da7;*/ }
-.category-lines #down-section { background: #a0dce6; }
-.category-vines #down-section { background: #fcbfaa; }
-.cagegory-art #down-section { background: #95c1dd; }
-.category-flower #down-section { background: #80d8d9; }
+.category-eggs #down-section { background: #d1e2f4; }
+.category-watercolor #down-section { background: #ffc3c5; /*#abeda6;*/ }
+.category-vintage #down-section { background: #fcdace; /*#ffbbd1;*/ }
+.category-lines #down-section { background: #fde5db; /*#a0dce6;*/ }
+.category-vines #down-section { background: #d9f0e0; }
+.cagegory-art #down-section { background: #b5d0e5; }
+.category-flower #down-section { background: #ffcfde; }
 .category-trees #down-section { background: #f4e59c; }
-.category-flower-power #down-section { background: #f8aec0; }
-.category-mosaics #down-section { background: #ffb797; }
-.category-retro #down-section { background: #9bedaf; }
+.category-flower-power #down-section { background: #e0f4e4; }
+.category-mosaics #down-section { background: #f3cff1; }
+.category-retro #down-section { background: #ffe7f1; }
+.category-trees #down-section { background: #d1f4d3; } 
 
 .category-all .inner-content #down-section .title { text-shadow: 0px 3px 5px #385971; }
-.category-eggs .inner-content #down-section .title { text-shadow: 0px 3px 5px #826c13; }
-.category-watercolor .inner-content #down-section .title { text-shadow: 0px 3px 5px #3e8238; }
+.category-eggs .inner-content #down-section .title { text-shadow: 0px 3px 5px #627b96; }
+.category-watercolor .inner-content #down-section .title { text-shadow: 0px 3px 5px #a25356; /*#3e8238;*/ }
+.category-vintage .inner-content #down-section .title { text-shadow: 0px 3px 5px #845342; }
+.category-lines .inner-content #down-section .title { text-shadow: 0px 3px 5px #906959; }
+.category-vines .inner-content #down-section .title { text-shadow: 0px 3px 5px #618c6e; }
 .category-art .inner-content #down-section .title { text-shadow: 0px 3px 5px #2d5673; }
-.category-flower .inner-content #down-section .title { text-shadow: 0px 3px 5px #125454; }
-.category-trees .inner-content #down-section .title { text-shadow: 0px 3px 5px #736729; }
+.category-flower .inner-content #down-section .title { text-shadow: 0px 3px 5px #9a5a6e; }
+.category-trees .inner-content #down-section .title { text-shadow: 0px 3px 5px #457147; }
+.category-mosaics .inner-content #down-section .title { text-shadow: 0px 3px 5px #92598f; }
+.category-retro .inner-content #down-section .title { text-shadow: 0px 3px 5px #865a6c; }
+.category-flower-power .inner-content #down-section .title { text-shadow: 0px 3px 5px #60946b; }
 
-.category-mosaics .inner-content #down-section .title { text-shadow: 0px 3px 5px #985435; }
-.category-retro .inner-content #down-section .title { text-shadow: 0px 3px 5px #20582e; }
-
-.category-lines .inner-content #down-section .title { text-shadow: 0px 3px 5px #4e818a; }
-
+/* ==========================================================================
+  Payment page
+============================================================================= */
+.step3 .inner-content .title,
+.step3 .eebunny-form,
+.step3 .ebunny-form {
+    text-shadow: 0px 3px 5px #b47fc1;
+}
+.step3 p {
+    font-size: 23px; font-size: 2.3rem;
+    margin: 0;
+    text-shadow: 0px 3px 5px #b47fc1;
+}
+#payment-data .input-wrap {
+    margin-bottom: 20px;
+}
+ul.p-options {
+   list-style: none; 
+}
+ul.p-options li {
+    display: inline-block;
+    margin: 0 10px;
+}
+ul.p-options li a {
+    color: #fff !important;
+    margin-bottom: 20px;
+    padding-top: 1px;
+    text-shadow: none;
+}
+ul.p-options .op1 {
+    background: url(../img/option1-bg.png);
+}
+ul.p-options .op2 {
+    background: url(../img/option2-bg.png);
+}
+ul.p-options .op3 {
+    background: url(../img/option3-bg.png);
+}
+ul.p-options .t1 {
+    display: block;
+    font-size: 16px; font-size: 1.6rem;
+    margin-top: 40px;
+    line-height: 0.9;
+}
+ul.p-options .t2 {
+    display: block;
+    font-size: 16px; font-size: 1.6rem;
+    margin-top: 31px;
+}
+ul.p-options .op2 .t2,
+ul.p-options .op3 .t2 {
+    margin-top: 15px;
+}
+ul.p-options li a {
+    box-sizing: border-box;
+    display: inline-block;
+    height: 151px;
+    position: relative;
+    width: 151px;
+}
+ul.p-options li a.selected {
+    border: 2px solid white;
+    -webkit-border-radius: 5px 0 5px 0;
+    border-radius: 51px 0 51px 0;
+}
+ul.p-options li a img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+.cards-icons {
+    margin-bottom: 20px;
+    /*text-align: left;*/
+}
+.cards-icons a {
+    margin: 0 2px;
+}
+.cards-icons .taxes-alert {
+    display: block;
+}
 
 /* ==========================================================================
    Informative pages

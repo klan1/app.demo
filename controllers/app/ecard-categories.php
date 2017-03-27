@@ -53,10 +53,10 @@ if ($controller_object->on_board_read()) {
     /**
      * Related list
      */
-    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "messages");
-    $controller_object->board_read_object->set_related_show_all_data(FALSE);
-    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Predefined messages", ecard_messages::ROOT_URL, ecard_messages::BOARD_CREATE_URL, ecard_messages::BOARD_READ_URL, ecard_messages::BOARD_LIST_URL);
-    $related_list->append_to($related_div);
+//    $related_db_table = new \k1lib\crudlexs\class_db_table($db, "messages");
+//    $controller_object->board_read_object->set_related_show_all_data(FALSE);
+//    $related_list = $controller_object->board_read_object->create_related_list($related_db_table, NULL, "Predefined messages", ecard_messages::ROOT_URL, ecard_messages::BOARD_CREATE_URL, ecard_messages::BOARD_READ_URL, ecard_messages::BOARD_LIST_URL);
+//    $related_list->append_to($related_div);
     /**
      * Related list
      */

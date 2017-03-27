@@ -35,7 +35,7 @@ if ($post_data) {
         // SET THE LOGGED SESSION
         $app_session->save_data_to_coockie(APP_BASE_URL);
         if ($app_session->load_data_from_coockie($db)) {
-            DOM_notifications::queue_mesasage("Wellcome!", "success");
+            DOM_notifications::queue_mesasage("welcome!", "success");
             if (\k1lib\urlrewrite\get_back_url(TRUE)) {
                 \k1lib\html\html_header_go(url::do_url(\k1lib\urlrewrite\get_back_url(TRUE)));
             } else {

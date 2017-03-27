@@ -67,7 +67,8 @@ if (\k1app\APP_MODE != 'shell') {
         define('APP_BASE_URL', $app_base_url);
     }
 
-    define('APP_DOMAIN_URL', (\k1lib\common\get_http_protocol() . '://') . \APP_DOMAIN);
+//    define('APP_DOMAIN_URL', (\k1lib\common\get_http_protocol() . '://') . \APP_DOMAIN);
+    define('APP_DOMAIN_URL', 'https://' . \APP_DOMAIN);
     define('APP_URL', APP_DOMAIN_URL . APP_BASE_URL);
     define('APP_LOGIN_URL', APP_URL . 'log/form/');
     define('APP_HOME_URL', APP_URL);

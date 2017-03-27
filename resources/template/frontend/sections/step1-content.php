@@ -8,7 +8,7 @@ use k1lib\notifications\on_DOM as DOM_notifications;
 
 require 'ecard-generation.php';
 
-global $ecard_data, $ecard_mode, $category_data;
+global $db, $ecard_data, $ecard_mode, $category_data;
 
 $body = frontend::html()->body();
 $head = frontend::html()->head();
@@ -35,17 +35,50 @@ if (!empty($ecard_data)) :
     }
 
     // POST MANAGEMENT AND DEFAULTS VALUES
+    $post_errors = [];
     if (!empty($_POST)) {
         $post_data = \k1lib\forms\check_all_incomming_vars($_POST, 'step1-data');
+        // VALIDATE VALID ECARDS VALUES
+        // FROM
+        $from_error = \k1lib\forms\check_value_type($post_data['sender_name'], 'letters');
+        if ($from_error !== '' || strlen($post_data['sender_name']) < 2) {
+            $post_errors['sender_name'] = "'TO' should be only letters and more than 2 characters.";
+            DOM_notifications::queue_mesasage($post_errors['sender_name'], 'warning', 'messages-area', 'Please correct the following errors:');
+        }
+        // TO
+        $to_error = \k1lib\forms\check_value_type($post_data['recipent_name'], 'letters');
+        if ($to_error !== '' || strlen($post_data['recipent_name']) < 2) {
+            $post_errors['recipent_name'] = "'FROM' should be only letters and more than 2 characters.";
+            DOM_notifications::queue_mesasage($post_errors['recipent_name'], 'warning', 'messages-area', 'Please correct the following errors:');
+        }
+        // DATE OUT
+        $date_out = \k1lib\forms\check_value_type($post_data['date_out'], 'date-future');
+        if ($date_out !== '' || strlen($post_data['date_out']) < 10) {
+            $post_errors['date_out'] = "Delivery date must to be on future";
+            DOM_notifications::queue_mesasage($post_errors['date_out'], 'warning', 'messages-area', 'Please correct the following errors:');
+        }
+        // EMAIL
+        $email_error = \k1lib\forms\check_value_type($post_data['recipent_email'], 'email');
+        if ($email_error !== '') {
+            $post_errors['recipent_email'] = 'Invalid E-Mail.';
+            DOM_notifications::queue_mesasage($post_errors['recipent_email'], 'warning', 'messages-area', 'Please correct the following errors:');
+        }
+        // MESSAGE
+        if (strlen($post_data['user_message']) < 5) {
+            $post_errors['user_message'] = 'Message too short, must be at least 5 letters.';
+            DOM_notifications::queue_mesasage($post_errors['user_message'], 'warning', 'messages-area', 'Please correct the following errors:');
+        }
     } else {
         $post_data = \k1lib\common\unserialize_var('step1-data');
-        if (empty($post_data) && \k1lib\session\session_db::is_logged()) {
-            $temp_step1_data_file = APP_RESOURCES_PATH . 'tmp/' . md5(\k1lib\session\session_db::get_user_login()) . '-step1-data';
-            if (file_exists($temp_step1_data_file)) {
-                $post_data = unserialize(file_get_contents($temp_step1_data_file));
-            }
+//        if (empty($post_data) && \k1lib\session\session_db::is_logged()) {
+//            $temp_step1_data_file = APP_RESOURCES_PATH . 'tmp/' . md5(\k1lib\session\session_db::get_user_login()) . '-step1-data';
+//            if (file_exists($temp_step1_data_file)) {
+//                $post_data = unserialize(file_get_contents($temp_step1_data_file));
+//            }
+//        }
+        if (!empty($post_data)) {
+            $post_data['mode'] = '';
         }
-        $post_data['mode'] = '';
     }
     $default_message = 'Please write your custom message using form below this Ecard.';
 
@@ -57,7 +90,6 @@ if (!empty($ecard_data)) :
             'send_message' => (!empty($post_data['user_message'] && strlen($post_data['user_message']) >= 5) ? $post_data['user_message'] : $default_message),
         ];
     } else {
-//        $post_data['mode'] = '';
         $custom_data = [
             'send_to_name' => '',
             'send_from_name' => '',
@@ -68,32 +100,8 @@ if (!empty($ecard_data)) :
             'color' => '000000',
             'recipent_email' => '',
             'size' => '0',
+            'date_out' => '2017-04-15',
         ];
-    }
-    // VALIDATE VALID ECARDS VALUES
-    $post_errors = [];
-    // FROM
-    $from_error = \k1lib\forms\check_value_type($post_data['sender_name'], 'letters');
-    if ($from_error !== '' || strlen($post_data['sender_name']) < 2) {
-        $post_errors['sender_name'] = "'TO' should be only letters and more than 2 characters.";
-        DOM_notifications::queue_mesasage($post_errors['sender_name'], 'warning', 'messages-area', 'Please correct the following errors:');
-    }
-    // TO
-    $to_error = \k1lib\forms\check_value_type($post_data['recipent_name'], 'letters');
-    if ($to_error !== '' || strlen($post_data['recipent_name']) < 2) {
-        $post_errors['recipent_name'] = "'FROM' should be only letters and more than 2 characters.";
-        DOM_notifications::queue_mesasage($post_errors['recipent_name'], 'warning', 'messages-area', 'Please correct the following errors:');
-    }
-    // EMAIL
-    $email_error = \k1lib\forms\check_value_type($custom_data['send_message'], 'letters-symbols');
-    if ($email_error !== '') {
-        $post_errors['send_message'] = 'Message must have more than 5 letters.';
-        DOM_notifications::queue_mesasage($post_errors['send_message'], 'warning', 'messages-area', 'Please correct the following errors:');
-    }
-    // MESSAGE
-    if (strlen($post_data['user_message']) < 5) {
-        $post_errors['recipent_email'] = 'Message too short, must be at least 5 letters.';
-        DOM_notifications::queue_mesasage($post_errors['recipent_email'], 'warning', 'messages-area', 'Please correct the following errors:');
     }
     // SEND MODE
     if (($post_data['mode'] == 'send') && empty($post_errors)) {
@@ -109,11 +117,12 @@ if (!empty($ecard_data)) :
             'send_font_file' => get_ecard_font_by_name($post_data['font']),
             'send_font_size' => $post_data['size'],
             'send_font_color' => $post_data['color'],
+            'send_date_out' => $post_data['date_out'],
         ];
         \k1lib\common\serialize_var($send_data, 'send-data');
-        $new_url = str_replace('step1', 'step2', APP_URL . url::get_this_url());
+        $step2_url = str_replace('step1', 'step2', APP_URL . url::get_this_url());
 
-        \k1lib\html\html_header_go($new_url);
+        \k1lib\html\html_header_go($step2_url);
 //    } else if (!empty($post_errors)) {
     } elseif (($post_data['mode'] == 'preview') || (empty($post_data['mode']))) {     // PREVIEW MODE
 
@@ -129,6 +138,19 @@ if (!empty($ecard_data)) :
         // E-MAIL
         $send_to_email = new \k1lib\html\input('text', 'recipent_email', $post_data['recipent_email']);
         $send_to_email->set_attrib('placeholder', 'E-mail');
+        // DATE OUT
+        $send_date_out = new \k1lib\html\input('text', 'date_out', $post_data['date_out'], 'datepicker');
+        $send_date_out->set_attrib('placeholder', 'When this message should arrive?');
+        // CUSTOM MESSAGES
+        $messages_table = new \k1lib\crudlexs\class_db_table($db, 'messages');
+        $messages_data = $messages_table->get_data(TRUE, FALSE);
+        $messages_for_select = [];
+        foreach ($messages_data as $key => $values) {
+            $messages_for_select[$values['message_id']] = $values['message_text'];
+        }
+
+        $message_from_ebunny = \k1lib\html\select_list_from_array('', $messages_for_select, NULL, TRUE, NULL, 'predefined_message', 'Select a predefined message');
+
         // MESSAGE
         $user_message = new \k1lib\html\textarea('user_message');
         $user_message->set_attrib('rows', 5);
@@ -211,72 +233,77 @@ if (!empty($ecard_data)) :
                 </div>
                 <div class="title">Select</div>
                 <?php echo $messages_output ?>
-                <form id="ecard-customizer" class="eebunny-form users-data clearfix" method="post" action="./#preview">
-                    <div class="col1">
-                        <!--<input type="hidden" class="card-orientation" name="orientation" value="">-->
-                        <label>From</label>
-                        <div class="input-wrap">
-                            <?php echo $send_from_name ?>
-                        </div>
-                        <label>To</label>
-                        <div class="input-wrap">
-                            <?php echo $send_to_name ?>
-                        </div>
-                        <div class="input-wrap">
-                            <?php echo $send_to_email ?>
-                        </div>
-                    </div>
-                    <div class="col2">
-                        <div class="optional-message">
-                            <label>Optional message</label>
-                            <div class="input-wrap">
-                                <select name="message">
-                                    <option>Select message</option>
-                                    <option value="message1">Message 1</option>
-                                    <option value="message2">Message 2</option>
-                                    <option value="message3">Message 3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <table>
-                            <tr>
-                                <td width="50%">
-                                    <label>Font</label>
-                                    <div class="input-wrap">
-                                        <?php echo $font ?>
-                                    </div>
-                                </td>
-                                <td width="25%" class="font-size">
-                                    <label>Size</label>
-                                    <div class="input-wrap">
-                                        <?php echo $font_size ?>
-                                    </div>
-                                </td>
-                                <td width="25%">
-                                    <label>Color</label>
-                                    <div class="input-wrap">    
-                                        <?php echo $color ?>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="personal-message">
-                            <label>Type message</label>
-                            <div class="input-wrap">
-                                <?php echo $user_message ?>
-                            </div>
-                        </div>
-                        <div class="buttons-wrap">
-                            <input id="form-mode" type="hidden" name="mode" value="preview">
-                            <input id="btn-preview" type="button" name="preview" value="Preview"/>
-                            <?php if (($post_data['mode'] == 'preview') && empty($post_errors)) : // PREVIEW MODE     ?>
-                                <input id="btn-send" type="button" name="send" value="Send"/>
-                            <?php endif ?>
-                        </div>
-                    </div>
-                </form>
+                <div class="row clearfix">
+                    <form id="ecard-customizer" class="eebunny-form users-data clearfix" method="post" action="./#preview">
 
+
+                        <div class="one_half">
+                            <!--<input type="hidden" class="card-orientation" name="orientation" value="">-->
+                            <label>From</label>
+                            <div class="input-wrap">
+                                <?php echo $send_from_name ?>
+                            </div>
+                            <label>To</label>
+                            <div class="input-wrap">
+                                <?php echo $send_to_name ?>
+                            </div>
+                            <div class="input-wrap">
+                                <?php echo $send_to_email ?>
+                            </div>
+                            <label>Delivery on</label>
+                            <div class="input-wrap">
+                                <?php echo $send_date_out ?>
+                            </div>
+                        </div>
+                        <div class="one_half last">
+                            <div class="optional-message">
+                                <label>Optional message</label>
+                                <div class="input-wrap">
+                                    <?php echo $message_from_ebunny ?>
+                                </div>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td width="50%">
+                                        <label>Font</label>
+                                        <div class="input-wrap">
+                                            <?php echo $font ?>
+                                        </div>
+                                    </td>
+                                    <td width="25%" class="font-size">
+                                        <label>Size</label>
+                                        <div class="input-wrap">
+                                            <?php echo $font_size ?>
+                                        </div>
+                                    </td>
+                                    <td width="25%">
+                                        <label>Color</label>
+                                        <div class="input-wrap">    
+                                            <?php echo $color ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="personal-message">
+                                <label>Type message</label>
+                                <div class="input-wrap">
+                                    <?php echo $user_message ?>
+                                </div>
+                            </div>
+                            <div class="buttons-wrap">
+                                <input id="form-mode" type="hidden" name="mode" value="preview">
+                                <input id="btn-preview" type="button" name="preview" value="Preview"/>
+                                <?php if (($post_data['mode'] == 'preview') && empty($post_errors)) : // PREVIEW MODE      ?>
+                                    <input id="btn-send" type="button" name="send" value="Send"/>
+                                <?php endif ?>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
             </div>
         </div>                
-    <?php } // PREVIEW MODE       ?>
+    <?php } // PREVIEW MODE        ?>
 <?php endif; ?>

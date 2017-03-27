@@ -41,10 +41,11 @@
             <div class="container clearfix">
                 <ul class="menu">
                     <li><a href="<?php echo APP_URL . 'site/' ?>">Home</a></li>
-                    <li><a href="<?php echo APP_URL . 'site/pages/about-us/' ?>">About</a></li>
                     <li><a href="<?php echo APP_URL . 'site/category/all/' ?>">All E-Cards</a></li>
-                    <li><a href="<?php echo APP_URL . 'site/pages/payments/' ?>">Payments</a></li>
-                    <li><a href="<?php echo APP_URL . 'site/pages/messages/' ?>">Messages</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/pages/about-us/' ?>">About</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/pages/contact-us/' ?>">Contact</a></li>
+<!--                    <li><a href="<?php echo APP_URL . 'site/pages/payments/' ?>">Payments</a></li>
+                    <li><a href="<?php echo APP_URL . 'site/pages/messages/' ?>">Messages</a></li>-->
                 </ul>
                 <ul class="social-links">
                     <li class="fb"><a target="_blank" href="https://facebook.com/EeBunny"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-facebook.png" alt="Facebook"/></a></li>

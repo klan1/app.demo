@@ -38,6 +38,8 @@ jQuery(document).ready(function ($) {
     //slick carousel for header
     $('.header-slider').slick({
         dots: true,
+        autoplay: true,
+        autoplaySpeed: 5000,
         infinite: true,
         speed: 500,
         fade: true,
@@ -88,14 +90,24 @@ jQuery(document).ready(function ($) {
         ;
     });
     //implements select input using links and a hidden field
-//    $('.orientation .horizontal,.orientation .vertical').click(function(e){
-//        e.preventDefault();
-//        if(!$(this).hasClass('selected')){
-//            $(this).addClass('selected').siblings().removeClass('selected');
-//            var orientation_value = $(this).data('orientation');
-//            $('#users-data .card-orientation').val(orientation_value);
-//        }
-//    });
+    $('.p-options .op1,.p-options .op2, .p-options .op3').click(function (e) {
+        e.preventDefault();
+        if (!$(this).hasClass('selected')) {
+            $(this).addClass('selected').parent().siblings().children('a').removeClass('selected');
+            if ($(this).hasClass('op1')) {
+                $('#payment-data input[name="payment_option"]').val('1');
+            }
+            ;
+            if ($(this).hasClass('op2')) {
+                $('#payment-data input[name="payment_option"]').val('2');
+            }
+            ;
+            if ($(this).hasClass('op3')) {
+                $('#payment-data input[name="payment_option"]').val('3');
+            }
+            ;
+        }
+    });
     // hide/show thumbnails for categories
     function select_items_from(cat) {
         $('.categories .carousel a[href$="' + cat + '"]').click(function (e) {
@@ -112,8 +124,8 @@ jQuery(document).ready(function ($) {
 
     //place a magnifying glass when pointer hover thumbnails
     /*th = $('.thumb-set .preview-box').css('height');
-    $('.thumb-set .preview-box').prepend('<div class="overlay-table"><div class="overlay-cell"><img src="' + img_dir_url + 'mglass.png"></div></div>');
-    $('.overlay-table').css('height', th);*/
+     $('.thumb-set .preview-box').prepend('<div class="overlay-table"><div class="overlay-cell"><img src="' + img_dir_url + 'mglass.png"></div></div>');
+     $('.overlay-table').css('height', th);*/
 
     //.seemore and .seeall buttons toggle visibility for .preview-box hidden items
     $('.seemore').click(function (e) {
@@ -123,39 +135,46 @@ jQuery(document).ready(function ($) {
         $(this).addClass('hidden');
     });
     //select different modes for different buttons on #ecard-customizer
-    $('#ecard-customizer #btn-preview').click(function(e){
-        $('#form-mode').attr('value','preview');
+    $('#ecard-customizer #btn-preview').click(function (e) {
+        $('#form-mode').attr('value', 'preview');
         $('#ecard-customizer').submit();
     });
-    $('#ecard-customizer #btn-send').click(function(e){
-        $('#form-mode').attr('value','send');
+    $('#ecard-customizer #btn-send').click(function (e) {
+        $('#form-mode').attr('value', 'send');
         $('#ecard-customizer').submit();
     });
     //this enables .close-button to close their container .callout
-    $('.callout .close-button').click(function(e){
+    $('.callout .close-button').click(function (e) {
         e.preventDefault();
         $(this).parent().hide(0);
     });
     //detect text color change on "step1" page and set #form-mode hidden field accordingly
     initial_color = $('body.step1 .jscolor').css('background-color');
     //console.log(initial_color);
-    $('body.step1 #ecard-customizer').on('submit',function(e){
+    $('body.step1 #ecard-customizer').on('submit', function (e) {
         //e.preventDefault();
-        if($('body.step1 .jscolor').css('background-color') !== initial_color){
-            $('#form-mode').attr('value','preview');
+        if ($('body.step1 .jscolor').css('background-color') !== initial_color) {
+            $('#form-mode').attr('value', 'preview');
         }
     });
     //following lines trigger form submit when some imputs change.
-    $('body.step1 #ecard-customizer select[name="font"]').on('change',function(){
-        $('#form-mode').attr('value','preview');
+    $('body.step1 #ecard-customizer select[name="font"]').on('change', function () {
+        $('#form-mode').attr('value', 'preview');
         $('#ecard-customizer').trigger('submit');
     });
-    $('body.step1 #ecard-customizer select[name="size"]').on('change',function(){
-        $('#form-mode').attr('value','preview');
+    $('body.step1 #ecard-customizer select[name="size"]').on('change', function () {
+        $('#form-mode').attr('value', 'preview');
         $('#ecard-customizer').trigger('submit');
     });
-    $('body.step1 #ecard-customizer .jscolor').on('change',function(){
-        $('#form-mode').attr('value','preview');
+    $('body.step1 #ecard-customizer .jscolor').on('change', function () {
+        $('#form-mode').attr('value', 'preview');
         $('#ecard-customizer').trigger('submit');
+    });
+    // DATEPICKER
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        showButtonPanel: true,
     });
 });

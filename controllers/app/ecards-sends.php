@@ -91,15 +91,12 @@ if ($controller_object->on_board_read()) {
     /**
      * HTML OUTPUT
      */
-    $grid = new \k1lib\html\foundation\grid();
-    $grid->append_to($div);
-    $row = $grid->append_row()->col(1)->set_value("&nbsp;");
-    $row = $grid->append_row();
-    $row->append_a(url::do_url($_SERVER['REQUEST_URI'], ['action' => 'send-email']), " Send ecard", NULL, 'button success fi-mail');
+    $div_ecard = new \k1lib\html\div();
+    $div_ecard->append_to($div);
 
-    $row = $grid->append_row();
-    $row->col(1)->append_child(new \k1lib\html\h3('Preview'));
-    $row->col(1)->append_child($ecard->get_ecard_img_tag());
+    $div_ecard->append_a(url::do_url($_SERVER['REQUEST_URI'], ['action' => 'send-email']), " Send ecard", NULL, 'button success fi-mail');
+    $div_ecard->append_child(new \k1lib\html\h3('Preview'));
+    $div_ecard->append_child($ecard->get_ecard_img_tag());
 }
 
 if ($controller_object->on_board_read()) {

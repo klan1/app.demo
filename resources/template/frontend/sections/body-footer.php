@@ -2,6 +2,7 @@
         <!-- <?php echo basename(__FILE__) ?> -->
         <footer class="site-footer">
             <div class="container clearfix">
+                <a href="https://www.gogetssl.com"><img src="https://www.gogetssl.com/skin/i/ggssl-site-seal-v1-light.png" border=”0” /></a>
                 <nav class="footer-nav">
                     <ul class="menu">
                         <li><a href="<?php echo APP_URL . 'site/pages/about-us/' ?>">About</a></li>
@@ -21,7 +22,7 @@
                         <li><a target="_blank" href="https://instagram.com/ee.bunny"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-instagram2.png" alt="Instagram"></a></li>
                         <li><a target="_blank" href="https://twitter.com/eebunny_"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/icon-twitter2.png" alt="Twitter"></a></li>
                     </ul>
-                </nav> 
+                </nav>
             </div>
             <div class="copyright">
                 <div class="container clearfix">
@@ -33,3 +34,4 @@
         <script>
             img_dir_url = '<?php echo APP_TEMPLATE_IMAGES_URL; ?>';
         </script>
+        

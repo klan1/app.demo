@@ -36,10 +36,10 @@ $controller_object->set_config_from_class('\k1app\ecard_messages');
  */
 $div = $controller_object->init_board();
 
-$controller_object->read_url_keys_text_for_create('ecard_categories');
+//$controller_object->read_url_keys_text_for_create('ecard_categories');
 
 if ($controller_object->on_board_list()) {
-    $controller_object->board_list_object->set_create_enable(FALSE);
+//    $controller_object->board_list_object->set_create_enable(FALSE);
 }
 
 $controller_object->start_board();
@@ -51,17 +51,17 @@ if ($controller_object->on_object_list()) {
 }
 
 if ($controller_object->on_object_read()) {
-    /**
-     * Custom Links
-     */
-    $get_params = [
-        'auth-code' => '--fieldauthcode--',
-        'back-url' => $_SERVER['REQUEST_URI']
-    ];
-    
-    // Category LINK
-    $category_url = url::do_url(APP_BASE_URL . ecard_categories_config::ROOT_URL . '/' . ecard_categories_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
-    $controller_object->object_read()->apply_link_on_field_filter($category_url, ['ecard_category_id'], ['ecard_category_id']);
+//    /**
+//     * Custom Links
+//     */
+//    $get_params = [
+//        'auth-code' => '--fieldauthcode--',
+//        'back-url' => $_SERVER['REQUEST_URI']
+//    ];
+//    
+//    // Category LINK
+//    $category_url = url::do_url(APP_BASE_URL . ecard_categories_config::ROOT_URL . '/' . ecard_categories_config::BOARD_READ_URL . '/--customfieldvalue--/', $get_params);
+//    $controller_object->object_read()->apply_link_on_field_filter($category_url, ['ecard_category_id'], ['ecard_category_id']);
 }
 
 $controller_object->exec_board();

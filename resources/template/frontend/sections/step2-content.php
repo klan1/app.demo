@@ -61,30 +61,30 @@ if (!empty($_POST) && !empty($form_action)) {
             // NAME
             $name_error = \k1lib\forms\check_value_type($post_data['new_user_name'], 'letters');
             if ($name_error !== '' || strlen($post_data['new_user_name']) < 2) {
-                DOM_notifications::queue_mesasage("Your name should be only letters and more than 2 characters.", 'warning', 'messages-area', 'Please correct the following errors:');
                 $post_errors['new_user_name'] = 'Your name should be only letters and more than 2 characters.';
+                DOM_notifications::queue_mesasage($post_errors['new_user_name'], 'warning', 'messages-area', 'Please correct the following errors:');
             }
             // LAST NAME
             $last_name_error = \k1lib\forms\check_value_type($post_data['new_user_last_name'], 'letters');
             if ($last_name_error !== '' || strlen($post_data['new_user_last_name']) < 2) {
-                DOM_notifications::queue_mesasage("Your last name should be only letters and more than 2 characters.", 'warning', 'messages-area', 'Please correct the following errors:');
                 $post_errors['new_user_last_name'] = 'Your last name should be only letters and more than 2 characters.';
+                DOM_notifications::queue_mesasage($post_errors['new_user_last_name'], 'warning', 'messages-area', 'Please correct the following errors:');
             }
             // NEW EMAIL
             $email_error = \k1lib\forms\check_value_type($post_data['new_user_email'], 'email');
             if ($email_error !== '') {
-                DOM_notifications::queue_mesasage("Invalid E-Mail", 'warning', 'messages-area', 'Please correct the following errors:');
                 $post_errors['new_user_email'] = 'Invalid E-Mail.';
+                DOM_notifications::queue_mesasage($post_errors['new_user_email'], 'warning', 'messages-area', 'Please correct the following errors:');
             }
             // PASSWORD
             if (strlen($post_data['new_user_password']) < 6) {
-                DOM_notifications::queue_mesasage("Password have to be 6 or more characters.", 'warning', 'messages-area', 'Please correct the following errors:');
                 $post_errors['new_user_password'] = 'Password have to be 6 or more characters.';
+                DOM_notifications::queue_mesasage($post_errors['new_user_password'], 'warning', 'messages-area', 'Please correct the following errors:');
             }
             // PASSWORD CONFIRMATION
             if ($post_data['new_user_password'] != $post_data['new_user_password_confirm']) {
-                DOM_notifications::queue_mesasage("Password confirmation is not the same.", 'warning', 'messages-area', 'Please correct the following errors:');
                 $post_errors['new_user_password'] = 'Password confirmation is not the same.';
+                DOM_notifications::queue_mesasage($post_errors['new_user_password'], 'warning', 'messages-area', 'Please correct the following errors:');
             }
             // NO ERRORS? THEN REGISTER
             if (empty($post_errors)) {
@@ -215,14 +215,16 @@ if (!empty($_POST) && !empty($form_action)) {
                         if ($send_data_saved !== FALSE) {
                             if (file_exists($temp_send_data_file)) {
                                 $send_data = unserialize(file_get_contents($temp_send_data_file));
+                                unlink($temp_send_data_file);
                                 \k1lib\common\serialize_var($send_data, 'send-data');
                             }
                             if (file_exists($temp_step1_data_file)) {
                                 $step1_data = unserialize(file_get_contents($temp_step1_data_file));
+                                unlink($temp_step1_data_file);
                                 \k1lib\common\serialize_var($step1_data, 'step1-data');
                             }
                         }
-                        DOM_notifications::queue_mesasage("Wellcome!", "success");
+                        DOM_notifications::queue_mesasage("welcome!", "success");
                         if (\k1lib\urlrewrite\get_back_url(TRUE)) {
                             \k1lib\html\html_header_go(url::do_url(\k1lib\urlrewrite\get_back_url(TRUE)));
                         } else {

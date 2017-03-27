@@ -67,10 +67,8 @@ if (empty($_POST['DO_STEP_1']) && empty($_GET['token-id'])) {
     appendXmlNode($xmlRequest, $xmlSale, 'currency', 'USD');
 
     // Some additonal fields may have been previously decided by user
-    appendXmlNode($xmlRequest, $xmlSale, 'order-id', '199');
+    appendXmlNode($xmlRequest, $xmlSale, 'order-id', '60');
     appendXmlNode($xmlRequest, $xmlSale, 'order-description', 'Single Card');
-//    appendXmlNode($xmlRequest, $xmlSale, 'merchant-defined-field-1', 'Red');
-//    appendXmlNode($xmlRequest, $xmlSale, 'merchant-defined-field-2', 'Medium');
     appendXmlNode($xmlRequest, $xmlSale, 'tax-amount', '0.00');
     appendXmlNode($xmlRequest, $xmlSale, 'shipping-amount', '0.00');
 
@@ -114,43 +112,43 @@ if (empty($_POST['DO_STEP_1']) && empty($_GET['token-id'])) {
 //    appendXmlNode($xmlRequest, $xmlShippingAddress, 'address2', $_POST['shipping-address-address2']);
 //    $xmlSale->appendChild($xmlShippingAddress);
 
-
-    // Products already chosen by user
-    $xmlProduct = $xmlRequest->createElement('product');
-    appendXmlNode($xmlRequest, $xmlProduct, 'product-code', 'SKU-123456');
-    appendXmlNode($xmlRequest, $xmlProduct, 'description', 'test product description');
-    appendXmlNode($xmlRequest, $xmlProduct, 'commodity-code', 'abc');
-    appendXmlNode($xmlRequest, $xmlProduct, 'unit-of-measure', 'lbs');
-    appendXmlNode($xmlRequest, $xmlProduct, 'unit-cost', '5.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'quantity', '1');
-    appendXmlNode($xmlRequest, $xmlProduct, 'total-amount', '7.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'tax-amount', '2.00');
-
-    appendXmlNode($xmlRequest, $xmlProduct, 'tax-rate', '1.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'discount-amount', '2.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'discount-rate', '1.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'tax-type', 'sales');
-    appendXmlNode($xmlRequest, $xmlProduct, 'alternate-tax-id', '12345');
-
-    $xmlSale->appendChild($xmlProduct);
-
-    $xmlProduct = $xmlRequest->createElement('product');
-    appendXmlNode($xmlRequest, $xmlProduct, 'product-code', 'SKU-123456');
-    appendXmlNode($xmlRequest, $xmlProduct, 'description', 'test 2 product description');
-    appendXmlNode($xmlRequest, $xmlProduct, 'commodity-code', 'abc');
-    appendXmlNode($xmlRequest, $xmlProduct, 'unit-of-measure', 'lbs');
-    appendXmlNode($xmlRequest, $xmlProduct, 'unit-cost', '2.50');
-    appendXmlNode($xmlRequest, $xmlProduct, 'quantity', '2');
-    appendXmlNode($xmlRequest, $xmlProduct, 'total-amount', '7.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'tax-amount', '2.00');
-
-    appendXmlNode($xmlRequest, $xmlProduct, 'tax-rate', '1.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'discount-amount', '2.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'discount-rate', '1.00');
-    appendXmlNode($xmlRequest, $xmlProduct, 'tax-type', 'sales');
-    appendXmlNode($xmlRequest, $xmlProduct, 'alternate-tax-id', '12345');
-
-    $xmlSale->appendChild($xmlProduct);
+//
+//    // Products already chosen by user
+//    $xmlProduct = $xmlRequest->createElement('product');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'product-code', 'SKU-123456');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'description', 'test product description');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'commodity-code', 'abc');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'unit-of-measure', 'lbs');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'unit-cost', '5.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'quantity', '1');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'total-amount', '7.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'tax-amount', '2.00');
+//
+//    appendXmlNode($xmlRequest, $xmlProduct, 'tax-rate', '1.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'discount-amount', '2.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'discount-rate', '1.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'tax-type', 'sales');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'alternate-tax-id', '12345');
+//
+//    $xmlSale->appendChild($xmlProduct);
+//
+//    $xmlProduct = $xmlRequest->createElement('product');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'product-code', 'SKU-123456');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'description', 'test 2 product description');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'commodity-code', 'abc');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'unit-of-measure', 'lbs');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'unit-cost', '2.50');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'quantity', '2');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'total-amount', '7.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'tax-amount', '2.00');
+//
+//    appendXmlNode($xmlRequest, $xmlProduct, 'tax-rate', '1.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'discount-amount', '2.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'discount-rate', '1.00');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'tax-type', 'sales');
+//    appendXmlNode($xmlRequest, $xmlProduct, 'alternate-tax-id', '12345');
+//
+//    $xmlSale->appendChild($xmlProduct);
 
     $xmlRequest->appendChild($xmlSale);
 

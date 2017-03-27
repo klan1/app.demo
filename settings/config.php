@@ -83,3 +83,11 @@ include_once 'controllers-config.php';
 //ini_set('memory_limit', '100M');
 //ROUND numbers on all html foundation tables
 \k1lib\html\foundation\table_from_data::$float_round_default = 2;
+
+/**
+ * PAYLINE CONFIG
+ */
+// API Setup parameters
+const PAYLINE_GATEWAY = 'https://secure.paylinedatagateway.com/api/v2/three-step';
+//const PAYLINE_APIKEY = '7mVh9Ku6x3x9tD485h4XAefEt6s86k7A'; // Production
+const PAYLINE_APIKEY = '2F822Rw39fx762MaV7Yy86jXGTC7sCDy'; // Testing
