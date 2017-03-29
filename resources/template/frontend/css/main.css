@@ -425,6 +425,9 @@ ul.social-links {
     height: auto;
     max-width: 100%;
 }
+.slick-dots li button:before {
+    /*background: #cc7082;*/
+}
 .cards-section { min-height: 600px; font-size: 17px; font-size: 1.7rem; }
 .cards-section h2 {
     font-family:'trendsetter';

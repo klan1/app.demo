@@ -74,6 +74,7 @@ if (empty($_POST)) {
                 $payment['price'] = '10.99';
                 break;
         }
+        \k1lib\common\serialize_var($payment, 'payment-price');
     }
     // NAME
     $name_error = \k1lib\forms\check_value_type($post_data['billing-first-name'], 'letters');
@@ -155,6 +156,7 @@ if (empty($_POST)) {
             'user_post_data' => json_encode($post_data),
             'payment_amount' => $payment['price'],
             'payment_type' => $payment['type'],
+            'payment_plan_id' => $payment['membership_id'],
             'payment_source' => 'Payline',
             'source_id' => 'Payline',
             'payment_auth_code' => NULL,
@@ -213,12 +215,16 @@ if (empty($_POST)) {
 
                 case 'MEMBERSHIP':
                     // ADD-SUBCRIPTION
+
+                    $today_plus_1day = strtotime("1 day", strtotime(date('Ymd')));
+                    $next_day = date("Ymd", $today_plus_1day);
+
                     $xmlSale = $xmlRequest->createElement('add-subscription');
 
                     // Amount, authentication, and Redirect-URL are typically the bare minimum.
                     appendXmlNode($xmlRequest, $xmlSale, 'api-key', PAYLINE_APIKEY);
                     appendXmlNode($xmlRequest, $xmlSale, 'redirect-url', $step3_redirect_url);
-                    appendXmlNode($xmlRequest, $xmlSale, 'start-date', date('Ymn'));
+                    appendXmlNode($xmlRequest, $xmlSale, 'start-date', $next_day);
 //                    appendXmlNode($xmlRequest, $xmlSale, 'amount', $payment['price']);
 //                    appendXmlNode($xmlRequest, $xmlSale, 'ip-address', $_SERVER["REMOTE_ADDR"]);
                     appendXmlNode($xmlRequest, $xmlSale, 'currency', 'USD');
@@ -230,17 +236,13 @@ if (empty($_POST)) {
                     appendXmlNode($xmlRequest, $xmlSale, 'shipping-amount', '0.00');
 
                     $xmlPlan = $xmlRequest->createElement('plan');
-
-                    // Amount, authentication, and Redirect-URL are typically the bare minimum.
-                    appendXmlNode($xmlRequest, $xmlPlan, 'plan', $payment['membership_id']);
+                    appendXmlNode($xmlRequest, $xmlPlan, 'plan-id', $payment['membership_id']);
+                    $xmlSale->appendChild($xmlPlan);
                     break;
 
                 default:
                     break;
             }
-
-
-
 
             // Set the Billing and Shipping from what was collected on initial shopping cart form
             $xmlBillingAddress = $xmlRequest->createElement('billing');
@@ -253,6 +255,9 @@ if (empty($_POST)) {
             //billing-address-email
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'country', $post_data['billing-country']);
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'email', $post_data['billing-email']);
+            if ($payment['type'] == 'MEMBERSHIP') {
+                appendXmlNode($xmlRequest, $xmlBillingAddress, 'customer-receipt', 'true');
+            }
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'phone', $post_data['billing-phone']);
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'address2', $post_data['billing-address2']);
             $xmlSale->appendChild($xmlBillingAddress);
@@ -267,16 +272,27 @@ if (empty($_POST)) {
             $gwResponse = new \SimpleXMLElement($data);
             if ((string) $gwResponse->result == 1) {
                 // UPDATE the transaction ID to keep record
+                switch ($payment['type']) {
+                    case 'ECARD':
+                        $payment_transaction_id = $gwResponse->{'transaction-id'};
 
-                $payment_transaction_id = $gwResponse->{'transaction-id'};
+                        break;
+
+                    case 'MEMBERSHIP':
+                        $payment_transaction_id = $gwResponse->{'subscription-id'};
+
+                        break;
+                }
 
                 // The form url for used in Step Two below
                 $payment_gateway = $gwResponse->{'form-url'};
 
                 \k1lib\sql\sql_update($db, 'payments', ['payment_transaction_id' => $payment_transaction_id], ['payment_id' => $payment_id]);
             } else {
-                throw New \Exception(print " Error, received " . $data);
+                d($payment);
                 d($data);
+                d($xmlRequest);
+//                throw New \Exception(print " Error, received " . $data);
             }
         } else {
             if ($payment_already_autorized = TRUE) {
@@ -305,11 +321,11 @@ if (empty($_POST)) {
 
                 <?php echo $messages_output ?>
                 <?php if (empty($payment_gateway)) : ?>
-                    <div class="title">Chose Your Payment Option</div>
+                    <div class="title">Choose Your Payment Option</div>
                     <ul class="p-options">
                         <li>
                             <a href="#" class="popt op1 <?php echo ($post_data['payment_option'] == '1') ? 'selected' : '' ?>">
-                                <span class="t1">Single card:</span>
+                                <span class="t1">Single Ecard:</span>
                                 <?php if (($user_data['membership_id'] === 3) || ($user_data['membership_id'] === 4)) : ?>
                                     <span class="t2">$0.88 USD</span>
                                 <?php else : ?>
@@ -320,13 +336,13 @@ if (empty($_POST)) {
                         <?php if (($user_data['membership_id'] !== 4) || ($user_data['membership_id'] !== 4)) : ?>
                             <li>
                                 <a href="#" class="popt op2 <?php echo ($post_data['payment_option'] == '2') ? 'selected' : '' ?>">
-                                    <span class="t1">Subscription 5 Ecards/Mont:</span>
+                                    <span class="t1">Subscription 5 Ecards/Month:</span>
                                     <span class="t2">$4.99 USD</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="popt op3 <?php echo ($post_data['payment_option'] == '3') ? 'selected' : '' ?>">
-                                    <span class="t1">Subscription 10 Ecards/Mont:</span>
+                                    <span class="t1">Subscription 10 Ecards/Month:</span>
                                     <span class="t2">$10.99 USD</span>
                                 </a>
                             </li>
@@ -467,7 +483,7 @@ if (empty($_POST)) {
                                     <?php if ($post_data['payment_option'] + 0 === 1) : ?>
                                         <li>
                                             <a href="#" class="popt op1 selected">
-                                                <span class="t1">Single card:</span>
+                                                <span class="t1">Single Ecard:</span>
                                                 <?php if (($user_data['membership_id'] === 3) || ($user_data['membership_id'] === 4)) : ?>
                                                     <span class="t2">$0.88 USD</span>
                                                 <?php else : ?>
@@ -479,7 +495,7 @@ if (empty($_POST)) {
                                     <?php if ($post_data['payment_option'] + 0 === 2) : ?>
                                         <li>
                                             <a href="#" class="popt op2 selected">
-                                                <span class="t1">Subscription 5 Ecards/Mont:</span>
+                                                <span class="t1">Subscription 5 Ecards/Month:</span>
                                                 <span class="t2">$4.99 USD</span>
                                             </a>
                                         </li>
@@ -487,7 +503,7 @@ if (empty($_POST)) {
                                     <?php if ($post_data['payment_option'] + 0 === 3) : ?>
                                         <li>
                                             <a href="#" class="popt op3 selected">
-                                                <span class="t1">Subscription 10 Ecards/Mont:</span>
+                                                <span class="t1">Subscription 10 Ecards/Month:</span>
                                                 <span class="t2">$10.99 USD</span>
                                             </a>
                                         </li>
@@ -515,24 +531,24 @@ if (empty($_POST)) {
                                 <div class="row clearfix">
                                     <div class="one_half">
                                         <div class="input-wrap">
-                                            <input type="text" name="billing-account-name" maxlength="60" value='Test user' placeholder="Name as appears on card">
+                                            <input type="text" name="billing-account-name" maxlength="60" value='' placeholder="Name as appears on card">
                                         </div>
                                     </div>
                                     <div class="one_half last">
                                         <div class="input-wrap">
-                                            <input type="text" name="billing-cc-number" maxlength="16" value='5431111111111111' placeholder="Credit Card #">
+                                            <input type="text" name="billing-cc-number" maxlength="16" value='' placeholder="Credit Card #">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row clearfix">
                                     <div class="one_half">
                                         <div class="input-wrap">
-                                            <input type="text" name="billing-cc-exp" maxlength="5" value='10/25' placeholder="MM/YY Example: 05/25">
+                                            <input type="text" name="billing-cc-exp" maxlength="5" value='' placeholder="MM/YY Example: 05/25">
                                         </div>
                                     </div>
                                     <div class="one_half last">
                                         <div class="input-wrap">
-                                            <input type="text" name="cvv" maxlength="4" value='999' placeholder="Card security code">
+                                            <input type="text" name="cvv" maxlength="4" value='' placeholder="Card security code">
                                         </div>
                                     </div>
                                 </div>

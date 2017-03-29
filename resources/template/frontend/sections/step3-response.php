@@ -6,7 +6,192 @@ use \k1lib\notifications\on_DOM as DOM_notifications;
 
 include 'payments.php';
 
+$payment_id = \k1lib\common\unserialize_var('payment-id');
+$payment = \k1lib\common\unserialize_var('payment-price');
+
+$send_data_final = [];
+
+if (empty($payment_id) || empty($_GET['token-id'])) {
+    \k1lib\controllers\error_404('WFT!');
+}
+
+// Step Three: Once the browser has been redirected, we can obtain the token-id and complete
+// the transaction through another XML HTTPS POST including the token-id which abstracts the
+// sensitive payment information that was previously collected by the Payment Gateway.
+$tokenId = $_GET['token-id'];
+$xmlRequest = new \DOMDocument('1.0', 'UTF-8');
+$xmlRequest->formatOutput = true;
+$xmlCompleteTransaction = $xmlRequest->createElement('complete-action');
+appendXmlNode($xmlRequest, $xmlCompleteTransaction, 'api-key', PAYLINE_APIKEY);
+appendXmlNode($xmlRequest, $xmlCompleteTransaction, 'token-id', $tokenId);
+$xmlRequest->appendChild($xmlCompleteTransaction);
+
+
+// Process Step Three
+$response = sendXMLviaCurl($xmlRequest, PAYLINE_GATEWAY);
+$response_json = \k1lib\common\XmlToJson($response);
+$response_array = json_decode($response_json, TRUE);
+$gwResponse = new \SimpleXMLElement((string) $response);
+
+$payment_acepted = FALSE;
+$payment_declined = FALSE;
+$payment_error = FALSE;
+
+$payments_table = new \k1lib\crudlexs\class_db_table($db, 'payments');
+$payment_key = ['payment_id' => $payment_id];
+$payments_table->set_query_filter($payment_key);
+$payment_data = $payments_table->get_data(FALSE);
+
+// lets secure the transaction
+if (!empty($response_array)) {
+    // ] => 543111******1111
+    if (key_exists('cc-number', $response_array['billing']) && PAYLINE_APIKEY != '2F822Rw39fx762MaV7Yy86jXGTC7sCDy') {
+        $cc_number = substr($response_array['billing']['cc-number'], 0, 6);
+        $cc_test_numbers = [
+            411111,
+            543111,
+            601160,
+            341111
+        ];
+        if (array_search($cc_number, $cc_test_numbers) !== FALSE) {
+            DOM_notifications::queue_mesasage('Youn can not use TEST Credit Card numbres here.', 'warning', 'messages-area', 'Payment Gateway says:');
+            \k1lib\html\html_header_go('../');
+        }
+    }
+
+
+    $response_codes = [
+        '100' => 'Transaction was approved.',
+        '200' => 'Transaction was declined by processor.',
+        '201' => 'Do not honor.',
+        '202' => 'Insufficient funds.',
+        '203' => 'Over limit.',
+        '204' => 'Transaction not allowed.',
+        '220' => 'Incorrect payment information.',
+        '221' => 'No such card issuer.',
+        '222' => 'No card number on file with issuer.',
+        '223' => 'Expired card.',
+        '224' => 'Invalid expiration date.',
+        '225' => 'Invalid card security code.',
+        '240' => 'Call issuer for further information.',
+        '250' => 'Pick up card.',
+        '251' => 'Lost card.',
+        '252' => 'Stolen card.',
+        '253' => 'Fraudulent card.',
+        '260' => 'Declined with further instructions available. (See response text)',
+        '261' => 'Declined-Stop all recurring payments.',
+        '262' => 'Declined-Stop this recurring program.',
+        '263' => 'Declined-Update cardholder data available.',
+        '264' => 'Declined-Retry in a few days.',
+        '300' => 'Transaction was rejected by gateway.',
+        '400' => 'Transaction error returned by processor.',
+        '410' => 'Invalid merchant configuration.',
+        '411' => 'Merchant account is inactive.',
+        '420' => 'Communication error.',
+        '421' => 'Communication error with issuer.',
+        '430' => 'Duplicate transaction at processor.',
+        '440' => 'Processor format error.',
+        '441' => 'Invalid transaction information.',
+        '460' => 'Processor feature not available.',
+        '461' => 'Unsupported card type.',
+    ];
+
+    switch ($payment['type']) {
+        case 'ECARD':
+            if (!empty($response_array['authorization-code'])) {
+                $payment_data['payment_auth_code'] = $response_array['authorization-code'];
+            }
+            break;
+
+        case 'MEMBERSHIP':
+            if (!empty($response_array['authorization-code'])) {
+                $payment_data['subscription-id'] = $response_array['subscription-id'];
+            }
+            break;
+    }
+    $payment_data['payment_response_result'] = $response_array['result'];
+    $payment_data['payment_response'] = $response_json;
+    if ($payments_table->update_data($payment_data, $payment_key)) {
+        \k1lib\common\unserialize_var('payment-id');
+        if ($response_array['result'] == '1') {
+            $payment_acepted = TRUE;
+
+            if ($payment['type'] == 'MEMBERSHIP') {
+                $today_plus_30day = strtotime("30 day", strtotime(date('Ymd')));
+                $expiration_date = date("Ymd", $today_plus_30day);
+
+
+                $user_memberships_table = new \k1lib\crudlexs\class_db_table($db, 'user_memberships');
+                $um_data = [
+                    'user_id' => \k1lib\session\session_db::get_user_data()['user_id'],
+                    'membership_id' => $payment['membership_id'],
+                    'membership_expiration' => $expiration_date,
+                ];
+                $user_memberships_table->insert_data($um_data);
+            }
+
+            /**
+             * SET THE ECARD SEND ORDER
+             */
+            $send_data = \k1lib\common\unserialize_var('send-data');
+
+            $users_table = new \k1lib\crudlexs\class_db_table($db, 'view_users_complete');
+            $users_table->set_query_filter(['user_email' => \k1lib\session\session_db::get_user_login()]);
+            $user_data = $users_table->get_data(FALSE);
+
+            $ecard_sends = new \k1lib\crudlexs\class_db_table($db, 'ecard_sends');
+
+            // ADD ECARD TO QUEUE
+            $send_data_final = array_merge($send_data, $user_data);
+            $send_data_final = \k1lib\common\clean_array_with_guide($send_data_final, $ecard_sends->get_db_table_config(TRUE));
+
+            $send_data_final['send_price_used'] = $response_array['amount'];
+            $send_data_final['send_ip'] = $_SERVER['REMOTE_ADDR'];
+            $send_data_final['send_browser'] = $_SERVER['HTTP_USER_AGENT'];
+
+            $ecard_sends->insert_data($send_data_final);
+
+            /**
+             * CLEAN ALL THE SEND PROCESS
+             */
+            \k1lib\common\unset_serialize_var('billing-info');
+            \k1lib\common\unset_serialize_var('send-data');
+            \k1lib\common\unset_serialize_var('step1-data');
+            \k1lib\common\unset_serialize_var('step2-data');
+            \k1lib\common\unset_serialize_var('step3-data');
+        } elseif ($response_array['result'] == '2') {
+
+            $payment_declined = TRUE;
+            DOM_notifications::queue_mesasage('Transaction declined: ' . $response_codes[$response_array['result-code']], 'warning', 'messages-area', 'Payment Gateway says:');
+            \k1lib\html\html_header_go('../');
+        } elseif ($response_array['result'] == '3') {
+            $payment_error = TRUE;
+            DOM_notifications::queue_mesasage('Transaction error: ' . $response_codes[$response_array['result-code']], 'warning', 'messages-area', 'Payment Gateway says:');
+            \k1lib\html\html_header_go('../');
+        }
+    } else {
+        DOM_notifications::queue_mesasage('Can\'t update the transaction.: ' . $response_codes[$response_array['result-code']], 'warning', 'messages-area', 'Payment Gateway says:');
+        \k1lib\html\html_header_go('../');
+    }
+}
+
+
+
+
 /**
+ * 
+ * 
+ * 
+  Array
+  (
+  [result] => 3
+  [result-text] => Invalid Credit Card Number REFID:3204361521
+  [result-code] => 300
+  [append] => Array
+  (
+  )
+
+  )
   Array
   (
   [ecard_id] => 1
@@ -70,163 +255,114 @@ include 'payments.php';
   [membership_send_free] => 1
   [membership_send_quantity] => 5
   )
+  Array
+  (
+  [result] => 1
+  [result-text] => OK
+  [subscription-id] => 3550214526
+  [result-code] => 100
+  [action-type] => add_subscription
+  [plan] => Array
+  (
+  [plan-id] => 4
+  )
+
+  [billing] => Array
+  (
+  [first-name] => Camilo
+  [last-name] => Lopez
+  [address1] => En Cali
+  [city] => Cali
+  [state] => DC
+  [postal] => 12345
+  [country] => US
+  [phone] => +573183988800
+  [email] => soporte@klan1.com
+  [cc-number] => 543111******1111
+  [cc-exp] => 1025
+  )
+
+  [append] => Array
+  (
+  )
+
+  )
+  SimpleXMLElement::__set_state(array(
+  'result' => '1',
+  'result-text' => 'SUCCESS',
+  'transaction-id' => '3549300109',
+  'result-code' => '100',
+  'authorization-code' => '123456',
+  'avs-result' => 'N',
+  'cvv-result' => 'M',
+  'action-type' => 'sale',
+  'amount' => '1.99',
+  'amount-authorized' => '1.99',
+  'tip-amount' => '0.00',
+  'surcharge-amount' => '0.00',
+  'ip-address' => '181.49.86.42',
+  'industry' => 'ecommerce',
+  'processor-id' => 'ccprocessora',
+  'currency' => 'USD',
+  'order-description' => 'SINGLE CARD',
+  'order-id' => '53',
+  'tax-amount' => '0.00',
+  'shipping-amount' => '0.00',
+  'billing' =>
+  SimpleXMLElement::__set_state(array(
+  'first-name' => 'Alejandro',
+  'last-name' => 'Trujillo',
+  'address1' => 'Cali 1234',
+  'city' => 'Cali',
+  'state' => 'Va',
+  'postal' => '98765',
+  'country' => 'US',
+  'email' => 'alejo@klan1.com',
+  'cc-number' => '411111******1111',
+  'cc-exp' => '1025',
+  )),
+  ))
  */
-$send_data_final = [
-];
-
-if (!empty($_GET['token-id'])) {
-
-// Step Three: Once the browser has been redirected, we can obtain the token-id and complete
-// the transaction through another XML HTTPS POST including the token-id which abstracts the
-// sensitive payment information that was previously collected by the Payment Gateway.
-    $tokenId = $_GET['token-id'];
-    $xmlRequest = new \DOMDocument('1.0', 'UTF-8');
-    $xmlRequest->formatOutput = true;
-    $xmlCompleteTransaction = $xmlRequest->createElement('complete-action');
-    appendXmlNode($xmlRequest, $xmlCompleteTransaction, 'api-key', PAYLINE_APIKEY);
-    appendXmlNode($xmlRequest, $xmlCompleteTransaction, 'token-id', $tokenId);
-    $xmlRequest->appendChild($xmlCompleteTransaction);
-
-
-// Process Step Three
-    $response = sendXMLviaCurl($xmlRequest, PAYLINE_GATEWAY);
-    $response_json = \k1lib\common\XmlToJson($response);
-    $response_array = json_decode($response_json, TRUE);
-    $gwResponse = new \SimpleXMLElement((string) $response);
-
-    $payment_acepted = FALSE;
-    $payment_declined = FALSE;
-    $payment_error = FALSE;
-
-    if ($response_array['result'] == '3') {
-        $payment_error = TRUE;
-
-        DOM_notifications::queue_mesasage('Transaction error.', 'warning', 'messages-area', 'System:');
-    } elseif (isset($response_array['order-id']) && !empty($response_array['order-id'])) {
-        // ACEPTED OR DECLINED
-        if (($response_array['result'] == '1') || ($response_array['result'] == '2')) {
-            $payment_id = $response_array['order-id'];
-
-            $payments_table = new \k1lib\crudlexs\class_db_table($db, 'payments');
-            $payment_key = ['payment_id' => $payment_id];
-            $payments_table->set_query_filter($payment_key);
-            $payment_data = $payments_table->get_data(FALSE);
-
-            // lets secure the transaction
-            if ($payment_data['payment_transaction_id'] == $response_array['transaction-id']) {
-                $payment_data['payment_auth_code'] = $response_array['authorization-code'];
-                $payment_data['payment_response_result'] = $response_array['result'];
-                $payment_data['payment_response'] = $response_json;
-                if ($payments_table->update_data($payment_data, $payment_key)) {
-                    \k1lib\common\unserialize_var('payment-id');
-                    if ($response_array['result'] == '1') {
-                        $payment_acepted = TRUE;
-
-                        /**
-                         * SET THE ECARD SEND ORDER
-                         */
-                        $send_data = \k1lib\common\unserialize_var('send-data');
-
-                        $users_table = new \k1lib\crudlexs\class_db_table($db, 'view_users_complete');
-                        $users_table->set_query_filter(['user_email' => \k1lib\session\session_db::get_user_login()]);
-                        $user_data = $users_table->get_data(FALSE);
-
-                        $ecard_sends = new \k1lib\crudlexs\class_db_table($db, 'ecard_sends');
-
-                        $send_data_final = array_merge($send_data, $user_data);
-                        $send_data_final = \k1lib\common\clean_array_with_guide($send_data_final, $ecard_sends->get_db_table_config(TRUE));
-
-                        $send_data_final['send_price_used'] = $response_array['amount'];
-                        $send_data_final['send_ip'] = $_SERVER['REMOTE_ADDR'];
-                        $send_data_final['send_browser'] = $_SERVER['HTTP_USER_AGENT'];
-
-                        $ecard_sends->insert_data($send_data_final);
-
-                        \k1lib\common\unset_serialize_var('billing-info');
-                        \k1lib\common\unset_serialize_var('send-data');
-                        \k1lib\common\unset_serialize_var('step1-data');
-                        \k1lib\common\unset_serialize_var('step2-data');
-                        \k1lib\common\unset_serialize_var('step3-data');
-                    } elseif ($response_array['result'] == '2') {
-                        $payment_declined = TRUE;
-                    }
-                } else {
-                    d('Can\'t update the transaction.');
-                }
-            }
-        }
-    } else {
-        DOM_notifications::queue_mesasage('You shouldn\'t be here!', 'warning', 'messages-area', 'Nasty hacker alert:');
-    }
-
-
-    /**
-      SimpleXMLElement::__set_state(array(
-      'result' => '1',
-      'result-text' => 'SUCCESS',
-      'transaction-id' => '3549300109',
-      'result-code' => '100',
-      'authorization-code' => '123456',
-      'avs-result' => 'N',
-      'cvv-result' => 'M',
-      'action-type' => 'sale',
-      'amount' => '1.99',
-      'amount-authorized' => '1.99',
-      'tip-amount' => '0.00',
-      'surcharge-amount' => '0.00',
-      'ip-address' => '181.49.86.42',
-      'industry' => 'ecommerce',
-      'processor-id' => 'ccprocessora',
-      'currency' => 'USD',
-      'order-description' => 'SINGLE CARD',
-      'order-id' => '53',
-      'tax-amount' => '0.00',
-      'shipping-amount' => '0.00',
-      'billing' =>
-      SimpleXMLElement::__set_state(array(
-      'first-name' => 'Alejandro',
-      'last-name' => 'Trujillo',
-      'address1' => 'Cali 1234',
-      'city' => 'Cali',
-      'state' => 'Va',
-      'postal' => '98765',
-      'country' => 'US',
-      'email' => 'alejo@klan1.com',
-      'cc-number' => '411111******1111',
-      'cc-exp' => '1025',
-      )),
-      ))
-     */
-}
 ?>
-<div class="inner-content">
-    <div class="container">
-        <div class="row clearfix">
-            <?php echo $messages_output ?>
-            <br/><br/>
-            <?php if ($payment_acepted) : ?>
-                <div class="row clearfix">
-                    <div class="title">Payment has been applied</div>
-                    <p>
-                        PAYLINE transaction ID: <?php echo $response_array['transaction-id'] ?>
-                    </p>
-                    <p>
-                        PAYLINE Authorization number: <?php echo $response_array['authorization-code'] ?>
-                    </p>
-                    <p> 
-                        <a href="<?php echo APP_URL . 'site/' ?>">Back home</a>
-                    </p>
-                </div>
-            <?php endif ?>
-            <?php if ($payment_declined || $payment_error) : ?>
-                <div class="row clearfix">
-                    <div class="title">Try again.</div>
-                    <p> 
-                        <a href="../">Back to E-Card</a>
-                    </p>
-                </div>
-            <?php endif ?>
-            <br/><br/>
-        </div>
-    </div>                        
-</div>
+<?php if ($payment_acepted || $payment_declined || $payment_error) : ?>
+    <div class="inner-content">
+        <div class="container">
+            <div class="row clearfix">
+                <?php echo $messages_output ?>
+                <br/><br/>
+                <?php if ($payment_acepted) : ?>
+                    <div class="row clearfix">
+                        <div class="title">Payment has been applied</div>
+                        <?php if ($payment['type'] == 'ECARD') : ?>
+                            <p>
+                                PAYLINE transaction ID: <?php echo $response_array['transaction-id'] ?>
+                            </p>
+                            <p>
+                                PAYLINE Authorization number: <?php echo $response_array['authorization-code'] ?>
+                            </p>
+                            <p> 
+                                <a href="<?php echo APP_URL . 'site/' ?>">Back home</a>
+                            </p>
+                        <?php endif; ?>
+                        <?php if ($payment['type'] == 'MEMBERSHIP') : ?>
+                            <p>
+                                PAYLINE subscription ID: <?php echo $response_array['subscription-id'] ?>
+                            </p>
+                            <p> 
+                                <a href="<?php echo APP_URL . 'site/' ?>">Back home</a>
+                            </p>
+                        <?php endif; ?>
+                    </div>
+                <?php endif ?>
+                <?php if ($payment_declined || $payment_error) : ?>
+                    <div class="row clearfix">
+                        <p> 
+                            <a href="../">Back to E-Card</a>
+                        </p>
+                    </div>
+                <?php endif ?>
+                <br/><br/>
+            </div>
+        </div>                        
+    </div>
+<?php endif; ?>
