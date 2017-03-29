@@ -43,38 +43,11 @@ if (empty($_POST)) {
     $step3_redirect_url = APP_URL . url::make_url_from_rewrite() . 'response/';
 
     $post_errors = [];
+
     // PAYMENT
     if (((int) $post_data['payment_option'] + 0 < 1) || ((int) $post_data['payment_option'] + 0 > 3)) {
         $post_errors['payment_option'] = 'Payment option needs to be selected.';
         DOM_notifications::queue_mesasage($post_errors['payment_option'], 'warning', 'messages-area', 'Please correct the following errors:');
-    } else {
-        // PRICE
-        switch ($post_data['payment_option']) {
-            case 1:
-                $payment['type'] = 'ECARD';
-                $payment['membership_id'] = NULL;
-                if (($user_data['membership_id'] === 3) || ($user_data['membership_id'] === 4)) {
-                    $payment['description'] = 'SINGLE CARD - MEMBER DISCOUNT';
-                    $payment['price'] = '0.88';
-                } else {
-                    $payment['description'] = 'SINGLE CARD';
-                    $payment['price'] = '1.99';
-                }
-                break;
-            case 2:
-                $payment['description'] = 'MONTHLY SUBSCRIPTION';
-                $payment['membership_id'] = 3;
-                $payment['type'] = 'MEMBERSHIP';
-                $payment['price'] = '4.99';
-                break;
-            case 3:
-                $payment['description'] = 'MONTHLY SUBSCRIPTION';
-                $payment['membership_id'] = 4;
-                $payment['type'] = 'MEMBERSHIP';
-                $payment['price'] = '10.99';
-                break;
-        }
-        \k1lib\common\serialize_var($payment, 'payment-price');
     }
     // NAME
     $name_error = \k1lib\forms\check_value_type($post_data['billing-first-name'], 'letters');
@@ -133,6 +106,36 @@ if (empty($_POST)) {
 
     $payment_gateway = NULL;
     if (empty($post_errors)) {
+        // PRICE
+        switch ($post_data['payment_option']) {
+            case 1:
+                $payment['type'] = 'ECARD';
+                $payment['membership_id'] = NULL;
+                if (($user_data['membership_id'] === 3) || ($user_data['membership_id'] === 4)) {
+                    $payment['description'] = 'SINGLE CARD - MEMBER DISCOUNT';
+                    $payment['price'] = '0.88';
+                } else {
+                    $payment['description'] = 'SINGLE CARD';
+                    $payment['price'] = '1.99';
+                }
+                break;
+            case 2:
+                $payment['description'] = 'MONTHLY SUBSCRIPTION';
+                $payment['membership_id'] = 3;
+                $payment['membership_lenght'] = 30;
+                $payment['type'] = 'MEMBERSHIP';
+                $payment['price'] = '4.99';
+                break;
+            case 3:
+                $payment['description'] = 'MONTHLY SUBSCRIPTION';
+                $payment['membership_id'] = 4;
+                $payment['membership_lenght'] = 3;
+                $payment['type'] = 'MEMBERSHIP';
+                $payment['price'] = '10.99';
+                break;
+        }
+        \k1lib\common\serialize_var($payment, 'payment-price');
+
         $payments_table = new \k1lib\crudlexs\class_db_table($db, 'payments');
 
         $new_user_data = [
@@ -192,58 +195,71 @@ if (empty($_POST)) {
             $xmlRequest = new \DOMDocument('1.0', 'UTF-8');
             $xmlRequest->formatOutput = true;
 
-            switch ($payment['type']) {
-                case 'ECARD':
-                    // SALE
-                    $xmlSale = $xmlRequest->createElement('sale');
+            // SALE
+            $xmlSale = $xmlRequest->createElement('sale');
 
-                    // Amount, authentication, and Redirect-URL are typically the bare minimum.
-                    appendXmlNode($xmlRequest, $xmlSale, 'api-key', PAYLINE_APIKEY);
-                    appendXmlNode($xmlRequest, $xmlSale, 'redirect-url', $step3_redirect_url);
-                    appendXmlNode($xmlRequest, $xmlSale, 'amount', $payment['price']);
-                    appendXmlNode($xmlRequest, $xmlSale, 'ip-address', $_SERVER["REMOTE_ADDR"]);
-                    appendXmlNode($xmlRequest, $xmlSale, 'currency', 'USD');
+            // Amount, authentication, and Redirect-URL are typically the bare minimum.
+            appendXmlNode($xmlRequest, $xmlSale, 'api-key', PAYLINE_APIKEY);
+            appendXmlNode($xmlRequest, $xmlSale, 'redirect-url', $step3_redirect_url);
+            appendXmlNode($xmlRequest, $xmlSale, 'amount', $payment['price']);
+            appendXmlNode($xmlRequest, $xmlSale, 'ip-address', $_SERVER["REMOTE_ADDR"]);
+            appendXmlNode($xmlRequest, $xmlSale, 'currency', 'USD');
 
-                    // Some additonal fields may have been previously decided by user
-                    appendXmlNode($xmlRequest, $xmlSale, 'order-id', $payment_id);
-                    appendXmlNode($xmlRequest, $xmlSale, 'order-description', $payment['description']);
-                    appendXmlNode($xmlRequest, $xmlSale, 'tax-amount', '0.00');
-                    appendXmlNode($xmlRequest, $xmlSale, 'shipping-amount', '0.00');
+            // Some additonal fields may have been previously decided by user
+            appendXmlNode($xmlRequest, $xmlSale, 'order-id', $payment_id);
+            appendXmlNode($xmlRequest, $xmlSale, 'order-description', $payment['description']);
+            appendXmlNode($xmlRequest, $xmlSale, 'tax-amount', '0.00');
+            appendXmlNode($xmlRequest, $xmlSale, 'shipping-amount', '0.00');
+            appendXmlNode($xmlRequest, $xmlSale, 'customer-receipt', 'true');
 
 
-                    break;
+            if ($payment['type'] == 'MEMBERSHIP') {
+                // ADD-SUBCRIPTION
 
-                case 'MEMBERSHIP':
-                    // ADD-SUBCRIPTION
+                $today_plus_1month = strtotime("+1 month");
+                $next_month = date("Ymd", $today_plus_1month);
 
-                    $today_plus_1day = strtotime("1 day", strtotime(date('Ymd')));
-                    $next_day = date("Ymd", $today_plus_1day);
+                $xmlSubscription = $xmlRequest->createElement('add-subscription');
 
-                    $xmlSale = $xmlRequest->createElement('add-subscription');
+                // Amount, authentication, and Redirect-URL are typically the bare minimum.
+//                appendXmlNode($xmlRequest, $xmlSubscription, 'api-key', PAYLINE_APIKEY);
+//                appendXmlNode($xmlRequest, $xmlSubscription, 'redirect-url', $step3_redirect_url);
+                appendXmlNode($xmlRequest, $xmlSubscription, 'start-date', $next_month);
+//                    appendXmlNode($xmlRequest, $xmlSubscription, 'amount', );
+//                    appendXmlNode($xmlRequest, $xmlSubscription, 'ip-address', $_SERVER["REMOTE_ADDR"]);
+//                appendXmlNode($xmlRequest, $xmlSubscription, 'currency', 'USD');
 
-                    // Amount, authentication, and Redirect-URL are typically the bare minimum.
-                    appendXmlNode($xmlRequest, $xmlSale, 'api-key', PAYLINE_APIKEY);
-                    appendXmlNode($xmlRequest, $xmlSale, 'redirect-url', $step3_redirect_url);
-                    appendXmlNode($xmlRequest, $xmlSale, 'start-date', $next_day);
-//                    appendXmlNode($xmlRequest, $xmlSale, 'amount', $payment['price']);
-//                    appendXmlNode($xmlRequest, $xmlSale, 'ip-address', $_SERVER["REMOTE_ADDR"]);
-                    appendXmlNode($xmlRequest, $xmlSale, 'currency', 'USD');
+                // Some additonal fields may have been previously decided by user
+//                appendXmlNode($xmlRequest, $xmlSubscription, 'order-id', $payment_id);
+//                appendXmlNode($xmlRequest, $xmlSubscription, 'order-description', $payment['description']);
+//                appendXmlNode($xmlRequest, $xmlSubscription, 'tax-amount', '0.00');
+//                appendXmlNode($xmlRequest, $xmlSubscription, 'shipping-amount', '0.00');
 
-                    // Some additonal fields may have been previously decided by user
-                    appendXmlNode($xmlRequest, $xmlSale, 'order-id', $payment_id);
-                    appendXmlNode($xmlRequest, $xmlSale, 'order-description', $payment['description']);
-                    appendXmlNode($xmlRequest, $xmlSale, 'tax-amount', '0.00');
-                    appendXmlNode($xmlRequest, $xmlSale, 'shipping-amount', '0.00');
+                $xmlPlan = $xmlRequest->createElement('plan');
+//                appendXmlNode($xmlRequest, $xmlPlan, 'plan-id', $payment['membership_id']);
+                appendXmlNode($xmlRequest, $xmlPlan, 'payments', 0);
+                appendXmlNode($xmlRequest, $xmlPlan, 'amount', $payment['price']);
+                appendXmlNode($xmlRequest, $xmlPlan, 'month-frequency', 1);
+                appendXmlNode($xmlRequest, $xmlPlan, 'day-of-month', date('j'));
+                $xmlSubscription->appendChild($xmlPlan);
 
-                    $xmlPlan = $xmlRequest->createElement('plan');
-                    appendXmlNode($xmlRequest, $xmlPlan, 'plan-id', $payment['membership_id']);
-                    $xmlSale->appendChild($xmlPlan);
-                    break;
+//                // Set the Billing and Shipping from what was collected on initial shopping cart form
+//                $xmlSubscriptionBillingAddress = $xmlRequest->createElement('billing');
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'first-name', $post_data['billing-first-name']);
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'last-name', $post_data['billing-last-name']);
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'address1', $post_data['billing-address1']);
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'city', $post_data['billing-city']);
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'state', $post_data['billing-state']);
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'postal', $post_data['billing-zip']);
+//                //billing-address-email
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'country', $post_data['billing-country']);
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'email', $post_data['billing-email']);
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'phone', $post_data['billing-phone']);
+//                appendXmlNode($xmlRequest, $xmlSubscriptionBillingAddress, 'address2', $post_data['billing-address2']);
+//                $xmlSubscription->appendChild($xmlSubscriptionBillingAddress);
 
-                default:
-                    break;
+                $xmlSale->appendChild($xmlSubscription);
             }
-
             // Set the Billing and Shipping from what was collected on initial shopping cart form
             $xmlBillingAddress = $xmlRequest->createElement('billing');
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'first-name', $post_data['billing-first-name']);
@@ -255,14 +271,14 @@ if (empty($_POST)) {
             //billing-address-email
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'country', $post_data['billing-country']);
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'email', $post_data['billing-email']);
-            if ($payment['type'] == 'MEMBERSHIP') {
-                appendXmlNode($xmlRequest, $xmlBillingAddress, 'customer-receipt', 'true');
-            }
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'phone', $post_data['billing-phone']);
             appendXmlNode($xmlRequest, $xmlBillingAddress, 'address2', $post_data['billing-address2']);
             $xmlSale->appendChild($xmlBillingAddress);
 
             $xmlRequest->appendChild($xmlSale);
+            d($xmlRequest->saveXML());
+
+
 
             // Process Step One: Submit all transaction details to the Payment Gateway except the customer's sensitive payment information.
             // The Payment Gateway will return a variable form-url.
@@ -559,7 +575,7 @@ if (empty($_POST)) {
                                     </div>
                                 </div>
 
-                                <span class="taxes-alert">None of these information will be stored by our servers, they will be sent to <a href="https://paylinedata.com/payline-gateway-online-payment-processing/" target="_blank">Payline Data LLC</a> payment gateway.</span>
+                                <span class="taxes-alert"><strong>No credit card information will be stored</strong> by EeBunny LLC servers<br/>, they will be sent to <a href="https://paylinedata.com/payline-gateway-online-payment-processing/" target="_blank">Payline Data LLC</a> payment gateway.</span>
                                 <br><br>
                             </form>
                         </div>

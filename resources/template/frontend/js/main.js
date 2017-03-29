@@ -175,6 +175,13 @@ jQuery(document).ready(function ($) {
         changeMonth: true,
         changeYear: true,
         dateFormat: "yy-mm-dd",
-        showButtonPanel: true,
+        showButtonPanel: true
+    });
+    //clones the message from a select field to a textarea field, on change
+    $('select#predefined_message').on('change',function(){
+        msg = $(this).children('option:selected').text();
+        if(msg !== undefined){
+            $('textarea[name="user_message"]').html(msg);
+        };
     });
 });

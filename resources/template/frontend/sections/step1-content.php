@@ -222,6 +222,7 @@ if (!empty($ecard_data)) :
                     <?php echo $ecard->get_ecard_img_tag(); ?>
 
                     <span class="eggs"><?php echo $category_data['ecc_name'] ?></span>
+                    <span class="no-watermark">No Watermark on Final E-card</span>
                 </div>
                 <div class="orientation">
                     <a href="../h/" class="horizontal selected" data-orientation="horizontal">

@@ -48,7 +48,7 @@ if (!empty($response_array)) {
     if (key_exists('cc-number', $response_array['billing']) && PAYLINE_APIKEY != '2F822Rw39fx762MaV7Yy86jXGTC7sCDy') {
         $cc_number = substr($response_array['billing']['cc-number'], 0, 6);
         $cc_test_numbers = [
-            411111,
+//            411111,
             543111,
             601160,
             341111
@@ -58,8 +58,10 @@ if (!empty($response_array)) {
             \k1lib\html\html_header_go('../');
         }
     }
-
-
+    /**
+     * {"append": {}, "result": "3", "result-code": "300", "result-text": "Duplicate transaction REFID:3204471420"}
+     * {"continue": "continue", "billing-zip": "12345", "magic_value": "ce192de4249e94ddf60c871aa330caa3", "billing-city": "Cali", "billing-email": "alejo@klan1.com", "billing-phone": "3183988800", "billing-state": "DC", "payment_option": "3", "billing-country": "US", "billing-address1": "Chipichape", "billing-address2": null, "billing-last-name": "Trujillo J", "billing-first-name": "Alejandro"}
+     */
     $response_codes = [
         '100' => 'Transaction was approved.',
         '200' => 'Transaction was declined by processor.',
@@ -166,11 +168,12 @@ if (!empty($response_array)) {
             \k1lib\html\html_header_go('../');
         } elseif ($response_array['result'] == '3') {
             $payment_error = TRUE;
-            DOM_notifications::queue_mesasage('Transaction error: ' . $response_codes[$response_array['result-code']], 'warning', 'messages-area', 'Payment Gateway says:');
+            DOM_notifications::queue_mesasage('Transaction error: ' . $response_codes[$response_array['result-code']] . ' - ' . $response_array['result-text'], 'warning', 'messages-area', 'Payment Gateway says:');
             \k1lib\html\html_header_go('../');
         }
     } else {
         DOM_notifications::queue_mesasage('Can\'t update the transaction.: ' . $response_codes[$response_array['result-code']], 'warning', 'messages-area', 'Payment Gateway says:');
+        d($response_array);
         \k1lib\html\html_header_go('../');
     }
 }
