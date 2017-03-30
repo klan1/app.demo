@@ -48,7 +48,7 @@ if (!empty($response_array)) {
     if (key_exists('cc-number', $response_array['billing']) && PAYLINE_APIKEY != '2F822Rw39fx762MaV7Yy86jXGTC7sCDy') {
         $cc_number = substr($response_array['billing']['cc-number'], 0, 6);
         $cc_test_numbers = [
-//            411111,
+            411111,
             543111,
             601160,
             341111
@@ -98,18 +98,14 @@ if (!empty($response_array)) {
         '461' => 'Unsupported card type.',
     ];
 
-    switch ($payment['type']) {
-        case 'ECARD':
-            if (!empty($response_array['authorization-code'])) {
-                $payment_data['payment_auth_code'] = $response_array['authorization-code'];
-            }
-            break;
+    // PAYMENT AUTH CODE
+    $payment_data['payment_auth_code'] = $response_array['authorization-code'];
+    // TRANSACTION ID
+    $payment_data['payment_transaction_id'] = $response_array['transaction-id'];
 
-        case 'MEMBERSHIP':
-            if (!empty($response_array['authorization-code'])) {
-                $payment_data['subscription-id'] = $response_array['subscription-id'];
-            }
-            break;
+    // SUBSCRIPTION ID
+    if (!empty($response_array['subscription-id'])) {
+        $payment_data['payment_subscription_id'] = $response_array['subscription-id'];
     }
     $payment_data['payment_response_result'] = $response_array['result'];
     $payment_data['payment_response'] = $response_json;
@@ -117,11 +113,12 @@ if (!empty($response_array)) {
         \k1lib\common\unserialize_var('payment-id');
         if ($response_array['result'] == '1') {
             $payment_acepted = TRUE;
+            $discountable = 0;
 
+            // MEMBERSHIP APPLY
             if ($payment['type'] == 'MEMBERSHIP') {
-                $today_plus_30day = strtotime("30 day", strtotime(date('Ymd')));
-                $expiration_date = date("Ymd", $today_plus_30day);
-
+                $today_plus_1month = strtotime("+1 month");
+                $expiration_date = date("Ymd", $today_plus_1month);
 
                 $user_memberships_table = new \k1lib\crudlexs\class_db_table($db, 'user_memberships');
                 $um_data = [
@@ -130,6 +127,8 @@ if (!empty($response_array)) {
                     'membership_expiration' => $expiration_date,
                 ];
                 $user_memberships_table->insert_data($um_data);
+
+                $discountable = 1;
             }
 
             /**
@@ -138,7 +137,7 @@ if (!empty($response_array)) {
             $send_data = \k1lib\common\unserialize_var('send-data');
 
             $users_table = new \k1lib\crudlexs\class_db_table($db, 'view_users_complete');
-            $users_table->set_query_filter(['user_email' => \k1lib\session\session_db::get_user_login()]);
+            $users_table->set_query_filter(['user_id' => \k1lib\session\session_db::get_user_data()['user_id']]);
             $user_data = $users_table->get_data(FALSE);
 
             $ecard_sends = new \k1lib\crudlexs\class_db_table($db, 'ecard_sends');
@@ -150,12 +149,15 @@ if (!empty($response_array)) {
             $send_data_final['send_price_used'] = $response_array['amount'];
             $send_data_final['send_ip'] = $_SERVER['REMOTE_ADDR'];
             $send_data_final['send_browser'] = $_SERVER['HTTP_USER_AGENT'];
+            $send_data_final['send_discountable'] = $discountable;
 
             $ecard_sends->insert_data($send_data_final);
 
             /**
              * CLEAN ALL THE SEND PROCESS
              */
+            \k1lib\common\unset_serialize_var('payment-id');
+            \k1lib\common\unset_serialize_var('payment-price');
             \k1lib\common\unset_serialize_var('billing-info');
             \k1lib\common\unset_serialize_var('send-data');
             \k1lib\common\unset_serialize_var('step1-data');
@@ -325,6 +327,59 @@ if (!empty($response_array)) {
   'cc-exp' => '1025',
   )),
   ))
+ * 
+ * Array
+  (
+  [result] => 1
+  [result-text] => SUCCESS
+  [transaction-id] => 3552974405
+  [subscription-id] => 3552976396
+  [result-code] => 100
+  [authorization-code] => 123456
+  [avs-result] => N
+  [cvv-result] => N
+  [action-type] => sale
+  [amount] => 10.99
+  [amount-authorized] => 10.99
+  [tip-amount] => 0.00
+  [surcharge-amount] => 0.00
+  [ip-address] => 181.49.86.228
+  [industry] => ecommerce
+  [processor-id] => paylinevantiv
+  [currency] => USD
+  [order-description] => MONTHLY SUBSCRIPTION
+  [customer-receipt] => true
+  [order-id] => 130
+  [tax-amount] => 0.00
+  [shipping-amount] => 0.00
+  [plan] => Array
+  (
+  [payments] => 0
+  [amount] => 10.99
+  [month-frequency] => 1
+  [day-of-month] => 29
+  )
+
+  [billing] => Array
+  (
+  [first-name] => Alejandro
+  [last-name] => Trujillo J
+  [address1] => Chipichape
+  [city] => Cali
+  [state] => DC
+  [postal] => 12345
+  [country] => US
+  [phone] => 3183988800
+  [email] => alejo@klan1.com
+  [cc-number] => 530695******1801
+  [cc-exp] => 0517
+  )
+
+  [append] => Array
+  (
+  )
+
+  )
  */
 ?>
 <?php if ($payment_acepted || $payment_declined || $payment_error) : ?>
@@ -336,31 +391,28 @@ if (!empty($response_array)) {
                 <?php if ($payment_acepted) : ?>
                     <div class="row clearfix">
                         <div class="title">Payment has been applied</div>
-                        <?php if ($payment['type'] == 'ECARD') : ?>
-                            <p>
-                                PAYLINE transaction ID: <?php echo $response_array['transaction-id'] ?>
-                            </p>
-                            <p>
-                                PAYLINE Authorization number: <?php echo $response_array['authorization-code'] ?>
-                            </p>
-                            <p> 
-                                <a href="<?php echo APP_URL . 'site/' ?>">Back home</a>
-                            </p>
-                        <?php endif; ?>
+                        <p>PAYLINE information</p>
+                        <p>
+                            Authorization number: <?php echo $response_array['authorization-code'] ?>
+                        </p>
+                        <p>
+                            Transaction ID: <?php echo $response_array['transaction-id'] ?>
+                        </p>
                         <?php if ($payment['type'] == 'MEMBERSHIP') : ?>
                             <p>
-                                PAYLINE subscription ID: <?php echo $response_array['subscription-id'] ?>
-                            </p>
-                            <p> 
-                                <a href="<?php echo APP_URL . 'site/' ?>">Back home</a>
+                                Subscription ID: <?php echo $response_array['subscription-id'] ?>
                             </p>
                         <?php endif; ?>
+                        <br/><br/>
+                        <p> 
+                            <a href="<?php echo APP_URL . 'site/' ?>">Back home</a>
+                        </p>
                     </div>
                 <?php endif ?>
                 <?php if ($payment_declined || $payment_error) : ?>
                     <div class="row clearfix">
                         <p> 
-                            <a href="../">Back to E-Card</a>
+                            <a href="../">Select More Ecards!</a>
                         </p>
                     </div>
                 <?php endif ?>

@@ -250,7 +250,9 @@ if (!empty($_POST) && !empty($form_action)) {
         }
     }
 } else {
-    if (!\k1lib\session\session_db::is_logged()) {
+    if (\k1lib\session\session_db::is_logged()) {
+        \k1lib\html\html_header_go($step3_url);
+    } else {
 
         $post_data = \k1lib\common\unserialize_var('step2_data');
         $post_errors = \k1lib\common\unserialize_var('post-errors');
@@ -373,28 +375,6 @@ if (!empty($_POST) && !empty($form_action)) {
                 </div>
             </div>
         </div>               
-    <?php }else { // on session ?>
-        <!-- <?php echo basename(__FILE__) ?> -->
-        <?php if ($on_send_process) : ?>
-            <div class="slide-inner">
-                <ul class="steps clearfix">
-                    <li><a href="<?php echo $step1_url ?>"><span>Step 01</span>Write your message</a></li>
-                    <li class="selected"><a class="selected" href="#"><span>Step 02</span>Make someone happy</a></li>
-                    <li><a href="#"><span>Step 03</span>Send your love</a></li>
-                </ul>
-            </div>
-        <?php endif ?>
-        <div class="inner-content">
-            <div class="container">
-                <div class="row clearfix">
-                    <h2>You are already logged, please continue.</h2>
-                    <form id="join-data" class="eebunny-form clearfix" method="post" action="./continue/">
-                        <?php echo $magic_value ?>
-                        <input type="submit" onclick="" name="continue" value="Continue"/>
-                    </form>
-                </div>
-            </div>
-        </div>   
-    <?php } // on session ?>
+    <?php } // LOGGED ?>
 <?php } // no post 
 ?>

@@ -183,13 +183,13 @@ if (empty($_POST)) {
             } else {
                 $payment_id = NULL;
                 $payment_already_autorized = TRUE;
-                \k1lib\common\unserialize_var('payment-id');
-                \k1lib\common\unserialize_var('billing-info');
-                \k1lib\common\unserialize_var('send-data');
+                \k1lib\common\unset_unserialize_var('payment-id');
+                \k1lib\common\unset_unserialize_var('billing-info');
+                \k1lib\common\unset_unserialize_var('send-data');
                 \k1lib\html\html_header_go(APP_URL . 'site/');
             }
         }
-        if (!empty($payment_id) && (empty($payment_transaction_id) && empty($payment_gateway))) {
+        if (!empty($payment_id)) {
             //ENUM('MEMBERSHIP', 'ECARD')
             // Initiate Step One: Now that we've collected the non-sensitive payment information, we can combine other order information and build the XML format.
             $xmlRequest = new \DOMDocument('1.0', 'UTF-8');
@@ -228,7 +228,6 @@ if (empty($_POST)) {
 //                    appendXmlNode($xmlRequest, $xmlSubscription, 'amount', );
 //                    appendXmlNode($xmlRequest, $xmlSubscription, 'ip-address', $_SERVER["REMOTE_ADDR"]);
 //                appendXmlNode($xmlRequest, $xmlSubscription, 'currency', 'USD');
-
                 // Some additonal fields may have been previously decided by user
 //                appendXmlNode($xmlRequest, $xmlSubscription, 'order-id', $payment_id);
 //                appendXmlNode($xmlRequest, $xmlSubscription, 'order-description', $payment['description']);
@@ -276,9 +275,6 @@ if (empty($_POST)) {
             $xmlSale->appendChild($xmlBillingAddress);
 
             $xmlRequest->appendChild($xmlSale);
-            d($xmlRequest->saveXML());
-
-
 
             // Process Step One: Submit all transaction details to the Payment Gateway except the customer's sensitive payment information.
             // The Payment Gateway will return a variable form-url.
@@ -288,22 +284,31 @@ if (empty($_POST)) {
             $gwResponse = new \SimpleXMLElement($data);
             if ((string) $gwResponse->result == 1) {
                 // UPDATE the transaction ID to keep record
-                switch ($payment['type']) {
-                    case 'ECARD':
-                        $payment_transaction_id = $gwResponse->{'transaction-id'};
-
-                        break;
-
-                    case 'MEMBERSHIP':
-                        $payment_transaction_id = $gwResponse->{'subscription-id'};
-
-                        break;
+                $payment_step_1_data = \k1lib\common\XmlToJson($gwResponse->asXML());
+//                d($payment_id);
+//                d($data);
+//                d($gwResponse->asXML());
+//                d($payment_step_1_data);
+                // REQUEST DATA JSON SAVE
+                $payment_update_data = [
+                    'payment_request_response_data' => $payment_step_1_data
+                ];
+                //TRANSACTION ID
+                if (!empty($gwResponse->{'transaction-id'})) {
+                    $payment_update_data['payment_transaction_id'] = $gwResponse->{'transaction-id'};
+                } else {
+                    $payment_update_data['payment_transaction_id'] = NULL;
                 }
-
-                // The form url for used in Step Two below
+//                $payment_transaction_id = $gwResponse->{'transaction-id'};
+                // SUBSCRIPTION ID
+                if (!empty($gwResponse->{'subscription-id'})) {
+                    $payment_update_data['payment_subscription_id'] = $gwResponse->{'subscription-id'};
+                } else {
+                    $payment_update_data['payment_subscription_id'] = NULL;
+                }
                 $payment_gateway = $gwResponse->{'form-url'};
 
-                \k1lib\sql\sql_update($db, 'payments', ['payment_transaction_id' => $payment_transaction_id], ['payment_id' => $payment_id]);
+                \k1lib\sql\sql_update($db, 'payments', $payment_update_data, ['payment_id' => $payment_id]);
             } else {
                 d($payment);
                 d($data);
@@ -397,6 +402,7 @@ if (empty($_POST)) {
                                     // US STATES SELECT
 // STATE
                                     $us_states = array(
+                                        '' => 'Select your state',
                                         'AL' => 'ALABAMA',
                                         'AK' => 'ALASKA',
                                         'AS' => 'AMERICAN SAMOA',
@@ -462,7 +468,7 @@ if (empty($_POST)) {
                                     );
                                     $us_states_reverse = array_flip($us_states);
 // CUSTOM MESSAGES
-                                    $states = \k1lib\html\select_list_from_array('billing-state', $us_states, $post_data['billing-state'], TRUE, NULL, NULL);
+                                    $states = \k1lib\html\select_list_from_array('billing-state', $us_states, $post_data['billing-state'], FALSE, NULL, NULL);
                                     ?>
                                     <?php echo $states ?>
                                 </div>
@@ -575,7 +581,7 @@ if (empty($_POST)) {
                                     </div>
                                 </div>
 
-                                <span class="taxes-alert"><strong>No credit card information will be stored</strong> by EeBunny LLC servers<br/>, they will be sent to <a href="https://paylinedata.com/payline-gateway-online-payment-processing/" target="_blank">Payline Data LLC</a> payment gateway.</span>
+                                <span class="taxes-alert"><strong>No credit card information will be stored</strong> by EeBunny LLC servers,<br/> they will be sent to <a href="https://paylinedata.com/payline-gateway-online-payment-processing/" target="_blank">Payline Data LLC</a> payment gateway.</span>
                                 <br><br>
                             </form>
                         </div>
