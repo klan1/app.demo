@@ -47,7 +47,7 @@ $payment_step = url::set_url_rewrite_var(url::get_url_level_count(), "payment_st
 if (empty($payment_step)) {
     $payment_step = 0;
 } else {
-    $payment_step_allowed = ['response'];
+    $payment_step_allowed = ['response','confirm'];
     if (array_search($payment_step, $payment_step_allowed) === FALSE) {
         \k1lib\controllers\error_404($payment_step);
     }

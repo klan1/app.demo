@@ -85,7 +85,7 @@ if ($controller_object->on_board_read()) {
 
     if (\k1lib\forms\check_single_incomming_var($_GET['action']) == 'send-email') {
 //        $ecard->send_email('alejo@klan1.com');
-        $ecard->send_email(NULL, TRUE);
+        $ecard->send_email(NULL, FALSE);
     }
 
     /**

@@ -544,7 +544,7 @@ class ecard_generator {
         $mail->AltBody = 'You have received an Electronic Easter Bunny Card!';
 
         if ($mail->Send()) {
-            DOM_notifications::queue_mesasage('Message has been sent', 'sucess');
+            DOM_notifications::queue_mesasage('Message has been sent', 'success');
         } else {
             DOM_notifications::queue_mesasage('Message could not be sent.', 'alert');
             DOM_notifications::queue_mesasage('Mailer Error: ' . $mail->ErrorInfo, 'alert');

@@ -169,9 +169,6 @@ if (!empty($_POST) && !empty($form_action)) {
          * LOGIN PROCEDURE
          */
         if ($do_login) {
-            d("doing-login...");
-            d($_POST);
-            d($_SESSION);
             $login_user_input = "login_email";
             $login_password_input = "login_password";
             $login_remember_me = "remember-me";
@@ -241,6 +238,7 @@ if (!empty($_POST) && !empty($form_action)) {
                     DOM_notifications::queue_mesasage("Empty data", "warning");
                 } elseif ($app_session_check === array()) {
                     DOM_notifications::queue_mesasage("Bad password or login", "alert");
+                    \k1lib\html\html_header_go('../');
                 }
             } elseif ($post_data === FALSE) {
                 DOM_notifications::queue_mesasage("BAD, BAD Magic!!", "warning");
