@@ -13,15 +13,12 @@ global $app_session;
 $users_table = new \k1lib\crudlexs\class_db_table($db, 'view_users_complete');
 $users_table->set_query_filter(['user_email' => \k1lib\session\session_db::get_user_login()]);
 $user_data = $users_table->get_data(FALSE);
-d($_POST);
+
 if ((((int) $user_data['membership_id'] > 2) && ($user_data['send_discountable'] < $user_data['membership_send_quantity']))) {
     $on_membership = TRUE;
     $send_data = \k1lib\common\unserialize_var('send-data');
-    d($send_data);
-    d("is");
 } else {
     $on_membership = FALSE;
-    d("is not");
 }
 if (!$on_membership) {
     if (isset($_POST['payment-billing-update'])) {

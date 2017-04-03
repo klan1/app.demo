@@ -462,12 +462,15 @@ class ecard_generator {
             if ($mail->Send()) {
                 DOM_notifications::queue_mesasage('Message has been sent', 'success');
                 $this->ecard_sends_table->update_data(['send_date_sent' => date("Y-m-d H:i:s")], ['send_id' => $this->send_id]);
+                return TRUE;
             } else {
                 DOM_notifications::queue_mesasage('Message could not be sent.', 'alert');
                 DOM_notifications::queue_mesasage('Mailer Error: ' . $mail->ErrorInfo, 'alert');
+                return FALSE;
             }
         } else {
             DOM_notifications::queue_mesasage('Message could not be sent for empty data.', 'alert');
+            return FALSE;
         }
     }
 

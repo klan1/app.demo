@@ -12,7 +12,7 @@ use k1lib\notifications\on_frontend as frontend_notifications;
 /*
  * APP START
  */
-\k1lib\session\session_plain::set_session_name("K1APP-SITE");
+\k1lib\session\session_plain::set_session_name("K1APP-SITE-DEV");
 \k1lib\session\session_plain::set_app_user_levels([
     'user',
     'guest'

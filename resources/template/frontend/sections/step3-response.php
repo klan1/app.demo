@@ -42,6 +42,10 @@ $payment_key = ['payment_id' => $payment_id];
 $payments_table->set_query_filter($payment_key);
 $payment_data = $payments_table->get_data(FALSE);
 
+//DELIVERY
+$ecard_queued = FALSE;
+$ecard_sent = FALSE;
+
 // lets secure the transaction
 if (!empty($response_array)) {
     // ] => 543111******1111
@@ -151,7 +155,23 @@ if (!empty($response_array)) {
             $send_data_final['send_browser'] = $_SERVER['HTTP_USER_AGENT'];
             $send_data_final['send_discountable'] = $discountable;
 
-            $ecard_sends->insert_data($send_data_final);
+            $ecard_id = $ecard_sends->insert_data($send_data_final);
+
+            // SAME DAY DELIVERY
+            $date_out_timestamp = strtotime($send_data_final['send_date_out']);
+            $today_timestamp = strtotime(date('Y-m-d'));
+
+            if ($date_out_timestamp <= $today_timestamp) {
+                if (!empty($ecard_id)) {
+                    include_once 'ecard-generation.php';
+                    $ecard = new ecard_generator($send_data_final['ecard_id'], $send_data_final['ecard_mode'], $ecard_id);
+                    if ($ecard->send_email()) {
+                        $ecard_sent = TRUE;
+                    }
+                }
+            } else {
+                $ecard_queued = TRUE;
+            }
 
             /**
              * CLEAN ALL THE SEND PROCESS
@@ -404,15 +424,26 @@ if (!empty($response_array)) {
                             </p>
                         <?php endif; ?>
                         <br/><br/>
+                        <?php if ($ecard_queued) : ?>
+                            <div class="row clearfix">
+                                <div class="title">E-Card has been queued for send!</div>
+                            </div>
+                        <?php endif ?>
+                        <?php if ($ecard_sent) : ?>
+                            <div class="row clearfix">
+                                <div class="title">E-Card has been sent!</div>
+                            </div>
+                        <?php endif ?>
                         <p> 
-                            <a href="<?php echo APP_URL . 'site/' ?>">Back home</a>
+                            <a href="<?php echo APP_URL . 'site/' ?>">Select More Ecards!</a>
                         </p>
                     </div>
                 <?php endif ?>
+
                 <?php if ($payment_declined || $payment_error) : ?>
                     <div class="row clearfix">
                         <p> 
-                            <a href="../">Select More Ecards!</a>
+                            <a href="../">Try again.</a>
                         </p>
                     </div>
                 <?php endif ?>

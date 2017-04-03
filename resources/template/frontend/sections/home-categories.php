@@ -42,9 +42,11 @@ foreach ($categories_data as $category_data) :
             <div class="right">
                 <header class="section-header clearfix">
                     <div class="header-left clearfix">
-                        <div id="join-<?php echo $cat_slug ?>-wrapper" class="join-wrapper-home">
-                            <a href="#" class="join-btn">JOIN</a>
-                        </div>
+                        <?php if (!\k1lib\session\session_db::is_logged()) : ?>
+                            <div id="join-<?php echo $cat_slug ?>-wrapper" class="join-wrapper-home">
+                                <a href="<?php echo APP_URL . '/site/join-now/ref=home' ?>" class="join-btn">JOIN</a>
+                            </div>
+                        <?php endif ?>
                         <hr class="margin-line"/>
                         <p><?php echo $category_data['ecc_description'] ?></p>  
                     </div>
@@ -65,16 +67,16 @@ foreach ($categories_data as $category_data) :
                 $ecards_data_hidden = $ecards_table->get_data(TRUE, FALSE);
                 ?>
                 <?php foreach ($ecards_data as $ecard) : // ECARD THUMBNAIL ?>
-                <div class="preview-box">
-                    <h3 class="card-preview-title">&nbsp;</h3>
-                    <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/'?>" class="thumb-link"><img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/></a>
-                </div>
+                    <div class="preview-box">
+                        <h3 class="card-preview-title">&nbsp;</h3>
+                        <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/' ?>" class="thumb-link"><img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/></a>
+                    </div>
                 <?php endforeach ?>
                 <?php foreach ($ecards_data_hidden as $ecard) : // ECARD THUMBNAIL ?>
-                <div class="preview-box hidden">
-                    <h3 class="card-preview-title">&nbsp;</h3>    
-                    <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/'?>" class="thumb-link"><img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/></a>
-                </div>
+                    <div class="preview-box hidden">
+                        <h3 class="card-preview-title">&nbsp;</h3>    
+                        <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/' ?>" class="thumb-link"><img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/></a>
+                    </div>
                 <?php endforeach ?>
                 <div class="more-wrapper">
                     <a class="seemore" href="<?php echo $cat_url ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/seemore.png" alt="see more"/></a>
