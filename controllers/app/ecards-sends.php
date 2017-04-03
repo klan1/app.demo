@@ -78,14 +78,13 @@ if ($controller_object->on_board_read()) {
 
     $ecard_send_data = $controller_object->db_table->get_data(FALSE)[1];
 
-    $mode = ($ecard_send_data['ecard_mode'] == 'h') ? ECARD_HORIZONTAL : ECARD_VERTICAL;
-
-    $ecard = new ecard_generator($ecard_send_data['ecard_id'], $mode, $ecard_send_data['send_id']);
+    $ecard = new ecard_generator($ecard_send_data['ecard_id'], $ecard_send_data['ecard_mode'], $ecard_send_data['send_id']);
     $ecard->set_image_proportion(0.8);
 
     if (\k1lib\forms\check_single_incomming_var($_GET['action']) == 'send-email') {
 //        $ecard->send_email('alejo@klan1.com');
-        $ecard->send_email(NULL, TRUE);
+        $ecard->send_email(NULL, FALSE);
+        \k1lib\html\html_header_go(url::do_url($_SERVER['REQUEST_URI'], [], TRUE, ['auth-code']));
     }
 
     /**
@@ -94,7 +93,13 @@ if ($controller_object->on_board_read()) {
     $div_ecard = new \k1lib\html\div();
     $div_ecard->append_to($div);
 
+    // SEND BUTTON
     $div_ecard->append_a(url::do_url($_SERVER['REQUEST_URI'], ['action' => 'send-email']), " Send ecard", NULL, 'button success fi-mail');
+
+    // VIEW EMAIL BUTTON
+    $view_email_url = get_ecard_email_url($ecard_send_data['send_id']);
+    $div_ecard->append_a($view_email_url, " View email", NULL, 'button fi-mail')->set_attrib('target', '_BLANK');
+
     $div_ecard->append_child(new \k1lib\html\h3('Preview'));
     $div_ecard->append_child($ecard->get_ecard_img_tag());
 }

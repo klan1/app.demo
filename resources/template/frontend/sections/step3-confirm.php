@@ -5,8 +5,9 @@ namespace k1app;
 use \k1lib\notifications\on_DOM as DOM_notifications;
 
 $send_data = \k1lib\common\unserialize_var('send-data');
+//DELIVERY
 $ecard_queued = FALSE;
-$ecard_sended = FALSE;
+$ecard_sent = FALSE;
 
 if (!empty($send_data)) {
     $discountable = 1;
@@ -29,7 +30,23 @@ if (!empty($send_data)) {
     $send_data_final['send_browser'] = $_SERVER['HTTP_USER_AGENT'];
     $send_data_final['send_discountable'] = $discountable;
 
-    $ecard_sends->insert_data($send_data_final);
+    $ecard_id = $ecard_sends->insert_data($send_data_final);
+
+    // SAME DAY DELIVERY
+    $date_out_timestamp = strtotime($send_data_final['send_date_out']);
+    $today_timestamp = strtotime(date('Y-m-d'));
+
+    if ($date_out_timestamp <= $today_timestamp) {
+        if (!empty($ecard_id)) {
+            include_once 'ecard-generation.php';
+            $ecard = new ecard_generator($send_data_final['ecard_id'], $send_data_final['ecard_mode'], $ecard_id);
+            if ($ecard->send_email()) {
+                $ecard_sent = TRUE;
+            }
+        }
+    } else {
+        $ecard_queued = TRUE;
+    }
 
 //    d($send_data_final);
 
@@ -43,8 +60,6 @@ if (!empty($send_data)) {
     \k1lib\common\unset_serialize_var('step1-data');
     \k1lib\common\unset_serialize_var('step2-data');
     \k1lib\common\unset_serialize_var('step3-data');
-
-    $ecard_queued = TRUE;
 } else {
     DOM_notifications::queue_mesasage('Can\'t update the transaction.: ' . $response_codes[$response_array['result-code']], 'warning', 'messages-area', 'Payment Gateway says:');
     d($response_array);
@@ -54,18 +69,18 @@ if (!empty($send_data)) {
 <div class="inner-content">
     <div class="container">
         <div class="row clearfix">
-            <?php echo $messages_output ?>
+<?php echo $messages_output ?>
             <br/><br/>
             <?php if ($ecard_queued) : ?>
                 <div class="row clearfix">
                     <div class="title">E-Card has been queued for send!</div>
                 </div>
-            <?php endif ?>
-            <?php if ($ecard_sended) : ?>
+<?php endif ?>
+            <?php if ($ecard_sent) : ?>
                 <div class="row clearfix">
                     <div class="title">E-Card has been sent!</div>
                 </div>
-            <?php endif ?>
+<?php endif ?>
             <br/><br/>
             <div class="row clearfix">
                 <p> 

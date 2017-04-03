@@ -90,5 +90,5 @@ include_once 'controllers-config.php';
  */
 // API Setup parameters
 const PAYLINE_GATEWAY = 'https://secure.paylinedatagateway.com/api/v2/three-step';
-const PAYLINE_APIKEY = '7mVh9Ku6x3x9tD485h4XAefEt6s86k7A'; // Production
-//const PAYLINE_APIKEY = '2F822Rw39fx762MaV7Yy86jXGTC7sCDy'; // Testing
+//const PAYLINE_APIKEY = '7mVh9Ku6x3x9tD485h4XAefEt6s86k7A'; // Production
+const PAYLINE_APIKEY = '2F822Rw39fx762MaV7Yy86jXGTC7sCDy'; // Testing
