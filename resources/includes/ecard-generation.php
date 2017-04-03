@@ -14,6 +14,19 @@ const ECARD_VERTICAL = 2;
 const ECARD_THUMB_WIDTH = 246;
 const ECARD_THUMB_HEIGHT = 143;
 
+function get_ecard_id_auth_code($send_id) {
+    $auth_code = md5($send_id . \k1lib\K1MAGIC::get_value());
+    return $auth_code;
+}
+
+function check_ecard_id_auth_code($send_id, $auth_code_from_url) {
+    if ($auth_code_from_url === get_ecard_id_auth_code($send_id)) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
 function get_ecard_fonts() {
     return [
         'DK-Innuendo.otf' => 'DK Innuendo',
@@ -197,7 +210,13 @@ class ecard_generator {
     private $from_text = 'From: ';
 
     public function __construct($ecard_id, $mode = ECARD_HORIZONTAL, $send_id = NULL) {
-
+        if ($mode == 'v') {
+            $mode = ECARD_VERTICAL;
+        }
+        if ($mode == 'h') {
+            $mode = ECARD_HORIZONTAL;
+        }
+        
         $this->ecard_id = $ecard_id;
         $this->ecard_mode = $mode;
         $this->send_id = $send_id;
@@ -544,7 +563,7 @@ class ecard_generator {
         $mail->AltBody = 'You have received an Electronic Easter Bunny Card!';
 
         if ($mail->Send()) {
-            DOM_notifications::queue_mesasage('Message has been sent', 'sucess');
+            DOM_notifications::queue_mesasage('Message has been sent', 'success');
         } else {
             DOM_notifications::queue_mesasage('Message could not be sent.', 'alert');
             DOM_notifications::queue_mesasage('Mailer Error: ' . $mail->ErrorInfo, 'alert');

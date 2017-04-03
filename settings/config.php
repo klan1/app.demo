@@ -12,8 +12,9 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const APP_TITLE = "EeBunny eCards";
-const APP_DESCRIPTION = "eCard Control Panel";
+const APP_TITLE = "EeBunny: The Most Amazing Bunny E-cards";
+const APP_DESCRIPTION = "Personalized Bunny E-cards for Every Occasion, Special Moments & Special Events";
+const APP_KEYWORKS = "Easter Bunny,Happy Easter,Greeting Ecards,Animal Ecards,Bunny Pets,e cards,happy birthday cards,christmas cards,online greeting cards,funny greeting cards,holiday Ecards,e greetings,Mosaic,Vintage,Watercolor,Eggs,Flower Power,Retro,Flowers,E-cards, Free Ecards";
 const APP_VERBOSE = 0;
 
 /**
@@ -67,7 +68,7 @@ const APP_VERBOSE = 0;
 /*
  * DB CONFIG
  */
-\k1lib\db\handler::enable("k1app_eebunny_ecards", 'dev-k1.eebunny', 'DB4cc3ss', 'localhost', '3306', "mysql");
+\k1lib\db\handler::enable("eebunny_ecards_production", 'dev-k1.eebunny', 'DB4cc3ss', 'localhost', '3306', "mysql");
 /**
  * DB Security
  */
