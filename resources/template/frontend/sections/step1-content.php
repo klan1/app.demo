@@ -165,7 +165,8 @@ if (!empty($ecard_data)) :
                 if (!$font_selected && ($font_name == $post_data['font'])) {
                     if (!$font_selected) {
                         $li->set_attrib('selected', TRUE);
-                        $ecard->set_custom_font_file($font_file);
+                        $custom_data['send_font_file'] = $font_file;
+//                        $ecard->set_custom_font_file($font_file);
                         $font_selected = TRUE;
                     }
                 }
@@ -173,7 +174,8 @@ if (!empty($ecard_data)) :
                 if (!$font_selected && $font_name == $ecard_fonts[$ecard_data['ecard_font']]) {
                     if (!$font_selected) {
                         $li->set_attrib('selected', TRUE);
-                        $ecard->set_custom_font_file($font_file);
+                        $custom_data['send_font_file'] = $font_file;
+//                        $ecard->set_custom_font_file($font_file);
                         $font_selected = TRUE;
                     }
                 }
@@ -188,14 +190,16 @@ if (!empty($ecard_data)) :
             if ($size_number == $post_data['size']) {
                 if (!$font_size_select) {
                     $li->set_attrib('selected', TRUE);
-                    $ecard->set_custom_font_size($font_size_px);
+                    $custom_data['send_font_size'] = $size_number;
+//                    $ecard->set_custom_font_size($font_size_px);
                     $font_size_select = TRUE;
                 }
             }
         }
         // COLOR
         $color = new \k1lib\html\input('text', 'color', $post_data['color'], 'jscolor');
-        $ecard->set_custom_font_color($post_data['color']);
+        $custom_data['send_font_color'] = $post_data['color'];
+//        $ecard->set_custom_font_color($post_data['color']);
 
         $ecard->load_message(NULL, $custom_data);
         $ecard->use_watermark();

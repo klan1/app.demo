@@ -14,131 +14,6 @@ const ECARD_VERTICAL = 2;
 const ECARD_THUMB_WIDTH = 246;
 const ECARD_THUMB_HEIGHT = 143;
 
-function get_ecard_fonts() {
-    return [
-        'DK-Innuendo.otf' => 'DK Innuendo',
-        'Janesville-Script.ttf' => 'Janesville Script',
-        'Light-up-the-World.ttf' => 'Light up the World',
-        'LillyBelle_2.ttf' => 'LillyBelle 2',
-        'Snaps-Taste.otf' => 'Snaps Taste',
-        'Tinfoil-Tiara.otf' => 'Tinfoil Tiara',
-        'Xiomara-Script.ttf' => 'Xiomara Script',
-    ];
-}
-
-function get_ecard_font_by_name($font_name) {
-    $fonts = get_ecard_fonts();
-    $fonts_flip = array_flip($fonts);
-    if (key_exists($font_name, $fonts_flip)) {
-        return $fonts_flip[$font_name];
-    } else {
-        return NULL;
-    }
-}
-
-function get_ecard_font_sizes($font_name = NULL) {
-    $fonts = get_ecard_fonts();
-    $fonts_flip = array_flip($fonts);
-    $fonts_base_size = [
-        'DK-Innuendo.otf' => 50,
-        'Janesville-Script.ttf' => 140,
-        'Light-up-the-World.ttf' => 70,
-        'LillyBelle_2.ttf' => 50,
-        'Snaps-Taste.otf' => 50,
-        'Tinfoil-Tiara.otf' => 100,
-        'Xiomara-Script.ttf' => 60,
-    ];
-    if (empty($font_name)) {
-        $size_array = [
-            50 => '-2',
-            60 => '-1',
-            70 => '0',
-            80 => '1',
-            90 => '2'
-        ];
-    } else {
-        $size_array = [
-            ($fonts_base_size[$fonts_flip[$font_name]]) - 20 => '-2',
-            ($fonts_base_size[$fonts_flip[$font_name]]) - 10 => '-1',
-            ($fonts_base_size[$fonts_flip[$font_name]]) => '0',
-            ($fonts_base_size[$fonts_flip[$font_name]]) + 10 => '1',
-            ($fonts_base_size[$fonts_flip[$font_name]]) + 20 => '2'
-        ];
-    }
-    return $size_array;
-}
-
-/**
- * 
- * @param \Imagick $canvas
- * @param \ImagickDraw $draw
- * @param string $text
- * @param int $max_width
- * @return string
- */
-function message_to_lines(\Imagick $canvas, \ImagickDraw $draw, $text, $max_width) {
-    $words = explode(" ", $text);
-
-    $lines = '';
-    $i = 0;
-    while ($i < count($words)) {//as long as there are words 
-        $line = "";
-        do {//append words to line until the fit in size 
-            if ($line != "") {
-                $line .= " ";
-            }
-            $line .= $words[$i];
-
-
-            $i++;
-            if (($i) == count($words)) {
-                break; //last word -> break 
-            }
-
-            //messure size of line + next word 
-            $linePreview = $line . " " . $words[$i];
-            $metrics = $canvas->queryFontMetrics($draw, $linePreview);
-        } while ($metrics["textWidth"] <= $max_width);
-
-        //echo "<hr>".$line."<br>"; 
-        $lines .= $line . "\n";
-    }
-
-    return $lines;
-}
-
-function get_ecard_thumbnail($filename, $width = ECARD_THUMB_WIDTH, $height = ECARD_THUMB_HEIGHT) {
-    $ecards_table = 'ecards';
-    $thumbnail_resize_folder = APP_RESOURCES_PATH . 'images/thumbnails/';
-    $thumbnail_resize_url = APP_RESOURCES_URL . 'images/thumbnails/';
-    $thumbnail_file = \k1lib\forms\file_uploads::get_uploaded_file_path($filename, $ecards_table);
-
-    if (!empty($filename) && file_exists($thumbnail_file)) {
-        $just_filename = strstr(basename($filename), '.', TRUE);
-
-        $thumbnail_file_resized = $thumbnail_resize_folder . $just_filename . '_' . $width . 'x' . $height . '.jpg';
-        $thumbnail_file_resized_url = $thumbnail_resize_url . $just_filename . '_' . $width . 'x' . $height . '.jpg';
-        if (file_exists($thumbnail_file_resized)) {
-            return $thumbnail_file_resized_url;
-        } else {
-            try {
-                $imagick = new \Imagick();
-                $imagick->readImage($thumbnail_file);
-            } catch (Exception $e) {
-                DOM_notifications::queue_mesasage('Error when loading the thumbnail file: ' . $e->getMessage(), "alert");
-            }
-            $imagick->thumbnailimage($width, $height);
-            $imagick->setformat('jpg');
-            $imagick->setcompression(\Imagick::COMPRESSION_JPEG);
-            $imagick->setimagecompressionquality(80);
-            $imagick->writeimage($thumbnail_file_resized);
-            return $thumbnail_file_resized_url;
-        }
-    } else {
-        return $thumbnail_resize_url . 'no-thumbnail.jpg';
-    }
-}
-
 class ecard_generator {
 
     private $layout_data = array();
@@ -147,6 +22,12 @@ class ecard_generator {
     private $ecard_mode = NULL;
     private $send_id = NULL;
     private $send_data = NULL;
+
+    /**
+     *
+     * @var type \k1lib\crudlexs\class_db_table
+     */
+    private $ecard_sends_table = NULL;
 
     /**
      * @var \Imagick
@@ -197,6 +78,12 @@ class ecard_generator {
     private $from_text = 'From: ';
 
     public function __construct($ecard_id, $mode = ECARD_HORIZONTAL, $send_id = NULL) {
+        if ($mode == 'v') {
+            $mode = ECARD_VERTICAL;
+        }
+        if ($mode == 'h') {
+            $mode = ECARD_HORIZONTAL;
+        }
 
         $this->ecard_id = $ecard_id;
         $this->ecard_mode = $mode;
@@ -267,7 +154,7 @@ class ecard_generator {
                 }
             }
         } else {
-            $error = 'eCard ID do not exist';
+            $error = 'E-Card ID do not exist';
             DOM_notifications::queue_mesasage($error, "alert");
         }
     }
@@ -302,10 +189,10 @@ class ecard_generator {
      */
     public function get_ecard_img_tag() {
         if (!empty($this->imagick)) {
-            $img_tag = new \k1lib\html\img($this->get_ecard_src_base64(), 'eCard generated', 'ecard-img');
+            $img_tag = new \k1lib\html\img($this->get_ecard_src_base64(), 'E-Card generated', 'ecard-img');
             return $img_tag;
         } else {
-            $img_tag = new \k1lib\html\img($this->no_img, 'eCard no file', 'ecard-img');
+            $img_tag = new \k1lib\html\img($this->no_img, 'E-Card no file', 'ecard-img');
             return $img_tag;
         }
     }
@@ -335,12 +222,38 @@ class ecard_generator {
                 $this->draw_from = new \ImagickDraw();
                 $this->draw_message = new \ImagickDraw();
 
-                // CUSTOM COLOR FOR ALL
+                //APPLY CUSTOM DATA
+                $this->send_data['send_font_size'];
+                $this->send_data['send_font_file'];
+                $this->send_data['send_font_color'];
+                $this->send_data[''];
+                $this->send_data[''];
+
+                // FONT FILE
+                if (isset($this->send_data['send_font_file']) && !empty($this->send_data['send_font_file'])) {
+                    $this->custom_font_file = $this->send_data['send_font_file'];
+                }
+                // FONT COLOR
+                if (isset($this->send_data['send_font_color']) && !empty($this->send_data['send_font_color'])) {
+                    $this->custom_font_color = $this->send_data['send_font_color'];
+                }
                 if (!empty($this->custom_font_color)) {
                     $custom_color = new Color($this->custom_font_color);
                     $custom_color_rgb = $custom_color->getRgbString();
                 } else {
                     $custom_color_rgb = NULL;
+                }
+                // FONT SIZE
+                if (isset($this->send_data['send_font_size']) && !empty($this->send_data['send_font_size'])) {
+                    if (!empty($this->custom_font_file)) {
+                        $ecard_font_sizes = get_ecard_font_sizes($this->custom_font_file, FALSE);
+                        if (!empty($ecard_font_sizes)) {
+                            $ecard_font_sizes_fliped = array_flip($ecard_font_sizes);
+                            if (array_key_exists($this->send_data['send_font_size'], $ecard_font_sizes_fliped)) {
+                                $this->custom_font_size = $ecard_font_sizes_fliped[$this->send_data['send_font_size']];
+                            }
+                        }
+                    }
                 }
 
                 // Set TO properties
@@ -434,7 +347,7 @@ class ecard_generator {
 
             return $this->imagick;
         } else {
-            $error = 'No image present to compose eCard';
+            $error = 'No image present to compose E-Card';
             DOM_notifications::queue_mesasage($error, "alert");
 
             return FALSE;
@@ -466,6 +379,7 @@ class ecard_generator {
         if (!empty($this->send_id)) {
             global $db;
             $ecard_send_table = new \k1lib\crudlexs\class_db_table($db, 'ecard_sends');
+            $this->ecard_sends_table = $ecard_send_table;
             $ecard_send_table->set_query_filter(['send_id' => $this->send_id]);
             $this->send_data = $ecard_send_table->get_data(FALSE);
 
@@ -514,58 +428,72 @@ class ecard_generator {
     }
 
     function send_email($send_to = NULL, $dev_copy = FALSE) {
-        if ($send_to == NULL) {
-            $send_to = $this->send_data['send_to_email'];
-        }
 
-        $mail = new \PHPMailer;
+        if (!empty($this->send_id) && !empty($this->send_data)) {
+            if ($send_to == NULL) {
+                $send_to = $this->send_data['send_to_email'];
+            }
 
-        $mail->IsSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.mandrillapp.com';                 // Specify main and backup server
-        $mail->Port = 587;                                    // Set the SMTP port
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'EEBunny';                // SMTP username
-        $mail->Password = 'Gn5TA04jtDb5EDwf1tZwKQ';                  // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
+            $mail = new \PHPMailer;
 
-        $mail->From = 'noreply@eebunny.com';
-        $mail->FromName = $this->send_data['send_from_name'];
-        $mail->AddAddress($send_to, $this->send_data['send_to_name']);  // Add a recipient
-        if ($dev_copy) {
-            $mail->AddAddress('alejo@klan1.com', "God developer");  // Add a recipient
-        }
+            $mail->IsSMTP();                                      // Set mailer to use SMTP
+            $mail->Host = 'smtp.mandrillapp.com';                 // Specify main and backup server
+            $mail->Port = 587;                                    // Set the SMTP port
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = 'EEBunny';                // SMTP username
+            $mail->Password = 'Gn5TA04jtDb5EDwf1tZwKQ';                  // SMTP password
+            $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
 
-        $mail->IsHTML(true);                                  // Set email format to HTML
+            $mail->From = 'noreply@eebunny.com';
+            $mail->FromName = $this->send_data['send_from_name'];
+            $mail->AddAddress($send_to, $this->send_data['send_to_name']);  // Add a recipient
+            if ($dev_copy) {
+                $mail->AddAddress('alejo@klan1.com', "God developer");  // Add a recipient
+            }
 
-        $mail->Subject = 'Ecard from ' . $this->send_data['send_from_name'];
-        $mail->Body = $this->make_email_html();
-        $mail->addStringAttachment($this->get_ecard_imagick(), 'ecard-attached.jpg', 'base64', 'image/jpg', 'attachment');
-        $mail->addStringEmbeddedImage($this->get_ecard_imagick(), "000ECARD000", 'ecard-inline.jpg', 'base64', 'image/jpg');
-        $mail->AltBody = 'You have received an Electronic Easter Bunny Card!';
+            $mail->IsHTML(true);                                  // Set email format to HTML
 
-        if ($mail->Send()) {
-            DOM_notifications::queue_mesasage('Message has been sent', 'success');
+            $mail->Subject = 'Easter E-Card from ' . $this->send_data['send_from_name'];
+            $mail->Body = $this->make_email_html();
+//            $mail->addStringAttachment($this->get_ecard_imagick(), 'ecard-attached.jpg', 'base64', 'image/jpg', 'attachment');
+//            $mail->addStringEmbeddedImage($this->get_ecard_imagick(), "000ECARD000", 'ecard-inline.jpg', 'base64', 'image/jpg');
+            $mail->AltBody = 'You have received an Electronic Easter Bunny Card!';
+
+            if ($mail->Send()) {
+                DOM_notifications::queue_mesasage('Message has been sent', 'success');
+                $this->ecard_sends_table->update_data(['send_date_sent' => date("Y-m-d H:i:s")], ['send_id' => $this->send_id]);
+            } else {
+                DOM_notifications::queue_mesasage('Message could not be sent.', 'alert');
+                DOM_notifications::queue_mesasage('Mailer Error: ' . $mail->ErrorInfo, 'alert');
+            }
         } else {
-            DOM_notifications::queue_mesasage('Message could not be sent.', 'alert');
-            DOM_notifications::queue_mesasage('Mailer Error: ' . $mail->ErrorInfo, 'alert');
+            DOM_notifications::queue_mesasage('Message could not be sent for empty data.', 'alert');
         }
     }
 
     function make_email_html() {
-        $doc_type = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-        $html = new \k1lib\html\html('en');
-        $html->set_attrib('xmlns', 'http://www.w3.org/1999/xhtml');
+        $view_email_url = get_ecard_email_url($this->send_id);
 
-        $body = new \k1lib\html\body();
-        $body->append_to($html);
-
-        $body->append_h3('Enjoy your eCard!');
-
-        $ecard_img_tag = new \k1lib\html\img('cid:000ECARD000');
-        $ecard_img_tag->set_style('max-width:100%');
-
-        $body->append_child($ecard_img_tag);
-        return $doc_type . "\n" . $html->generate();
+        $email_html_content = file_get_contents($view_email_url);
+        if (!empty($email_html_content)) {
+            return $email_html_content;
+        } else {
+            return "NO CONTENT";
+        }
+//        $doc_type = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+//        $html = new \k1lib\html\html('en');
+//        $html->set_attrib('xmlns', 'http://www.w3.org/1999/xhtml');
+//
+//        $body = new \k1lib\html\body();
+//        $body->append_to($html);
+//
+//        $body->append_h3('Enjoy your E-Card!');
+//
+//        $ecard_img_tag = new \k1lib\html\img('cid:000ECARD000');
+//        $ecard_img_tag->set_style('max-width:100%');
+//
+//        $body->append_child($ecard_img_tag);
+//        return $doc_type . "\n" . $html->generate();
     }
 
     function set_custom_font_color($custom_font_color) {
@@ -688,4 +616,159 @@ class Color extends \Mexitek\PHPColors\Color {
         return '#' . $rgb;
     }
 
+}
+
+function get_ecard_id_auth_code($send_id) {
+    $auth_code = md5($send_id . \k1lib\K1MAGIC::get_value());
+    return $auth_code;
+}
+
+function check_ecard_id_auth_code($send_id, $auth_code_from_url) {
+    if ($auth_code_from_url === get_ecard_id_auth_code($send_id)) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+function get_ecard_email_url($send_id) {
+    return (APP_URL . 'get-ecard/' . $send_id . '/' . get_ecard_id_auth_code($send_id) . '/' . 'view-email' . '/');
+}
+
+function get_ecard_fonts() {
+    return [
+        'DK-Innuendo.otf' => 'DK Innuendo',
+        'Janesville-Script.ttf' => 'Janesville Script',
+        'Light-up-the-World.ttf' => 'Light up the World',
+        'LillyBelle_2.ttf' => 'LillyBelle 2',
+        'Snaps-Taste.otf' => 'Snaps Taste',
+        'Tinfoil-Tiara.otf' => 'Tinfoil Tiara',
+        'Xiomara-Script.ttf' => 'Xiomara Script',
+    ];
+}
+
+function get_ecard_font_by_name($font_name) {
+    $fonts = get_ecard_fonts();
+    $fonts_flip = array_flip($fonts);
+    if (key_exists($font_name, $fonts_flip)) {
+        return $fonts_flip[$font_name];
+    } else {
+        return NULL;
+    }
+}
+
+function get_ecard_font_sizes($font_name = NULL, $use_flip = TRUE) {
+    $fonts = get_ecard_fonts();
+    if ($use_flip) {
+        $fonts_flip = array_flip($fonts);
+    }
+    $fonts_base_size = [
+        'DK-Innuendo.otf' => 50,
+        'Janesville-Script.ttf' => 140,
+        'Light-up-the-World.ttf' => 70,
+        'LillyBelle_2.ttf' => 50,
+        'Snaps-Taste.otf' => 50,
+        'Tinfoil-Tiara.otf' => 100,
+        'Xiomara-Script.ttf' => 60,
+    ];
+    if (empty($font_name)) {
+        $size_array = [
+            50 => '-2',
+            60 => '-1',
+            70 => '0',
+            80 => '1',
+            90 => '2'
+        ];
+    } else {
+        if ($use_flip) {
+
+            $size_array = [
+                ($fonts_base_size[$fonts_flip[$font_name]]) - 20 => '-2',
+                ($fonts_base_size[$fonts_flip[$font_name]]) - 10 => '-1',
+                ($fonts_base_size[$fonts_flip[$font_name]]) => '0',
+                ($fonts_base_size[$fonts_flip[$font_name]]) + 10 => '1',
+                ($fonts_base_size[$fonts_flip[$font_name]]) + 20 => '2'
+            ];
+        } else {
+            $size_array = [
+                ($fonts_base_size[$font_name]) - 20 => '-2',
+                ($fonts_base_size[$font_name]) - 10 => '-1',
+                ($fonts_base_size[$font_name]) => '0',
+                ($fonts_base_size[$font_name]) + 10 => '1',
+                ($fonts_base_size[$font_name]) + 20 => '2'
+            ];
+        }
+    }
+    return $size_array;
+}
+
+/**
+ * 
+ * @param \Imagick $canvas
+ * @param \ImagickDraw $draw
+ * @param string $text
+ * @param int $max_width
+ * @return string
+ */
+function message_to_lines(\Imagick $canvas, \ImagickDraw $draw, $text, $max_width) {
+    $words = explode(" ", $text);
+
+    $lines = '';
+    $i = 0;
+    while ($i < count($words)) {//as long as there are words 
+        $line = "";
+        do {//append words to line until the fit in size 
+            if ($line != "") {
+                $line .= " ";
+            }
+            $line .= $words[$i];
+
+
+            $i++;
+            if (($i) == count($words)) {
+                break; //last word -> break 
+            }
+
+            //messure size of line + next word 
+            $linePreview = $line . " " . $words[$i];
+            $metrics = $canvas->queryFontMetrics($draw, $linePreview);
+        } while ($metrics["textWidth"] <= $max_width);
+
+        //echo "<hr>".$line."<br>"; 
+        $lines .= $line . "\n";
+    }
+
+    return $lines;
+}
+
+function get_ecard_thumbnail($filename, $width = ECARD_THUMB_WIDTH, $height = ECARD_THUMB_HEIGHT) {
+    $ecards_table = 'ecards';
+    $thumbnail_resize_folder = APP_RESOURCES_PATH . 'images/thumbnails/';
+    $thumbnail_resize_url = APP_RESOURCES_URL . 'images/thumbnails/';
+    $thumbnail_file = \k1lib\forms\file_uploads::get_uploaded_file_path($filename, $ecards_table);
+
+    if (!empty($filename) && file_exists($thumbnail_file)) {
+        $just_filename = strstr(basename($filename), '.', TRUE);
+
+        $thumbnail_file_resized = $thumbnail_resize_folder . $just_filename . '_' . $width . 'x' . $height . '.jpg';
+        $thumbnail_file_resized_url = $thumbnail_resize_url . $just_filename . '_' . $width . 'x' . $height . '.jpg';
+        if (file_exists($thumbnail_file_resized)) {
+            return $thumbnail_file_resized_url;
+        } else {
+            try {
+                $imagick = new \Imagick();
+                $imagick->readImage($thumbnail_file);
+            } catch (Exception $e) {
+                DOM_notifications::queue_mesasage('Error when loading the thumbnail file: ' . $e->getMessage(), "alert");
+            }
+            $imagick->thumbnailimage($width, $height);
+            $imagick->setformat('jpg');
+            $imagick->setcompression(\Imagick::COMPRESSION_JPEG);
+            $imagick->setimagecompressionquality(80);
+            $imagick->writeimage($thumbnail_file_resized);
+            return $thumbnail_file_resized_url;
+        }
+    } else {
+        return $thumbnail_resize_url . 'no-thumbnail.jpg';
+    }
 }

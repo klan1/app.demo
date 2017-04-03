@@ -10,6 +10,7 @@ $server_name = $_SERVER['SERVER_NAME'];
 /**
  * TEMPLATE NAME
  */
+// BETTER ALL FOR SITE AND SPECIFIC TO CONTROL PANEL
 if (strstr($_SERVER['REQUEST_URI'], '/app/') === FALSE) {
     $app_template = 'frontend';
 } else {
