@@ -47,5 +47,5 @@ if (!empty($auth_code) && (check_ecard_id_auth_code($send_id, $auth_code))) {
     require $controller_to_include;
 } else {
 
-    echo "Excus Me, want do you want here ? (\_/) " . get_ecard_id_auth_code($send_id);
+    echo "Excus Me, want do you want here ? (\_/)";
 }

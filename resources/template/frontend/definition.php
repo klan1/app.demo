@@ -12,6 +12,8 @@ class frontend extends \k1lib\html\DOM {
     static public function start_template() {
 
         self::html()->body()->init_sections();
+        self::html()->body()->content()->set_attrib("style", NULL);
+
     }
 
 }
