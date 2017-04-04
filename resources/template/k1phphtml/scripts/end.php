@@ -4,8 +4,6 @@ namespace k1app;
 
 use k1app\k1app_template as DOM;
 
-header('Content-Type: text/plain');
-
 if (DOM::is_started()) {
     $run_info = DOM::html()->get_element_by_id("k1lib-run-info");
 

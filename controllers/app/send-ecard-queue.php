@@ -3,12 +3,12 @@
 namespace k1app;
 
 use k1lib\urlrewrite\url as url;
-use k1lib\session\session_db as session_db;
-use k1lib\html\template as template;
 
 include 'ecard-generation.php';
 
 k1app_template::end();
+
+header('Content-Type: text/plain');
 
 $ecard_sends_table = new \k1lib\crudlexs\class_db_table($db, 'ecard_sends');
 //$ecard_sends_table->set_query_filter(['send_date_out' => date('Y-m-d'), 'send_date_sent' => NULL], TRUE);
@@ -33,8 +33,3 @@ if (!empty($ecard_sends_queue)) {
 }else{
     d('Nothing to send now.');
 }
-
-
-
-
-
