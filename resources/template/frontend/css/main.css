@@ -154,6 +154,9 @@ body.categories .title {
     font-family:'Myriad Pro semibold';
     font-weight: 600;
 }
+strong {
+    color: #cacaca;
+}
 .container {
     margin-left: auto;
     margin-right: auto;
@@ -346,6 +349,7 @@ ul.social-links {
 /* ========== Carousel ============= */
 .carousel ul {
     margin: 0;
+    padding: 0;
 }
 .carousel ul li {
     text-align: center;
@@ -433,10 +437,16 @@ ul.social-links {
     font-family:'trendsetter';
     font-size: 94px; font-size: 9.4rem;
     font-weight: normal;
-    margin: 0;
+    margin: 0 0 0 11px;
+}
+.cards-section#lines h2 {
+    margin: 0 0 0 15px;
 }
 .cards-section .right h2 {
     display: none;
+}
+.home-page .cards-section .header-left p {
+    margin-top: -5px;
 }
 .join-wrapper-home {
     display: none;
@@ -824,7 +834,7 @@ body.step3 .inner-content {
     font-size: 30px; font-size: 3.0rem;
     margin-bottom: 14px;
     text-align: center;
-    text-shadow: 0px 3px 5px #148e88;
+    text-shadow: 0px 3px 5px #8f99c8;
     width: 100%;
 }
 .inner-content .subtitle {
@@ -887,11 +897,11 @@ body.step3 .inner-content {
     font-weight: 400;
     position: absolute;
     right: 0;
-    text-shadow: 0px 3px 5px #148e88;
+    text-shadow: 0px 3px 5px #8f99c8;
 }
 .inner-content .card .no-watermark {
     bottom: -25px;
-    color: #cc7082;
+    color: #fff;
     left: 0;
     position: absolute;
 }
@@ -1017,6 +1027,7 @@ body.step3 .inner-content {
 .eebunny-form textarea {
     border: 0 none;
     color: #b76f80;
+    height: 62px;
     outline: 0;
     width: 100%;
 }
@@ -1043,6 +1054,7 @@ body.step3 .inner-content {
     margin-right: 6px;
     max-width: 155px;
     text-align: center;
+    text-transform: capitalize;
     width: 100%;
 }
 .eebunny-form label {
@@ -1051,7 +1063,7 @@ body.step3 .inner-content {
     font-weight: 400;
     font-size: 38px; font-size: 3.8rem;
     padding-left: 10px;
-    text-shadow: 0px 3px 5px #148e88;
+    text-shadow: 0px 3px 5px #8f99c8;
 }
 .eebunny-form .input-wrap {
     background: #fff;
@@ -1194,18 +1206,19 @@ body.categories .title { color: #cf7082; }
 .step3 .inner-content .title,
 .step3 .eebunny-form,
 .step3 .ebunny-form {
-    text-shadow: 0px 3px 5px #b47fc1;
+    text-shadow: 0px 3px 5px #99a8d1;
 }
 .step3 p {
     font-size: 23px; font-size: 2.3rem;
     margin: 0;
-    text-shadow: 0px 3px 5px #b47fc1;
+    text-shadow: 0px 3px 5px #99a8d1;
 }
 #payment-data .input-wrap {
     margin-bottom: 20px;
 }
 ul.p-options {
    list-style: none; 
+   padding: 0;
 }
 ul.p-options li {
     display: inline-block;
@@ -1231,6 +1244,10 @@ ul.p-options .t1 {
     font-size: 16px; font-size: 1.6rem;
     margin-top: 40px;
     line-height: 0.9;
+}
+ul.p-options .op1 .t1 {
+    position: relative;
+    top: 5px;
 }
 ul.p-options .t2 {
     display: block;
@@ -1267,6 +1284,9 @@ ul.p-options li a img {
 }
 .cards-icons .taxes-alert {
     display: block;
+}
+.step3 .eebunny-form input[type="submit"] {
+    margin-left: -12px;
 }
 
 /* ==========================================================================
