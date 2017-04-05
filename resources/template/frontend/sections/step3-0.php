@@ -13,8 +13,6 @@ global $app_session;
 $users_table = new \k1lib\crudlexs\class_db_table($db, 'view_users_complete');
 $users_table->set_query_filter(['user_email' => \k1lib\session\session_db::get_user_login()]);
 $user_data = $users_table->get_data(FALSE);
-d(\k1lib\session\session_db::get_user_login());
-d($user_data);
 
 if ((((int) $user_data['membership_id'] > 2) && ($user_data['send_discountable'] < $user_data['membership_send_quantity']))) {
     $on_membership = TRUE;
@@ -335,7 +333,6 @@ if (!$on_membership) {
         }
     }
 }
-d("{$user_data['membership_send_quantity']} - {$user_data['send_discountable']}");
 ?>
 <!-- <?php echo basename(__FILE__) ?> -->
 <div class="slide-inner">

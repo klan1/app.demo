@@ -1,5 +1,5 @@
 <?php namespace k1app ?>
-<?php d(\k1lib\session\session_db::get_user_data()) ?>
+<?php // d(\k1lib\session\session_db::get_user_data()) ?>
         <!-- <?php echo basename(__FILE__) ?> -->
         <header class="site-header">
             <div class="container clearfix">
