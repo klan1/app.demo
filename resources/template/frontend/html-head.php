@@ -10,7 +10,7 @@ $head->append_meta("viewport", "width=device-width, initial-scale=1.0");
 $head->append_meta("description", APP_DESCRIPTION);
 $head->append_meta("keywords", APP_KEYWORKS);
 
-$head->link_css(APP_URL)->set_attrib("rel", "canonical");
+$head->link_css(APP_URL . 'site/')->set_attrib("rel", "canonical");
 
 $head->append_meta("generator", "Klan1 Network Web App Enginie " . \k1lib\VERSION);
 $head->append_meta("developer", "Alejandro Trujillo J. - alejo@klan1.com");

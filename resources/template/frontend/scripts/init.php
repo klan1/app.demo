@@ -27,6 +27,7 @@ $head->append_child(new script(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js"));
 $head->append_child(new script(APP_TEMPLATE_URL . "js/vendor/modernizr-2.8.3.min.js"));
 
 $head->load_file(APP_TEMPLATE_PATH . 'sections/header-favicon.php', \k1lib\html\INSERT_ON_BEFORE_TAG_CLOSE);
+$head->load_file(APP_TEMPLATE_PATH . 'sections/header-open-graph.php', \k1lib\html\INSERT_ON_BEFORE_TAG_CLOSE);
 
 /**
  * HTML BODY

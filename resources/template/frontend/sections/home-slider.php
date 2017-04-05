@@ -10,7 +10,7 @@
 ?>
         <!-- <?php echo basename(__FILE__) ?> -->
         <div class="header-slider slide old-space">
-            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2a.jpg" alt="EeBunny Ecards"/></div>
-            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2b.jpg" alt="EeBunny Ecards"/></div>
-            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/Sliders-2c.jpg" alt="EeBunny Ecards"/></div>
+            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/1.jpg" alt="EeBunny Ecards"/></div>
+            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/2.jpg" alt="EeBunny Ecards"/></div>
+            <div><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/3.jpg" alt="EeBunny Ecards"/></div>
         </div>

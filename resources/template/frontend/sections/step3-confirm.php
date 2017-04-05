@@ -69,22 +69,27 @@ if (!empty($send_data)) {
 <div class="inner-content">
     <div class="container">
         <div class="row clearfix">
-<?php echo $messages_output ?>
-            <br/><br/>
+            <?php echo $messages_output ?>
             <?php if ($ecard_queued) : ?>
                 <div class="row clearfix">
                     <div class="title">E-Card has been queued for send!</div>
                 </div>
-<?php endif ?>
+            <?php endif ?>
             <?php if ($ecard_sent) : ?>
                 <div class="row clearfix">
                     <div class="title">E-Card has been sent!</div>
                 </div>
-<?php endif ?>
+            <?php endif ?>
             <br/><br/>
             <div class="row clearfix">
                 <p> 
-                    <a href="<?php echo APP_URL . 'site/' ?>">Select More Ecards!</a>
+                    <a href="<?php echo APP_URL . 'site/' ?>">Select More E-Cards!</a>
+                </p>
+            </div>
+            <br/><br/>
+            <div class="row clearfix">
+                <p> 
+                    <img src="<?php echo APP_TEMPLATE_IMAGES_URL ?>thank-you.png" alt=""/>
                 </p>
             </div>
         </div>

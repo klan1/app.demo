@@ -407,7 +407,6 @@ if (!empty($response_array)) {
         <div class="container">
             <div class="row clearfix">
                 <?php echo $messages_output ?>
-                <br/><br/>
                 <?php if ($payment_acepted) : ?>
                     <div class="row clearfix">
                         <div class="title">Payment has been applied</div>
@@ -436,6 +435,12 @@ if (!empty($response_array)) {
                         <?php endif ?>
                         <p> 
                             <a href="<?php echo APP_URL . 'site/' ?>">Select More Ecards!</a>
+                        </p>
+                    </div>
+                    <br/><br/>
+                    <div class="row clearfix">
+                        <p> 
+                            <img src="<?php echo APP_TEMPLATE_IMAGES_URL ?>thank-you.png" alt=""/>
                         </p>
                     </div>
                 <?php endif ?>
