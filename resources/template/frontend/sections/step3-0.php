@@ -13,6 +13,8 @@ global $app_session;
 $users_table = new \k1lib\crudlexs\class_db_table($db, 'view_users_complete');
 $users_table->set_query_filter(['user_email' => \k1lib\session\session_db::get_user_login()]);
 $user_data = $users_table->get_data(FALSE);
+d(\k1lib\session\session_db::get_user_login());
+d($user_data);
 
 if ((((int) $user_data['membership_id'] > 2) && ($user_data['send_discountable'] < $user_data['membership_send_quantity']))) {
     $on_membership = TRUE;
@@ -118,7 +120,7 @@ if (!$on_membership) {
                 case 1:
                     $payment['type'] = 'ECARD';
                     $payment['membership_id'] = NULL;
-                    if (((int) $user_data['membership_id'] === 3) || ((int)$user_data['membership_id'] === 4)) {
+                    if (((int) $user_data['membership_id'] === 3) || ((int) $user_data['membership_id'] === 4)) {
                         $payment['description'] = 'SINGLE CARD - MEMBER DISCOUNT';
                         $payment['price'] = '0.88';
                     } else {
@@ -333,6 +335,7 @@ if (!$on_membership) {
         }
     }
 }
+d("{$user_data['membership_send_quantity']} - {$user_data['send_discountable']}");
 ?>
 <!-- <?php echo basename(__FILE__) ?> -->
 <div class="slide-inner">
@@ -349,7 +352,7 @@ if (!$on_membership) {
             <?php if ($on_membership) : ?>
                 <div class="title">You have an active membership</div>
                 <div class="row clearfix">
-                    <h2>Sends remaining: <?php echo $user_data['membership_send_quantity'] - $user_data['send_discountable'] ?></h2>
+                    <h2>Sends remaining : <?php echo (int) $user_data['membership_send_quantity'] - (int) $user_data['send_discountable'] ?></h2>
                     <?php $send_date = new \DateTime($send_data['send_date_out']); ?>
                     <p>Press continue if you want to send your E-Card on <?php echo $send_date->format('F j') ?>.</p>
                     <br/><br/>
@@ -525,7 +528,7 @@ if (!$on_membership) {
                                             <li>
                                                 <a href="#" class="popt op1 selected">
                                                     <span class="t1">Single Ecard:</span>
-                                                    <?php if (((int)$user_data['membership_id'] === 3) || ((int)$user_data['membership_id'] === 4)) : ?>
+                                                    <?php if (((int) $user_data['membership_id'] === 3) || ((int) $user_data['membership_id'] === 4)) : ?>
                                                         <span class="t2">$0.88 USD</span>
                                                     <?php else : ?>
                                                         <span class="t2">$1.99 USD</span>
