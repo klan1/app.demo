@@ -154,8 +154,14 @@ body.categories .title {
     font-family:'Myriad Pro semibold';
     font-weight: 600;
 }
-strong {
-    color: #cacaca;
+#k1lib-content strong {
+    color: #fff;
+    text-decoration: underline;
+}
+#k1lib-content.page strong {
+    /*color: #9e9e9e; gris*/
+    color: #af5969;
+    text-decoration: none;
 }
 .container {
     margin-left: auto;
@@ -424,10 +430,17 @@ ul.social-links {
     top: 50%;
 }
 /* ========== Banner slider ============= */
+.header-slider {
+    text-align: center;
+}
 .header-slider img {
-    display: block;
+    display: inline-block;
     height: auto;
     max-width: 100%;
+}
+.header-slider .slick-slide {
+    line-height: 305px;
+    min-height: 305px;
 }
 .slick-dots li button:before {
     /*background: #cc7082;*/
@@ -445,6 +458,9 @@ ul.social-links {
 .cards-section .right h2 {
     display: none;
 }
+.cards-section .right .join-wrapper-home {
+    display: none;
+}
 .home-page .cards-section .header-left p {
     margin-top: -5px;
 }
@@ -457,8 +473,8 @@ ul.social-links {
 #k1lib-content .join-wrapper-home a:hover {
     color: #fff;
 }
-#join-watercolor-wrapper,
-#join-lines-wrapper {
+.join-watercolor-wrapper,
+.join-lines-wrapper {
     display: block;
 }
 #join-lines-wrapper .join-btn {
@@ -1395,6 +1411,9 @@ ul.p-options li a img {
         text-align: center;
         width: 100%;
     }
+    .main-menu ul.social-links {
+        margin-bottom: 25px;
+    }
     .main-menu ul.menu {
         padding: 10px 0 0;
         margin-bottom: 20px;
@@ -1407,10 +1426,12 @@ ul.p-options li a img {
     }
 }
 @media only screen and (min-width: 880px) {
-    .cards-section .right h2 {
+    .cards-section .right h2,
+    .cards-section .right .join-wrapper-home {
         display: inline-block;
     }
-    .cards-section .left h2 {
+    .cards-section .left h2,
+    .cards-section .left .join-wrapper-home {
         display: none;
     }
 }
@@ -1431,6 +1452,11 @@ ul.p-options li a img {
     #art { background-attachment: scroll }
     .margin-line {
         margin-top: 0;
+    }
+    .cards-section .join-wrapper-home {
+        display: block;
+        text-align: center;
+        width: 100%;
     }
     .cards-section .join-btn, .cards-section .join-btn-orange {
         margin-bottom: 30px;
