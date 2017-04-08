@@ -31,6 +31,7 @@ foreach ($categories_data as $category_data) :
     </style>
     <section class="cards-section" id="<?php echo $cat_slug ?>">
         <style type="text/css">
+            <!-- #<?php echo $cat_slug ?> h2, <?php echo $category_data['ecc_css'] ?> -->
             #<?php echo $cat_slug ?> h2, <?php echo $category_data['ecc_css'] ?>
             #<?php echo $cat_slug ?> { background: url(<?php echo file_uploads::get_uploaded_file_url($category_data['ecc_bg_img'], $categories_table->get_db_table_name()); ?>) repeat-y top center scroll; }
         </style>
