@@ -68,10 +68,16 @@ jQuery(document).ready(function ($) {
         }
     });
     //clone and duplicate title to hide/show it responsively 
-    $('.cards-section h2').each(function () {
+    /*$('.cards-section h2').each(function () {
         tt = $(this).clone();
         $(this).parent().parent().find('.header-left').prepend(tt);
-    });
+    });*/
+    //clone and duplicate join-button to hide/show it responsively 
+    /*$('.cards-section .join-wrapper-home').each(function () {
+        jj = $(this).clone();
+        $(this).parent().parent().find('.header-left').apppend(jj);
+    });*/
+    
     //Each item with the .has-popup class is checked
     //if it also has a data-pupup-id attribute then the element
     //with that id is relocated as a popup within the item.

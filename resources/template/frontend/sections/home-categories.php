@@ -31,19 +31,26 @@ foreach ($categories_data as $category_data) :
     </style>
     <section class="cards-section" id="<?php echo $cat_slug ?>">
         <style type="text/css">
-    <?php echo $category_data['ecc_css'] ?>
+            <!-- #<?php echo $cat_slug ?> h2, <?php echo $category_data['ecc_css'] ?> -->
+            #<?php echo $cat_slug ?> h2, <?php echo $category_data['ecc_css'] ?>
             #<?php echo $cat_slug ?> { background: url(<?php echo file_uploads::get_uploaded_file_url($category_data['ecc_bg_img'], $categories_table->get_db_table_name()); ?>) repeat-y top center scroll; }
         </style>
         <div class="container clearfix">
             <div class="left">
                 <h2><?php echo $category_data['ecc_name'] ?></h2>
+                <?php if (!\k1lib\session\session_db::is_logged() && in_array($category_data['ecc_slug'], array('watercolor', 'lines'))) : ?>
+                    <div id="" class="join-<?php echo $cat_slug ?>-wrapper join-wrapper-home">
+                        <a href="<?php echo APP_URL . '/site/join-now/ref=home' ?>" class="join-btn">JOIN</a>
+                    </div>
+                <?php endif ?>
                 <img src="<?php echo file_uploads::get_uploaded_file_url($category_data['ecc_bunny_png'], $categories_table->get_db_table_name()); ?>" alt="<?php echo $category_data['ecc_name'] ?>"/>
             </div>
             <div class="right">
                 <header class="section-header clearfix">
                     <div class="header-left clearfix">
-                        <?php if (!\k1lib\session\session_db::is_logged()) : ?>
-                            <div id="join-<?php echo $cat_slug ?>-wrapper" class="join-wrapper-home">
+                        <h2><?php echo $category_data['ecc_name'] ?></h2>
+                        <?php if (!\k1lib\session\session_db::is_logged() && in_array($category_data['ecc_slug'], array('watercolor', 'lines'))) : ?>
+                            <div id="" class="join-<?php echo $cat_slug ?>-wrapper join-wrapper-home">
                                 <a href="<?php echo APP_URL . '/site/join-now/ref=home' ?>" class="join-btn">JOIN</a>
                             </div>
                         <?php endif ?>

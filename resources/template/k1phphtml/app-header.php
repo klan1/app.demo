@@ -26,6 +26,7 @@ if (!isset($_GET['just-controller'])) {
          * EEBUNNY CONTROL PANEL NAV
          */
         if (k1lib_session::check_user_level(['god', 'admin'])) {
+            $menu_left->add_menu_item(APP_URL . 'site/', 'Frontend - Website', 'nav-frontend')->set_attrib('target', '_blank');
             $menu_left->add_menu_item(APP_URL . 'app/dashboard-admin/', 'Admin Dashboard', 'nav-dashboard');
 
             $ecard_submenu = $menu_left->add_sub_menu("#", 'eCards', 'nav-ecards');
