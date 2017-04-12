@@ -134,7 +134,7 @@ if (!empty($ecard_data)) :
         $send_from_name->set_attrib('placeholder', 'Your name');
         // RECIPENTS'S NAME
         $send_to_name = new \k1lib\html\input('text', 'recipent_name', $custom_data['send_to_name']);
-        $send_to_name->set_attrib('placeholder', 'Recipent\'s name');
+        $send_to_name->set_attrib('placeholder', 'Recipients');
         // E-MAIL
         $send_to_email = new \k1lib\html\input('text', 'recipent_email', $post_data['recipent_email']);
         $send_to_email->set_attrib('placeholder', 'E-mail');
@@ -255,7 +255,7 @@ if (!empty($ecard_data)) :
                             <div class="input-wrap">
                                 <?php echo $send_to_email ?>
                             </div>
-                            <label>Delivery on</label>
+                            <label>Delivery date</label>
                             <div class="input-wrap">
                                 <?php echo $send_date_out ?>
                             </div>

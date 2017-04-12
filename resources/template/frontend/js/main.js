@@ -190,4 +190,18 @@ jQuery(document).ready(function ($) {
             $('textarea[name="user_message"]').html(msg);
         };
     });
+    //preset select tag color propertie
+    $('.eebunny-form select').css('color','#f2c3d4');
+    //change select field color on focus
+    $('.eebunny-form select').focus(function(){
+        $(this).css('color','#b76f80');
+    });
+    //recover select color
+    $('.eebunny-form select').blur(function(){
+        if($(this).val() != $(this).children('option').eq(0).val()){
+            $(this).css('color','#b76f80');
+        } else {
+            $(this).css('color','#f2c3d4');
+        }
+    });
 });
