@@ -349,7 +349,7 @@ ul.social-links {
 .slide-inner {
     background: #f2c3d4 url(../img/inner-slide-bg.png) repeat;
     display: block;
-    padding: 30px 0;
+    padding: 10px 0;
     text-align: center;
 }
 /* ========== Carousel ============= */
@@ -439,8 +439,8 @@ ul.social-links {
     max-width: 100%;
 }
 .header-slider .slick-slide {
-    line-height: 305px;
-    min-height: 305px;
+    /*line-height: 305px;
+    min-height: 305px;*/
 }
 .slick-dots li button:before {
     /*background: #cc7082;*/
@@ -920,6 +920,7 @@ body.step3 .inner-content {
     color: #fff;
     left: 0;
     position: absolute;
+    text-shadow: 0px 3px 5px #8f99c8;
 }
 .thumb-set {
     font-size: 0;
