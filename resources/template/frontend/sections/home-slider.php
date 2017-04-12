@@ -13,4 +13,5 @@
             <div style="background: url('<?php echo APP_TEMPLATE_IMAGES_URL?>slides/1-bg.jpg') repeat;"><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/1.png" alt="EeBunny Ecards"/></div>
             <div style="background: url('<?php echo APP_TEMPLATE_IMAGES_URL?>slides/2-bg.jpg') repeat;"><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/2.png" alt="EeBunny Ecards"/></div>
             <div style="background: url('<?php echo APP_TEMPLATE_IMAGES_URL?>slides/3-bg.jpg') repeat;"><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/3.png" alt="EeBunny Ecards"/></div>
+            <div style="background: url('<?php echo APP_TEMPLATE_IMAGES_URL?>slides/4-bg.png') repeat;"><img src="<?php echo APP_TEMPLATE_IMAGES_URL?>slides/4.png" alt="EeBunny Ecards"/></div>
         </div>
