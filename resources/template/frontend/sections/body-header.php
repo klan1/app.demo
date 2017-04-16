@@ -38,7 +38,7 @@ global $search_query, $search_input;
                     </div>
                     <div id="login-popup" style="display:none;"><span>consectetur adipisicing elit.</span></div>
                 <?php else: ?>
-                    <a class="my-account-btn" href="<?php //echo APP_URL . 'site/pages/my-account/'         ?>javascript:alert('Coming soon (\\_/)')"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/my-acount.png" alt="my-account"/></a>
+                    <a class="my-account-btn" href="<?php echo APP_URL . 'site/account/' ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/my-acount.png" alt="my-account"/></a>
                     <a class="my-login-btn" href="<?php echo APP_URL . 'site/logout/' ?>"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>/log-out-2.png" alt="my-account"/></a>
                 <?php endif; ?>
             </div>
