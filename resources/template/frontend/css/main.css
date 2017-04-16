@@ -193,7 +193,7 @@ body.categories .title {
     outline: 0;
     padding: 4px 4px;
 }
-#search.active {
+#search {
     border: 1px solid #ddb2b0;
     color: #ddb2b0;
 }

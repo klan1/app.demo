@@ -2,6 +2,7 @@
 
 namespace k1app;
 
+use k1lib\notifications\on_DOM as DOM_notifications;
 use \k1lib\urlrewrite\url as url;
 
 require 'ecard-generation.php';
@@ -19,11 +20,49 @@ if ($category_slug) {
 
     global $ecards_data;
     $ecards_data = [];
-    foreach ($categories_data as $category_data) {
-        $ecards_table = new \k1lib\crudlexs\class_db_table($db, "ecards");
-        $ecards_table->set_query_filter(['ecard_category_id' => $category_data['ecard_category_id']], TRUE);
 
-        $ecards_data = array_merge($ecards_data, $ecards_table->get_data(TRUE, FALSE));
+
+    if (isset($_GET['s'])) {
+        $ecards_table = new \k1lib\crudlexs\class_db_table($db, "ecards");
+
+        $search_query = \k1lib\forms\check_single_incomming_var($_GET['s']);
+        if (!empty($search_query) && (\k1lib\forms\check_value_type($search_query, 'letters')) == '') {
+            $search_input = frontend::html()->get_element_by_id('search');
+            if (isset($search_input)) {
+                $search_input->set_value($search_query);
+            }
+            $sql_query = "SELECT
+                                *, MATCH (
+                                            ecard_name,
+                                            ecard_name_public,
+                                            ecard_hashtags
+                                    ) AGAINST (
+                                            '{$search_query}' IN NATURAL LANGUAGE MODE
+                                    ) AS score
+                            FROM
+                                    ecards
+                            HAVING
+                                    score > 1
+                            ORDER BY
+                                    score DESC";
+            $ecards_table->set_custom_sql_query($sql_query);
+            $ecards_data = $ecards_table->get_data(TRUE, FALSE);
+        } else {
+            DOM_notifications::queue_mesasage('Bad search terms', 'warning', 'messages-area', 'Attention:');
+        }
+
+        if (empty($ecards_data)) {
+            DOM_notifications::queue_mesasage('No results, showing all E-Cards', 'warning', 'messages-area', 'Attention:');
+            $ecards_table->set_custom_sql_query(NULL);
+            $ecards_data = $ecards_table->get_data(TRUE, FALSE);
+        }
+    } else {
+        foreach ($categories_data as $category_data) {
+            $ecards_table = new \k1lib\crudlexs\class_db_table($db, "ecards");
+            $ecards_table->set_query_filter(['ecard_category_id' => $category_data['ecard_category_id']], TRUE);
+
+            $ecards_data = array_merge($ecards_data, $ecards_table->get_data(TRUE, FALSE));
+        }
     }
 
     if (!empty($ecards_data)) {

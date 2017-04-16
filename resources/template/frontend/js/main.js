@@ -59,25 +59,28 @@ jQuery(document).ready(function ($) {
         }
     });
     //search field control
-    $('.searchform').submit(function (e) {
-        if ($('#search').val().length > 0) {
-
-        } else {
-            e.preventDefault();
-            $('#search').addClass('active');
-        }
-    });
+//    $('.searchform').submit(function (e) {
+//        if ($('#search').val().length > 0) {
+////            $('#search').addClass('active');
+//        } else {
+//            e.preventDefault();
+//            $('#search').addClass('active');
+//        }
+//    });
+//    $('#search-btn').hover(function (e) {
+//        $('#search').addClass('active');
+//    })
     //clone and duplicate title to hide/show it responsively 
     /*$('.cards-section h2').each(function () {
-        tt = $(this).clone();
-        $(this).parent().parent().find('.header-left').prepend(tt);
-    });*/
+     tt = $(this).clone();
+     $(this).parent().parent().find('.header-left').prepend(tt);
+     });*/
     //clone and duplicate join-button to hide/show it responsively 
     /*$('.cards-section .join-wrapper-home').each(function () {
-        jj = $(this).clone();
-        $(this).parent().parent().find('.header-left').apppend(jj);
-    });*/
-    
+     jj = $(this).clone();
+     $(this).parent().parent().find('.header-left').apppend(jj);
+     });*/
+
     //Each item with the .has-popup class is checked
     //if it also has a data-pupup-id attribute then the element
     //with that id is relocated as a popup within the item.
@@ -184,24 +187,25 @@ jQuery(document).ready(function ($) {
         showButtonPanel: true
     });
     //clones the message from a select field to a textarea field, on change
-    $('select#predefined_message').on('change',function(){
+    $('select#predefined_message').on('change', function () {
         msg = $(this).children('option:selected').text();
-        if(msg !== undefined){
+        if (msg !== undefined) {
             $('textarea[name="user_message"]').html(msg);
-        };
+        }
+        ;
     });
     //preset select tag color propertie
     /*$('.eebunny-form select').css('color','#f2c3d4');
-    //change select field color on focus
-    $('.eebunny-form select').focus(function(){
-        $(this).css('color','#b76f80');
-    });
-    //recover select color
-    $('.eebunny-form select').blur(function(){
-        if($(this).val() != $(this).children('option').eq(0).val()){
-            $(this).css('color','#b76f80');
-        } else {
-            $(this).css('color','#f2c3d4');
-        }
-    });*/
+     //change select field color on focus
+     $('.eebunny-form select').focus(function(){
+     $(this).css('color','#b76f80');
+     });
+     //recover select color
+     $('.eebunny-form select').blur(function(){
+     if($(this).val() != $(this).children('option').eq(0).val()){
+     $(this).css('color','#b76f80');
+     } else {
+     $(this).css('color','#f2c3d4');
+     }
+     });*/
 });
