@@ -570,6 +570,9 @@ ul.social-links {
     height: 38px;
     margin: 0 10px 10px 32px;
     position: relative;
+    font-family: 'trendsetter';
+    font-size: 1.5em;
+    text-align: center ;
 }
 .card-preview-title::before {
     content: "";
@@ -1234,8 +1237,8 @@ body.categories .title { color: #cf7082; }
     margin-bottom: 20px;
 }
 ul.p-options {
-   list-style: none; 
-   padding: 0;
+    list-style: none; 
+    padding: 0;
 }
 ul.p-options li {
     display: inline-block;

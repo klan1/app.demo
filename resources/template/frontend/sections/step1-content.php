@@ -165,6 +165,7 @@ if (!empty($ecard_data)) :
                 if (!$font_selected && ($font_name == $post_data['font'])) {
                     if (!$font_selected) {
                         $li->set_attrib('selected', TRUE);
+                        $li->set_class('default-selected');
                         $custom_data['send_font_file'] = $font_file;
 //                        $ecard->set_custom_font_file($font_file);
                         $font_selected = TRUE;
@@ -174,6 +175,7 @@ if (!empty($ecard_data)) :
                 if (!$font_selected && $font_name == $ecard_fonts[$ecard_data['ecard_font']]) {
                     if (!$font_selected) {
                         $li->set_attrib('selected', TRUE);
+                        $li->set_class('default-selected');
                         $custom_data['send_font_file'] = $font_file;
 //                        $ecard->set_custom_font_file($font_file);
                         $font_selected = TRUE;
@@ -190,6 +192,7 @@ if (!empty($ecard_data)) :
             if ($size_number == $post_data['size']) {
                 if (!$font_size_select) {
                     $li->set_attrib('selected', TRUE);
+                    $li->set_class('default-selected');
                     $custom_data['send_font_size'] = $size_number;
 //                    $ecard->set_custom_font_size($font_size_px);
                     $font_size_select = TRUE;
@@ -220,7 +223,7 @@ if (!empty($ecard_data)) :
                     EeBunny - Ecards
                 </div>
                 <div class="subtitle">
-                    Custom your Ecard
+                    <?php echo $ecard_data['ecard_name_public']; ?>
                 </div>
                 <div class="card" id="preview">
                     <?php echo $ecard->get_ecard_img_tag(); ?>

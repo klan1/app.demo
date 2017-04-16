@@ -392,7 +392,7 @@ if (!$on_membership) {
                         <p>Ecards Sent Additional to Subscription will be at a Discounted 50% cost of Single Ecard.</p>
                         <br/><br/>
                         <div class="row clearfix">
-                            <div class="title">Billing information</div>
+                            <div class="title">Billing Information</div>
 
                             <div class="row clearfix">
                                 <div class="one_half">
@@ -559,7 +559,7 @@ if (!$on_membership) {
                                 </form>
                             </div>
                             <div class="one_half last">
-                                <div class="title">Credit Card information</div>
+                                <div class="title">Credit Card Information</div>
                                 <div class="cards-icons">
                                     <a href="#"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>icon-paypal.png" alt="paypal"></a>
                                     <a href="#"><img src="<?php echo APP_TEMPLATE_IMAGES_URL; ?>icon-visa.png" alt="Visa"></a>
