@@ -176,7 +176,7 @@ if (!empty($_POST) && !empty($form_action)) {
             $user_data = [];
             $login_table = "view_users_complete";
             $login_user_field = "user_email";
-            $login_password_field = "login_password";
+            $login_password_field = "user_password";
             $login_level_field = "user_level";
             if (!isset($app_session)) {
                 $app_session = new \k1lib\session\session_db($db);
