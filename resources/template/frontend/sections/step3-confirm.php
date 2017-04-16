@@ -4,13 +4,23 @@ namespace k1app;
 
 use \k1lib\notifications\on_DOM as DOM_notifications;
 
+global $app_session, $ecard_data;
+
 $send_data = \k1lib\common\unserialize_var('send-data');
 //DELIVERY
 $ecard_queued = FALSE;
 $ecard_sent = FALSE;
 
 if (!empty($send_data)) {
-    $discountable = 1;
+
+    if ((float) $ecard_data['ecard_price_full'] !== 0.0) {
+        $is_free = FALSE;
+        $discountable = 1;
+    } else {
+        $discountable = 0;
+        $is_free = TRUE;
+    }
+
 
     /**
      * SET THE ECARD SEND ORDER
