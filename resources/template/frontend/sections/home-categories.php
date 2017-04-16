@@ -31,7 +31,7 @@ foreach ($categories_data as $category_data) :
     </style>
     <section class="cards-section" id="<?php echo $cat_slug ?>">
         <style type="text/css">
-            <?php echo $category_data['ecc_css'] ?>
+    <?php echo $category_data['ecc_css'] ?>
             #<?php echo $cat_slug ?> { background: url(<?php echo file_uploads::get_uploaded_file_url($category_data['ecc_bg_img'], $categories_table->get_db_table_name()); ?>) repeat-y top center scroll; }
         </style>
         <div class="container clearfix">
@@ -74,13 +74,13 @@ foreach ($categories_data as $category_data) :
                 ?>
                 <?php foreach ($ecards_data as $ecard) : // ECARD THUMBNAIL ?>
                     <div class="preview-box">
-                        <h3 class="card-preview-title">&nbsp;</h3>
+                        <h3 class="card-preview-title"><?php echo $ecard['ecard_name_public']; ?></h3>
                         <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/' ?>" class="thumb-link"><img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/></a>
                     </div>
                 <?php endforeach ?>
                 <?php foreach ($ecards_data_hidden as $ecard) : // ECARD THUMBNAIL ?>
                     <div class="preview-box hidden">
-                        <h3 class="card-preview-title">&nbsp;</h3>    
+                        <h3 class="card-preview-title"><?php echo $ecard['ecard_name_public']; ?></h3>    
                         <a href="<?php echo APP_URL . 'site/view-ecard/' . $ecard['ecard_id'] . '/step1/h/' ?>" class="thumb-link"><img class="preview" src="<?php echo get_ecard_thumbnail($ecard['ecard_thumbnail']); ?>" alt=""/></a>
                     </div>
                 <?php endforeach ?>
