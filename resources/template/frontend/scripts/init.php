@@ -40,3 +40,5 @@ $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/main.js?time=" . time
 $body->load_file(APP_TEMPLATE_PATH . 'sections/facebook-pixel.php', \k1lib\html\INSERT_ON_BEFORE_TAG_CLOSE);
 $body->load_file(APP_TEMPLATE_PATH . 'sections/google-analytics.php', \k1lib\html\INSERT_ON_BEFORE_TAG_CLOSE);
 
+global $search_input;
+$search_input = new \k1lib\html\input('text', 's', NULL, NULL, 'search');
