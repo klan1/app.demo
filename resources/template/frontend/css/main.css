@@ -571,7 +571,8 @@ ul.social-links {
     margin: 0 10px 10px 32px;
     position: relative;
     font-family: 'trendsetter';
-    font-size: 1.5em;
+    font-size: 28px;
+    font-size: 2.8rem;
     text-align: center ;
 }
 .card-preview-title::before {
@@ -1056,6 +1057,9 @@ body.step3 .inner-content {
     color: #b76f80;
     outline: 0;
     width: 100%;
+}
+.eebunny-form #predefined_message option:first-child {
+    color: #f2c3d4;
 }
 .eebunny-form input[type="button"],
 .eebunny-form input[type="submit"] {

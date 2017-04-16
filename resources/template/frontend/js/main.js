@@ -191,7 +191,7 @@ jQuery(document).ready(function ($) {
         };
     });
     //preset select tag color propertie
-    $('.eebunny-form select').css('color','#f2c3d4');
+    /*$('.eebunny-form select').css('color','#f2c3d4');
     //change select field color on focus
     $('.eebunny-form select').focus(function(){
         $(this).css('color','#b76f80');
@@ -203,5 +203,5 @@ jQuery(document).ready(function ($) {
         } else {
             $(this).css('color','#f2c3d4');
         }
-    });
+    });*/
 });
