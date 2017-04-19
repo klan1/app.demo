@@ -180,3 +180,8 @@ class pages_config extends users_k1lib_config {
     const ROOT_URL = "app/cp-frontend-pages";
 
 }
+class home_slides_config extends users_k1lib_config {
+
+    const ROOT_URL = "app/cp-home_slides";
+
+}
