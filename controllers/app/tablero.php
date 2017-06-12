@@ -82,11 +82,13 @@ $row1_col2->append_h4("Productos presentes{$product_title_append}");
 
 $products = new \k1lib\crudlexs\class_db_table($db, "products");
 
+$having_filter = 'HAVING PESO > 0 OR CANTIDAD > 0';
 
-$sql_query = "SELECT COD, PRODUCTO, SUM(PESO) as PESO, SUM(CANTIDAD) as CANTIDAD
-FROM view_dashboard_products
-{$warehouse_filter}
-GROUP BY PRODUCTO";
+$sql_query = "SELECT COD, PRODUCTO, SUM(PESO) as PESO, SUM(CANTIDAD) as CANTIDAD "
+        . "FROM view_dashboard_products"
+        . " {$warehouse_filter} "
+        . " GROUP BY PRODUCTO "
+        . " {$having_filter} ";
 
 $products_data = \k1lib\sql\sql_query($db, $sql_query, TRUE, TRUE);
 if ($products_data) {
