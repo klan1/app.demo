@@ -52,15 +52,11 @@ if (\k1app\APP_MODE != 'shell') {
      * If this error is trigger you should set by hand the CONST: APP_BASE_URL
      * with your personal configuration.
      */
-    if (isset($_SERVER['CONTEXT_PREFIX'])) {
-        define('APP_BASE_URL', $_SERVER['CONTEXT_PREFIX'] . '/');
-    } else {
-        $app_base_url = dirname(substr($_SERVER['SCRIPT_FILENAME'], strlen(DOCUMENT_ROOT))) . '/';
-        if ($app_base_url == '//') {
-            $app_base_url = '/';
-        }
-        define('APP_BASE_URL', $app_base_url);
+    $app_base_url = dirname(substr($_SERVER['SCRIPT_FILENAME'], strlen(\DOCUMENT_ROOT))) . '/';
+    if ($app_base_url == '//') {
+        $app_base_url = '/';
     }
+    define('APP_BASE_URL', $app_base_url);
 
     define('APP_DOMAIN_URL', (\k1lib\common\get_http_protocol() . '://') . \APP_DOMAIN);
     define('APP_URL', APP_DOMAIN_URL . APP_BASE_URL);
