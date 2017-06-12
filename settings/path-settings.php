@@ -69,6 +69,7 @@ if (\k1app\APP_MODE != 'shell') {
     define('APP_TEMPLATE_URL', APP_RESOURCES_URL . 'template/' . APP_TEMPLATE . '/');
     define('APP_TEMPLATE_IMAGES_URL', APP_TEMPLATE_URL . 'img/');
 
+
     /**
      * COMPOSER
      */
