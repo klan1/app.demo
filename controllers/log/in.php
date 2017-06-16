@@ -10,7 +10,7 @@ $login_password_input = "pass";
 $login_remember_me = "remember-me";
 
 $user_data = [];
-$login_table = "users";
+$login_table = "users_k1lib";
 $login_user_field = "user_login";
 $login_password_field = "user_password";
 $login_level_field = "user_level";
@@ -19,7 +19,6 @@ if (!isset($app_session)) {
 }
 $app_session->set_config($login_table, $login_user_field, $login_password_field, $login_level_field);
 $app_session->set_inputs($login_user_input, $login_password_input, $login_remember_me);
-
 
 // chekc the magic value
 $post_data = $app_session->catch_post();
@@ -36,7 +35,7 @@ if ($post_data) {
         // SET THE LOGGED SESSION
         $app_session->save_data_to_coockie(APP_BASE_URL);
         if ($app_session->load_data_from_coockie($db)) {
-            DOM_notifications::queue_mesasage("Bienvenido", "success");
+            DOM_notifications::queue_mesasage("welcome!", "success");
             if (\k1lib\urlrewrite\get_back_url(TRUE)) {
                 \k1lib\html\html_header_go(url::do_url(\k1lib\urlrewrite\get_back_url(TRUE)));
             } else {
@@ -48,7 +47,7 @@ if ($post_data) {
     } elseif ($app_session_check === NULL) {
         DOM_notifications::queue_mesasage("No se han recibido datos", "warning");
     } elseif ($app_session_check === array()) {
-        DOM_notifications::queue_mesasage("Usuario y/o contraseña incorrecta", "alert");
+        DOM_notifications::queue_mesasage("Bad password or login", "alert");
     }
 } elseif ($post_data === FALSE) {
     DOM_notifications::queue_mesasage("BAD, BAD Magic!!", "warning");

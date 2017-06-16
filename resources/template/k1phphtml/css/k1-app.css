@@ -69,7 +69,7 @@ section.k1lib-content {
 OFF CANVAS CUSTOM STYLES
 */
 .off-canvas {
-    background-color: #444;
+    background-color: #933a5d;
     height: 100vh;
 }
 .off-canvas-content {
@@ -97,6 +97,9 @@ OFF CANVAS CUSTOM STYLES
 }
 ul.menu li  a{
     color: #FFF;
+}
+.menu .active>a {
+    background: #d08ba6;
 }
 ul.menu li.has-submenu.active.is-accordion-submenu-parent a{
     /*background-color: #2199FF;*/
@@ -226,7 +229,7 @@ html #login-form-body {
     font-size: 0.8em;
 }
 #k1lib-login-title {
-    background-color: #00a2d0;
+    background-color: #f2d1de;
 }
 #k1lib-login-title h1 {
     color: #FFF;

@@ -11,7 +11,6 @@
 
 namespace k1app;
 
-use \k1lib\session\session_db as session_db;
 use k1lib\PROFILER as PROFILER;
 
 PROFILER::start();
@@ -39,13 +38,6 @@ if (\k1lib\db\handler::is_enabled()) {
     }
     $db->exec("set names utf8");
 }
-
-/*
- * APP START
- */
-$app_session = new session_db($db);
-$app_session->start_session();
-$app_session->load_logged_session_db();
 
 /*
  * MANAGE THE URL REWRITING 1st (0 index) level

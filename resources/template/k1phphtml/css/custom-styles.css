@@ -19,8 +19,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .k1lib-crudlexs-related-data h3 {
     font-size: 1.2em;
-    color: #fff;
-    background-color: #00a2d0;
+    color: #000;
+    background-color: #f2d1de;
     padding: 10px 20px;
     margin: 30px 0 20px 0;
 
@@ -28,8 +28,8 @@ h1, h2, h3, h4, h5, h6 {
 
 h4 {
     font-size: 1em;
-    background-color: #00a2d0;
-    color: #fff;
+    background-color: #f2d1de;
+    color: #000;
 
     padding: 5px 20px;
 
@@ -46,7 +46,7 @@ h4 span {
 h4 .button.fi-list, h4 .button.fi-plus {
     background-color:#fff;
     margin: 5px 0px;
-    color: #00a2d0;
+    color: #f2d1de;
     font-weight: bold;
 }
 
@@ -96,8 +96,8 @@ h4.table9:before{
 
 
 .top-bar, .top-bar ul, .title-bar {
-    background-color: #00a2d0;
-    color: #fff;
+    background-color: #f2d1de;
+    color: #000;
 }
 
 
