@@ -68,7 +68,11 @@ const APP_VERBOSE = 0;
 /*
  * DB CONFIG
  */
-\k1lib\db\handler::enable("k1app_demo", 'k1dev', '', 'localhost', '3306', "mysql", TRUE);
+if ($_SERVER['SERVER_NAME'] != 'k1dev.local') {
+    include "config-db-remote.php";
+} else {
+    \k1lib\db\handler::enable("k1app_demo", 'k1dev', '', 'localhost', '3306', "mysql", TRUE);
+}
 /**
  * DB Security
  */
@@ -83,6 +87,5 @@ include_once 'controllers-config.php';
 \k1lib\html\html::set_use_log(FALSE);
 
 //ini_set('memory_limit', '100M');
-
 //ROUND numbers on all html foundation tables
 \k1lib\html\foundation\table_from_data::$float_round_default = 2;
