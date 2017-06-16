@@ -26,28 +26,9 @@ if (!isset($_GET['just-controller'])) {
          * EEBUNNY CONTROL PANEL NAV
          */
         if (k1lib_session::check_user_level(['god', 'admin'])) {
-            $menu_left->add_menu_item(APP_URL . 'site/', 'Frontend - Website', 'nav-frontend')->set_attrib('target', '_blank');
-            $menu_left->add_menu_item(APP_URL . 'app/dashboard-admin/', 'Admin Dashboard', 'nav-dashboard');
-
-            $ecard_submenu = $menu_left->add_sub_menu("#", 'eCards', 'nav-ecards');
-            $ecard_submenu->add_menu_item(APP_URL . 'app/ecards/', 'Our eCards', 'nav-ecards-our');
-            $ecard_submenu->add_menu_item(APP_URL . 'app/ecards-sends/', 'User Sends', 'nav-ecards-user-sends');
-            $ecard_submenu->add_menu_item(APP_URL . 'app/send-ecard-queue/', 'Send today\'s ecards', 'nav-todays-ecards')->set_attrib('target', '_blank');
-            $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-categories/', 'Categories', 'nav-ecards-categories');
-            $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-messages/', 'Messages', 'nav-ecards-messages');
-            $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-layouts-h/', 'Horizontal layouts', 'nav-ecards-layouts-h');
-            $ecard_submenu->add_menu_item(APP_URL . 'app/ecard-layouts-v/', 'Vertical layouts', 'nav-ecards-layouts-v');
-
-            $user_submenu = $menu_left->add_sub_menu("#", 'Users', 'nav-users');
-            $user_submenu->add_menu_item(APP_URL . 'app/users/', 'Our Users', 'nav-users-our');
-            $user_submenu->add_menu_item(APP_URL . 'app/user-memberships/', 'User memberships', 'nav-user-memberships');
-            $user_submenu->add_menu_item(APP_URL . 'app/memberships/', 'Memberships', 'nav-memberships');
-
-            $user_submenu = $menu_left->add_sub_menu("#", 'Payments', 'nav-payments');
-            $user_submenu->add_menu_item(APP_URL . 'app/payments/', 'Payment history', 'nav-payments-history');
-            
+            $menu_left->add_menu_item(APP_URL . 'app/dashboard/', 'Dashboard', 'nav-dashboard');
         } elseif (k1lib_session::check_user_level(['user'])) {
-            $menu_left->add_menu_item(APP_URL . 'app/dashboard-user/', 'User Dashboard', 'nav-dashboard');
+            $menu_left->add_menu_item(APP_URL . 'app/dashboard/', 'Dashboard', 'nav-dashboard');
         } else {
             trigger_error("No idea how you do it!", E_USER_ERROR);
         }
@@ -59,9 +40,6 @@ if (!isset($_GET['just-controller'])) {
 
                 $admin_menu = $menu_left_tail->add_sub_menu('#', 'App preferences', 'nav-app-preferences');
 
-                $admin_menu->add_menu_item(APP_URL . 'app/cp-users/', 'Control Panel Users', 'nav-cp-users');
-                $admin_menu->add_menu_item(APP_URL . 'app/cp-frontend-pages/', 'Frontend Pages', 'nav-cp-frontend-pages');
-                $admin_menu->add_menu_item(APP_URL . 'app/cp-home-sliders/', 'Home Sliders', 'nav-cp-home-sliders');
                 $admin_menu->add_menu_item(APP_URL . 'table-explorer/show-tables/', 'Table Explorer', 'nav-table-explorer');
                 $admin_menu->add_menu_item(APP_URL . 'table-metadata/show-tables/', 'Manage tables', 'nav-manage-tables');
                 $admin_menu->add_menu_item(APP_URL . 'table-metadata/load-field-comments/', 'Load fields metadata', 'nav-fields-metadata');
