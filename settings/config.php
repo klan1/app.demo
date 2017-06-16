@@ -12,9 +12,9 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const APP_TITLE = "EeBunny: The Most Amazing Bunny E-cards";
-const APP_DESCRIPTION = "Personalized Bunny E-cards for Every Occasion, Special Moments & Special Events";
-const APP_KEYWORKS = "Easter Bunny,Happy Easter,Greeting Ecards,Animal Ecards,Bunny Pets,e cards,happy birthday cards,christmas cards,online greeting cards,funny greeting cards,holiday Ecards,e greetings,Mosaic,Vintage,Watercolor,Eggs,Flower Power,Retro,Flowers,E-cards, Free Ecards";
+const APP_TITLE = "K1.LIB App example";
+const APP_DESCRIPTION = "";
+const APP_KEYWORKS = "";
 const APP_VERBOSE = 0;
 
 /**
@@ -22,7 +22,7 @@ const APP_VERBOSE = 0;
  */
 // # md5 -s "k1 app demo"
 //MD5 ("k1 app demo") = ffb07e0d73382f34ffdd99567c39921c
-\k1lib\K1MAGIC::set_value("ffb07e0d73382f34ffdd99567c39921c");
+\k1lib\K1MAGIC::set_value("ffb07e0dd3382g34ffdd99567c39921c");
 
 /**
  * URL REWRITE ENABLE
@@ -68,7 +68,7 @@ const APP_VERBOSE = 0;
 /*
  * DB CONFIG
  */
-\k1lib\db\handler::enable("eebunny_ecards_production", 'dev-k1.eebunny', 'DB4cc3ss', 'localhost', '3306', "mysql");
+\k1lib\db\handler::enable("k1app_demo", 'k1dev', '', 'localhost', '3306', "mysql", TRUE);
 /**
  * DB Security
  */
@@ -81,14 +81,8 @@ include_once 'controllers-config.php';
  * OTHERS
  */
 \k1lib\html\html::set_use_log(FALSE);
+
 //ini_set('memory_limit', '100M');
+
 //ROUND numbers on all html foundation tables
 \k1lib\html\foundation\table_from_data::$float_round_default = 2;
-
-/**
- * PAYLINE CONFIG
- */
-// API Setup parameters
-const PAYLINE_GATEWAY = 'https://secure.paylinedatagateway.com/api/v2/three-step';
-const PAYLINE_APIKEY = '7mVh9Ku6x3x9tD485h4XAefEt6s86k7A'; // Production
-//const PAYLINE_APIKEY = '2F822Rw39fx762MaV7Yy86jXGTC7sCDy'; // Testing

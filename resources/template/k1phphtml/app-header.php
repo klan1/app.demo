@@ -29,6 +29,8 @@ if (!isset($_GET['just-controller'])) {
             $menu_left->add_menu_item(APP_URL . 'app/dashboard/', 'Dashboard', 'nav-dashboard');
         } elseif (k1lib_session::check_user_level(['user'])) {
             $menu_left->add_menu_item(APP_URL . 'app/dashboard/', 'Dashboard', 'nav-dashboard');
+        } elseif (k1lib_session::check_user_level(['guest'])) {
+            $menu_left->add_menu_item(APP_URL . 'app/dashboard/', 'Dashboard', 'nav-dashboard');
         } else {
             trigger_error("No idea how you do it!", E_USER_ERROR);
         }

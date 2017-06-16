@@ -19,33 +19,36 @@ template::load_template('scripts/init');
 
 k1app_template::start_template();
 
-if (session_db::is_logged()) {
-    $controller_to_include = url::set_next_url_level(APP_CONTROLLERS_PATH, FALSE, 'controller_to_include');
-
-    if (!$controller_to_include) {
-        if (session_db::check_user_level(['god', 'admin'])) {
-            $go_url = url::do_url("dashboard/");
-        } elseif (session_db::check_user_level(['user'])) {
-            $go_url = url::do_url("dashboard/");
-        } else {
-            trigger_error("No idea how you do it!", E_USER_ERROR);
-        }
-        \k1lib\html\html_header_go($go_url);
-    } else {
-        require $controller_to_include;
-    }
+$controller_to_include = url::set_next_url_level(APP_CONTROLLERS_PATH, FALSE, 'controller_to_include');
+if ($controller_to_include) {
+    require $controller_to_include;
 } else {
-    /**
-     * REMOVE THIS !! when the login system is setup
-     */
-    $go_url = url::do_url("../table-explorer/");
-    /**
-     * UNCOMMENT THIS !! when the login system is setup
-     */
+    if (session_db::is_logged()) {
+        if (!$controller_to_include) {
+            if (session_db::check_user_level(['god', 'admin'])) {
+                $go_url = url::do_url("dashboard/");
+            } elseif (session_db::check_user_level(['user'])) {
+                $go_url = url::do_url("dashboard/");
+            } else {
+                trigger_error("No idea how you do it!", E_USER_ERROR);
+            }
+            \k1lib\html\html_header_go($go_url);
+        } else {
+            require $controller_to_include;
+        }
+    } else {
+        /**
+         * REMOVE THIS !! when the login system is setup
+         */
+        $go_url = url::do_url("../table-explorer/");
+        \k1lib\html\html_header_go($go_url);
+        /**
+         * UNCOMMENT THIS !! when the login system is setup
+         */
 //    $get_params = ["back-url" => $_SERVER['REQUEST_URI']];
 //    \k1lib\html\html_header_go(url::do_url(APP_URL . "log/form/", $get_params));
+    }
 }
-
 // APP Debug output
 template::load_template('verbose-output');
 // Template end
