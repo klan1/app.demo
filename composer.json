@@ -20,7 +20,7 @@
         "klan1/k1.lib": "dev-master",
         "klan1/k1.lib-dom": "dev-master",
         "zurb/foundation": "6.2.1",
-        "phpmailer/phpmailer": "v5.2.22",
+        "phpmailer/phpmailer": "v5.2.22"
     },
     "require-dev": {
     }
