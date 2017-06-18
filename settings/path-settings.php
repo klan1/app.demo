@@ -85,8 +85,8 @@ if (\k1app\APP_MODE != 'shell') {
      * COMPOSER - FOUNDATION 6.X
      */
     define('COMPOSER_FOUNDATION_URL', COMPOSER_PACKAGES_URL . 'zurb/foundation/');
-    define('COMPOSER_FOUNDATION_CSS_URL', COMPOSER_FOUNDATION_URL . 'dist/foundation.min.css');
-    define('COMPOSER_FOUNDATION_JS_URL', COMPOSER_FOUNDATION_URL . 'dist/foundation.min.js');
+    define('COMPOSER_FOUNDATION_CSS_URL', COMPOSER_FOUNDATION_URL . 'dist/css/foundation.min.css');
+    define('COMPOSER_FOUNDATION_JS_URL', COMPOSER_FOUNDATION_URL . 'dist/js/foundation.min.js');
     /**
      * BOWER
      */
