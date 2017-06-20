@@ -10,7 +10,7 @@ $login_password_input = "pass";
 $login_remember_me = "remember-me";
 
 $user_data = [];
-$login_table = "users_k1lib";
+$login_table = "users";
 $login_user_field = "user_login";
 $login_password_field = "user_password";
 $login_level_field = "user_level";

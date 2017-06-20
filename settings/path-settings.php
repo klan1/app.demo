@@ -78,17 +78,18 @@ if (\k1app\APP_MODE != 'shell') {
 
 
     /**
+     * BOWER
+     */
+    /**
+     * BOWER - FOUNDATION 6.X
+     */
+    define('BOWER_PACKAGES_URL', APP_URL . 'bower_components/');
+    define('COMPOSER_FOUNDATION_URL', BOWER_PACKAGES_URL . 'foundation-sites/');
+    define('COMPOSER_FOUNDATION_CSS_URL', COMPOSER_FOUNDATION_URL . 'dist/css/foundation.min.css');
+    define('COMPOSER_FOUNDATION_JS_URL', COMPOSER_FOUNDATION_URL . 'dist/js/foundation.min.js');
+
+    /**
      * COMPOSER
      */
     define('COMPOSER_PACKAGES_URL', APP_URL . 'vendor/');
-    /**
-     * COMPOSER - FOUNDATION 6.X
-     */
-    define('COMPOSER_FOUNDATION_URL', COMPOSER_PACKAGES_URL . 'zurb/foundation/');
-    define('COMPOSER_FOUNDATION_CSS_URL', COMPOSER_FOUNDATION_URL . 'dist/css/foundation.min.css');
-    define('COMPOSER_FOUNDATION_JS_URL', COMPOSER_FOUNDATION_URL . 'dist/js/foundation.min.js');
-    /**
-     * BOWER
-     */
-    define('BOWER_PACKAGES_URL', APP_URL . 'bower_components/');
 }
