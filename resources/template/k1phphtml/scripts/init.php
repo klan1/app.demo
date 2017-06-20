@@ -32,7 +32,7 @@ $head->append_child(new script(BOWER_PACKAGES_URL . "tinymce/tinymce.min.js"));
  */
 $body->append_child_tail(new script(BOWER_PACKAGES_URL . "jquery/dist/jquery.min.js"));
 $body->append_child_tail(new script(BOWER_PACKAGES_URL . "jqueryui/jquery-ui.min.js"));
-$body->append_child_tail(new script(BOWER_PACKAGES_URL . "what-input/what-input.min.js"));
+$body->append_child_tail(new script(BOWER_PACKAGES_URL . "what-input/dist/what-input.min.js"));
 $body->append_child_tail(new script(COMPOSER_FOUNDATION_JS_URL));
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/responsive-tables.js"));
 $body->append_child_tail(new script(APP_TEMPLATE_URL . "js/k1app.js?time=" . time()));
