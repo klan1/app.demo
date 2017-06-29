@@ -14,7 +14,6 @@ template::load_template('app-footer');
 
 DOM::html()->head()->set_title(APP_TITLE . " | Auto APP");
 
-DOM::menu_left_tail()->set_active('nav-app-preferences');
 DOM::menu_left_tail()->set_active('nav-table-explorer');
 
 $span = (new \k1lib\html\span("subheader"))->set_value("Tables of DB ");

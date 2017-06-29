@@ -11,8 +11,6 @@
 
 namespace k1app;
 
-use \k1lib\session\session_db as session_db;
-use k1lib\html\template as template;
 use k1lib\PROFILER as PROFILER;
 
 PROFILER::start();
@@ -42,13 +40,6 @@ if (\k1lib\db\handler::is_enabled()) {
 }
 
 /*
- * APP START
- */
-$app_session = new session_db($db);
-$app_session->start_session();
-$app_session->load_logged_session_db();
-
-/*
  * MANAGE THE URL REWRITING 1st (0 index) level
  */
 $url_controller = \k1lib\urlrewrite\url::set_url_rewrite_var(0, "url_section", TRUE);
@@ -59,11 +50,5 @@ if (!$url_controller) {
 /**
  * TEMPLATE AND CONTROLLER LOAD
  */
-// Template init
-template::load_template('scripts/init');
 // controller load
 require \k1lib\controllers\load_controller($url_controller, APP_CONTROLLERS_PATH);
-// APP Debug output
-template::load_template('verbose-output');
-// Template end
-template::load_template('scripts/end');

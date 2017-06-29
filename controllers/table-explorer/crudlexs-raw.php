@@ -15,7 +15,6 @@ if (!isset($_GET['just-controller'])) {
     template::load_template('app-header');
     template::load_template('app-footer');
 
-    DOM::menu_left_tail()->set_active('nav-app-preferences');
     DOM::menu_left_tail()->set_active('nav-table-explorer');
 
     /**
