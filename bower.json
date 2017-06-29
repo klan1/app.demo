@@ -17,7 +17,7 @@
     "jquery": "~2.2",
     "jqueryui": "~1",
     "what-input": "~4",
-    "foundation-sites": "~6",
+    "foundation-sites": "~6.3",
     "foundation-icon-fonts": "*",
     "tinymce": "~4"
   }

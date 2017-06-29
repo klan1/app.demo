@@ -70,11 +70,11 @@ OFF CANVAS CUSTOM STYLES
 */
 .off-canvas {
     background-color: #444;
-    height: 100vh;
+    /*height: 100vh;*/
 }
 .off-canvas-content {
     box-shadow: none;
-    height: 100vh;
+    /*height: 100vh;*/
 }
 #app-left-header {
     padding: 10px 5px;
