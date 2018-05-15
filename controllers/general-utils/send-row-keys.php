@@ -43,5 +43,6 @@ $back_url_saved = \k1lib\common\unserialize_var("back-url");
 
 $array_to_send = array_merge($post_data_saved, $to_merge_array);
 \k1lib\common\serialize_var($array_to_send, "post-data-to-use");
+\k1lib\common\serialize_var($reference_db_table->get_db_table_config(), "post-data-table-config");
 
 \k1lib\html\html_header_go($back_url_saved);
