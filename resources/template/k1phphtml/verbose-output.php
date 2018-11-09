@@ -7,6 +7,8 @@ use k1lib\sql\local_cache;
 use k1lib\session\session_db as k1lib_session;
 use k1app\k1app_template as DOM;
 
+$body = DOM::html()->body();
+
 if (APP_VERBOSE > 0) {
     $div = $body->footer()->append_div("callout", "k1lib-session-data");
     if (k1lib_session::is_enabled()) {
