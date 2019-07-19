@@ -14,10 +14,10 @@
     ".versions"
   ],
   "dependencies": {
-    "jquery": "~2.2",
+    "jquery": "~3",
     "jqueryui": "~1",
     "what-input": "~4",
-    "foundation-sites": "~6.3",
+    "foundation-sites": "~6",
     "foundation-icon-fonts": "*",
     "tinymce": "~4"
   }

@@ -20,7 +20,7 @@ if (!isset($_GET['just-controller'])) {
     if (!(isset($_GET['no-footer']) && ($_GET['no-footer'] == "1"))) {
         $div = $container->append_child_tail(new \k1lib\html\div($footer_class, $footer_id));
         $klan1_link = new \k1lib\html\a("http://www.klan1.com?ref=k1.app", "KLAN1", "_blank", NULL, "klan1-site-link");
-        $footer_text = $div->append_h6("&copy; 2013-2016 Dev by $klan1_link");
+        $footer_text = $div->append_h6("&copy; 2013-2019 Dev by $klan1_link");
         $footer_text->append_span(null, "k1lib-run-info");
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "k1.app-skeleton",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "K1.lib app skeleton ",
   "main": "index.js",
   "scripts": {
