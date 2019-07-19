@@ -12,4 +12,4 @@ $app_session->start_session();
 
 DOM_notifications::queue_mesasage("Bye!", "success");
 
-\k1lib\html\html_header_go(APP_URL . "log/form/");
+\k1lib\html\html_header_go(APP_URL . "roy-2019/log/form/");

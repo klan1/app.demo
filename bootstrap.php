@@ -25,19 +25,17 @@ const IN_K1APP = TRUE;
 require_once 'settings/path-settings.php';
 require_once 'settings/config.php';
 
-require_once APP_TEMPLATE_PATH . '/definition.php';
-/*
- * DB CONNECTION
+/**
+ * AUTOLOAD FOR APP CLASES
  */
-if (\k1lib\db\handler::is_enabled()) {
-    try {
-        $db = new \k1lib\db\handler();
-        $db->set_verbose_level(APP_VERBOSE);
-    } catch (\PDOException $e) {
-        trigger_error($e->getMessage(), E_USER_ERROR);
-    }
-    $db->exec("set names utf8");
-}
+spl_autoload_register(function($className) {
+    $className = str_replace("\\", DIRECTORY_SEPARATOR, $className);
+    $file_to_load = APP_CLASSES_PATH . $className . '.php';
+    include_once $file_to_load;
+});
+
+
+require_once APP_TEMPLATE_PATH . '/definition.php';
 
 /*
  * MANAGE THE URL REWRITING 1st (0 index) level

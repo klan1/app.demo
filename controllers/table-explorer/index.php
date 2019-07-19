@@ -6,9 +6,15 @@ use \k1lib\urlrewrite\url as url;
 use k1lib\html\template as template;
 use k1lib\session\session_db as session_db;
 
+//include 'db.php';
+include 'db-local.php';
+include 'controllers-config.php';
+
+
 /*
  * APP START
  */
+session_db::set_session_name(SESSION_APP_NAME);
 $app_session = new session_db($db);
 $app_session->start_session();
 $app_session->load_logged_session_db();

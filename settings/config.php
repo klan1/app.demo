@@ -17,6 +17,8 @@ const APP_DESCRIPTION = "";
 const APP_KEYWORKS = "";
 const APP_VERBOSE = 0;
 
+const SESSION_APP_NAME = 'K1APP-SESSION';
+
 /**
  * SET a CUSTOM K1MAGIC for K1.lib
  */
@@ -65,22 +67,7 @@ const APP_VERBOSE = 0;
  * TEMPLATE CONFIG
  */
 \k1lib\html\template::enable(APP_TEMPLATE_PATH);
-/*
- * DB CONFIG
- */
-if ($_SERVER['SERVER_NAME'] != 'k1dev.local') {
-    include "config-db-remote.php";
-} else {
-    \k1lib\db\handler::enable("k1app_demo", 'k1dev', '', 'localhost', '3306', "mysql", TRUE);
-}
-/**
- * DB Security
- */
-include_once 'db-tables-aliases.php';
-/**
- * Controllers Config
- */
-include_once 'controllers-config.php';
+
 /*
  * OTHERS
  */

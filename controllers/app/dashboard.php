@@ -8,10 +8,11 @@ use k1lib\html\template as template;
 use \k1lib\urlrewrite\url as url;
 use k1app\k1app_template as DOM;
 
-\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'log/form/');
+\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'app/log/form/');
 
-//\k1lib\sql\sql_query($db, "SET sql_mode='';");
+\k1lib\sql\sql_query($db, "SET sql_mode='';");
 
+k1app_template::start_template();
 
 $content = DOM::html()->body()->content();
 
@@ -19,12 +20,14 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::set_title(3, "Dashboard");
+DOM::set_title(3, "K1 App Dashboard");
 
 DOM::menu_left()->set_active('nav-dashboard');
 
+$filter_url_value = \k1lib\forms\check_single_incomming_var(url::set_url_rewrite_var(url::get_url_level_count(), 'filter_url_value', FALSE));
+$filter_data_url_value = \k1lib\forms\check_single_incomming_var(url::set_url_rewrite_var(url::get_url_level_count(), 'digitador_url_value', FALSE));
 
-$content->append_h1("Dashboard");
+$content->append_h1("Vista rapida");
 $content->set_class("dashboard");
 
 /**

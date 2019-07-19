@@ -6,18 +6,24 @@ use k1lib\urlrewrite\url as url;
 use k1lib\session\session_db as session_db;
 use k1lib\html\template as template;
 
+include 'db-local.php';
+include 'db-tables-aliases.php';
+include 'controllers-config.php';
+
 /*
  * APP START
  */
+session_db::set_session_name(SESSION_APP_NAME);
 $app_session = new session_db($db);
 $app_session->start_session();
 $app_session->load_logged_session_db();
 
+//\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'roy-2019/log/form/');
 
 // Template init
 template::load_template('scripts/init');
 
-k1app_template::start_template();
+//k1app_template::start_template();
 
 $controller_to_include = url::set_next_url_level(APP_CONTROLLERS_PATH, FALSE, 'controller_to_include');
 if ($controller_to_include) {
@@ -40,7 +46,7 @@ if ($controller_to_include) {
         /**
          * REMOVE THIS !! when the login system is setup
          */
-        $go_url = url::do_url("../table-explorer/");
+        $go_url = url::do_url("log/form/");
         \k1lib\html\html_header_go($go_url);
         /**
          * UNCOMMENT THIS !! when the login system is setup

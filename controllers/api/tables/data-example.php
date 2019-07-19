@@ -1,0 +1,11 @@
+<?php
+
+namespace k1app;
+
+require 'db-local.php';
+
+$crud_api_obj = new api\auth\api_crud(TRUE,TRUE);
+$crud_api_obj->set_db($db);
+$crud_api_obj->set_db_table_name('data_example');
+$crud_api_obj->set_db_table_keys_fields(['id']);
+$crud_api_obj->exec();

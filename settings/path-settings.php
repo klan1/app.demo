@@ -24,6 +24,7 @@ define('APP_DOMAIN', $server_name . (( $_SERVER['SERVER_PORT'] != '80') ? ':' . 
 
 
 define('APP_CONTROLLERS_PATH', APP_ROOT . '/controllers/');
+define('APP_CLASSES_PATH', APP_ROOT . '/classes/');
 
 const APP_CONTROLLERS_PATH = \APP_CONTROLLERS_PATH;
 
@@ -52,7 +53,7 @@ define('BOWER_PACKAGES_PATH', APP_ROOT . 'bower_components/');
 set_include_path(APP_SETTINGS_PATH . PATH_SEPARATOR . APP_RESOURCES_PATH . '/includes' . PATH_SEPARATOR . get_include_path());
 
 // AUTO CONFIGURATED URLS 
-if (\k1app\APP_MODE != 'shell') {
+if (APP_MODE != 'shell') {
 
     /**
      * If this error is trigger you should set by hand the CONST: APP_BASE_URL
@@ -65,7 +66,11 @@ if (\k1app\APP_MODE != 'shell') {
     define('APP_BASE_URL', $app_base_url);
 
 //    define('APP_DOMAIN_URL', (\k1lib\common\get_http_protocol() . '://') . \APP_DOMAIN);
-    define('APP_DOMAIN_URL', 'http://' . \APP_DOMAIN);
+    if ((strstr($_SERVER['SERVER_NAME'], 'somoscausa.org') === FALSE) && (strstr($_SERVER['SERVER_NAME'], 'klan1.net') === FALSE)) {
+        define('APP_DOMAIN_URL', 'http://' . \APP_DOMAIN);
+    } else {
+        define('APP_DOMAIN_URL', 'https://' . \APP_DOMAIN);
+    }
     define('APP_URL', APP_DOMAIN_URL . APP_BASE_URL);
     define('APP_LOGIN_URL', APP_URL . 'log/form/');
     define('APP_HOME_URL', APP_URL);
