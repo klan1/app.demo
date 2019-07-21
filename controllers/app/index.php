@@ -6,7 +6,7 @@ use k1lib\urlrewrite\url as url;
 use k1lib\session\session_db as session_db;
 use k1lib\html\template as template;
 
-include 'db-local.php';
+include 'db.php';
 include 'db-tables-aliases.php';
 include 'controllers-config.php';
 

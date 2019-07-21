@@ -13,7 +13,7 @@ require_once '../../settings/config.php';
 /*
  * USE HERE THE DB CONFIG SCRIPT FILE
  */
-$db_script =  'db-local.php';
+$db_script =  'db.php';
 require_once $db_script;
 
 /**

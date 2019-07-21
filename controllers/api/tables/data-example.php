@@ -2,7 +2,7 @@
 
 namespace k1app;
 
-require 'db-local.php';
+require 'db.php';
 
 $crud_api_obj = new api\auth\api_crud(TRUE,TRUE);
 $crud_api_obj->set_db($db);

@@ -13,7 +13,7 @@ require_once '../../settings/config.php';
 /*
  * USE HERE THE DB CONFIG SCRIPT FILE
  */
-require_once 'db-local.php';
+require_once 'db.php';
 
 /**
  * AUTOLOAD FOR APP CLASES
