@@ -23,7 +23,7 @@ if (!isset($_GET['just-controller'])) {
     if (!empty(DOM::off_canvas())) {
 
         /**
-         * EEBUNNY CONTROL PANEL NAV
+         * MENU ITEMS
          */
         if (k1lib_session::check_user_level(['god', 'admin'])) {
             $menu_left->add_menu_item(APP_URL . 'app/dashboard/', 'Dashboard', 'nav-dashboard');

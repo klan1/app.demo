@@ -32,7 +32,7 @@ class k1app_template extends \k1lib\html\DOM {
                 self::$off_canvas->left();
                 // APP LOGO
                 self::$off_canvas->left()->append_div(NULL,'app-logo')
-                        ->append_child(new \k1lib\html\img(APP_TEMPLATE_IMAGES_URL . 'klan1-white.png'));
+                        ->append_child(new \k1lib\html\img(APP_TEMPLATE_IMAGES_URL . 'klan1-white.png','app-logo-img','','logo-img'));
                 
                 self::$off_canvas->menu_left_head();
                 self::$off_canvas->menu_left();
