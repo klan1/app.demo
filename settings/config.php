@@ -40,7 +40,7 @@ const SESSION_APP_NAME = 'K1APP-SESSION';
  * SESSION CONFIG
  */
 \k1lib\session\session_plain::enable();
-\k1lib\session\session_plain::set_session_name("K1APP");
+\k1lib\session\session_plain::set_session_name(SESSION_APP_NAME);
 \k1lib\session\session_plain::set_use_ip_in_userhash(FALSE);
 \k1lib\session\session_plain::set_app_user_levels([
     'god',

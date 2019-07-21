@@ -144,19 +144,17 @@ if ($db_table->get_state()) {
                 $table_config_to_use[$field][$option_name] = $input_yes->generate() . " " . $input_no->generate();
             } else {
                 $input = new \k1lib\html\input("text", "{$field}[{$option_name}]", $option_value);
-                $table_config_to_use[$field][$option_name] = $input->generate();
+                $input_generated = $input->generate();
+                $table_config_to_use[$field][$option_name] = $input_generated;
             }
         }
         if (isset($_POST[$field])) {
             $post_data_to_change[$field] = implode(",", $_POST[$field]);
         }
 
-
         $li = $ul->append_li(null, "accordion-item")->set_attrib("data-accordion-item", TRUE);
         $a_title = (new \k1lib\html\a("#", $field))->set_attrib("class", "accordion-title k1lib-field-of-title")->append_to($li);
-        $div_content = (new \k1lib\html\div($class))->set_attrib("class", "accordion-content")->set_attrib("data-tab-content", TRUE)->append_to($li);
-
-
+        $div_content = (new \k1lib\html\div('div_content'))->set_attrib("class", "accordion-content")->set_attrib("data-tab-content", TRUE)->append_to($li);
         \k1lib\html\generate_row_2columns_layout($div_content, $table_config_to_use[$field]);
     }
 

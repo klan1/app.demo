@@ -31,7 +31,12 @@ require_once 'settings/config.php';
 spl_autoload_register(function($className) {
     $className = str_replace("\\", DIRECTORY_SEPARATOR, $className);
     $file_to_load = APP_CLASSES_PATH . $className . '.php';
-    include_once $file_to_load;
+    if (file_exists($file_to_load)) {
+        include_once $file_to_load;
+    }else{
+//        error_reporting(E_ALL);
+        trigger_error($className . ' do not fount to autoload', E_USER_NOTICE);
+    }
 });
 
 
