@@ -7,7 +7,7 @@
 namespace k1app;
 
 // Composer lines
-define("K1LIB_LANG", "en");
+define("K1LIB_LANG", "es");
 require __DIR__ . '/vendor/autoload.php';
 
 // k1.app start

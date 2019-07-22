@@ -15,9 +15,9 @@
   ],
   "dependencies": {
     "jquery": "~3",
-    "jqueryui": "~1",
     "what-input": "~4",
     "foundation-sites": "~6",
+    "foundation-datepicker": "*",
     "foundation-icon-fonts": "*",
     "tinymce": "~4"
   }
