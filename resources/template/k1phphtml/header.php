@@ -16,7 +16,7 @@ $head->link_css(APP_URL)->set_attrib("rel", "canonical");
 
 $head->append_meta("generator", "Klan1 Network Web App Enginie " . \k1lib\VERSION);
 $head->append_meta("developer", "Alejandro Trujillo J. - alejo@klan1.com");
-$head->append_meta("dev_contact", "http://www.klan1.com, +57 318 398-8800");
+$head->append_meta("dev_contact", "httsp://klan1.com, +57 318 398-8800");
 
 $body->header()->append_child_tail((new \k1lib\html\div(NULL, "k1lib-output")));
 
