@@ -24,16 +24,15 @@ class k1app_template extends \k1lib\html\DOM {
      */
     static protected $top_bar;
 
-
     static public function start_template($bars = TRUE, $left = TRUE, $right = FALSE) {
         if ($left || $right) {
             self::$off_canvas = new off_canvas(self::html()->body());
             if ($left) {
                 self::$off_canvas->left();
                 // APP LOGO
-                self::$off_canvas->left()->append_div(NULL,'app-logo')
-                        ->append_child(new \k1lib\html\img(APP_TEMPLATE_IMAGES_URL . 'klan1-white.png','app-logo-img','','logo-img'));
-                
+                self::$off_canvas->left()->append_div(NULL, 'app-logo')
+                        ->append_child(new \k1lib\html\img(APP_TEMPLATE_IMAGES_URL . 'klan1-white.png', 'app-logo-img', '', 'logo-img'));
+
                 self::$off_canvas->menu_left_head();
                 self::$off_canvas->menu_left();
                 self::$off_canvas->menu_left_tail();
@@ -51,22 +50,17 @@ class k1app_template extends \k1lib\html\DOM {
              * TITLE BAR
              */
             self::$title_bar = new title_bar();
-            self::$top_bar = new top_bar();
 
             self::$title_bar->append_to(self::html()->body()->header());
-            self::$title_bar->set_class('hide-for-large', TRUE);
-            self::$title_bar->left_button()->set_attrib('data-open', 'offCanvasLeft');
+            self::$title_bar->left_button()
+                    ->set_attrib('data-open', 'offCanvasLeft')
+                    ->set_class('hide-for-large', TRUE);
             self::$title_bar->title()->append_span("k1lib-title-1");
             self::$title_bar->title()->append_span("k1lib-title-2");
             self::$title_bar->title()->append_span("k1lib-title-3");
-
-            self::$top_bar->append_to(self::html()->body()->header());
-            self::$top_bar->set_class('show-for-large', TRUE);
-            self::$top_bar->title()->append_span("k1lib-title-1");
-            self::$top_bar->title()->append_span("k1lib-title-2");
-            self::$top_bar->title()->append_span("k1lib-title-3");
         }
     }
+
     static public function start_template_plain() {
         self::start_template(FALSE, FALSE, FALSE);
     }

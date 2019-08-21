@@ -59,7 +59,7 @@ $k1lib_field_config_options_defaults = [
     'sql' => null,
 ];
 
-\k1lib\session\session_db::is_logged(TRUE, url::do_url(APP_URL . "log/form/", ["back-url" => $_SERVER['REQUEST_URI']]));
+\k1lib\session\session_db::is_logged(TRUE, url::do_url(APP_URL . "app/log/form/", ["back-url" => $_SERVER['REQUEST_URI']]));
 
 if (\k1lib\session\session_db::check_user_level(["god"])) {
     $controller_to_load = url::set_next_url_level(APP_CONTROLLERS_PATH, FALSE);

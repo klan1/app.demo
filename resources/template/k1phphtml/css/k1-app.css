@@ -349,3 +349,14 @@ TABLE MANAGER
 /* FIXES */
 
 .off-canvas-wrapper { overflow:visible !important; }
+
+.title-bar-left, .title-bar-right {
+-webkit-box-flex: 0 1 auto !important;
+-webkit-flex: 0 1 auto  !important;
+-ms-flex: 0 1 auto  !important;
+flex: 0 1 auto  !important;
+}
+
+.title-bar-title {
+display: inline !important;
+}

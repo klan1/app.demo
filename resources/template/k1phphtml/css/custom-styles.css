@@ -1,0 +1,183 @@
+/* 
+    Created on : Oct 17, 2016, 1:48:25 PM
+    Author     : j0hnd03
+*/
+.callout {
+    border: none;
+}
+
+.k1lib-crudlexs-list-content .callout {
+    background-color: #f2f2f2;
+
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+}
+
+.k1lib-crudlexs-related-data h3 {
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #00a2d0;
+    padding: 10px 20px;
+    margin: 30px 0 20px 0;
+
+}
+
+h4 {
+    font-size: 1em;
+    background-color: #00a2d0;
+    color: #fff;
+
+    padding: 5px 20px;
+
+}
+
+h4 a {
+    color: inherit;
+}
+h4 span {
+    color: inherit;
+    font-size: 0.8em;
+}
+
+h4 .button.fi-list, h4 .button.fi-plus {
+    background-color:#fff;
+    margin: 5px 0px;
+    color: #00a2d0;
+    font-weight: bold;
+}
+
+h4 .button.fi-plus:hover {
+    background-color: #147cc0;
+}
+
+
+
+h4.table6:before, h4.table5:before, h4.table1:before {
+    content: "\f200 \00A0";
+    font-family: "foundation-icons";
+}
+
+h4.table2:before {
+    content: "\f172 \00A0";
+    font-family: "foundation-icons";
+}
+
+h4.table3:before {
+    content: "\f1fc \00A0";
+    font-family: "foundation-icons";
+}
+
+h4.table7:before {
+    content: "\f18a \00A0";
+    font-family: "foundation-icons";
+}
+
+h4.table8:before {
+    content: "\f150  \00A0";
+    font-family: "foundation-icons";
+}
+
+
+h4.table9{
+    padding: 10px;
+    background-color: #e4e4e4;
+    color: #807d7d;
+
+}
+
+h4.table9:before{
+    content: "\f18a \00A0";
+    font-family: "foundation-icons";
+}
+
+
+.top-bar, .top-bar ul, .title-bar {
+    background-color: #00a2d0;
+    color: #fff;
+}
+
+
+.top-bar a, .top-bar ul a {
+    color: #fff;
+}
+
+.top-bar-right {
+    text-transform: capitalize;
+
+}
+.subheader {
+    color: #fff;  
+}
+
+#value-client-logo {
+
+}
+
+
+.dropdown.menu>li.is-dropdown-submenu-parent>a:after {
+    border-color: #ffffff transparent transparent;
+}
+
+
+
+.k1lib-data-group {
+    background-color: #f1f1f1;
+    padding: 20px;
+    color: #7b7b7b;
+    position: relative;
+}
+
+.k1lib-related-data-list {
+    margin: 30px 0 0px 0;
+}
+
+.k1lib-data-group-title 
+{
+
+    text-transform: uppercase;
+    font-size: 1.3em;
+    padding: 0px 20px 10px 20px;
+
+}
+
+.k1lib-data-item-label {
+    color: #7b7b7b;
+    text-transform: uppercase;
+    font-size: 0.8em;
+
+}
+
+.k1lib-data-item-value span {
+    text-transform: capitalize;
+}
+
+.k1app-related-list {
+    border-top:none;
+}
+
+.button {
+
+}
+
+.button.alert {    
+    background-color: #da3116;
+    color: #fff;
+    border:2px solid #fff;
+
+}
+
+.button.alert:before {
+    content: "\f217  \00A0";
+    font-family: "foundation-icons";
+}
+
+
+table tfoot td, table tfoot th, table thead td, table thead th {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    color: #7b7b7b;
+}
+
