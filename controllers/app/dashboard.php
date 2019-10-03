@@ -36,12 +36,12 @@ $content->set_class("dashboard");
 $content_grid = new \k1lib\html\foundation\grid(2, 2, $content);
 
 //$row1_col1 = $content_grid->row(1)->set_class('expanded')->cell(1)->large(6)->medium(12)->small(12);
-$row1_col1 = $content_grid->row(1)->cell(1)->large(6)->medium(12)->small(12);
+$row1_col1 = $content_grid->row(1)->set_class('grid-margin-x', TRUE)->cell(1)->large(6)->medium(12)->small(12);
 $row1_col2 = $content_grid->row(1)->cell(2)->large(6)->medium(12)->small(12);
 
 //$row2_col1 = $content_grid->row(2)->set_class('expanded')->cell(1)->large(6)->medium(12)->small(12);
-$row2_col1 = $content_grid->row(2)->set_class('expanded')->cell(1)->large(6)->medium(12)->small(12);
-$row2_col2 = $content_grid->row(2)->set_class('expanded')->cell(2)->large(6)->medium(12)->small(12);
+$row2_col1 = $content_grid->row(2)->cell(1)->large(6)->medium(12)->small(12);
+$row2_col2 = $content_grid->row(2)->cell(2)->large(6)->medium(12)->small(12);
 
 /**
  * GRID ROW 1
@@ -63,8 +63,12 @@ $table1->set_data($data_table);
  * GRID ROW 1 COL 2
  */
 // this week
-$row1_col2->append_h4("Row 1 Column 1");
+$row1_col2->append_h4("Row 1 Column 2");
 
+$table2 = new \k1lib\html\foundation\table_from_data();
+$table2->append_to($row1_col2);
+
+$table2->set_data($data_table);
 
 /**
  * GRID ROW 2
