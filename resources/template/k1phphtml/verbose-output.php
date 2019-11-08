@@ -10,7 +10,7 @@ use k1app\k1app_template as DOM;
 $body = DOM::html()->body();
 
 if (!empty($body)) {
-    if (APP_VERBOSE > 1) {
+    if (K1APP_VERBOSE > 1) {
         $div = $body->footer()->append_div("callout", "k1lib-session-data");
         if (k1lib_session::is_enabled()) {
             $div->append_h5("App session data");
@@ -20,13 +20,13 @@ if (!empty($body)) {
             $div->append_h6("There is not App session data");
         }
     }
-    if (k1lib_session::is_logged() && APP_VERBOSE > 1) {
+    if (k1lib_session::is_logged() && K1APP_VERBOSE > 1) {
         $div = $body->footer()->append_div("callout", "k1lib-serialized-data");
         $div->append_h5("App Serialized data");
         $div->append_div()->set_attrib("style", "overflow: scroll")
                 ->set_value(print_r($_SESSION['serialized_vars'], TRUE));
     }
-    if (k1lib_session::is_logged() && APP_VERBOSE > 2) {
+    if (k1lib_session::is_logged() && K1APP_VERBOSE > 2) {
         $div = $body->footer()->append_div("callout", "k1lib-sql-profile");
         if (local_cache::is_enabled()) {
             $div->append_h5("DB Local cache and SQL profiler");
@@ -45,7 +45,7 @@ if (!empty($body)) {
             $div->append_h6("DB Local cache is not enabled");
         }
     }
-    if (k1lib_session::is_logged() && APP_VERBOSE > 3) {
+    if (k1lib_session::is_logged() && K1APP_VERBOSE > 3) {
         $div = $body->footer()->append_div("callout", "k1lib-globals");
         if (local_cache::is_enabled()) {
             $div->append_h5("PHP Globals data");

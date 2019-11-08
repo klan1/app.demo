@@ -12,10 +12,10 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const APP_TITLE = "SIE 2019";
-const APP_DESCRIPTION = "Cliente: DEMO";
-const APP_KEYWORKS = "";
-const APP_VERBOSE = 0;
+const K1APP_TITLE = "SIE 2019";
+const K1APP_DESCRIPTION = "Cliente de demostración";
+const K1APP_KEYWORKS = "";
+const K1APP_VERBOSE = 0;
 
 const SESSION_APP_NAME = 'K1APP-SIE-DEMO-SESSION';
 

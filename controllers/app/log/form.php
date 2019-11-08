@@ -36,7 +36,7 @@ $centered_grid->row(1)->cell(1)->small(10)->medium(6)->large(4);
 
 $main_grid = new \k1lib\html\foundation\grid(4, 1, $centered_grid->row(1)->cell(1));
 $main_grid->row(1)->cell(1)->set_class("text-center")->set_id("k1lib-login-logo")->append_child(new \k1lib\html\img(APP_TEMPLATE_IMAGES_URL . "klan1.png"));
-$main_grid->row(2)->cell(1)->set_id("k1lib-login-title")->set_class("text-left")->append_h1('K1APP SKELETON');
+$main_grid->row(2)->cell(1)->set_id("k1lib-login-title")->set_class("text-left")->append_h1(K1APP_TITLE);
 
 $login_grid = $main_grid->row(3)->cell(1)->append_grid(5, 1)->set_id("k1app-login-content");
 

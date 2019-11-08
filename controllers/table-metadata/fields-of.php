@@ -20,7 +20,7 @@ $db_table_to_use = \k1lib\db\security\db_table_aliases::decode($table_alias);
 $span = (new \k1lib\html\span("subheader"))->set_value("Field of: ");
 DOM::set_title(3, $span . $db_table_to_use . ' [' . \k1lib\sql\get_db_database_name($db) . ']');
 
-DOM::html()->head()->set_title(APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
+DOM::html()->head()->set_title(K1APP_TITLE . " | {$span->get_value()} {$db_table_to_use}");
 
 
 $db_table = new \k1lib\crudlexs\class_db_table($db, $db_table_to_use);
