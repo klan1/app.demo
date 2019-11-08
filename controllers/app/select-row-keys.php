@@ -24,7 +24,7 @@ $selector_title = "Select the Key";
 
 $body->content()->append_h3($selector_title);
 
-DOM::html()->head()->set_title(K1APP_TITLE . " | {$selector_title} ");
+DOM::html()->head()->set_title(K1APP_DESCRIPTION . " | {$selector_title} ");
 
 
 $static_vars_from_get = \k1lib\forms\check_all_incomming_vars($_GET);

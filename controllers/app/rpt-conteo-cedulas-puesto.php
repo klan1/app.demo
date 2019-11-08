@@ -20,7 +20,7 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::set_title(3, K1APP_TITLE);
+DOM::set_title(3, K1APP_DESCRIPTION);
 
 DOM::menu_left()->set_active('nav-rpt-conteo-puesto');
 
