@@ -147,3 +147,7 @@ class crudlexs_config extends table_config_god_default_class{
     const ROOT_URL = "table-explorer/crudlexs";
 }
 
+/**
+ * APP USER CONFIG CLASESS FROM HERE, UPCODE PLEASE LET IT BE.
+ */
+
