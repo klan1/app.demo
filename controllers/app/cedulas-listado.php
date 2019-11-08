@@ -10,7 +10,7 @@ use k1app\k1app_template as DOM;
 use k1lib\notifications\on_DOM as DOM_notifications;
 use k1lib\session\session_db as session_db;
 
-\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'ch-2019/log/form/');
+\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'app/log/form/');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -24,7 +24,7 @@ k1app_template::start_template();
 $body = DOM::html()->body();
 
 template::load_template('header');
-template::load_template('app-header-ch-2019');
+template::load_template('app-header');
 template::load_template('app-footer');
 
 DOM::menu_left()->set_active('nav-cedulas');

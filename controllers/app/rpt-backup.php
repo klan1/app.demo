@@ -2,7 +2,7 @@
 
 namespace k1app;
 
-\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'ch-2019/log/form/');
+\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'app/log/form/');
 
 // This might be different on your proyect
 

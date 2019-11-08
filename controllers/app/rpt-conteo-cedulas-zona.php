@@ -8,7 +8,7 @@ use k1lib\html\template as template;
 use \k1lib\urlrewrite\url as url;
 use k1app\k1app_template as DOM;
 
-\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'ch-2019/log/form/');
+\k1lib\session\session_db::is_logged(TRUE, APP_URL . 'app/log/form/');
 
 \k1lib\sql\sql_query($db, "SET sql_mode='';");
 
@@ -17,10 +17,10 @@ k1app_template::start_template();
 $content = DOM::html()->body()->content();
 
 template::load_template('header');
-template::load_template('app-header-ch-2019');
+template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::set_title(3, "SIP - Recoleccion de datos manual");
+DOM::set_title(3, K1APP_TITLE);
 
 DOM::menu_left()->set_active('nav-rpt-conteo-zona');
 
