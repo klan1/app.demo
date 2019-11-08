@@ -47,7 +47,7 @@ if ($reporte_data) {
         $progreso_digitadores_table->set_class('k1lib-crudlexs-list')->append_to($content);
 
         $progreso_digitadores_table->set_data($reporte_data);
-        $rpt_link = new \k1lib\html\a("/v1/app/rpt-backup/?capitan_id={{field:capitan_id}}", "{{field:capitan_id}}");
+        $rpt_link = new \k1lib\html\a(APP_URL . 'app/rpt-backup/?capitan_id={{field:capitan_id}}', "{{field:capitan_id}}");
         $progreso_digitadores_table->insert_tag_on_field($rpt_link, ['capitan_id']);
     }
 }
