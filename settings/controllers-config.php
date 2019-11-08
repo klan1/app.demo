@@ -239,3 +239,37 @@ class users_config extends listados_config_class {
     const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin'];
 
 }
+
+class table_config_reg_candidatos extends table_config_admin_default_class {
+
+    const CONTROLLER_ALLOWED_LEVELS = ['god', 'admin'];
+
+    /**
+     * URLS
+     */
+    const ROOT_URL = "registraduria/candidatos";
+
+    /**
+     * AVAILABILITY
+     */
+    const BOARD_CREATE_ENABLED = FALSE;
+    const BOARD_UPDATE_ENABLED = FALSE;
+    const BOARD_DELETE_ENABLED = FALSE;
+
+    /**
+     * NAMES
+     */
+    const BOARD_CREATE_NAME = "Crear Candidato";
+
+    /**
+     * ALLOWED LEVELS
+     */
+    const BOARD_CREATE_ALLOWED_LEVELS = ['god'];
+    const BOARD_READ_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_UPDATE_ALLOWED_LEVELS = ['god'];
+    const BOARD_DELETE_ALLOWED_LEVELS = ['god'];
+    const BOARD_EXPORT_ALLOWED_LEVELS = ['god', 'admin'];
+    const BOARD_LIST_ALLOWED_LEVELS = ['god', 'admin'];
+
+}
+

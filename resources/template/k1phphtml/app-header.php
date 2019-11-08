@@ -30,8 +30,14 @@ if (!isset($_GET['just-controller'])) {
          */
         if (k1lib_session::check_user_level(['god', 'admin'])) {
             $menu_left->add_menu_item(APP_URL . 'app/dashboard/', 'Progreso', 'nav-dashboard');
+
             $menu_left->add_menu_item(APP_URL . 'app/listados/', 'Listados 2019', 'nav-firmas');
             $menu_left->add_menu_item(APP_URL . 'app/cedulas-listado/', 'Cédulas', 'nav-cedulas');
+
+            $censo_menu = $menu_left->add_sub_menu('#', 'Censo 2019', 'nav-camara-2018');
+            $censo_menu->add_menu_item(APP_URL . 'censo/consultar-full/', 'Consultar', 'nav-censo-2019');
+            $censo_menu->add_menu_item(APP_URL . 'censo/divipole/', 'Ver Divipol', 'nav-censo-divipole');
+//            $censo_menu->add_menu_item(APP_URL . 'censo/log/', 'Ver log', 'nav-censo-2019-log');
 
             $rpt_menu_progress = $menu_left->add_sub_menu('#', 'Reportes de progreso', 'nav-progress-rpt');
             $rpt_menu_progress->add_menu_item(APP_URL . 'app/rpt-progreso-capitanes/', 'Progreso capitanes', 'nav-rpt-progreso-capitanes');
@@ -50,6 +56,7 @@ if (!isset($_GET['just-controller'])) {
 
             $config_menu = $menu_left->add_sub_menu('#', 'Configuracion', 'nav-config');
             $config_menu->add_menu_item(APP_URL . 'app/rpt-backup/', 'Descargar DB', 'nav-rpt-backup');
+            $config_menu->add_menu_item(APP_URL . 'registraduria/candidatos/', 'Candidatos 2019', 'nav-admin-candidatos');
             $config_menu->add_menu_item(APP_URL . 'app/util-usuarios/', 'Usuarios del app', 'nav-utils-usuarios');
             $config_menu->add_menu_item($user_url, 'Mi perfil', 'nav-utils-perfil');
         } elseif (k1lib_session::check_user_level(['user'])) {
