@@ -12,19 +12,19 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const K1APP_TITLE = "K1.LIB App example";
-const K1APP_DESCRIPTION = "";
+const K1APP_TITLE = "SIE 2019";
+const K1APP_DESCRIPTION = "Cliente de demostración";
 const K1APP_KEYWORKS = "";
 const K1APP_VERBOSE = 0;
 
-const SESSION_APP_NAME = 'K1APP-SESSION';
+const SESSION_APP_NAME = 'K1APP-SIE-DEMO-SESSION';
 
 /**
  * SET a CUSTOM K1MAGIC for K1.lib
  */
 // # md5 -s "k1 app demo"
 //MD5 ("k1 app demo") = ffb07e0d73382f34ffdd99567c39921c
-\k1lib\K1MAGIC::set_value("ffb07e0dd3382g34ffdd99567c39921c");
+\k1lib\K1MAGIC::set_value("ffb07e0dd3182g34ffdd99567c3F921c");
 
 /**
  * URL REWRITE ENABLE
