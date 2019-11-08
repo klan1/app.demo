@@ -9,7 +9,7 @@ $body = DOM::html()->body();
 
 $head->append_meta()->set_attrib("charset", "utf-8");
 $head->append_meta("viewport", "width=device-width, initial-scale=1.0");
-$head->append_meta("description", APP_DESCRIPTION);
+$head->append_meta("description", K1APP_DESCRIPTION);
 $head->append_meta("keywords", "klan1 network, k1.lib, k1.app, skeleton, software, develop");
 
 $head->link_css(APP_URL)->set_attrib("rel", "canonical");

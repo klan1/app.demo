@@ -12,10 +12,10 @@ date_default_timezone_set("America/Bogota");
  *  NAME AND DESCRIPTION
  */
 
-const APP_TITLE = "K1.LIB App example";
-const APP_DESCRIPTION = "";
-const APP_KEYWORKS = "";
-const APP_VERBOSE = 0;
+const K1APP_TITLE = "K1.LIB App example";
+const K1APP_DESCRIPTION = "";
+const K1APP_KEYWORKS = "";
+const K1APP_VERBOSE = 0;
 
 const SESSION_APP_NAME = 'K1APP-SESSION';
 

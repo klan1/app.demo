@@ -15,7 +15,7 @@ if (DOM::off_canvas()) {
 
 if (!isset($_GET['just-controller'])) {
 
-    DOM::set_title(1, APP_TITLE);
+    DOM::set_title(1, K1APP_TITLE);
     DOM::set_title(2, ' :: ');
     DOM::set_title(3, '');
 

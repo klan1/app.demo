@@ -12,7 +12,7 @@ template::load_template('header');
 template::load_template('app-header');
 template::load_template('app-footer');
 
-DOM::html()->head()->set_title(APP_TITLE . " | Auto APP");
+DOM::html()->head()->set_title(K1APP_TITLE . " | Auto APP");
 
 DOM::menu_left_tail()->set_active('nav-table-explorer');
 

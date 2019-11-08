@@ -17,7 +17,7 @@ $main_css = COMPOSER_FOUNDATION_CSS_URL;
 /**
  * HTML HEAD
  */
-$head->set_title(APP_TITLE);
+$head->set_title(K1APP_TITLE);
 
 $head->link_css(COMPOSER_FOUNDATION_CSS_URL);
 $head->link_css(BOWER_PACKAGES_URL . "foundation-icon-fonts/foundation-icons.css");
