@@ -15,7 +15,7 @@ $login_user_field = "user_login";
 $login_password_field = "user_password";
 $login_level_field = "user_level";
 if (!isset($app_session)) {
-    $app_session = new \k1lib\session\session_db($db_chontico);
+    $app_session = new \k1lib\session\session_db($db);
 }
 $app_session->set_config($login_table, $login_user_field, $login_password_field, $login_level_field);
 $app_session->set_inputs($login_user_input, $login_password_input, $login_remember_me);
@@ -34,7 +34,7 @@ if ($post_data) {
         $app_session->start_session();
         // SET THE LOGGED SESSION
         $app_session->save_data_to_coockie(APP_BASE_URL);
-        if ($app_session->load_data_from_coockie($db_chontico)) {
+        if ($app_session->load_data_from_coockie($db)) {
             DOM_notifications::queue_mesasage("welcome!", "success");
             if (\k1lib\urlrewrite\get_back_url(TRUE)) {
                 \k1lib\html\html_header_go(url::do_url(\k1lib\urlrewrite\get_back_url(TRUE)));

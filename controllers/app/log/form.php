@@ -8,7 +8,7 @@ use k1app\k1app_template as DOM;
 use k1lib\session\session_db as session_db;
 
 if (!isset($app_session)) {
-    $app_session = new session_db($db_chontico);
+    $app_session = new session_db($db);
 }
 
 DOM::start_template_plain();
