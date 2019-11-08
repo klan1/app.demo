@@ -53,8 +53,7 @@ class k1app_template extends \k1lib\html\DOM {
 
             self::$title_bar->append_to(self::html()->body()->header());
             self::$title_bar->left_button()
-                    ->set_attrib('data-open', 'offCanvasLeft')
-                    ->set_class('hide-for-large', TRUE);
+                    ->set_attrib('data-toggle', 'offCanvasLeft');
             self::$title_bar->title()->append_span("k1lib-title-1");
             self::$title_bar->title()->append_span("k1lib-title-2");
             self::$title_bar->title()->append_span("k1lib-title-3");

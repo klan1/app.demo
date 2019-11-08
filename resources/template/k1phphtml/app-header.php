@@ -9,7 +9,8 @@ use k1app\k1app_template as DOM;
 $body = DOM::html()->body();
 
 if (DOM::off_canvas()) {
-    DOM::off_canvas()->left()->set_class('reveal-for-large', TRUE);
+//    DOM::off_canvas()->left()->set_class('reveal-for-large', TRUE);
+    DOM::off_canvas()->left()->set_attrib('data-options', 'inCanvasFor:large;');
 }
 
 if (!isset($_GET['just-controller'])) {
