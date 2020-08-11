@@ -105,7 +105,7 @@ export class @TABLE_NAME@Model {
 }\n
 tpl;
 $ts_var_template = <<<tpl
-    @VARNAME@: @TYPE@;\n
+    @VARNAME@: @TYPE@ = null;\n
 tpl;
 
 $models_path = APP_CLASSES_PATH . 'k1app/models/';
