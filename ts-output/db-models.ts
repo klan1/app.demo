@@ -207,7 +207,6 @@ export class EstudiosIpigModel {
     fk_empresa_id: number = null;
     fk_user_id: number = null;
     nombre: string = null;
-    dias: number = null;
     tipo_cria: number = null;
     tipo_cria_dias: number = null;
     tipo_levante: number = null;
@@ -376,5 +375,25 @@ export class VariablesIpigModel {
     variable_id: number = null;
     tipo_variable: string = null;
     nombre: string = null;
+
+}
+export class ViewEstudiosIpigModel {
+    estudio_ipig_id: number = null;
+    fk_granja_id: number = null;
+    granja_nombre: string = null;
+    fk_empresa_id: number = null;
+    nombre_empresa: string = null;
+    fk_user_id: number = null;
+    nombre: string = null;
+    tipo_cria: number = null;
+    tipo_cria_dias: number = null;
+    tipo_levante: number = null;
+    tipo_levante_dias: number = null;
+    tipo_levante_alimento: string = null;
+    tipo_ceba: number = null;
+    tipo_ceba_dias: number = null;
+    tipo_ceba_alimento: string = null;
+    resultado: number = null;
+    resultado_fecha: string = null;
 
 }

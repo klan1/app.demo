@@ -4,7 +4,7 @@ namespace k1app\models;
 
 use k1lib\api\api_model;
 
-class estudios_ipig_model extends api_model {
+class view_estudios_ipig_model extends api_model {
     /**
      * @var int
      */
@@ -14,9 +14,17 @@ class estudios_ipig_model extends api_model {
      */
     public $fk_granja_id;
     /**
+     * @var string
+     */
+    public $granja_nombre;
+    /**
      * @var int
      */
     public $fk_empresa_id;
+    /**
+     * @var string
+     */
+    public $nombre_empresa;
     /**
      * @var int
      */
